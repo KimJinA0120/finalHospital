@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.//EN"
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hospital.mapper.HospitalizationMapper">
+
+<sql id="HospitalizationBasseColumns">
+HOSPITALIZATION_NUM, BED_NUM, PATIENT_NUM, IN_DATE, OUT_DATE, HOSPITALIZATION_STATUS
+</sql>
+
+<insert id="hospitalizationInsert" parameterType="HospitalizationDTO">
+	insert into hospitalization(<include refid="HospitalizationBasseColumns" /> )
+	values (#{hospitalizationNum},#{bedNum},#{patientNum}
+			,#{inDate},#{outDate},#{hospitalizationStatus})
+</insert>
+
+<select id="hospitalizationSelectList" resultType="HospitalizationDTO">
+	select
+	<include refid="HospitalizationBasseColumns" />
+	from hospitalization
+</select>
+
+<select id="hospitalizationSelectOne" resultType="HospitalizationDTO" parameterType="string">
+	select <include refid="HospitalizationBasseColumns" />
+	from hospitalization
+	where HOSPITALIZATION_NUM = #{hospitalizationNum}
+</select>
+
+<update id="hospitalizationUpdate" parameterType="HospitalizationDTO">
+	update hospitalization
+	<trim prefix="set" suffixOverrides=",">
+		BED_NUM=#{bedNum}, 
+		PATIENT_NUM=#{patientNum},
+		IN_DATE=#{inDate},
+		OUT_DATE=#{outDate},
+		HOSPITALIZATION_STATUS=#{hospitalizationStatus}
+	</trim>
+	where HOSPITALIZATION_NUM = #{hospitalizationNum}
+</update>
+
+<delete id="hospitalizationDelete" parameterType="string">
+	delete from hospitalization
+	where HOSPITALIZATION_NUM = #{hospitalizationNum}
+</delete>
+
+
+
+</mapper>

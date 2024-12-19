@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>hospitalizationModify.html</title>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+</head>
+<body>
+입원수속 <br />
+<form action="hospitalizationUpdate" method="post"  >
+입원번호 : <input type="text" name="hospitalizationNum" th:value="${hospitalizationCommand.hospitalizationNum}" readonly="readonly"><br />
+병상번호 : <input type="text" name="bedNum" th:value="${hospitalizationCommand.bedNum}"><input type="button" value="검색하기"><br />
+환자번호 : <input type="text" name="patientNum" th:value="${hospitalizationCommand.patientNum}" readonly="readonly"><br />
+입원날짜 : <input type="date" name="inDate" th:value="${hospitalizationCommand.inDate}"><br />
+퇴원날짜 : <input type="date" name="outDate" th:value="${hospitalizationCommand.outDate}"><br />
+입원상태 : <input type="checkBox" name="hospitalizationStatus" th:value="${hospitalizationCommand.hospitalizationStatus}">입원<br />
+<input type="submit" value="입원수정완료">
+</form>
+</body>
+</html>
