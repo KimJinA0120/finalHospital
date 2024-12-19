@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hospital.mapper.SurgeryMapper">
+	<sql id="surgeryAppointmentBase">
+		SURGERY_APPOINTMENT_NUM, SEMP_NUM, OPERATING_ROOM_NUM, WARDPRESCRIPT_NUM, SURGERY_NAME, SURGERY_DATE, AEMP_NUM
+	</sql>
+	<insert id="SurgeryAppointment" parameterType="surgeryAppointment">
+		insert into surgery_appointment ( <include refid="surgeryAppointmentBase"/> )
+		values (#{surgeryAppointmentNum}, #{sempNum}, #{operatingRoomNum}
+			, #{wardprescriptNum}, #{surgeryName}, #{surgeryDate}, #{aempNum})
+	</insert>
+	<select id="surgeryAppointmentList" resultType="surgeryAppointment">
+		select <include refid="surgeryAppointmentBase"/> from surgery_appointment
+	</select>
+	<select id="surgeryAppointmentOneSelect" parameterType="string" resultType="surgeryAppointment">
+		select <include refid="surgeryAppointmentBase"/> from surgery_appointment
+		where surgery_Appointment_Num = #{surgeryAppointmentNum}
+	</select>
+	<update id="surgeryAppointmentUpdate" parameterType="surgeryAppointment">
+		update surgery_Appointment
+		set SEMP_NUM = #{sempNum},
+			OPERATING_ROOM_NUM = #{operatingRoomNum},
+			SURGERY_NAME = #{surgeryName},
+			SURGERY_DATE = #{surgeryDate},
+			AEMP_NUM = #{aempNum}
+		where SURGERY_APPOINTMENT_NUM = #{surgeryAppointmentNum}
+	</update>
+	<delete id="surgeryAppointmentDelete" parameterType="string">
+		delete from surgery_Appointment
+		where SURGERY_APPOINTMENT_NUM = #{surgeryAppointmentNum}
+	</delete>
+	
+	<sql id="surgeryColumnBase">
+		SURGERY_NUM, SURGERY_APPOINTMENT_NUM, SURGERY_CONTENT, INPUT_DATE, SEMP_NUM
+	</sql>
+	<insert id="surgeryWrite" parameterType="surgery">
+		insert into surgery ( <include refid="surgeryColumnBase"/> )
+		values ( #{surgeryNum}, #{surgeryAppointmentNum}, #{surgeryContent}, sysdate, #{sempNum})
+	</insert>
+	<select id="surgeryList" resultType="surgery">
+		select <include refid="surgeryColumnBase"/> from surgery
+	</select>
+</mapper>

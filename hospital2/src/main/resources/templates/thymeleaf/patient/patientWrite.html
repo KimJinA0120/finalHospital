@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" src ="/static/js/daumAddressScript.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript" src="/static/js/check.js"></script>
+</head>
+  <body>        
+                    
+   <form action="patientWrite" method="post"  > <!-- th:object="${patientCommand}" -->
+환자번호: 	<input type="text" name="patientNum" th:value="${patientCommand.patientNum}" />번호 자동부여<br />
+	
+이름 : <input type="text" name="patientName"  th:value="${patientCommand.patientName}" /> <br />
+주민등록번호 : <input type="text" name="patientJumin"  th:value="${patientCommand.patientJumin}" /> <br />	
+생년월일: <input type="date" name="patientBirth"  th:value="${patientCommand.patientBirth}" /> <br />
+아이디 : <input type="text" name="patientId" id="patientId" th:value="${patientCommand.patientId}" />
+				<span id="idCheck"></span>  <br />
+비밀번호 :    	<input type="password" name="patientPw" /> <br />
+비밀번호확인 : 	<input type="password" name="patientPwCon" /> <br />
+
+주소 : <input type="text" name="patientAddr" id="sample4_roadAddress"  th:value="${patientCommand.patientAddr}" readonly="readonly" />
+				<button type="button" onclick="execDaumPostcode();">우편번호검색</button><br />
+상세주소 : <input type="text" name="patientAddrDetail" th:value="${patientCommand.patientAddrDetail}"/><br />
+우편번호 : <input type="text" name="patientPost" id="sample4_postcode" th:value="${patientCommand.patientPost}" readonly="readonly"/><br />
+전화번호 : <input type="tel" name="patientPhone" th:value="${patientCommand.patientPhone}"/> <br />
+
+이메일 : 		<input type="email" name="patientEmail" id="patientEamil" th:value="${patientCommand.patientEmail}"/>
+	<span id="emialCheck"></span> <br />
+성별: <input type="radio" name="patientGender" value="M" checked="checked"> 남
+	<input type="radio" name="patinetGender" value="F"> 여
+			
+<input type="submit" value="환자등록" />
+</form>
+
+</body>
+</html>

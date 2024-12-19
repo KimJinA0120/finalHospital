@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>수술기록 리스트</title>
+</head>
+<body>
+<a href="surgeryWrite">수술결과 기록하기</a>
+	<table border="1" width="600">
+		<tr><th>수술번호</th><th>수술예약번호</th><th>입력일시</th><th>작성자</th></tr>
+		<tr th:each="dto : ${list}">
+			<td>[[${dto.surgeryNum}]]</td>
+			<td>[[${dto.surgeryAppointmentNum}]]</td>
+			<td>[[${#dates.format(dto.inputDate,'yyyy-MM-dd')}]]</td>
+			<td>[[${dto.sempNum}]]</td>
+		</tr>
+	</table>
+</body>
+</html>
