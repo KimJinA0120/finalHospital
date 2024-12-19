@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hospital.mapper.ReceiptMapper">
+<select id="receiptSelectList" parameterType="receipt">
+	select receipt_num, patient_num, emp_num, receipt_date, reservation_date
+	from receipt
+	<where>
+		<if test="searchWord != null">
+		receipt_num like '%' || #{searchWord} || '%'
+	 	or patient_num like '%' || #{searchWord} || '%'
+	 	</if>
+	 </where>
+	 order by reservation_date
+</select>
+<select id="receiptCount" resultType="integer">
+	select count(*) from receipt
+</select>
+<insert id="receiptInsert" parameterType="receipt">
+	insert into receipt(receipt_num, patient_num, emp_num
+						, receipt_date, reservation_date)
+	values(#{receiptNum}, #{patientNum}, #{empNum}
+			, sysdate, sysdate)
+</insert>
+<insert id="reservationInsert" parameterType="receipt">
+	insert into receipt(receipt_num, patient_num, emp_num
+						, receipt_date, reservation_date)
+	values(#{receiptNum}, #{patientNum}, #{empNum}
+			, null, #{reservationDate})
+</insert>
+<select id="patSelectList" resultType="patientDTO">
+select * from(
+	select rownum rn, pateint_num, patient_name, patient_jumin, patient_birth
+	  from salary
+	  where pateint_num like '%' || #{searchWord} || '%'
+	  or patient_name like '%' || #{searchWord} || '%'
+	  order by pateint_num
+	 )
+where rn between #{startRow} and #{endRow}
+</select>
+<select id="patSelectListCount" resultType="integer">
+	select count(*) from patient
+</select>
+</mapper>
