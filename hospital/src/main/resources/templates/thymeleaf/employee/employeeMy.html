@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>patientMy</title>
+
+
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" src ="/static/js/daumAddressScript.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript" src="/static/js/check.js"></script>
+</head>
+<bod>
+<a th:href="@{patientDetail(patientNum=${dto.patientNum })}">내 정보 보기</a> |
+<a th:href="@{patientUpdate(patientNum=${dto.patientNum })}" id="patientDelete">내 정보 수정하기</a> | 
+<a th:href="|patientDelete?patientNum${dto.patientNum}|">탈퇴 하기</a>                       
+
+</body>
+</html>

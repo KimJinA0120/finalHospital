@@ -19,7 +19,7 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("patient")
-public class PatientController {
+public class EmployeeController {
 	@Autowired
 	PatientWriteService patientWriteService;
 	@Autowired

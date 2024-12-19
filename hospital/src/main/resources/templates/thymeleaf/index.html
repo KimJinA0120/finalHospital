@@ -2,9 +2,32 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Index</title>
 </head>
 <body>
-테스트
+테스트 <br>
+<a href="surgery/surgeryAppointmentList">수술예약</a><br>
+<a href="surgery/surgeryList">환자수술결과기록</a><br>
+<br>
+<a href="wardPS/wardPsList">병동처방</a><br>
+<a href="nursing/nursingList">간호처방</a><br>
+<a href="WardRoomBed/WardList">병동리스트</a><br/>
+<br/>
+
+<br/>
+<th:block  th:if="${session.auth==null}">
+<a href="patient/patientWrite">환자 회원가입</a><br/>
+<a href="login">로그인</a><br/>
+</th:block>
+<th:block th:if="${session.auth!=null}"> 
+<a href="login/logout">로그아웃</a><br/>
+<a href="patient/patientList">환자목록</a><br/>
+
+<a href="patient/patientMyPage">환자 마이페이지</a><br/>
+</th:block>
+여기부터 내가 새로 쓴 부분
+<a href="employee/employeeWrite">직원등록</a>
+ <a href="employee/employeeList">직원목록</a>
+ <a href="employee/employeeMyPage">직원 마이페이지</a>
 </body>
 </html>

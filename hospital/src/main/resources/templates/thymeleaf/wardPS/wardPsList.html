@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>wardPsList</title>
+</head>
+<body>
+<a href="/">홈</a>
+<h1>병동처방</h1>
+<p align="right"><a href="wardPsWrite">병동처방 작성</a></p>
+<table border="1" width=800px align="center">
+   <caption>병동처방목록</caption>
+   <tr>
+      <th>병동처방번호</th>
+      <th>입원번호</th>
+      <th>진단명</th>
+      <th>담당의</th>
+   </tr>
+   
+   <tr th:each="dto : ${list}">
+      <td><a th:href="|wardPsInfo?num=${dto.wardPsNum}|">[[${dto.wardPsNum}]]</a></td>
+      <td>[[${dto.hospNum}]]</td>
+      <td><a th:href="|wardPsInfo?num=${dto.wardPsNum}|">[[${dto.diagName}]]</a></td>
+      <td>[[${dto.empNum}]]</td>
+   </tr>
+</table>
+</body>
+</html>

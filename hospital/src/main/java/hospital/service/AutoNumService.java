@@ -22,4 +22,8 @@ public class AutoNumService {
 		return autoNum;
 	}
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> branch 'main' of https://github.com/KimJinA0120/finalHospital.git

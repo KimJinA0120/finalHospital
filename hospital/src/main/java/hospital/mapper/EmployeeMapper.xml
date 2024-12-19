@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hospital.mapper.employeeMapper">
+<sql id="baseColumn">
+	emp_num , emp_name ,emp_jumin
+	, emp_birth, emp_gender, emp_id 
+	, emp_pw , emp_addr,emp_addr_detail 
+	, emp_post, emp_email, emp_phone
+</sql>
+<insert id="employeeInsert" parameterType="employeeDTO">
+insert into employee( <include refid="baseColumn"/> )
+values( #{employeeNum}, #{employeeName}, #{employeeJumin}
+		,#{employeeBirth}, #{employeeGender},  #{employeeId}
+		, #{employeePw},#{employeeAddr},#{employeeAddrDetail}
+		, #{employeePost}, #{employeeEmail},#{employeePhone})
+</insert>
+
+<select id="employeeSelectAll" parameterType="employeeDTO" resultType="employeeDTO">
+select 	<include refid="baseColumn"/>
+ from employee
+</select>
+
+<select id="employeeSelectOne" parameterType="employeeDTO" resultType="employeeDTO">
+select 	<include refid="baseColumn"/>
+ from employee
+where emp_NUM = #{empNum}
+</select>
+
+<update id="employeeUpdate" parameterType="employeeDTO">
+update employee
+set emp_Name=#{empName }, emp_birth=#{empBirth}
+ , emp_gender=#{empGender},  emp_Addr=#{empAddr}
+	 , emp_Addr_Detail=#{empAddrDetail }, emp_Post=#{empPost }
+	 , emp_Email=#{empEmail }, emp_Phone=#{empPhone }
+where emp_NUM = #{empNum}
+</update>
+<delete id="employeeDelete" parameterType="String">
+delete from employee where emp_NUM = #{employeeNum}
+</delete>
+
+<select id="employeeNumSelect" parameterType="String" resultType="String">
+select emp_num from employee where emp_id=#{employeeId}
+</select>
+
+<select id="findemployeeId" resultType="String">
+select emp_id from employee where emp_phone=#{empPhone} and emp_Email=#{empEmail}
+</select>
+
+<select id="findemployeePw" resultType="String">
+select emp_Pw from employee where emp_id=#{empId} and emp_Email=#{empEmail}
+</select>
+</mapper>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hospital.mapper.PatientMapper">
+<sql id="baseColumn">
+	patient_num , patient_name ,patient_jumin
+	, patient_birth, patient_gender, patient_id 
+	, patient_pw , patient_addr,patient_addr_detail 
+	, patient_post, patient_email, patient_phone
+</sql>
+<insert id="patientInsert" parameterType="patientDTO">
+insert into patient( <include refid="baseColumn"/> )
+values( #{patientNum}, #{patientName}, #{patientJumin}
+		,#{patientBirth}, #{patientGender},  #{patientId}
+		, #{patientPw},#{patientAddr},#{patientAddrDetail}
+		, #{patientPost}, #{patientEmail},#{patientPhone})
+</insert>
+
+<select id="patientSelectAll" parameterType="patientDTO" resultType="patientDTO">
+select 	<include refid="baseColumn"/>
+ from patient
+</select>
+
+<select id="patientSelectOne" parameterType="patientDTO" resultType="patientDTO">
+select 	<include refid="baseColumn"/>
+ from patient
+where patient_NUM = #{patientNum}
+</select>
+
+<update id="patientUpdate" parameterType="patientDTO">
+update patient
+set patient_Name=#{patientName }, patient_birth=#{patientBirth}
+ , patient_gender=#{patientGender},  patient_Addr=#{patientAddr}
+	 , patient_Addr_Detail=#{patientAddrDetail }, patient_Post=#{patientPost }
+	 , patient_Email=#{patientEmail }, patient_Phone=#{patientPhone }
+where patient_NUM = #{patientNum}
+</update>
+<delete id="patientDelete" parameterType="String">
+delete from patient where patient_NUM = #{patientNum}
+</delete>
+
+<select id="patientNumSelect" parameterType="String" resultType="String">
+select patient_num from patient where patient_id=#{patientId}
+</select>
+
+<select id="findpatientId" resultType="String">
+select patient_id from patient where patient_phone=#{patientPhone} and patient_Email=#{patientEmail}
+</select>
+
+<select id="findpatientPw" resultType="String">
+select patient_Pw from patient where patient_id=#{patientId} and patient_Email=#{patientEmail}
+</select>
+</mapper>
