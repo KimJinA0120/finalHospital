@@ -14,4 +14,21 @@
 	<select id="surgeryAppointmentList" resultType="surgeryAppointment">
 		select <include refid="surgeryAppointmentBase"/> from surgery_appointment
 	</select>
+	<select id="surgeryAppointmentOneSelect" parameterType="string" resultType="surgeryAppointment">
+		select <include refid="surgeryAppointmentBase"/> from surgery_appointment
+		where surgery_Appointment_Num = #{surgeryAppointmentNum}
+	</select>
+	<update id="surgeryAppointmentUpdate" parameterType="surgeryAppointment">
+		update surgery_Appointment
+		set SEMP_NUM = #{sempNum},
+			OPERATING_ROOM_NUM = #{operatingRoomNum},
+			SURGERY_NAME = #{surgeryName},
+			SURGERY_DATE = #{surgeryDate},
+			AEMP_NUM = #{aempNum}
+		where SURGERY_APPOINTMENT_NUM = #{surgeryAppointmentNum}
+	</update>
+	<delete id="surgeryAppointmentDelete" parameterType="string">
+		delete from surgery_Appointment
+		where SURGERY_APPOINTMENT_NUM = #{surgeryAppointmentNum}
+	</delete>
 </mapper>

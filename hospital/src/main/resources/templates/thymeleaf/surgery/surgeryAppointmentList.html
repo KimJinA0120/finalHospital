@@ -5,11 +5,12 @@
 <title>수술 예약 리스트</title>
 </head>
 <body>
-	<a href="surgeryAppointment">수술예약하기</a>
+	<a href="surgeryAppointment">수술예약하기</a> <br>
+	<a href="/">홈으로</a> <br>
 	<table border="1" width="600">
-		<tr><td>수술예약번호</td><td>수술명</td><td>수술날짜</td><td>집도의</td><td>마취의</td><td>수술실</td></tr>
+		<tr><th>수술예약번호</th><th>수술명</th><th>수술날짜</th><th>집도의</th><th>마취의</th><th>수술실</th></tr>
 		<tr th:each="dto : ${list}">
-			<td>[[${dto.surgeryAppointmentNum}]]</td>
+			<td><a th:href="|surgeryAppointmentDetail?surgeryAppointmentNum=${dto.surgeryAppointmentNum}|">[[${dto.surgeryAppointmentNum}]]</a></td>
 			<td>[[${dto.surgeryName}]]</td>
 			<td>[[${#dates.format(dto.surgeryDate,'yyyy-MM-dd')}]]</td>
 			<td>[[${dto.sempNum}]]</td>

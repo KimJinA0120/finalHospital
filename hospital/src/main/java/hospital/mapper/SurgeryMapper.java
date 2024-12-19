@@ -10,4 +10,7 @@ import hospital.domain.SurgeryAppointmentDTO;
 public interface SurgeryMapper {
 	public int SurgeryAppointment(SurgeryAppointmentDTO dto);
 	public List<SurgeryAppointmentDTO> surgeryAppointmentList();
+	public SurgeryAppointmentDTO surgeryAppointmentOneSelect(String surgeryAppointmentNum);
+	public int surgeryAppointmentUpdate(SurgeryAppointmentDTO dto);
+	public int surgeryAppointmentDelete(String surgeryAppointmentNum);
 }
