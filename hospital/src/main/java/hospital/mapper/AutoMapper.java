@@ -11,8 +11,4 @@ public interface AutoMapper {
 							, @Param("col_name") String col_name
 							, @Param("table_name") String table_name);
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> branch 'main' of https://github.com/KimJinA0120/finalHospital.git

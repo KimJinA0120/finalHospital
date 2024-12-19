@@ -21,9 +21,4 @@ public class AutoNumService {
 		= autoMapper.selectNum(sep, len, col_name, table_name);
 		return autoNum;
 	}
-
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> branch 'main' of https://github.com/KimJinA0120/finalHospital.git
