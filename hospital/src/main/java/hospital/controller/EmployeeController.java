@@ -8,96 +8,96 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import hospital.command.PatientCommand;
+import hospital.command.EmployeeCommand;
 import hospital.service.AutoNumService;
-import hospital.service.patient.PatientDeleteService;
-import hospital.service.patient.PatientDetailService;
-import hospital.service.patient.PatientListService;
-import hospital.service.patient.PatientUpdateService;
-import hospital.service.patient.PatientWriteService;
+import hospital.service.employee.EmployeeDeleteService;
+import hospital.service.employee.EmployeeDetailService;
+import hospital.service.employee.EmployeeListService;
+import hospital.service.employee.EmployeeUpdateService;
+import hospital.service.employee.EmployeeWriteService;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("patient")
+@RequestMapping("employee")
 public class EmployeeController {
 	@Autowired
-	PatientWriteService patientWriteService;
+	EmployeeWriteService employeeWriteService;
 	@Autowired
-	PatientListService patientListService;
+	EmployeeListService employeeListService;
 	@Autowired
-	PatientDetailService patientDetailService;
+	EmployeeDetailService employeeDetailService;
 	@Autowired
-	PatientUpdateService patientUpdateService;
+	EmployeeUpdateService employeeUpdateService;
 	@Autowired
-	PatientDeleteService patientDeleteService;
+	EmployeeDeleteService employeeDeleteService;
 	@Autowired
 	AutoNumService autoNumService;
 
-	@GetMapping("patientWrite")
-	public String patientWrite(PatientCommand patientCommand, Model model) {
-		String autoNum = autoNumService.execute("pati_", 6, "patient_num","patient");
-		patientCommand.setPatientNum(autoNum);
-		model.addAttribute("patientCommand", patientCommand);
-		return "thymeleaf/patient/patientWrite";
+	@GetMapping("employeeWrite")
+	public String employeeWrite(EmployeeCommand employeeCommand, Model model) {
+		String autoNum = autoNumService.execute("emp_", 5, "emp_num","employee");
+		employeeCommand.setEmpNum(autoNum);
+		model.addAttribute("employeeCommand", employeeCommand);
+		return "thymeleaf/employee/employeeWrite";
 	}
 	
 	/*
 	 * @Autowired IdcheckService idcheckService; // spring 방식
 	 * 
-	 * @PostMapping("patientIdCheck") public @ResponseBody Integer
-	 * patientIdCheck(String patientId) { // html, jsp파일경로(x) return
-	 * idcheckService.execute(patientId);
+	 * @PostMapping("employeeIdCheck") public @ResponseBody Integer
+	 * employeeIdCheck(String employeeId) { // html, jsp파일경로(x) return
+	 * idcheckService.execute(employeeId);
 	 * 
 	 * }
 	 * 
 	 * @Autowired EmailCheckService emailCheckService;
 	 * 
-	 * @PostMapping("patientEmailCheck") public @ResponseBody Integer
-	 * patientEmailCheck(String patientEmail) { return
-	 * emailCheckService.execute(patientEmail); }
+	 * @PostMapping("employeeEmailCheck") public @ResponseBody Integer
+	 * employeeEmailCheck(String employeeEmail) { return
+	 * emailCheckService.execute(employeeEmail); }
 	 */
 
-	@PostMapping("patientWrite")
-	public String patientWrite( //@Validated 
-			PatientCommand patientCommand
+	@PostMapping("employeeWrite")
+	public String employeeWrite( //@Validated 
+			EmployeeCommand employeeCommand
 			, BindingResult result 
 			) {
-		//if(result.hasErrors()) { return "thymeleaf/patient/patientWrite"; }
-		patientWriteService.execute(patientCommand);
+		//if(result.hasErrors()) { return "thymeleaf/employee/employeeWrite"; }
+		employeeWriteService.execute(employeeCommand);
 		return "redirect:/";
 	}
-	@GetMapping("patientList")
-	public String patientList(Model model) {
-		patientListService.execute(model);
-		return "thymeleaf/patient/patientList";
+	@GetMapping("employeeList")
+	public String employeeList(Model model) {
+		employeeListService.execute(model);
+		return "thymeleaf/employee/employeeList";
 	}
-	@GetMapping("patientMyPage")
-	public String patientMypage(HttpSession session, Model model) {
-		patientDetailService.execute(session, model);
-		return "thymeleaf/patient/patientMy";
-	}
-
-	@GetMapping("patientDetail")
-	public String patientDetail(HttpSession session, Model model) {
-		patientDetailService.execute(session, model);
-		return "thymeleaf/patient/patientDetail";
+	@GetMapping("employeeMyPage")
+	public String employeeMypage(HttpSession session, Model model) {
+		employeeDetailService.execute(session, model);
+		return "thymeleaf/employee/employeeMy";
 	}
 
-	@GetMapping("patientUpdate")
-	public String patientUpdate(HttpSession session, Model model) {
-		patientDetailService.execute(session, model);
-		return "thymeleaf/patient/patientUpdate";
+	@GetMapping("employeeDetail")
+	public String employeeDetail(HttpSession session, Model model) {
+		employeeDetailService.execute(session, model);
+		return "thymeleaf/employee/employeeDetail";
 	}
 
-	@PostMapping("patientUpdate")
-	public String patientUpdate(HttpSession session, PatientCommand patientCommand) {
-		patientUpdateService.execute(session, patientCommand);
-		return "redirect:patientDetail?patientNum=" + patientCommand.getPatientNum();
+	@GetMapping("employeeUpdate")
+	public String employeeUpdate(HttpSession session, Model model) {
+		employeeDetailService.execute(session, model);
+		return "thymeleaf/employee/employeeUpdate";
 	}
 
-	@GetMapping("patientDelete")
-	public String patientDelete(HttpSession session) {
-		patientDeleteService.execute(session);
+	@PostMapping("employeeUpdate")
+	public String employeeUpdate(HttpSession session, EmployeeCommand employeeCommand) {
+		employeeUpdateService.execute(session, employeeCommand);
+		return "redirect:employeeDetail?employeeNum=" + employeeCommand.getEmpNum();
+	}
+
+	@GetMapping("employeeDelete")
+	public String employeeDelete(HttpSession session) {
+		employeeDeleteService.execute(session);
 		session.invalidate();
 		return "redirect:/";
 	}

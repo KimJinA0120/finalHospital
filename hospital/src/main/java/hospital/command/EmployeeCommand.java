@@ -12,6 +12,7 @@ public class EmployeeCommand {
     String empName ;
     String empId ;
     String empPw ;
+    String empPwCon;
     String empPhone ;
     String empJumin ;
     String empGender ;

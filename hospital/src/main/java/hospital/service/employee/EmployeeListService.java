@@ -6,16 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import hospital.domain.PatientDTO;
-import hospital.mapper.PatientMapper;
+import hospital.domain.EmployeeDTO;
+import hospital.mapper.EmployeeMapper;
 
 @Service
 public class EmployeeListService {
 	@Autowired
-	PatientMapper patientMapper;
+	EmployeeMapper employeeMapper;
 
 	public void execute(Model model) {
-		List<PatientDTO> list=patientMapper.patientSelectAll();
+		List<EmployeeDTO> list=employeeMapper.employeeSelectAll();
 		model.addAttribute("list", list);
 		
 	}
