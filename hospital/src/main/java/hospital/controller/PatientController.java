@@ -7,9 +7,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import hospital.command.PatientCommand;
+import hospital.service.AutoNumService;
 import hospital.service.patient.PatientDeleteService;
 import hospital.service.patient.PatientDetailService;
 import hospital.service.patient.PatientListService;
@@ -30,14 +30,14 @@ public class PatientController {
 	PatientUpdateService patientUpdateService;
 	@Autowired
 	PatientDeleteService patientDeleteService;
-	//@Autowired
-	//AutoNumService autoNumService;
+	@Autowired
+	AutoNumService autoNumService;
 
 	@GetMapping("patientWrite")
 	public String patientWrite(PatientCommand patientCommand, Model model) {
-		//String autoNum = autoNumService.execute("patient_", "patient_num", 6, "patients");
-		//patientCommand.setpatientNum(autoNum);
-		//model.addAttribute("patientCommand", patientCommand);
+		String autoNum = autoNumService.execute("pati_", 6, "patient_num","patient");
+		patientCommand.setPatientNum(autoNum);
+		model.addAttribute("patientCommand", patientCommand);
 		return "thymeleaf/patient/patientWrite";
 	}
 	

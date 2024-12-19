@@ -33,7 +33,7 @@ update patient
 set patient_Name=#{patientName }, patient_birth=#{patientBirth}
  , patient_gender=#{patientGender},  patient_Addr=#{patientAddr}
 	 , patient_Addr_Detail=#{patientAddrDetail }, patient_Post=#{patientPost }
-	 , patient_Email=#{patientEmail }, patient_Phone=#{patientPhone },
+	 , patient_Email=#{patientEmail }, patient_Phone=#{patientPhone }
 where patient_NUM = #{patientNum}
 </update>
 <delete id="patientDelete" parameterType="String">
@@ -41,7 +41,7 @@ delete from patient where patient_NUM = #{patientNum}
 </delete>
 
 <select id="patientNumSelect" parameterType="String" resultType="String">
-select patient_num from patients where patient_id=#{patientId}
+select patient_num from patient where patient_id=#{patientId}
 </select>
 
 <select id="findpatientId" resultType="String">

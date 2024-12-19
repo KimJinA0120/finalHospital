@@ -10,7 +10,7 @@
 </head>
 <body>
 	<table  border=1>
-    	<tr><td rowspan="11">  <img th:src="|/static/upload/${dto.patientProfileImage}|"></td>
+    	
 		<tr><td>이름</td><td>[[${dto.patientName }]]</td></tr>
 		<tr><td>주민번호</td><td>[[${dto.patientJumin}]]</td></tr>
 		<tr><td>생년월일</td><td> [[${#dates.format(dto.patientBirth ,'yyyy-MM-dd')}]]</td></tr>
@@ -22,7 +22,7 @@
 		
 		<tr><td>이메일</td><td> [[${dto.patientEmail }]]</td></tr>
 		<tr><td>성별</td><td>[[${dto.patientGender}]]</td></tr>
-<tr> <td colspan="3">
+<tr> <td colspan="2">
 <a th:href="@{patientUpdate(patientNum=${dto.patientNum })}">유저 수정</a> | 
 <a th:href="|patientDelete?patientNum${dto.patientNum}|" id="patientDelete">탈퇴 하기</a> </td> </tr>
 </table>                
