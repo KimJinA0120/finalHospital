@@ -42,4 +42,8 @@
 	<select id="surgeryList" resultType="surgery">
 		select <include refid="surgeryColumnBase"/> from surgery
 	</select>
+	
+	<select id="operatingRoomList" resultType="operatingRoom">
+		select operating_room_num , operating_room_location from operating_room
+	</select>
 </mapper>
