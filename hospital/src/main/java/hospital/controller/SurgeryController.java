@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import hospital.command.SurgeryAppointmentCommand;
 import hospital.command.SurgeryCommand;
 import hospital.service.AutoNumService;
+import hospital.service.surgery.OperatingRoomListService;
 import hospital.service.surgery.SurgeryAppointmentDeleteService;
 import hospital.service.surgery.SurgeryAppointmentDetailService;
 import hospital.service.surgery.SurgeryAppointmentListService;
@@ -37,6 +38,8 @@ public class SurgeryController {
 	SurgeryWriteService surgeryWriteService;
 	@Autowired
 	SurgeryListService surgeryListService;
+	@Autowired
+	OperatingRoomListService operatingRoomListService;
 	
 	
 	// 수술 예약
@@ -97,5 +100,12 @@ public class SurgeryController {
 	public String surgeryWrite(SurgeryCommand surgeryCommand) {
 		surgeryWriteService.execute(surgeryCommand);
 		return "redirect:surgeryList";
+	}
+	
+	// 수술실 찾기
+	@GetMapping("operatingRoomList")
+	public String operatingRoomList(Model model) {
+		operatingRoomListService.execute(model);
+		return "thymeleaf/surgery/operatingRoomList";
 	}
 }

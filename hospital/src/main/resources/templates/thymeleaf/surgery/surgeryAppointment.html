@@ -3,6 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <title>수술 예약</title>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#surroom").click(function(){
+		window.open("/surgery/operatingRoomList", "operatingRoomList", "width=315, height=200, top=100, left=100");
+	})
+})
+</script>
+
 </head>
 <body>
 <form action="surgeryAppointment" method="post">
@@ -21,15 +30,15 @@
 		</tr>
 		<tr>
 			<th>집도의</th>
-			<td><input type="text" name="sempNum"/></td>
+			<td><input type="text" name="sempNum"/> <button type="button" id="semp">집도의 선택</button></td>
 		</tr>
 		<tr>
 			<th>마취의</th>
-			<td><input type="text" name="aempNum"/></td>
+			<td><input type="text" name="aempNum"/> <button type="button" id="aemp">마취의 선택</button></td>
 		</tr>
 		<tr>
 			<th>수술실</th>
-			<td><input type="text" name="operatingRoomNum"/></td>
+			<td><input type="text" name="operatingRoomNum" id="operatingRoom"/> <button type="button" id="surroom">수술실 찾기</button></td>
 		</tr>
 		<tr>
 			<th>처방번호</th>

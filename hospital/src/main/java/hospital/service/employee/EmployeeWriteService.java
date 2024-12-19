@@ -4,31 +4,35 @@ package hospital.service.employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import hospital.command.PatientCommand;
-import hospital.domain.PatientDTO;
-import hospital.mapper.PatientMapper;
+import hospital.command.EmployeeCommand;
+import hospital.controller.EmployeeController;
+import hospital.domain.EmployeeDTO;
+import hospital.mapper.EmployeeMapper;
 
 @Service
 public class EmployeeWriteService {
 	@Autowired
-	PatientMapper patientMapper;
+	EmployeeMapper employeeMapper;
 
-	public void execute(PatientCommand patientCommand) {
-		PatientDTO dto = new PatientDTO();
-		dto.setPatientNum(patientCommand.getPatientNum());
-		dto.setPatientName(patientCommand.getPatientName());
-		dto.setPatientJumin(patientCommand.getPatientJumin());
-		dto.setPatientBirth(patientCommand.getPatientBirth());
-		dto.setPatientGender(patientCommand.getPatientGender());
-		dto.setPatientId(patientCommand.getPatientId());
-		dto.setPatientPw(patientCommand.getPatientPw());
-		dto.setPatientPwCon(patientCommand.getPatientPwCon());
-		dto.setPatientAddr(patientCommand.getPatientAddr());
-		dto.setPatientAddrDetail(patientCommand.getPatientAddrDetail());
-		dto.setPatientPost(patientCommand.getPatientPost());
-		dto.setPatientEmail(patientCommand.getPatientEmail());
-		dto.setPatientPhone(patientCommand.getPatientPhone());
+	public void execute(EmployeeCommand employeeCommand) {
+		EmployeeDTO dto = new EmployeeDTO();
+		dto.setEmpNum(employeeCommand.getEmpNum());
+		dto.setEmpName(employeeCommand.getEmpName());
+		dto.setEmpJumin(employeeCommand.getEmpJumin());
+		dto.setEmpBirth(employeeCommand.getEmpBirth());
+		dto.setEmpGender(employeeCommand.getEmpGender());
+		dto.setEmpId(employeeCommand.getEmpId());
+		dto.setEmpPw(employeeCommand.getEmpPw());
+		dto.setEmpPwCon(employeeCommand.getEmpPwCon());
+		dto.setEmpAddr(employeeCommand.getEmpAddr());
+		dto.setEmpAddrDetail(employeeCommand.getEmpAddrDetail());
+		dto.setEmpPost(employeeCommand.getEmpPost());
+		dto.setEmpEmail(employeeCommand.getEmpEmail());
+		dto.setEmpPhone(employeeCommand.getEmpPhone());
+		dto.setSectionNum(employeeCommand.getSectionNum());
+		dto.setPosition(employeeCommand.getPosition());
+		dto.setEmpHiredate(employeeCommand.getEmpHiredate());
 		
-		patientMapper.patientInsert(dto);
+		employeeMapper.employeeInsert(dto);
 	}
 }

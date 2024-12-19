@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import hospital.domain.OperatingRoomDTO;
 import hospital.domain.SurgeryAppointmentDTO;
 import hospital.domain.SurgeryDTO;
 
@@ -17,4 +18,6 @@ public interface SurgeryMapper {
 	
 	public int surgeryWrite(SurgeryDTO dto);
 	public List<SurgeryDTO> surgeryList();
+	
+	public List<OperatingRoomDTO> operatingRoomList();
 }
