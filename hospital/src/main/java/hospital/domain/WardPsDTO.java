@@ -1,14 +1,15 @@
-package hospital.command;
+package hospital.domain;
 
 import java.util.Date;
 
+import org.apache.ibatis.type.Alias;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 
+@Alias("wardPS")
 @Data
-public class WardPsCommand {
-   
+public class WardPsDTO {
    String wardPsNum;
    String hospNum;
    String empNum;
