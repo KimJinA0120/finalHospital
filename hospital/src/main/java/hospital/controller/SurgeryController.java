@@ -8,12 +8,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import hospital.command.SurgeryAppointmentCommand;
+import hospital.command.SurgeryCommand;
 import hospital.service.AutoNumService;
 import hospital.service.surgery.SurgeryAppointmentDeleteService;
 import hospital.service.surgery.SurgeryAppointmentDetailService;
 import hospital.service.surgery.SurgeryAppointmentListService;
 import hospital.service.surgery.SurgeryAppointmentService;
 import hospital.service.surgery.SurgeryAppointmentUpdateService;
+import hospital.service.surgery.SurgeryListService;
+import hospital.service.surgery.SurgeryWriteService;
 
 @Controller
 @RequestMapping("surgery")
@@ -30,7 +33,13 @@ public class SurgeryController {
 	SurgeryAppointmentUpdateService surgeryAppointmentUpdateService;
 	@Autowired
 	SurgeryAppointmentDeleteService surgeryAppointmentDeleteService;
+	@Autowired
+	SurgeryWriteService surgeryWriteService;
+	@Autowired
+	SurgeryListService surgeryListService;
 	
+	
+	// 수술 예약
 	@GetMapping("surgeryAppointmentList") // 수술예약 리스트
 	public String surgeryAppointmentList(Model model) {
 		surgeryAppointmentListService.execute(model);
@@ -62,9 +71,31 @@ public class SurgeryController {
 		surgeryAppointmentUpdateService.execute(surgeryAppointmentCommand);
 		return "redirect:surgeryAppointmentDetail?surgeryAppointmentNum="+surgeryAppointmentCommand.getSurgeryAppointmentNum();
 	}
-	@GetMapping("surgeryAppointmentDelete")
+	@GetMapping("surgeryAppointmentDelete") // 수술예약 삭제
 	public String surgeryAppointmentDelete(String surgeryAppointmentNum) {
 		surgeryAppointmentDeleteService.execute(surgeryAppointmentNum);
 		return "redirect:surgeryAppointmentList";
+	}
+	
+	
+	// 수술결과 기록
+	@GetMapping("surgeryList") // 수술기록 리스트
+	public String surgeryList(Model model) {
+		surgeryListService.execute(model);
+		return "thymeleaf/surgery/surgeryList";
+	}
+	@GetMapping("surgeryWrite") // 수술기록 화면
+	public String surgeryWrite(String surgeryAppointmentNum, Model model) {
+		String autoNum = autoNumService.execute("Surgery_", 9, "SURGERY_NUM", "surgery");
+		model.addAttribute("autoNum", autoNum);
+		if(surgeryAppointmentNum != null) {
+			model.addAttribute("surgeryAppointmentNum", surgeryAppointmentNum);
+		}
+		return "thymeleaf/surgery/surgeryWrite";
+	}
+	@PostMapping("surgeryWrite") // 수술 기록하기
+	public String surgeryWrite(SurgeryCommand surgeryCommand) {
+		surgeryWriteService.execute(surgeryCommand);
+		return "redirect:surgeryList";
 	}
 }

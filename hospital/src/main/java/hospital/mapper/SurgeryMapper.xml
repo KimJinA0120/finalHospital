@@ -31,4 +31,15 @@
 		delete from surgery_Appointment
 		where SURGERY_APPOINTMENT_NUM = #{surgeryAppointmentNum}
 	</delete>
+	
+	<sql id="surgeryColumnBase">
+		SURGERY_NUM, SURGERY_APPOINTMENT_NUM, SURGERY_CONTENT, INPUT_DATE, SEMP_NUM
+	</sql>
+	<insert id="surgeryWrite" parameterType="surgery">
+		insert into surgery ( <include refid="surgeryColumnBase"/> )
+		values ( #{surgeryNum}, #{surgeryAppointmentNum}, #{surgeryContent}, sysdate, #{sempNum})
+	</insert>
+	<select id="surgeryList" resultType="surgery">
+		select <include refid="surgeryColumnBase"/> from surgery
+	</select>
 </mapper>
