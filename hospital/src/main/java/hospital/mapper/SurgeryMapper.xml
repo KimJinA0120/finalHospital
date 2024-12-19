@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hospital.mapper.SurgeryMapper">
+	<sql id="surgeryAppointmentBase">
+		SURGERY_APPOINTMENT_NUM, SEMP_NUM, OPERATING_ROOM_NUM, WARDPRESCRIPT_NUM, SURGERY_NAME, SURGERY_DATE, AEMP_NUM
+	</sql>
+	<insert id="SurgeryAppointment" parameterType="surgeryAppointment">
+		insert into surgery_appointment ( <include refid="surgeryAppointmentBase"/> )
+		values (#{surgeryAppointmentNum}, #{sempNum}, #{operatingRoomNum}
+			, #{wardprescriptNum}, #{surgeryName}, #{surgeryDate}, #{aempNum})
+	</insert>
+	<select id="surgeryAppointmentList" resultType="surgeryAppointment">
+		select <include refid="surgeryAppointmentBase"/> from surgery_appointment
+	</select>
+</mapper>
