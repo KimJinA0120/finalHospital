@@ -4,15 +4,19 @@ package hospital.service.employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import hospital.command.DoctorCommand;
 import hospital.command.EmployeeCommand;
-import hospital.controller.EmployeeController;
+import hospital.domain.DoctorDTO;
 import hospital.domain.EmployeeDTO;
+import hospital.mapper.DoctorMapper;
 import hospital.mapper.EmployeeMapper;
 
 @Service
 public class EmployeeWriteService {
 	@Autowired
 	EmployeeMapper employeeMapper;
+	@Autowired
+	DoctorMapper doctorMapper;
 
 	public void execute(EmployeeCommand employeeCommand) {
 		EmployeeDTO dto = new EmployeeDTO();
@@ -34,5 +38,13 @@ public class EmployeeWriteService {
 		dto.setEmpHiredate(employeeCommand.getEmpHiredate());
 		
 		employeeMapper.employeeInsert(dto);
+	}
+	
+	public void doctorWrite(EmployeeCommand employeeCommand, DoctorCommand doctorCommand) {
+		DoctorDTO dto =new DoctorDTO();
+		dto.setEmpNum(employeeCommand.getEmpNum());
+		String medicalSubject=doctorMapper.selectSectionName(employeeCommand.getSectionNum());
+		dto.setMedicalSubject(medicalSubject);
+		doctorMapper.doctorInsert(dto);
 	}
 }

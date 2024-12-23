@@ -81,6 +81,13 @@ public class EmployeeController {
 		employeeListService.employeeSearch(searchWord, page, model);
 		return "thymeleaf/employee/employeeSearch";
 	}
+	@GetMapping("doctorSearch")
+	public String doctorSearch(@RequestParam(value="searchWord", required=false) String searchWord
+			, @RequestParam(value="page", required=false, defaultValue="1") Integer page
+			, Model model) {
+		employeeListService.doctorSearch(searchWord, page, model);
+		return "thymeleaf/employee/doctorSearch";
+	}
 
 	@PostMapping("employeeWrite")
 	public String employeeWrite( //@Validated 

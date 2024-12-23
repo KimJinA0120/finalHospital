@@ -16,9 +16,9 @@ public class EmployeeDetailService {
 	
 	public void execute(HttpSession session, Model model) {
 		AuthInfoDTO auth=(AuthInfoDTO)session.getAttribute("auth");
-		String employeeId=auth.getUserId();
-		String employeeNum=employeeMapper.employeeNumSelect(employeeId);
-		EmployeeDTO dto=employeeMapper.employeeSelectOne(employeeNum);
+		String empId=auth.getUserId();
+		String empNum=employeeMapper.employeeNumSelect(empId);
+		EmployeeDTO dto=employeeMapper.employeeSelectOne(empNum);
 		
 		model.addAttribute("dto", dto);
 		

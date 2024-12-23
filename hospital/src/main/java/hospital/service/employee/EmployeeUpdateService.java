@@ -3,9 +3,12 @@ package hospital.service.employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import hospital.command.DoctorCommand;
 import hospital.command.EmployeeCommand;
 import hospital.domain.AuthInfoDTO;
+import hospital.domain.DoctorDTO;
 import hospital.domain.EmployeeDTO;
+import hospital.mapper.DoctorMapper;
 import hospital.mapper.EmployeeMapper;
 import jakarta.servlet.http.HttpSession;
 
@@ -13,6 +16,8 @@ import jakarta.servlet.http.HttpSession;
 public class EmployeeUpdateService {
 	@Autowired
 	EmployeeMapper employeeMapper;
+	@Autowired
+	DoctorMapper doctorMapper;
 	
 	public void execute(HttpSession session, EmployeeCommand employeeCommand) {
 		AuthInfoDTO auth=(AuthInfoDTO)session.getAttribute("auth");
@@ -39,6 +44,19 @@ public class EmployeeUpdateService {
 		
 		employeeMapper.employeeUpdate(dto);
 		
+		
+	}
+	
+	public void doctorUpdate(DoctorCommand doctorCommand, EmployeeDTO employeeDTO) {
+		DoctorDTO dto=new DoctorDTO();
+		
+		dto.setEmpNum(doctorCommand.getEmpNum());
+		dto.setMedicalRoomLocation(doctorCommand.getMedicalRoomLocation());
+		EmployeeDTO dto1=employeeMapper.employeeSelectOne(doctorCommand.getEmpNum());
+		String medicalRoomLocation=doctorMapper.selectSectionName(dto1.getSectionNum());
+		dto.setMedicalRoomLocation(medicalRoomLocation);
+		
+		doctorMapper.doctorUpdate(dto);
 		
 	}
 

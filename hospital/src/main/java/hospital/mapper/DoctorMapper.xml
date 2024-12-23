@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hospital.mapper.DoctorMapper">
+
+
+<select id="selectSectionName" parameterType="string" resultType="String">
+select section_name from section where section_num=#{sectionNum}
+</select>
+
+<insert id="doctorInsert" parameterType="doctorDTO">
+insert into doctor(emp_num, medicalSubject)
+values(#{empNum}, #{medicalSubject});
+</insert>
+
+<select id="doctorCount" resultType="integer">
+select count(emp_num) from doctor
+</select>
+
+<select id="doctorSelectAll" parameterType="startEndPage" resultType="doctorDTO">
+select * from 
+(select rownum rn, d.emp_num, emp_name, medical_subject, medical_room_location 
+from doctor d join employee e on d.emp_num=e.emp_num
+<if test="searchWord!=null">
+where 
+emp_num '%'||#{searchWord}||'%'
+or emp_name '%'||#{searchWord}||'%'
+or medical_subject '%'||#{medicalSubject}||'%'
+order by emp_num
+</if>
+) where rn between #{startRow} and #{endRow}
+</select>
+<!-- update, delete 만들기 -->
+
+<update id="doctorUpdate" parameterType="doctorDTO">
+update doctor 
+set medical_Subject=#{medicalSubject}
+, medical_Room_Location=#{medicalRoomLocation}
+where emp_num=#{empNum}
+</update>
+
+<delete id="doctorDelete" parameterType="String">
+delete from doctor where emp_num=#{empNum}
+</delete>
+</mapper>

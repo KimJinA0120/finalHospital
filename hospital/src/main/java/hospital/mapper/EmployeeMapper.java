@@ -15,12 +15,12 @@ public interface EmployeeMapper {
 
 	public List<EmployeeDTO> employeeSelectAll(StartEndPageDTO sepDTO);
 
-	public String employeeNumSelect(String employeeId);
+	public String employeeNumSelect(String empId);
 
-	public EmployeeDTO employeeSelectOne(String employeeNum);
+	public EmployeeDTO employeeSelectOne(String empNum);
 
 	public void employeeUpdate(EmployeeDTO dto);
-	public void employeeDelete(String employeeNum);
+	public void employeeDelete(String empNum);
 
 	public List<SectionDTO> sectionSearch(StartEndPageDTO sepDTO);
 
