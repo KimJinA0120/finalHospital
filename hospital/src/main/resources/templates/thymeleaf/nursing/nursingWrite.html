@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>nursingWrite</title>
+</head>
+<body>
+ <a href="javascript:history.back();">이전</a> <br>
+<form action="nursingWrite" method="post">
+간호번호 : <input type="text" name="nursingNum" readonly="readonly" th:value="${autoNum}"><br>
+병동처방번호 : <input type="text" name="wardPsNum" id="wardPsNum">
+			<button type="button" id="wardPsBtn">병동번호찾기</button> <br>
+담당간호사 : 	<input type="text" name="empNum" id="nursNum">
+			<button type="button" id="nursNumBtn">간호사번호 찾기</button> <br>
+<br>
+처치간호사 : 	<input type="text" name="handleNurs" id="handleNurs">
+			<button type="button" id="handleNursBtn">간호사번호 찾기</button> <br>
+<br>
+간호내용 : <br>
+<textarea rows="10" cols="40" name="nursingCon"></textarea><br>
+처치처방 : <br>
+<textarea rows="10" cols="40" name="hanPres"></textarea><br>
+처치날짜 : <input type="date" name="presDate"> <br>
+<input type="submit" value="등록">
+</form>
+</body>
+</html>

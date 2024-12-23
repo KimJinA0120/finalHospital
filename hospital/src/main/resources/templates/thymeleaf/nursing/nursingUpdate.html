@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>nursingUpdate</title>
+</head>
+<body>
+ <a href="javascript:history.back();">이전</a> <br>
+<form action="nursingUpdate" method="post">
+간호번호 : <input type="text" name="nursingNum" readonly="readonly" 
+			th:field="${nursCommand.nursingNum}"><br>
+병동처방번호 : <input type="text" name="wardPsNum" id="wardPsNum" th:field="${nursCommand.wardPsNum}">
+			<button type="button" id="wardPsBtn">병동번호찾기</button> <br>
+담당간호사 : 	<input type="text" name="empNum" id="nursNum" th:field="${nursCommand.empNum}">
+			<button type="button" id="nursNumBtn">간호사번호 찾기</button> <br>
+<br>
+처치간호사 : 	<input type="text" name="handleNurs" id="handleNurs" th:field="${nursCommand.handleNurs}">
+			<button type="button" id="handleNursBtn">간호사번호 찾기</button> <br>
+<br>
+간호내용 : <br>
+<textarea rows="10" cols="40" name="nursingCon">[[${nursCommand.nursingCon}]]</textarea><br>
+처치처방 : <br>
+<textarea rows="10" cols="40" name="hanPres">[[${nursCommand.hanPres}]]</textarea><br>
+처치날짜 : <input type="date" name="presDate" th:value="${#dates.format(nursCommand.presDate, 'yyyy-MM-dd')}"><br>
+<input type="submit" value="수정">
+</form>
+</body>
+</html>
