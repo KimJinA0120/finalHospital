@@ -14,7 +14,7 @@ public class HospitalizationDetailService {
 	
 	public void execute(Model model, String hospitalizationNum) {
 		HospitalizationDTO dto = hospitalizationMapper.hospitalizationSelectOne(hospitalizationNum);
-		model.addAttribute("hospitalizationCommand", dto);
+		model.addAttribute("dto", dto);
 	}
 
 }

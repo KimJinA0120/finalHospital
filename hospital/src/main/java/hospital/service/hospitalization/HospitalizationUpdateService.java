@@ -1,5 +1,6 @@
 package hospital.service.hospitalization;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +15,8 @@ public class HospitalizationUpdateService {
 	
 	public void execute(HospitalizationCommand hospitalizationCommand) {
 		HospitalizationDTO dto = new HospitalizationDTO();
-		dto.setBedNum(hospitalizationCommand.getBedNum());
-		dto.setHospitalizationNum(hospitalizationCommand.getHospitalizationNum());
-		dto.setHospitalizationStatus(hospitalizationCommand.getHospitalizationStatus());
-		dto.setInDate(hospitalizationCommand.getInDate());
-		dto.setOutDate(hospitalizationCommand.getOutDate());
-		dto.setPatientNum(hospitalizationCommand.getPatientNum());
+		BeanUtils.copyProperties(hospitalizationCommand, dto);
+		
 		hospitalizationMapper.hospitalizationUpdate(dto);
 	}
 

@@ -4,12 +4,19 @@
 <meta charset="UTF-8">
 <title>hospitalizationForm.html</title>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#bedserch").click(function(){
+		window.open("/WardRoomBed/bedList", "bedList", "width=315, height=200, top=100, left=100");
+	})
+})
+</script>
 </head>
 <body>
 입원수속 <br />
 <form action="hospitalizationRegist" method="post" th:object="${hospitalizationCommand}" >
 입원번호 : <input type="text" name="hospitalizationNum" th:value="${hospitalizationCommand.hospitalizationNum}" readonly="readonly"><br />
-병상번호 : <input type="text" name="bedNum"><input type="button" value="검색하기"><br />
+병상번호 : <input type="text" name="bedNum"><button type="button" id="bedserch" value="검색하기"></button><br />
 환자번호 : <input type="text" name="patientNum"><br />
 입원날짜 : <input type="date" name="inDate"><br />
 퇴원날짜 : <input type="date" name="outDate"><br />

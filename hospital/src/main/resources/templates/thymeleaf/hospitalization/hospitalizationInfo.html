@@ -5,14 +5,14 @@
 <title>hospitalizationInfo.html</title>
 </head>
 <body>
-입원번호 : [[${hospitalizationCommand.hospitalizationNum}]]<br />
-환자번호 : [[${hospitalizationCommand.bedNum}]]<br />
-병상번호 : [[${hospitalizationCommand.patientNum}]]<br />
-입원날짜 : [[${hospitalizationCommand.inDate}]]<br />
-퇴원날짜 : [[${hospitalizationCommand.outDate}]]<br />
-입원상태 : [[${hospitalizationCommand.hospitalizationStatus}]]<br />
+입원번호 : [[${dto.hospitalizationNum}]]<br />
+환자번호 : [[${dto.bedNum}]]<br />
+병상번호 : [[${dto.patientNum}]]<br />
+입원날짜 : [[${dto.inDate}]]<br />
+퇴원날짜 : [[${dto.outDate}]]<br />
+입원상태 : [[${dto.hospitalizationStatus}]]<br />
 
-<a th:href="|../hospitalizationUpdate/*{hospitalizationNum}|">입원수정</a> | 
-<a th:href="|../hospitalizationDelete/*{hospitalizationNum}|">입원삭제</a> 
+<a th:href="|hospitalizationUpdate?hospitalizationNum=${dto.hospitalizationNum}|">입원수정</a> | 
+<a th:href="|hospitalizationDelete?hospitalizationNum=${dto.hospitalizationNum}|">입원삭제</a> 
 </body>
 </html>

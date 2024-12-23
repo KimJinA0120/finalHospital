@@ -4,10 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import hospital.command.HospitalizationCommand;
 import hospital.service.AutoNumService;
@@ -34,13 +32,13 @@ public class HospitalizationController {
 	@Autowired
 	HospitalizationDeleteService hospitalizationDeleteService;
 	
-	@RequestMapping("hospitalizationList")
+	@RequestMapping("hospitalizationList") // 입원 리스트
 	public String hospitalizationList(Model model) {
 		hospitalizationListService.execute(model);
 		return "thymeleaf/hospitalization/hospitalizationList";
 	}
 	
-	@GetMapping("hospitalizationForm")
+	@GetMapping("hospitalizationForm") // 입원 등록 화면
 	public String hospitalizationForm(Model model) {
 		String autoNum 
 		= autoNumService.execute("HOS_", 5, "HOSPITALIZATION_NUM", "hospitalization");
@@ -51,39 +49,34 @@ public class HospitalizationController {
 		return "thymeleaf/hospitalization/hospitalizationForm";
 	}
 	
-	@PostMapping("hospitalizationRegist")
+	@PostMapping("hospitalizationRegist") // 입원 등록
 	public String hospitalizationRegist(HospitalizationCommand hospitalizationCommand) {
 		hospitalizationWriteService.execute(hospitalizationCommand);
 		return "redirect:hospitalizationList";
 	}
 	
-	@GetMapping("hospitalizationDetail/{hospitalizationNum}")
-	public String hospitalizationDetail(
-			@PathVariable("hospitalizationNum") String hospitalizationNum
-			, Model model) {
+	@GetMapping("hospitalizationDetail") // 입원 상세
+	public String hospitalizationDetail(String hospitalizationNum, Model model) {
 		hospitalizationDetailService.execute(model, hospitalizationNum);
 		return "thymeleaf/hospitalization/hospitalizationInfo";
 	}
 	
-	@RequestMapping(value="hospitalizationUpdate/{hospitalizationNum}", method=RequestMethod.GET)
-	public String hospitalizationUpdate(
-			@PathVariable("hospitalizationNum") String hospitalizationNum
-			, Model model) {
+	@GetMapping(value="hospitalizationUpdate") // 입원 수정화면
+	public String hospitalizationUpdate(String hospitalizationNum, Model model) {
 		hospitalizationDetailService.execute(model, hospitalizationNum);
 		return "thymeleaf/hospitalization/hospitalizationModify";
 	}
 	
-	@RequestMapping(value="hospitalizationUpdate", method=RequestMethod.POST)
-	public String hospitalizationUpdate(
-			HospitalizationCommand hospitalizationCommand) {
+	@PostMapping("hospitalizationUpdate") // 입원 수정
+	public String hospitalizationUpdate(HospitalizationCommand hospitalizationCommand) {
 		hospitalizationUpdateService.execute(hospitalizationCommand);
 		return "redirect:hospitalizationList";
 	}
 	
-	@GetMapping("hospitalizationDelete/{hospitalizationNum}")
-	public String hospitalizationDelete(@PathVariable("hospitalizationNum") String hospitalizationNum) {
+	@GetMapping("hospitalizationDelete") // 입원내역 삭제
+	public String hospitalizationDelete(String hospitalizationNum) {
 		hospitalizationDeleteService.execute(hospitalizationNum);
-		return "redirect:../hospitalizationList";
+		return "redirect:hospitalizationList";
 	}
 	
 

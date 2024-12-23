@@ -16,7 +16,7 @@
 	<td>입원번호</td><td>입원환자</td><td>입원병상</td><td>입원상태</td>
 </tr>
 <tr th:each=" dto : ${list}">
-	<td><a th:href="|hospitalizationDetail/${dto.hospitalizationNum}|">[[${dto.hospitalizationNum}]]</a></td>
+	<td><a th:href="|hospitalizationDetail?hospitalizationNum=${dto.hospitalizationNum}|">[[${dto.hospitalizationNum}]]</a></td>
 	<td>[[${dto.patientNum}]]</td>
 	<td>[[${dto.bedNum}]]</td>
 	<td>[[${dto.hospitalizationStatus}]]</td>
