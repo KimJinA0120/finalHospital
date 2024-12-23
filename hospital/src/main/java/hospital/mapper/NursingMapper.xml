@@ -42,7 +42,8 @@
 		where NURSING_NUM = #{nursingNum}
 	</update>
 
-
-
+	<delete id="delete" parameterType="string">
+		delete from nursing where NURSING_NUM = #{num}
+	</delete>
 
 </mapper>

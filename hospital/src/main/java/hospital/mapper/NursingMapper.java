@@ -17,4 +17,6 @@ public interface NursingMapper {
 
 	public void update(NursingDTO dto);
 
+	public void delete(String num);
+
 }

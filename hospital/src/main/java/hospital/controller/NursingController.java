@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import hospital.command.NursCommand;
 import hospital.service.AutoNumService;
+import hospital.service.nursing.NursingDeleteService;
 import hospital.service.nursing.NursingInfoService;
 import hospital.service.nursing.NursingListService;
 import hospital.service.nursing.NursingUpdateService;
@@ -69,5 +70,18 @@ public class NursingController {
 		nursingUpdateService.execute(nursCommand);
 		return "redirect:nursingInfo?num="+nursCommand.getNursingNum();
 	}
+	
+	
+	// 삭제
+	@Autowired
+	NursingDeleteService nursingDeleteService;
+	@RequestMapping("nursingDelete")
+	public String nursingDelete(String num) {
+		nursingDeleteService.execute(num);
+		return "redirect:nursingList";
+	}
+	
+	
+	
 	
 }
