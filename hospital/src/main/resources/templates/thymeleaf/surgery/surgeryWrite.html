@@ -3,6 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <title>수술 결과 작성</title>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#surAp").click(function(){
+		window.open("/surgery/surApList", "surApList", "width=800, height=400, top=100, left=100");
+	})
+})
+</script>
 </head>
 <body>
 <form action="surgeryWrite" method="post">
@@ -10,11 +18,11 @@
 		<tr><th>수술번호</th>
 			<td><input type="text" name="surgeryNum" th:value="${autoNum}" readonly="readonly"/></td></tr>
 		<tr><th>수술예약번호</th>
-			<td><input type="text" name="surgeryAppointmentNum" th:value="${surgeryAppointmentNum}"/><button>수술예약 찾기</button></td></tr>
+			<td><input type="text" name="surgeryAppointmentNum" th:value="${surgeryAppointmentNum}" id="surgeryAppointment"/><button type="button" id="surAp">수술예약 찾기</button></td></tr>
 		<tr><th>수술결과내용</th>
 			<td><textarea cols="50" rows="10" name="surgeryContent"></textarea></td></tr>
 		<tr><th>작성자</th>
-			<td><input type="text" name="sempNum"/></td></tr>
+			<td><input type="text" name="sempNum" id="semp"/></td></tr>
 		<tr><th colspan="2"><input type="submit" value="기록 작성"/></th></tr>
 	</table>
 </form>

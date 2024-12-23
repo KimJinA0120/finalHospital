@@ -3,12 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <title>수술 예약 리스트</title>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript" src="/static/js/checkbox.js"></script>
 </head>
 <body>
-	<a href="surgeryAppointment">수술예약하기</a> <br>
-	<a href="/">홈으로</a> <br>
-	<table border="1" width="600">
-		<tr><th>수술예약번호</th><th>수술명</th><th>수술날짜</th><th>집도의</th><th>마취의</th><th>수술실</th></tr>
+	<div align="center">
+		<a href="surgeryAppointment">수술예약하기</a> <br>
+		<a href="/">홈으로</a> <br>
+	</div>
+	<form action="surgeryAppointmentList" method="get" align="center">
+		<tr><td colspan="6">
+				검색 : 
+				<input type="search" name="searchWord" size="60" th:value="${searchWord}"/>
+				<input type="submit" value="검색"/>
+			</td>
+	</form>
+	<form action="surApsDelete" method="post" id="frm">
+	<table border="1" width="600" align="center">
+		<tr><th>수술예약번호</th><th>수술명</th><th>수술날짜</th><th>집도의</th><th>마취의</th><th>수술실</th>
+			<th><input type="checkbox" id="checkBoxs"/>
+				<input type="submit" value="삭제"/>
+			</th>
+		</tr>
 		<tr th:each="dto : ${list}">
 			<td><a th:href="|surgeryAppointmentDetail?surgeryAppointmentNum=${dto.surgeryAppointmentNum}|">[[${dto.surgeryAppointmentNum}]]</a></td>
 			<td>[[${dto.surgeryName}]]</td>
@@ -16,7 +32,28 @@
 			<td>[[${dto.sempNum}]]</td>
 			<td>[[${dto.aempNum}]]</td>
 			<td>[[${dto.operatingRoomNum}]]</td>
+			<th><input type="checkbox" name="nums" th:value="${dto.surgeryAppointmentNum}"/></th>
 		</tr>
+		<tr align="center"><td colspan="7">
+			<th:block th:if="${page <= 1}">
+				[이전]
+			</th:block>
+			<th:block th:if="${page > 1}">
+				<a th:href="@{surgeryAppointmentList(page=${page-1}, searchWord=${searchWord})}">[이전]</a>
+			</th:block>
+			
+			<th:block th:each=" i : ${#numbers.sequence(startPageNum, endPageNum)}">
+				<a th:href="@{sureryAppointmentLisst(page=${i}, searchWord=${searchWord})}">[[${i}]]</a>
+			</th:block>
+			
+			<th:block th:if="${page >= maxPage}">
+				[다음]
+			</th:block>
+			<th:block th:if="${page < maxPage}">
+				<a th:href="@{surgeryAppointmentList(page=${page+1},searchWord=${searchWord})}">[다음]</a>
+			</th:block>
+		</td></tr>
 	</table>
+	</form>
 </body>
 </html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>수술기록 상세페이지</title>
+</head>
+<body>
+<table border="1" width="500" align="center">
+	<tr><th>수술번호</th>
+		<td>[[${dto.surgeryNum}]]</td></tr>
+	<tr><th>수술예약번호</th>
+		<td>[[${dto.surgeryAppointmentNum}]]</td></tr>
+	<tr><th>수술내용</th>
+		<td>[[${dto.surgeryContent}]]</td></tr>
+	<tr><th>입력일시</th>
+		<td>[[${#dates.format(dto.inputDate, 'yyyy-MM-dd')}]]</td></tr>
+	<tr><th>작성자</th>
+		<td>[[${dto.sempNum}]]</td></tr>
+</table> <br>
+<div align="center">
+<a th:href="|surgeryModify?surgeryNum=${dto.surgeryNum}|">수정</a> <br> 
+<a href="surgeryList">돌아가기</a>
+</div>
+</body>
+</html>

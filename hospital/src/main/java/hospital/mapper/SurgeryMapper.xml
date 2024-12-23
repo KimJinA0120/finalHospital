@@ -11,9 +11,37 @@
 		values (#{surgeryAppointmentNum}, #{sempNum}, #{operatingRoomNum}
 			, #{wardprescriptNum}, #{surgeryName}, #{surgeryDate}, #{aempNum})
 	</insert>
-	<select id="surgeryAppointmentList" resultType="surgeryAppointment">
-		select <include refid="surgeryAppointmentBase"/> from surgery_appointment
+	<select id="surgeryAppointmentList" resultType="surgeryAppointment" parameterType="startEndPage">
+		select * from (
+			select ROW_NUMBER() over (order by SURGERY_APPOINTMENT_NUM) as rn,
+				<include refid="surgeryAppointmentBase"/> 
+			from surgery_appointment
+		<where>
+			<if test="searchWord != null">
+				SEMP_NUM like '%' || #{searchWord} || '%'
+				or AEMP_NUM like '%' || #{searchWord} || '%'
+				or SURGERY_APPOINTMENT_NUM like '%' || #{searchWord} || '%'
+			</if>
+		</where>
+		)
+		where rn between #{startRow} and #{endRow}
 	</select>
+	<select id="surgeryAppointmentCount" parameterType="string" resultType="integer">
+		select count(*) from surgery_appointment
+		<if test='searchWord != null'>
+			<where>
+				SEMP_NUM like '%' || #{searchWord} || '%'
+				or AEMP_NUM like '%' || #{searchWord} || '%'
+				or SURGERY_APPOINTMENT_NUM like '%' || #{searchWord} || '%'
+			</where>
+		</if>
+	</select>
+	<delete id="surApsDelete" parameterType="string">
+		delete from surgery_appointment where SURGERY_APPOINTMENT_NUM in
+		<foreach collection="surgeryAppointmentNum" item="surgeryAppointmentNum" close=")" open="(" separator="," index="index">
+			#{surgeryAppointmentNum}
+		</foreach>
+	</delete>
 	<select id="surgeryAppointmentOneSelect" parameterType="string" resultType="surgeryAppointment">
 		select <include refid="surgeryAppointmentBase"/> from surgery_appointment
 		where surgery_Appointment_Num = #{surgeryAppointmentNum}
@@ -42,6 +70,16 @@
 	<select id="surgeryList" resultType="surgery">
 		select <include refid="surgeryColumnBase"/> from surgery
 	</select>
+	<select id="surgeryOneSelect" resultType="surgery" parameterType="string">
+		select <include refid="surgeryColumnBase"/> from surgery
+		where surgery_num = #{surgeryNum}
+	</select>
+	<update id="surgeryUpdate" parameterType="surgery">
+		update surgery
+		set SURGERY_CONTENT = #{surgeryContent},
+			INPUT_DATE = #{inputDate}
+		where SURGERY_NUM = #{surgeryNum}
+	</update>
 	
 	<select id="operatingRoomList" resultType="operatingRoom">
 		select operating_room_num , operating_room_location from operating_room

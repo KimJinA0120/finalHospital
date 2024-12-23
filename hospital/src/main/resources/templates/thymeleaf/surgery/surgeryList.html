@@ -9,7 +9,7 @@
 	<table border="1" width="600">
 		<tr><th>수술번호</th><th>수술예약번호</th><th>입력일시</th><th>작성자</th></tr>
 		<tr th:each="dto : ${list}">
-			<td>[[${dto.surgeryNum}]]</td>
+			<td><a th:href="|surgeryDetail?surgeryNum=${dto.surgeryNum}|">[[${dto.surgeryNum}]]</a></td>
 			<td>[[${dto.surgeryAppointmentNum}]]</td>
 			<td>[[${#dates.format(dto.inputDate,'yyyy-MM-dd')}]]</td>
 			<td>[[${dto.sempNum}]]</td>
