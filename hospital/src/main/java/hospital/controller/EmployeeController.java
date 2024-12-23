@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import hospital.command.EmployeeCommand;
 import hospital.service.AutoNumService;
@@ -39,10 +40,15 @@ public class EmployeeController {
 
 	@GetMapping("employeeWrite")
 	public String employeeWrite(EmployeeCommand employeeCommand, Model model) {
-		String autoNum = autoNumService.execute("emp_", 5, "emp_num","employee");
-		employeeCommand.setEmpNum(autoNum);
 		model.addAttribute("employeeCommand", employeeCommand);
 		return "thymeleaf/employee/employeeWrite";
+	}
+	
+	// 직업(의사, 간호사, 의료기사, 일반직원)에 따라 직원번호 앞글자(sep)가 변경
+	@PostMapping("selectEmpSep")
+	public @ResponseBody String selectEmpSep(String jobSep) {
+		String autoNum = autoNumService.execute(jobSep, 5, "emp_num","employee");
+		return autoNum;
 	}
 	
 	/*

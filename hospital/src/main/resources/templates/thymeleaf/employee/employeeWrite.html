@@ -4,16 +4,52 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src ="/static/js/daumAddressScript.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script type="text/javascript" src="/static/js/check.js"></script>
+<script type="text/javascript">
+$(function() {
+	$("#job_category").on("change", function() {
+		
+		// 선택된 옵션의 값 가져오기
+		var selectedValue = $("#job_category option:selected").val();
+		
+		// 선택된 값이 비어있으면 AJAX 호출하지 않음
+		if (selectedValue == "0") {
+			alert("직업을 선택해주세요.");
+			return false;
+			
+		} else {
+			$.ajax({
+				type : "post",
+				url : "../employee/selectEmpSep",
+				data : {"jobSep" : selectedValue},
+				dataType : "text",
+				success : function(result) {
+					$("#empNum").val(result);
+				},
+				error: function() {
+					alert("오류");
+				}
+			});
+		}
+	});
+});
+</script>
 </head>
   <body>        
                     
    <form action="employeeWrite" method="post"  > <!-- th:object="${employeeCommand}" -->
-직원번호: 	<input type="text" name="empNum" th:value="${employeeCommand.empNum}" readonly="readonly"/>번호 자동부여<br />
-	
+직원번호: <select id="job_category" >
+<option value="0" selected>--선택--</option>
+<option value="doc_">의사</option>
+<option value="nur_">간호사</option>
+<option value="mdt_">의료기사</option>
+<option value="emp_">일반직원</option>
+</select> 
+<input type="text" name="empNum" th:value="${employeeCommand.empNum}"
+		id="empNum" readonly="readonly"/>번호 자동부여<br />
 이름 : <input type="text" name="empName"  th:value="${employeeCommand.empName}" /> <br />
 주민등록번호 : <input type="text" name="empJumin"  th:value="${employeeCommand.empJumin}" /> <br />	
 생년월일: <input type="date" name="empBirth"  th:value="${employeeCommand.empBirth}" /> <br />
