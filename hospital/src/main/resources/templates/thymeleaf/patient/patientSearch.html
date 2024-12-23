@@ -10,7 +10,7 @@
 <a href="patientWrite">환자등록</a><br />
 등록환자 수 : [[${count}]]<br />
 <table border=1 width="900">
-	 <form action="patientList" method="get">
+	 <form action="patientSearch" method="get">
 	<tr>
 		<td colspan="10">환자 검색:
 			<input type="search" name="searchWord" size=60 th:value="${searchWord}">
@@ -19,34 +19,34 @@
 	</tr>
 	</form> 
  <form action="patientsDelete" method="post" id="frm"> 
-	<tr><td><input type="checkbox" id="checkBoxs" /></td>
+	<tr>
 		<td>번호</td><td>이름</td><td>아이디</td><td>생년월일</td> <td>주소</td><td>전화번호</td><td>성별</td><
-		<td><button type="submit" >선택 삭제</button></td>
+	
 	</tr>
 	<tr th:each=" dto : ${list}">
-		<td><input type="checkbox" name="nums" th:value="${dto.patientNum}"/></td>
-		<td><a th:href="|patientDetail?patientNum=${dto.patientNum}|">[[${dto.patientNum}]]</a></td>
-		<td><a th:href="@{patientDetail(patientNum=${dto.patientNum})}">[[${dto.patientName}]]</a></td>
+		
+		<td>[[${dto.patientNum}]]</td>
+		<td>[[${dto.patientName}]]</td>
 		<td>[[${dto.patientId}]]</td>
 	
 		<td>[[${#dates.format(dto.patientBirth,'yyyy-MM-dd')}]]</td>
 		<td>[[${dto.patientAddr}]]</td>
 		<td>[[${dto.patientPhone}]]</td>
 		<td>[[${dto.patientGender}]]</td>
-		<td><!--  <button type="button" th:attr="onclick=|javascript:location.href='patientsDelete?nums=${dto.patientNum}'|">환자 삭제</button> --> </td>
+		
 	</tr>
  </form> 
 	 <tr>
 		<th colspan="10">
 		<span th:if="${page <= 1}">[이전]</span>
 		<span th:if="${page > 1}">
-			<a th:href="|patientList?page=${page - 1}&searchWord=${searchWord}|">[이전]</a>
+			<a th:href="|patientSearch?page=${page - 1}&searchWord=${searchWord}|">[이전]</a>
 		</span>   									<!-- 1,          10  -->
 		<th:block th:each=" i : ${#numbers.sequence(startPageNum, endPageNum)}">
-			[<a th:href="|patientList?page=${i}&searchWord=${searchWord}|">[[${i}]]</a>]
+			[<a th:href="|patientSearch?page=${i}&searchWord=${searchWord}|">[[${i}]]</a>]
 		</th:block>
 		<span th:if="${page < maxPage}">
-			<a th:href="@{patientList(page=${page + 1},searchWord=${searchWord})}">[다음]</a>
+			<a th:href="@{patientSearch(page=${page + 1},searchWord=${searchWord})}">[다음]</a>
 		</span>
 		<span th:if="${page >= maxPage}">
 			[다음]

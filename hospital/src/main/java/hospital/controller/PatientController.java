@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import hospital.command.PatientCommand;
 import hospital.service.AutoNumService;
@@ -35,7 +36,7 @@ public class PatientController {
 
 	@GetMapping("patientWrite")
 	public String patientWrite(PatientCommand patientCommand, Model model) {
-		String autoNum = autoNumService.execute("pati_", 6, "patient_num","patient");
+		String autoNum = autoNumService.execute("pat_", 5, "patient_num","patient");
 		patientCommand.setPatientNum(autoNum);
 		model.addAttribute("patientCommand", patientCommand);
 		return "thymeleaf/patient/patientWrite";
@@ -67,9 +68,18 @@ public class PatientController {
 		return "redirect:/";
 	}
 	@GetMapping("patientList")
-	public String patientList(Model model) {
-		patientListService.execute(model);
+	public String patientList(@RequestParam(value="searchWord", required=false) String searchWord
+			, @RequestParam(value="page", required=false, defaultValue="1") Integer page
+			, Model model) {
+		patientListService.execute(page, searchWord, model);
 		return "thymeleaf/patient/patientList";
+	}
+	@GetMapping("patientSearch")
+	public String patientSearch(@RequestParam(value="searchWord", required=false) String searchWord
+			, @RequestParam(value="page", required=false, defaultValue="1") Integer page
+			, Model model) {
+		patientListService.patientSearch(page, searchWord, model);
+		return "thymeleaf/patient/patientSearch";
 	}
 	@GetMapping("patientMyPage")
 	public String patientMypage(HttpSession session, Model model) {

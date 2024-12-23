@@ -17,9 +17,20 @@ values( #{patientNum}, #{patientName}, #{patientJumin}
 		, #{patientPost}, #{patientEmail},#{patientPhone})
 </insert>
 
-<select id="patientSelectAll" parameterType="patientDTO" resultType="patientDTO">
-select 	<include refid="baseColumn"/>
- from patient
+<select id="patientSelectAll" parameterType="startEndPage" resultType="patientDTO">
+select *
+ from (select rownum rn, <include refid="baseColumn"/> from patient
+ 
+ <if test="searchWord!=null">
+ where 
+ patient_num like '%'||#{searchWord}||'%'
+ or patient_name like '%'||#{searchWord}||'%'
+ or patient_id like '%'||#{searchWord}||'%'
+ or patient_phone like '%'||#{searchWord}||'%'
+ order by patient_num 
+ </if>
+ )
+ where rn between #{startRow} and #{endRow}
 </select>
 
 <select id="patientSelectOne" parameterType="patientDTO" resultType="patientDTO">
@@ -50,5 +61,9 @@ select patient_id from patient where patient_phone=#{patientPhone} and patient_E
 
 <select id="findpatientPw" resultType="String">
 select patient_Pw from patient where patient_id=#{patientId} and patient_Email=#{patientEmail}
+</select>
+
+<select id="patientCount" resultType="integer">
+select count(patient_num) from patient
 </select>
 </mapper>

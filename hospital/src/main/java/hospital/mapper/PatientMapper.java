@@ -5,13 +5,14 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import hospital.domain.PatientDTO;
+import hospital.domain.StartEndPageDTO;
 
 @Mapper
 public interface PatientMapper {
 
 	public void patientInsert(PatientDTO dto);
 
-	public List<PatientDTO> patientSelectAll();
+	public List<PatientDTO> patientSelectAll(StartEndPageDTO sepDTO);
 
 	public String patientNumSelect(String patientId);
 
@@ -20,5 +21,7 @@ public interface PatientMapper {
 	public void patientUpdate(PatientDTO dto);
 
 	public void patientDelete(String patientNum);
+
+	public Integer patientCount();
 
 }
