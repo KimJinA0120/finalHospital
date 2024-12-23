@@ -33,6 +33,24 @@
    		where WARDPRESCRIPT_NUM = #{num}
    </select>
    
+   <update id="wardPsUpdate" parameterType="wardPS">
+   		update WARDPRESCRIPT
+   		set  HOSPITALIZATION_NUM = #{hospNum}
+   			, EMP_NUM = #{empNum}
+   			, DIAGNOSTIC_NAME= #{diagName}
+   			, DIAGNOSTIC_CONTENT = #{diagCont}
+   			, MEDICINE_PRESCRIPT = #{medicPres}
+      		, EXAMINATION_PRESCRIPT = #{examPres}
+      		, HANDLE_PRESCRIPT = #{hanPres}
+      		, UPDATE_DATE = sysdate
+   		where WARDPRESCRIPT_NUM = #{wardPsNum}
+   </update>
+   
+   <delete id="delete" parameterType="string">
+   		delete from WARDPRESCRIPT
+   		where WARDPRESCRIPT_NUM = #{num}
+   </delete>
+   
    
    
 </mapper>

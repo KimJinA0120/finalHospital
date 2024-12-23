@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>wardPsUpdate</title>
+</head>
+<body>
+병동처방 수정 <br>
+<form action="wardPsUpdate" method="post">
+병동처방번호 : <input type="text" name="wardPsNum" 
+          th:field="${wardPsCommand.wardPsNum}" readonly="readonly"> <!--번호 자동부여--><br>
+
+입원번호 : <input type="text" name="hospNum" id="hospNum" th:field="${wardPsCommand.hospNum}"> 
+         <button type="button" id="SerHosp">입원번호 찾기</button><br>
+         
+담당의사번호 : <input type="text" name="empNum" id="empNum" th:field="${wardPsCommand.empNum}"><br>
+
+진단명 : <input type="text" name="diagName" th:field="${wardPsCommand.diagName}"><br>
+
+진단내용 : <textarea rows="10" cols="40" name="diagCont">[[${wardPsCommand.diagCont}]]</textarea><br>
+
+약처방 : <textarea rows="10" cols="40" name="medicPres">[[${wardPsCommand.medicPres}]]</textarea><br>
+
+검사 처방 : <textarea rows="10" cols="40" name="examPres">[[${wardPsCommand.examPres}]]</textarea><br>
+
+처치처방 : <textarea rows="10" cols="40" name="hanPres">[[${wardPsCommand.hanPres}]]</textarea><br>
+
+<input type="submit" value="수정">
+
+</form>
+</body>
+</html>

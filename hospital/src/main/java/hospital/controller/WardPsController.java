@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import hospital.command.WardPsCommand;
 import hospital.service.AutoNumService;
+import hospital.service.wardPS.WardPsDeleteService;
 import hospital.service.wardPS.WardPsInfoService;
 import hospital.service.wardPS.WardPsListService;
+import hospital.service.wardPS.WardPsUpdateService;
 import hospital.service.wardPS.WardPsWriteService;
 
 @Controller
@@ -28,7 +30,6 @@ public class WardPsController {
    
    
    /// 등록
-   
    @Autowired
    AutoNumService autoNumService;  // 번호자동부여서비스
    @GetMapping("wardPsWrite")
@@ -38,7 +39,6 @@ public class WardPsController {
       model.addAttribute("autoNum", autoNum);
       return "thymeleaf/wardPS/wardPsWrite";
    }
-   
    @Autowired
    WardPsWriteService wardPsWriteService;
    @PostMapping("wardPsWrite")
@@ -48,15 +48,37 @@ public class WardPsController {
    }
    
    
+   // 상세정보
    @Autowired
    WardPsInfoService wardPsInfoService;
    @GetMapping("wardPsInfo")
    public String wardPsInfo(String num ,Model model) {
 	   wardPsInfoService.execute(num, model);
-	   return "thymeleaf/wardPS//wardPsInfo";
+	   return "thymeleaf/wardPS/wardPsInfo";
    }
    
    
+   // 수정
+   @GetMapping("wardPsUpdate")
+   public String wardPsUpdate(String num, Model model) {
+	   wardPsInfoService.execute(num, model);
+	   return "thymeleaf/wardPS/wardPsUpdate";
+   }
+   @Autowired
+   WardPsUpdateService wardPsUpdateService;
+   @PostMapping("wardPsUpdate")
+   public String wardPsUpdate(WardPsCommand wardPsCommand) {
+	   wardPsUpdateService.execute(wardPsCommand);
+	   return "redirect:wardPsInfo?num="+wardPsCommand.getWardPsNum();
+   }
    
+   // 삭제
+   @Autowired
+   WardPsDeleteService wardPsDeleteService;
+   @RequestMapping("wardPsDelete")
+   public String wardPsDelete(String num) {
+	   wardPsDeleteService.execute(num);
+	   return "redirect:wardPsList";
+   }
    
 }
