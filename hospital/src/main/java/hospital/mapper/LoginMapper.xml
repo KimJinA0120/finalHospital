@@ -13,9 +13,9 @@ from patient where patient_id=#{userId}
 </select>
 
 <select id="employeeLoginSelectOne" parameterType="string" resultType="auth">
-select employee_id as userId, employee_pw as userPw,employee_name as userName
-, employee_email as userEmail
-from employee where patient_id=#{userId}
+select emp_id as userId, emp_pw as userPw, emp_name as userName
+, emp_email as userEmail
+from employee where emp_id=#{userId}
 
 </select>
 
