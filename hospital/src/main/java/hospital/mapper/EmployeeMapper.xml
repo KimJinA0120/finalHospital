@@ -22,7 +22,7 @@ values( #{empNum}, #{empName}, #{empId}
 <select id="employeeSelectAll" parameterType="startEndPage" resultType="employeeDTO">
 select *
  from
-( select rowNum rn, <include refid="baseColumn"/>
+( select rownum rn, <include refid="baseColumn"/>
  from employee  
  <if test="searchWord!=null">
  where
@@ -78,13 +78,13 @@ select count(section_num) from section
 
 <select id="sectionSearch" resultType="sectionDTO" parameterType="startEndPage">
 select * from
-( select rowNum rn, section_num, department_name, section_name, section_phone, section_location
+( select rownum rn, section_num, department_name, section_name, section_phone, section_location
  from section s join department d on s.department_num=d.department_num 
  <if test="searchWord!=null">
  where
  	section_num like '%'||#{searchWord}||'%'
  	or section_name like '%'||#{searchWord}||'%'
- 	or department_num like '%'||#{searchWord}||'%'
+ 	or d.department_num like '%'||#{searchWord}||'%'
  	or department_name like '%'||#{searchWord}||'%'
  	order by section_Num
  </if>

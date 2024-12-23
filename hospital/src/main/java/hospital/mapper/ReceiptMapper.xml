@@ -31,11 +31,11 @@
 </insert>
 <select id="patSelectList" resultType="patientDTO">
 select * from(
-	select rownum rn, pateint_num, patient_name, patient_jumin, patient_birth
+	select rownum rn, patient_num, patient_name, patient_jumin, patient_birth
 	  from salary
-	  where pateint_num like '%' || #{searchWord} || '%'
+	  where patient_num like '%' || #{searchWord} || '%'
 	  or patient_name like '%' || #{searchWord} || '%'
-	  order by pateint_num
+	  order by patient_num
 	 )
 where rn between #{startRow} and #{endRow}
 </select>

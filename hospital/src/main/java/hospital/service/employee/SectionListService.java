@@ -21,7 +21,8 @@ public class SectionListService {
 	public void execute(String searchWord, Integer page, Model model) {
 		int limit=5;
 		
-		StartEndPageDTO sepDTO=startEndPageService.execute(limit, page, searchWord);
+		StartEndPageDTO sepDTO=startEndPageService.execute(page, limit, searchWord);
+		System.out.println(sepDTO);
 		List<SectionDTO> list=employeeMapper.sectionSearch(sepDTO);
 		
 		Integer count=employeeMapper.sectionCount();

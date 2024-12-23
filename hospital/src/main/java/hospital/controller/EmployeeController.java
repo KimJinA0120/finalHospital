@@ -63,14 +63,14 @@ public class EmployeeController {
 	@GetMapping("sectionSearch")
 	public String sectionSearch(
 			@RequestParam(value="searchWord", required=false) String searchWord
-			, @RequestParam(value="searchWord", required=false, defaultValue="1") Integer page
+			, @RequestParam(value="page", required=false, defaultValue="1") Integer page
 			, Model model) {
 		sectionListService.execute(searchWord, page, model);
 		return "thymeleaf/employee/sectionSearch";
 	}
 	@GetMapping("employeeSearch")
 	public String employeeSearch(@RequestParam(value="searchWord", required=false) String searchWord
-			, @RequestParam(value="searchWord", required=false, defaultValue="1") Integer page
+			, @RequestParam(value="page", required=false, defaultValue="1") Integer page
 			, Model model){
 		employeeListService.employeeSearch(searchWord, page, model);
 		return "thymeleaf/employee/employeeSearch";
@@ -87,7 +87,7 @@ public class EmployeeController {
 	}
 	@GetMapping("employeeList")
 	public String employeeList(@RequestParam(value="searchWord", required=false) String searchWord
-			, @RequestParam(value="searchWord", required=false, defaultValue="1") Integer page
+			, @RequestParam(value="page", required=false, defaultValue="1") Integer page
 			, Model model) {
 		employeeListService.execute(searchWord, page, model);
 		return "thymeleaf/employee/employeeList";
