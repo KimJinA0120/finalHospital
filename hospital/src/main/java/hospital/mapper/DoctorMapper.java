@@ -22,4 +22,6 @@ public interface DoctorMapper {
 
 	public void doctorDelete(String empNum);
 
+	public DoctorDTO doctorSelectOne(String empNum);
+
 }

@@ -32,6 +32,11 @@ order by emp_num
 ) where rn between #{startRow} and #{endRow}
 </select>
 <!-- update, delete 만들기 -->
+<select id="doctorSelectOne" parameterType="string" resultType="doctorDTO">
+select d.emp_num, emp_name, medical_subject, medical_room_location 
+from doctor d join employee e on d.emp_num=e.emp_num
+where d.emp_num=#{empNum}
+</select>
 
 <update id="doctorUpdate" parameterType="doctorDTO">
 update doctor 

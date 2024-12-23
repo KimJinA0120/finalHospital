@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import hospital.domain.AuthInfoDTO;
+import hospital.domain.DoctorDTO;
 import hospital.domain.EmployeeDTO;
+import hospital.mapper.DoctorMapper;
 import hospital.mapper.EmployeeMapper;
 import jakarta.servlet.http.HttpSession;
 
@@ -13,6 +15,8 @@ import jakarta.servlet.http.HttpSession;
 public class EmployeeDetailService {
 	@Autowired
 	EmployeeMapper employeeMapper;
+	@Autowired
+	DoctorMapper doctorMapper;
 	
 	public void execute(HttpSession session, Model model) {
 		AuthInfoDTO auth=(AuthInfoDTO)session.getAttribute("auth");
@@ -22,6 +26,11 @@ public class EmployeeDetailService {
 		
 		model.addAttribute("dto", dto);
 		
+	}
+
+	public void doctorDetail(String empNum, Model model) {
+		DoctorDTO dto=doctorMapper.doctorSelectOne(empNum);
+		model.addAttribute("dto", dto);
 	}
 
 }

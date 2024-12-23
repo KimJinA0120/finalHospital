@@ -47,7 +47,7 @@ public class EmployeeUpdateService {
 		
 	}
 	
-	public void doctorUpdate(DoctorCommand doctorCommand, EmployeeDTO employeeDTO) {
+	public void doctorUpdate(DoctorCommand doctorCommand) {
 		DoctorDTO dto=new DoctorDTO();
 		
 		dto.setEmpNum(doctorCommand.getEmpNum());

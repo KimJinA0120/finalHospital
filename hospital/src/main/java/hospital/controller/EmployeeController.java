@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import hospital.command.DoctorCommand;
 import hospital.command.EmployeeCommand;
 import hospital.service.AutoNumService;
 import hospital.service.employee.EmployeeDeleteService;
@@ -135,4 +136,16 @@ public class EmployeeController {
 		session.invalidate();
 		return "redirect:/";
 	}
+	
+	@GetMapping("doctorUpdate")
+	public String doctorUpdate(String empNum, Model model) {
+		employeeDetailService.doctorDetail(empNum, model);
+		return "thymeleaf/employee/doctorUpdate";
+	}
+	@PostMapping("doctorUpdate")
+	public String doctorUpdate(DoctorCommand doctorCommand) {
+		employeeUpdateService.doctorUpdate(doctorCommand);
+		return "redirect:employeeList";
+	}
+	
 }
