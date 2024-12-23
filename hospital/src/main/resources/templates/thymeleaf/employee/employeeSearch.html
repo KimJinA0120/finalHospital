@@ -8,10 +8,9 @@
 </head>
 <body>
 <a href="employeeWrite">직원등록</a><br />
-<a href="employeeSearch">직원검색 임시</a><br/>
 직원수 : [[${count}]]<br />
 <table border=1 width="1000">
-	 <form action="employeeList" method="get">
+	 <form action="employeeSearch" method="get">
 	<tr>
 		<td colspan="10">직원 검색:
 			<input type="search" name="searchWord" size=60 th:value="${searchWord}">
@@ -19,13 +18,13 @@
 		</td>
 	</tr>
 	</form> 
- <form action="employeeDelete" method="post" id="frm"> 
-	<tr><td><input type="checkbox" id="checkBoxs" /></td>
+
+	<tr>
 		<td>번호</td><td>이름</td><td>아이디</td><td>생년월일</td> <td>주소</td><td>전화번호</td><td>성별</td><td>입사일</td>
-		<td><button type="submit" >선택 삭제</button></td>
+		
 	</tr>
 	<tr th:each=" dto : ${list}">
-		<td><input type="checkbox" name="nums" th:value="${dto.empNum}"/></td>
+	
 		<td><a th:href="|employeeDetail?empNum=${dto.empNum}|">[[${dto.empNum}]]</a></td>
 		<td><a th:href="@{employeeDetail(empNum=${dto.empNum})}">[[${dto.empName}]]</a></td>
 		<td>[[${dto.empId}]]</td>
@@ -35,20 +34,20 @@
 		<td>[[${dto.empPhone}]]</td>
 		<td>[[${dto.empGender}]]</td>
 		<td>[[${#dates.format(dto.empHiredate,'yyyy-MM-dd')}]]</td>
-		<td><!--  <button type="button" th:attr="onclick=|javascript:location.href='employeesDelete?nums=${dto.empNum}'|">직원 삭제</button>  --></td>
+		
 	</tr>
- </form> 
+
 	 <tr>
 		<th colspan="10">
 		<span th:if="${page <= 1}">[이전]</span>
 		<span th:if="${page > 1}">
-			<a th:href="|employeeList?page=${page - 1}&searchWord=${searchWord}|">[이전]</a>
+			<a th:href="|employeeSearch?page=${page - 1}&searchWord=${searchWord}|">[이전]</a>
 		</span>   								<!-- 	1,          10  -->
 		<th:block th:each=" i : ${#numbers.sequence(startPageNum, endPageNum)}">
-			[<a th:href="|employeeList?page=${i}&searchWord=${searchWord}|">[[${i}]]</a>]
+			[<a th:href="|employeeSearch?page=${i}&searchWord=${searchWord}|">[[${i}]]</a>]
 		</th:block>
 		<span th:if="${page < maxPage}">
-			<a th:href="@{employeeList(page=${page + 1},searchWord=${searchWord})}">[다음]</a>
+			<a th:href="@{employeeSearch(page=${page + 1},searchWord=${searchWord})}">[다음]</a>
 		</span>
 		<span th:if="${page >= maxPage}">
 			[다음]

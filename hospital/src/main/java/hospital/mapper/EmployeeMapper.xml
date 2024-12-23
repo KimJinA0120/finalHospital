@@ -4,22 +4,36 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="hospital.mapper.EmployeeMapper">
 <sql id="baseColumn">
-	emp_num , emp_name ,emp_jumin
-	, emp_birth, emp_gender, emp_id 
-	, emp_pw , emp_addr,emp_addr_detail 
-	, emp_post, emp_email, emp_phone
+	emp_num , emp_name , emp_id , emp_pw 
+	, emp_phone, emp_jumin, emp_gender
+	, emp_addr,emp_addr_detail , emp_post
+	, position, emp_email
+	, section_Num, emp_Hiredate, emp_birth
 </sql>
 <insert id="employeeInsert" parameterType="employeeDTO">
 insert into employee( <include refid="baseColumn"/> )
-values( #{employeeNum}, #{employeeName}, #{employeeJumin}
-		,#{employeeBirth}, #{employeeGender},  #{employeeId}
-		, #{employeePw},#{employeeAddr},#{employeeAddrDetail}
-		, #{employeePost}, #{employeeEmail},#{employeePhone})
+values( #{empNum}, #{empName}, #{empId}
+		,#{empPw}, #{empPhone},  #{empJumin}, #{empGender}
+		, #{empAddr},#{empAddrDetail}
+		, #{empPost}, #{position},#{empEmail}
+		, #{sectionNum}, #{empHiredate},#{empBirth})
 </insert>
 
-<select id="employeeSelectAll" parameterType="employeeDTO" resultType="employeeDTO">
-select 	<include refid="baseColumn"/>
- from employee
+<select id="employeeSelectAll" parameterType="startEndPage" resultType="employeeDTO">
+select *
+ from
+( select rowNum rn, <include refid="baseColumn"/>
+ from employee  
+ <if test="searchWord!=null">
+ where
+ 	emp_num like '%'||#{searchWord}||'%'
+ 	or emp_name like '%'||#{searchWord}||'%'
+ 	or position like '%'||#{searchWord}||'%'
+ 	or section_num like '%'||#{searchWord}||'%'
+ 	or emp_id like '%'||#{searchWord}||'%'
+ 	order by emp_Num
+ </if>
+ ) where rn between #{startRow} and #{endRow}
 </select>
 
 <select id="employeeSelectOne" parameterType="employeeDTO" resultType="employeeDTO">
@@ -30,10 +44,12 @@ where emp_NUM = #{empNum}
 
 <update id="employeeUpdate" parameterType="employeeDTO">
 update employee
-set emp_Name=#{empName }, emp_birth=#{empBirth}
- , emp_gender=#{empGender},  emp_Addr=#{empAddr}
+set emp_Name=#{empName }, emp_Phone=#{empPhone }
+	
+	 , emp_gender=#{empGender},  emp_Addr=#{empAddr}
 	 , emp_Addr_Detail=#{empAddrDetail }, emp_Post=#{empPost }
-	 , emp_Email=#{empEmail }, emp_Phone=#{empPhone }
+	 , position=#{position}, emp_Email=#{empEmail }
+	 , emp_birth=#{empBirth}
 where emp_NUM = #{empNum}
 </update>
 <delete id="employeeDelete" parameterType="String">
@@ -50,5 +66,29 @@ select emp_id from employee where emp_phone=#{empPhone} and emp_Email=#{empEmail
 
 <select id="findemployeePw" resultType="String">
 select emp_Pw from employee where emp_id=#{empId} and emp_Email=#{empEmail}
+</select>
+
+<select id="employeeCount" resultType="integer">
+select count(emp_Num) from employee  
+</select>
+
+<select id="sectionCount" resultType="integer">
+select count(section_num) from section
+</select>
+
+<select id="sectionSearch" resultType="sectionDTO" parameterType="startEndPage">
+select * from
+( select rowNum rn, section_num, department_name, section_name, section_phone, section_location
+ from section s join department d on s.department_num=d.department_num 
+ <if test="searchWord!=null">
+ where
+ 	section_num like '%'||#{searchWord}||'%'
+ 	or section_name like '%'||#{searchWord}||'%'
+ 	or department_num like '%'||#{searchWord}||'%'
+ 	or department_name like '%'||#{searchWord}||'%'
+ 	order by section_Num
+ </if>
+ ) where rn between #{startRow} and #{endRow}
+
 </select>
 </mapper>

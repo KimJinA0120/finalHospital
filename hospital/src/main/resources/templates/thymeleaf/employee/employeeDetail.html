@@ -22,8 +22,11 @@
 		
 		<tr><td>이메일</td><td> [[${dto.patientEmail }]]</td></tr>
 		<tr><td>성별</td><td>[[${dto.patientGender}]]</td></tr>
+		<tr><td>직무</td><td> [[${dto.position }]]</td></tr>
+		<tr><td>소속과</td><td>[[${dto.sectionNum}]]</td></tr>
+		<tr><td>입사일</td><td>[[${#dates.format(dto.empHiredate,'yyyy-MM-dd')}]]</td></tr>
 <tr> <td colspan="2">
-<a th:href="@{patientUpdate(patientNum=${dto.patientNum })}">유저 수정</a> | 
+<a th:href="@{patientUpdate(patientNum=${dto.patientNum })}">직원 수정</a> | 
 <a th:href="|patientDelete?patientNum${dto.patientNum}|" id="patientDelete">탈퇴 하기</a> </td> </tr>
 </table>                
 </body>

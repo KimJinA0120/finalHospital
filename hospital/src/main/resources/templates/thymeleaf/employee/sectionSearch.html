@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>소속과 검색</title>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript" src="/static/js/checkbox.js"></script>
+</head>
+<body>
+<table border=1 width="600">
+	 <form action="sectionSearch" method="get">
+	<tr>
+		<td colspan="10">소속과 검색:
+			<input type="search" name="searchWord" size=60 th:value="${searchWord}">
+			<input type="submit" value="검색">
+		</td>
+	</tr>
+	</form> 
+
+	<tr>
+		<td>소속과 번호</td><td>부서이름</td><td>소속과 이름</td><td>전화번호</td> <td>위치</td>
+		
+	</tr>
+	<tr th:each=" dto : ${list}">
+		
+		<td>[[${dto.sectionNum}]]</td>
+		<td>[[${dto.departmentName}]]</td>
+		<td>[[${dto.sectionName}]]</td>
+	
+		<td>[[${dto.sectionPhone}]]</td>
+		<td>[[${dto.sectionLocation}]]</td>
+	</tr> 
+	 <tr>
+		<th colspan="10">
+		<span th:if="${page <= 1}">[이전]</span>
+		<span th:if="${page > 1}">
+			<a th:href="|sectionSearch?page=${page - 1}&searchWord=${searchWord}|">[이전]</a>
+		</span>   								<!-- 	1,          10  -->
+		<th:block th:each=" i : ${#numbers.sequence(startPageNum, endPageNum)}">
+			[<a th:href="|sectionSearch?page=${i}&searchWord=${searchWord}|">[[${i}]]</a>]
+		</th:block>
+		<span th:if="${page < maxPage}">
+			<a th:href="@{sectionSearch(page=${page + 1},searchWord=${searchWord})}">[다음]</a>
+		</span>
+		<span th:if="${page >= maxPage}">
+			[다음]
+		</span>
+		</th>
+	</tr> 
+</table>
+</body>
+</html>

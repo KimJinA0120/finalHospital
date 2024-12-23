@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import hospital.command.EmployeeCommand;
 import hospital.service.AutoNumService;
@@ -15,6 +16,7 @@ import hospital.service.employee.EmployeeDetailService;
 import hospital.service.employee.EmployeeListService;
 import hospital.service.employee.EmployeeUpdateService;
 import hospital.service.employee.EmployeeWriteService;
+import hospital.service.employee.SectionListService;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -32,6 +34,8 @@ public class EmployeeController {
 	EmployeeDeleteService employeeDeleteService;
 	@Autowired
 	AutoNumService autoNumService;
+	@Autowired
+	SectionListService sectionListService;
 
 	@GetMapping("employeeWrite")
 	public String employeeWrite(EmployeeCommand employeeCommand, Model model) {
@@ -56,6 +60,21 @@ public class EmployeeController {
 	 * employeeEmailCheck(String employeeEmail) { return
 	 * emailCheckService.execute(employeeEmail); }
 	 */
+	@GetMapping("sectionSearch")
+	public String sectionSearch(
+			@RequestParam(value="searchWord", required=false) String searchWord
+			, @RequestParam(value="searchWord", required=false, defaultValue="1") Integer page
+			, Model model) {
+		sectionListService.execute(searchWord, page, model);
+		return "thymeleaf/employee/sectionSearch";
+	}
+	@GetMapping("employeeSearch")
+	public String employeeSearch(@RequestParam(value="searchWord", required=false) String searchWord
+			, @RequestParam(value="searchWord", required=false, defaultValue="1") Integer page
+			, Model model){
+		employeeListService.employeeSearch(searchWord, page, model);
+		return "thymeleaf/employee/employeeSearch";
+	}
 
 	@PostMapping("employeeWrite")
 	public String employeeWrite( //@Validated 
@@ -67,8 +86,10 @@ public class EmployeeController {
 		return "redirect:/";
 	}
 	@GetMapping("employeeList")
-	public String employeeList(Model model) {
-		employeeListService.execute(model);
+	public String employeeList(@RequestParam(value="searchWord", required=false) String searchWord
+			, @RequestParam(value="searchWord", required=false, defaultValue="1") Integer page
+			, Model model) {
+		employeeListService.execute(searchWord, page, model);
 		return "thymeleaf/employee/employeeList";
 	}
 	@GetMapping("employeeMyPage")
