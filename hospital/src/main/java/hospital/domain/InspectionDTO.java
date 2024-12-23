@@ -14,4 +14,5 @@ public class InspectionDTO {
 	LocalDateTime inspectionDate;
 	String wardprescriptNum;
 	String medicalNum;
+	String inspectionStatus;
 }

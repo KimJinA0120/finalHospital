@@ -4,11 +4,11 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="hospital.mapper.InspectionMapper">
 	<sql id="inspectionColumns">
-		INSPECTION_NUM, WARDPRESCRIPT_NUM, MEDICAL_NUM, INSPECTION_NAME, INSPECTION_DATE
+		INSPECTION_NUM, WARDPRESCRIPT_NUM, MEDICAL_NUM, INSPECTION_NAME, INSPECTION_DATE, INSPECTION_STATUS
 	</sql>
 	<insert id="inspectionInsert" parameterType="inspection">
 		insert into inspection ( <include refid="inspectionColumns"/>)
-		values (#{inspectionNum}, #{wardprescriptNum}, #{medicalNum}, #{inspectionName}, #{inspectionDate})
+		values (#{inspectionNum}, #{wardprescriptNum}, #{medicalNum}, #{inspectionName}, #{inspectionDate}, '검사미시행')
 	</insert>
 	<select id="inspectionAllSelect" resultType="inspection">
 		select <include refid="inspectionColumns"/> from inspection

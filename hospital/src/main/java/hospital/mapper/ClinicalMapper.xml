@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hospital.mapper.ClinicalMapper">
+<sql id="clinicalColumns">
+	INSPECTION_NUM, EMP_NUM, CLINICAL_NUM, CLINICAL_CONTENT
+</sql>
+<insert id="clinicalInsert" parameterType="clinical">
+	insert into clinical ( <include refid="clinicalColumns"/> )
+	values (#{inspectionNum}, #{empNum}, #{clinicalNum}, #{clinicalContent})
+</insert>
+<resultMap type="clinicalInspect" id="clinicalInspectResultMap">
+	<association property="clinicalDTO" javaType="clinical">
+		<id column="CLINICAL_NUM" jdbcType="VARCHAR" property="clinicalNum"/>
+		<result column="INSPECTION_NUM" jdbcType="VARCHAR" property="inspectionNum"/>
+		<result column="EMP_NUM" jdbcType="VARCHAR" property="empNum"/>
+	</association>
+	<association property="inspectionDTO" javaType="inspection">
+		<id column="INSPECTION_NUM" jdbcType="VARCHAR" property="inspectionNum"/>
+		<result column="INSPECTION_NAME" jdbcType="VARCHAR" property="inspectionName"/>
+		<result column="INSPECTION_DATE" jdbcType="DATE" property="inspectionDate"/>
+	</association>
+</resultMap>
+<select id="clinicalAllSelect" resultMap="clinicalInspectResultMap">
+	select clinical_num, emp_num
+		, c.INSPECTION_NUM, INSPECTION_NAME, INSPECTION_DATE
+	from clinical c join inspection i
+	on c.inspection_num = i.inspection_num
+</select>
+</mapper>

@@ -151,4 +151,5 @@ public class SurgeryController {
 		surgeryAppointmentListService.execute(page, searchWord, model);
 		return "thymeleaf/surgery/surApList";
 	}
+	
 }
