@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>검사예약 페이지</title>
+</head>
+<body>
+<div align="center">
+	<a href="inspectionList">리스트로 돌아가기</a>
+</div>
+<form action="inspectionWrite" method="post">
+<table border="1" width="600" align="center">
+	<tr><th>검사예약 번호</th>
+		<td><input type="text" name="inspectionNum" th:value="${autoNum}" readonly="readonly"/></td></tr>
+	<tr><th>검사명</th>
+		<td><input type="text" name="inspectionName"/></td></tr>
+	<tr><th>검사날짜</th>
+		<td><input type="datetime-local" name="inspectionDate"/></td></tr>
+	<tr><th>병동처방</th>
+		<td><input type="text" name="wardprescriptNum"/></td></tr>
+	<tr><th>진료번호</th>
+		<td><input type="text" name="medicalNum"/></td></tr>
+	<tr><th colspan="2"><input type="submit" value="검사예약"/></th></tr>
+</table>
+</form>
+</body>
+</html>

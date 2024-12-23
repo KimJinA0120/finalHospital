@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>검사예약 리스트</title>
+</head>
+<body>
+<div align="center">
+	<a href="inspectionWrite">검사예약</a> <br>
+	<a href="/">홈으로</a>
+</div>
+	<table border="1" width="600" align="center">
+		<tr><th>검사예약번호</th><th>검사명</th><th>검사날짜</th></tr>
+		<tr th:each="dto : ${list}">
+			<th><a th:href="|inspectionDetail?inspectionNum=${dto.inspectionNum}|">[[${dto.inspectionNum}]]</a></th>
+			<th>[[${dto.inspectionName}]]</th>
+			<th>[[${#temporals.format(dto.inspectionDate,'yyyy-MM-dd HH:mm')}]]</th>
+		</tr>
+	</table>
+</body>
+</html>

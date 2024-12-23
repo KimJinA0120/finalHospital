@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>검사예약 정보 상세보기</title>
+</head>
+<body>
+<div align="center">
+	<a href="inspectionList">리스트로 돌아가기</a>
+</div>
+<table border="1" width="600" align="center">
+	<tr><th>검사예약번호</th>
+		<td>[[${dto.inspectionNum}]]</td></tr>
+	<tr><th>검사명</th>
+		<td>[[${dto.inspectionName}]]</td></tr>
+	<tr><th>검사날짜</th>
+		<td>[[${#temporals.format(dto.inspectionDate,'yyyy-MM-dd HH:mm')}]]</td></tr>
+	<th:block th:if="${dto.wardprescriptNum!=null}">
+	<tr><th>병동처방번호</th>
+		<td>[[${dto.wardprescriptNum}]]</td></tr>
+	</th:block>
+	<th:block th:if="${dto.medicalNum!=null}">
+	<tr><th>진료번호</th>
+		<td>[[${dto.medicalNum}]]</td></tr>
+	</th:block>
+</table>
+<br>
+<div align="center">
+	<a th:href="|inspectionModify?inspectionNum=${dto.inspectionNum}|">수정하기</a> <br>
+	<a th:href="|inspectionDelete?inspectionNum=${dto.inspectionNum}|">삭제하기</a>
+</div>
+</body>
+</html>

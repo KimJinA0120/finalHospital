@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hospital.mapper.InspectionMapper">
+	<sql id="inspectionColumns">
+		INSPECTION_NUM, WARDPRESCRIPT_NUM, MEDICAL_NUM, INSPECTION_NAME, INSPECTION_DATE
+	</sql>
+	<insert id="inspectionInsert" parameterType="inspection">
+		insert into inspection ( <include refid="inspectionColumns"/>)
+		values (#{inspectionNum}, #{wardprescriptNum}, #{medicalNum}, #{inspectionName}, #{inspectionDate})
+	</insert>
+	<select id="inspectionAllSelect" resultType="inspection">
+		select <include refid="inspectionColumns"/> from inspection
+	</select>
+	<select id="inspectionOneSelect" parameterType="string" resultType="inspection">
+		select <include refid="inspectionColumns"/> from inspection
+		where INSPECTION_NUM = #{inspectionNum}
+	</select>
+	<update id="inspectionUpdate" parameterType="inspection">
+		update inspection
+		set INSPECTION_DATE = #{inspectionDate},
+			INSPECTION_NAME = #{inspectionName}
+		where INSPECTION_NUM = #{inspectionNum}
+	</update>
+	<delete id="inspectionDelete" parameterType="string">
+		delete from inspection
+		where INSPECTION_NUM = #{inspectionNum}
+	</delete>
+</mapper>
