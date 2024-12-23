@@ -28,6 +28,11 @@
       select <include refid="SelbaseCol"/> from WARDPRESCRIPT
    </select>
    
+   <select id="selectOne" resultType="wardPS">
+   		select <include refid="SelbaseCol"/> from WARDPRESCRIPT
+   		where WARDPRESCRIPT_NUM = #{num}
+   </select>
+   
    
    
 </mapper>

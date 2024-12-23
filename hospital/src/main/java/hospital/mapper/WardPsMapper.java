@@ -13,4 +13,6 @@ public interface WardPsMapper {
 
 	public void wardPsWrite(WardPsDTO dto);
 
+	public WardPsDTO selectOne(String num);
+
 }

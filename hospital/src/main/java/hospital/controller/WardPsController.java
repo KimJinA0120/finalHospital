@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import hospital.command.WardPsCommand;
 import hospital.service.AutoNumService;
+import hospital.service.wardPS.WardPsInfoService;
 import hospital.service.wardPS.WardPsListService;
 import hospital.service.wardPS.WardPsWriteService;
 
@@ -47,7 +48,13 @@ public class WardPsController {
    }
    
    
-   
+   @Autowired
+   WardPsInfoService wardPsInfoService;
+   @GetMapping("wardPsInfo")
+   public String wardPsInfo(String num ,Model model) {
+	   wardPsInfoService.execute(num, model);
+	   return "thymeleaf/wardPS//wardPsInfo";
+   }
    
    
    
