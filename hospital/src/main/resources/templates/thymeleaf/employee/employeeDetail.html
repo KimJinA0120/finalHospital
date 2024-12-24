@@ -10,24 +10,24 @@
 </head>
 <body>
 	<table  border=1>
-    	
-		<tr><td>이름</td><td>[[${dto.patientName }]]</td></tr>
-		<tr><td>주민번호</td><td>[[${dto.patientJumin}]]</td></tr>
-		<tr><td>생년월일</td><td> [[${#dates.format(dto.patientBirth ,'yyyy-MM-dd')}]]</td></tr>
-		<tr><td>아이디</td><td> [[${dto.patientId }]]</td></tr>
-		<tr><td>주소</td><td> [[${dto.patientAddr }]]</td></tr>
-		<tr><td>상세주소</td><td> [[${dto.patientAddrDetail }]]</td></tr>
-		<tr><td>우편번호</td><td> [[${dto.patientPost }]]</td></tr>
-		<tr><td>연락처</td><td> [[${dto.patientPhone }]]</td></tr>
+    	직원상세정보
+		<tr><td>이름</td><td>[[${dto.empName }]]</td></tr>
+		<tr><td>주민번호</td><td>[[${dto.empJumin}]]</td></tr>
+		<tr><td>생년월일</td><td> [[${#dates.format(dto.empBirth ,'yyyy-MM-dd')}]]</td></tr>
+		<tr><td>아이디</td><td> [[${dto.empId }]]</td></tr>
+		<tr><td>주소</td><td> [[${dto.empAddr }]]</td></tr>
+		<tr><td>상세주소</td><td> [[${dto.empAddrDetail }]]</td></tr>
+		<tr><td>우편번호</td><td> [[${dto.empPost }]]</td></tr>
+		<tr><td>연락처</td><td> [[${dto.empPhone }]]</td></tr>
 		
-		<tr><td>이메일</td><td> [[${dto.patientEmail }]]</td></tr>
-		<tr><td>성별</td><td>[[${dto.patientGender}]]</td></tr>
+		<tr><td>이메일</td><td> [[${dto.empEmail }]]</td></tr>
+		<tr><td>성별</td><td>[[${dto.empGender}]]</td></tr>
 		<tr><td>직무</td><td> [[${dto.position }]]</td></tr>
 		<tr><td>소속과</td><td>[[${dto.sectionNum}]]</td></tr>
 		<tr><td>입사일</td><td>[[${#dates.format(dto.empHiredate,'yyyy-MM-dd')}]]</td></tr>
 <tr> <td colspan="2">
-<a th:href="@{patientUpdate(patientNum=${dto.patientNum })}">직원 수정</a> | 
-<a th:href="|patientDelete?patientNum${dto.patientNum}|" id="patientDelete">탈퇴 하기</a> </td> </tr>
+<a th:href="@{employeeUpdate(empNum=${dto.empNum })}">직원 수정</a> | 
+<a th:href="|employeeDelete?empNum${dto.empNum}|" id="employeeDelete">탈퇴 하기</a> </td> </tr>
 </table>                
 </body>
 </html>

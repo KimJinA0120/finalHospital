@@ -32,24 +32,24 @@ public class LoginController {
 	public String patientLogin(@Validated LoginCommand loginCommand, HttpSession session,
 			BindingResult result) { //@Validated, BindingResult result
 		if(result.hasErrors()) { 
-			 return "thymeleaf/login"; 
+			 return "redirect:/login"; 
 		}else {
 		Integer i=loginService.patientLogin(loginCommand, session, result);
 			if(i==1) {
 				return "redirect:/";
-			}else return "thymeleaf/login";
+			}else return "redirect:/login";
 		}
 	}
 	@PostMapping("employeeLogin")
 	public String employeeLogin(@Validated LoginCommand loginCommand, HttpSession session,
 			BindingResult result) { //@Validated, BindingResult result
 		if(result.hasErrors()) { 
-			 return "thymeleaf/login"; 
+			 return "redirect:/login"; 
 		}else {
 		Integer i=loginService.employeeLogin(loginCommand, session, result);
 			if(i==1) {
 				return "redirect:/";
-			}else return "thymeleaf/login";
+			}else return "redirect:/login";
 		}
 	}
 	@GetMapping("logout")
