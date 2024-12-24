@@ -5,13 +5,14 @@
 <mapper namespace="hospital.mapper.HospitalizationMapper">
 
 <sql id="HospitalizationBasseColumns">
-HOSPITALIZATION_NUM, BED_NUM, PATIENT_NUM, IN_DATE, OUT_DATE, HOSPITALIZATION_STATUS
+HOSPITALIZATION_NUM, BED_NUM, PATIENT_NUM, IN_DATE, OUT_DATE, HOSPITALIZATION_STATUS, DOC_NUM, NUR_NUM
 </sql>
 
 <insert id="hospitalizationInsert" parameterType="HospitalizationDTO">
 	insert into hospitalization(<include refid="HospitalizationBasseColumns" /> )
 	values (#{hospitalizationNum},#{bedNum},#{patientNum}
-			,#{inDate},#{outDate},#{hospitalizationStatus})
+			,#{inDate},#{outDate},#{hospitalizationStatus}
+			,#{docNum},#{nurNum})
 </insert>
 
 <select id="hospitalizationSelectList" resultType="HospitalizationDTO">
@@ -33,7 +34,9 @@ HOSPITALIZATION_NUM, BED_NUM, PATIENT_NUM, IN_DATE, OUT_DATE, HOSPITALIZATION_ST
 		PATIENT_NUM=#{patientNum},
 		IN_DATE=#{inDate},
 		OUT_DATE=#{outDate},
-		HOSPITALIZATION_STATUS=#{hospitalizationStatus}
+		HOSPITALIZATION_STATUS=#{hospitalizationStatus},
+		DOC_NUM=#{docNum},
+		NUR_NUM=#{nurNum}
 	</trim>
 	where HOSPITALIZATION_NUM = #{hospitalizationNum}
 </update>

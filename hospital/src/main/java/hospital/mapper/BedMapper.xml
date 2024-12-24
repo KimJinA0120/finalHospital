@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hospital.mapper.BedMapper">
+	<select id="bedList" resultType="bedDTO">
+		select BED_NUM, ROOM_NUM, BED_STATUS
+		from bed
+		where room_num like 'norm'||'%'
+	</select>
+	
+	<!-- <resultMap type="RoomDTO" id="roomResultMap">
+		<constructor>
+			<idArg column="room_num" jdbcType="VARCHAR" javaType="string"/>
+			<arg column="ward_num" jdbcType="VARCHAR" javaType="string"/>
+			<arg column="room_location" jdbcType="BIGINT" javaType="integer"/>
+		</constructor>
+	</resultMap> -->
+	
+	<select id="roomList" resultType="RoomDTO" parameterType="string">
+		select ROOM_NUM, WARD_NUM, ROOM_LOCATION
+		from room
+		where ward_num = #{wardNum}
+	</select>
+	
+	
+	
+	
+</mapper>

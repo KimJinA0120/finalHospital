@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>roomList.html</title>
+
+</script>
+</head>
+<body>
+
+	<table border="1">
+		<tr><th>병동 번호</th><th>병실 번호</th><th>병실 위치</th></tr>
+		<tr th:each="dto : ${list}">
+			<td>[[${dto.wardNum}]]</td>
+			<td>[[${dto.roomNum}]]</td>
+			<td>[[${dto.roomLocation}]]</td>
+		</tr>
+	</table>
+</body>
+</html>

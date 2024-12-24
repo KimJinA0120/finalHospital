@@ -12,9 +12,12 @@
 입원번호 : <input type="text" name="hospitalizationNum" th:value="${dto.hospitalizationNum}" readonly="readonly"><br />
 병상번호 : <input type="text" name="bedNum" th:value="${dto.bedNum}"><br />
 환자번호 : <input type="text" name="patientNum" th:value="${dto.patientNum}"><br />
-입원날짜 : <input type="date" name="inDate" th:value="${dto.inDate}"><br />
-퇴원날짜 : <input type="date" name="outDate" th:value="${dto.outDate}"><br />
-입원상태 : <input type="checkBox" name="hospitalizationStatus" >입원<br />
+입원날짜 : <input type="date" name="inDate" th:value="${#dates.format(dto.inDate, 'yyyy-MM-dd')}"><br />
+퇴원날짜 : <input type="date" name="outDate" th:value="${#dates.format(dto.outDate, 'yyyy-MM-dd')}"><br />
+입원상태 : <input type="radio" name="hospitalizationStatus" value="입원" />입원
+				<input type="radio" name="hospitalizationStatus" value="퇴원"/>퇴원<br />
+담당의사 : <input type="text" name="docNum" th:value="${dto.docNum}"><br />
+담당간호사 : <input type="text" name="nurNum" th:value="${dto.nurNum}"><br />
 <input type="submit" value="입원등록">
 </form>
 </body>

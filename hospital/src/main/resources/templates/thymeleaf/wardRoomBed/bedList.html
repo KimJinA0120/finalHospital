@@ -5,8 +5,8 @@
 <title>bedList.html</title>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script type="text/javascript">
-function roomSelect(roomNum){
-	$(opener.document).find("#room").val(roomNum);
+function bedSelect(bedNum){
+	$(opener.document).find("#bedNum").val(bedNum);
 	
 	window.self.close();
 }
@@ -14,12 +14,13 @@ function roomSelect(roomNum){
 </head>
 <body>
 	<table border="1">
-		<tr><th>수술실 번호</th><th>수술실 위치</th></tr>
+		<tr><th>병상 번호</th><th>병실 번호</th><th>병상 상태</th></tr>
 		<tr th:each="dto : ${list}">
+			<td>[[${dto.bedNum}]]</td>
 			<td>[[${dto.roomNum}]]</td>
-			<td>[[${dto.roomLocation}]]</td>
+			<td>[[${dto.bedStatus}]]</td>
 			<td><button type="button" 
-					th:attr="onclick=|javascript:roomSelect('${dto.roomNum}')|">선택</button>
+					th:attr="onclick=|javascript:bedSelect('${dto.bedNum}')|">선택</button>
 			</td>
 		</tr>
 	</table>

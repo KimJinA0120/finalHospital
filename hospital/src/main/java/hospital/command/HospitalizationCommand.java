@@ -16,5 +16,6 @@ public class HospitalizationCommand {
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	Date outDate;
 	String hospitalizationStatus;
-
+	String docNum;
+	String nurNum;
 }
