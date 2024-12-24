@@ -97,6 +97,9 @@ public class EmployeeController {
 			) {
 		//if(result.hasErrors()) { return "thymeleaf/employee/employeeWrite"; }
 		employeeWriteService.execute(employeeCommand);
+		if(employeeCommand.getJobCategory().equals("doc_")) {
+			employeeWriteService.doctorWrite(employeeCommand);
+		}
 		return "redirect:/";
 	}
 	@GetMapping("employeeList")
@@ -135,6 +138,13 @@ public class EmployeeController {
 		employeeDeleteService.execute(session);
 		session.invalidate();
 		return "redirect:/";
+	}
+	@GetMapping("doctorList")
+	public String doctorList(@RequestParam(value="searchWord", required=false) String searchWord
+			, @RequestParam(value="page", required=false, defaultValue="1") Integer page
+			, Model model) {
+		employeeListService.doctorSearch(searchWord, page, model);
+		return "thymeleaf/employee/doctorList";
 	}
 	
 	@GetMapping("doctorUpdate")

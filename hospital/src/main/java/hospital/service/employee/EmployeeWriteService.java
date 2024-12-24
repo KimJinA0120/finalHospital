@@ -40,11 +40,14 @@ public class EmployeeWriteService {
 		employeeMapper.employeeInsert(dto);
 	}
 	
-	public void doctorWrite(EmployeeCommand employeeCommand, DoctorCommand doctorCommand) {
+	public void doctorWrite(EmployeeCommand employeeCommand) {
 		DoctorDTO dto =new DoctorDTO();
-		dto.setEmpNum(employeeCommand.getEmpNum());
+		
 		String medicalSubject=doctorMapper.selectSectionName(employeeCommand.getSectionNum());
+		System.out.println(medicalSubject);
+		
+		dto.setEmpNum(employeeCommand.getEmpNum());
 		dto.setMedicalSubject(medicalSubject);
-		doctorMapper.doctorInsert(dto);
+		int i=doctorMapper.doctorInsert(dto);
 	}
 }

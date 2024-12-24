@@ -26,4 +26,6 @@ public class EmployeeCommand {
     Date empHiredate;
     @DateTimeFormat(pattern="yyyy-MM-dd")
     Date empBirth;
+    
+    String jobCategory;
 }

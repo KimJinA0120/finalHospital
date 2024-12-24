@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript" src="/static/js/checkbox.js"></script>
+</head>
+<body>
+의사목록 페이지
+의사수 : [[${count}]]<br />
+<table border=1 width="600">
+	 <form action="doctorList" method="get">
+	<tr>
+		<td colspan="10">의사 검색:
+			<input type="search" name="searchWord" size=60 th:value="${searchWord}">
+			<input type="submit" value="검색">
+		</td>
+	</tr>
+	</form> 
+
+	<tr>
+		<td>의사번호</td><td>이름</td><td>진료과목</td><td>진료실위치</td> <td>수정하기</td>
+		
+	</tr>
+	<tr th:each=" dto : ${list}">
+	
+		<td>[[${dto.empNum}]]</td>
+		<td>[[${dto.empName}]]</td>
+		<td>[[${dto.medicalSubject}]]</td>
+		<td>[[${dto.medicalRoomLocation}]]</td>
+		<td><button type="button" onclick="javascript:location.href='doctorUpdate'">수정하기</button></td>
+		
+	</tr>
+ 
+	 <tr>
+		<th colspan="10">
+		<span th:if="${page <= 1}">[이전]</span>
+		<span th:if="${page > 1}">
+			<a th:href="|doctorList?page=${page - 1}&searchWord=${searchWord}|">[이전]</a>
+		</span>   								<!-- 	1,          10  -->
+		<th:block th:each=" i : ${#numbers.sequence(startPageNum, endPageNum)}">
+			[<a th:href="|doctorList?page=${i}&searchWord=${searchWord}|">[[${i}]]</a>]
+		</th:block>
+		<span th:if="${page < maxPage}">
+			<a th:href="@{doctorList(page=${page + 1},searchWord=${searchWord})}">[다음]</a>
+		</span>
+		<span th:if="${page >= maxPage}">
+			[다음]
+		</span>
+		</th>
+	</tr> 
+</table>
+</body>
+</html>

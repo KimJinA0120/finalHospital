@@ -29,7 +29,7 @@ public class EmployeeDetailService {
 	}
 
 	public void doctorDetail(String empNum, Model model) {
-		DoctorDTO dto=doctorMapper.doctorSelectOne(empNum);
+		DoctorDTO dto=doctorMapper.doctorSelectOne(empNum); //doctor테이블에서 의사정보를 가져옴
 		model.addAttribute("dto", dto);
 	}
 

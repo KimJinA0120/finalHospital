@@ -6,12 +6,14 @@
 
 
 <select id="selectSectionName" parameterType="string" resultType="String">
-select section_name from section where section_num=#{sectionNum}
+select SECTION_NAME 
+from section 
+where SECTION_NUM=#{sectionNum}
 </select>
 
 <insert id="doctorInsert" parameterType="doctorDTO">
-insert into doctor(emp_num, medicalSubject)
-values(#{empNum}, #{medicalSubject});
+insert into doctor(emp_num, MEDICAL_SUBJECT)
+values(#{empNum}, #{medicalSubject})
 </insert>
 
 <select id="doctorCount" resultType="integer">
@@ -40,8 +42,8 @@ where d.emp_num=#{empNum}
 
 <update id="doctorUpdate" parameterType="doctorDTO">
 update doctor 
-set medical_Subject=#{medicalSubject}
-, medical_Room_Location=#{medicalRoomLocation}
+set 
+medical_Room_Location=#{medicalRoomLocation}
 where emp_num=#{empNum}
 </update>
 

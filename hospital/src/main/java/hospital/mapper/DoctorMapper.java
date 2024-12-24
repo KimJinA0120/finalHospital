@@ -12,7 +12,7 @@ public interface DoctorMapper {
 
 	public String selectSectionName(String sectionNum);
 
-	public void doctorInsert(DoctorDTO dto);
+	public int doctorInsert(DoctorDTO dto);
 
 	public Integer doctorCount();
 

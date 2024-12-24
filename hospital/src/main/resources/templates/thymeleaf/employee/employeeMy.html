@@ -10,10 +10,17 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script type="text/javascript" src="/static/js/check.js"></script>
 </head>
-<bod>
+<body>
 <a th:href="@{employeeDetail(empNum=${dto.empNum })}">내 정보 보기</a> |
 <a th:href="@{employeeUpdate(empNum=${dto.empNum })}" id="employeeDelete">내 정보 수정하기</a> | 
-<a th:href="|employeeDelete?empNum${dto.empNum}|">탈퇴 하기</a>                       
+<a th:href="|employeeDelete?empNum${dto.empNum}|">탈퇴 하기</a>
+
+<br/><br/>       
+
+<a th:href="|doctorList|">의사목록</a><br/>
+<a th:href="doctorSearch">의사검색</a>
+
+                
 
 </body>
 </html>

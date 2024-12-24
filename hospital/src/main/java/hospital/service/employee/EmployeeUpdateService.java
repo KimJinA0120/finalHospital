@@ -52,9 +52,13 @@ public class EmployeeUpdateService {
 		
 		dto.setEmpNum(doctorCommand.getEmpNum());
 		dto.setMedicalRoomLocation(doctorCommand.getMedicalRoomLocation());
-		EmployeeDTO dto1=employeeMapper.employeeSelectOne(doctorCommand.getEmpNum());
-		String medicalRoomLocation=doctorMapper.selectSectionName(dto1.getSectionNum());
-		dto.setMedicalRoomLocation(medicalRoomLocation);
+		
+		
+		/*
+		 * EmployeeDTO dto1=employeeMapper.employeeSelectOne(doctorCommand.getEmpNum());
+		 * String medicalSubject=doctorMapper.selectSectionName(dto1.getSectionNum());
+		 * dto.setMedicalSubject(medicalSubject);
+		 */
 		
 		doctorMapper.doctorUpdate(dto);
 		
