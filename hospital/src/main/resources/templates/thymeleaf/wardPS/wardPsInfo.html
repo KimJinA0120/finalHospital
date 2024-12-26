@@ -8,8 +8,11 @@
 <a href="wardPsList">목록으로 돌아가기</a>
 <h1 align="center">처방번호 : [[${wardPsCommand.wardPsNum}]]</h1>
 <h2 align="center">진단명 : [[${wardPsCommand.diagName}]]</h2>
-<p align="center"> <a href="#">입원번호 : [[${wardPsCommand.hospNum}]]</a>
- | 담당의 : <a href="#">[[${wardPsCommand.empNum}]]</a> </p>
+<h4 align="center"><a href="#">입원번호 : [[${wardPsCommand.hospNum}]]</a></h4>
+<p align="center"> 담당의 : <a href="#">[[${wardPsCommand.empNum}]]</a> 
+ | 처방의사 : [[${wardPsCommand.writeDoc}]]
+</p>
+ 
 <p align="center"> 등록일시 : [[${#dates.format(wardPsCommand.inputDate, 'yyyy-MM-dd HH:mm:ss')}]]
  | 수정일시 : [[${#dates.format(wardPsCommand.updateDate, 'yyyy-MM-dd HH:mm:ss')}]]</p>
 <hr>

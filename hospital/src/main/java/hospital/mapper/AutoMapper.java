@@ -11,4 +11,6 @@ public interface AutoMapper {
 							, @Param("col_name") String col_name
 							, @Param("table_name") String table_name);
 
+	public String userNum(String userId);
+
 }

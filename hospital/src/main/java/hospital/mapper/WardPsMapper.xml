@@ -4,24 +4,26 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="hospital.mapper.WardPsMapper">
    <sql id="baseCol">
-      WARDPRESCRIPT_NUM, HOSPITALIZATION_NUM, EMP_NUM,
+      WARDPRESCRIPT_NUM, HOSPITALIZATION_NUM
+      , EMP_NUM, WRITE_DOC, UPDATE_DOC,
       DIAGNOSTIC_NAME, DIAGNOSTIC_CONTENT, MEDICINE_PRESCRIPT
-      , EXAMINATION_PRESCRIPT, HANDLE_PRESCRIPT, INPUT_DATE,UPDATE_DATE
+      , EXAMINATION_PRESCRIPT, HANDLE_PRESCRIPT, INPUT_DATE, UPDATE_DATE
    </sql>
    
    <sql id="SelbaseCol">
       WARDPRESCRIPT_NUM as wardPsNum, HOSPITALIZATION_NUM as hospNum
-      , EMP_NUM as empNum, DIAGNOSTIC_NAME as diagName
-      , DIAGNOSTIC_CONTENT as diagCont, MEDICINE_PRESCRIPT as medicPres
-      , EXAMINATION_PRESCRIPT as examPres, HANDLE_PRESCRIPT as hanPres
-      , INPUT_DATE as inputDate, UPDATE_DATE as updateDate
+      , EMP_NUM as empNum, WRITE_DOC as writeDoc, UPDATE_DOC as updateDoc
+      , DIAGNOSTIC_NAME as diagName, DIAGNOSTIC_CONTENT as diagCont
+      , MEDICINE_PRESCRIPT as medicPres, EXAMINATION_PRESCRIPT as examPres
+      , HANDLE_PRESCRIPT as hanPres, INPUT_DATE as inputDate
+      , UPDATE_DATE as updateDate
    </sql>
    
    <insert id="wardPsWrite" parameterType="wardPS">
       insert into WARDPRESCRIPT( <include refid="baseCol"/> )
-      values(#{wardPsNum}, #{hospNum}, #{empNum}, #{diagName}
-            , #{diagCont}, #{medicPres}, #{examPres}, #{hanPres}
-            , sysdate, sysdate )
+      values(#{wardPsNum}, #{hospNum}, #{empNum}, #{writeDoc}, null
+      		, #{diagName}, #{diagCont}, #{medicPres}, #{examPres}
+      		, #{hanPres}, sysdate, null )
    </insert>
    
    <select id="selectList" resultType="wardPS">
@@ -37,6 +39,7 @@
    		update WARDPRESCRIPT
    		set  HOSPITALIZATION_NUM = #{hospNum}
    			, EMP_NUM = #{empNum}
+   			, UPDATE_DOC = #{updateDoc}
    			, DIAGNOSTIC_NAME= #{diagName}
    			, DIAGNOSTIC_CONTENT = #{diagCont}
    			, MEDICINE_PRESCRIPT = #{medicPres}

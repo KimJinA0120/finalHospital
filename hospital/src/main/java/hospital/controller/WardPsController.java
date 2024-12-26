@@ -3,6 +3,8 @@ package hospital.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,13 +38,20 @@ public class WardPsController {
    public String wardPsWrite(Model model) {
       String autoNum 
       = autoNumService.execute("WPS_", 5, "WARDPRESCRIPT_num", "WARDPRESCRIPT");
-      model.addAttribute("autoNum", autoNum);
+      
+      WardPsCommand wardPsCommand = new WardPsCommand();
+      wardPsCommand.setWardPsNum(autoNum);
+      model.addAttribute("wardPsCommand", wardPsCommand);
       return "thymeleaf/wardPS/wardPsWrite";
    }
    @Autowired
    WardPsWriteService wardPsWriteService;
    @PostMapping("wardPsWrite")
-   public String wardPsWrite(WardPsCommand wardPsCommand) {
+   public String wardPsWrite(@Validated WardPsCommand wardPsCommand
+		   					, BindingResult result) {
+	  if (result.hasErrors()) {
+		  return "thymeleaf/wardPS/wardPsWrite";
+	} 
       wardPsWriteService.execute(wardPsCommand);
       return "redirect:wardPsList";
    }
@@ -67,7 +76,11 @@ public class WardPsController {
    @Autowired
    WardPsUpdateService wardPsUpdateService;
    @PostMapping("wardPsUpdate")
-   public String wardPsUpdate(WardPsCommand wardPsCommand) {
+   public String wardPsUpdate(@Validated WardPsCommand wardPsCommand
+		   						, BindingResult result) {
+	   if (result.hasErrors()) {
+		   return "thymeleaf/wardPS/wardPsUpdate";
+	}
 	   wardPsUpdateService.execute(wardPsCommand);
 	   return "redirect:wardPsInfo?num="+wardPsCommand.getWardPsNum();
    }
@@ -80,5 +93,11 @@ public class WardPsController {
 	   wardPsDeleteService.execute(num);
 	   return "redirect:wardPsList";
    }
+   
+   
+   ////////////// 입원번호 찾기
+   
+   
+   
    
 }

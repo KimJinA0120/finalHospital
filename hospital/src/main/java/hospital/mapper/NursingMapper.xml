@@ -4,21 +4,23 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="hospital.mapper.NursingMapper">
 	<sql id="baseCol">
-		NURSING_NUM, WARDPRESCRIPT_NUM, EMP_NUM, handle_nurs, NURSING_CONTENT
+		NURSING_NUM, WARDPRESCRIPT_NUM, EMP_NUM, handle_nurs
+		, UPDATE_NURS , NURSING_CONTENT
 		, HANDLE_PRESCRIPT, PRESCRIPT_DATE, INPUT_DATE, UPDATE_DATE
 	</sql>
 	
 	<sql id="SelbaseCol">
 		NURSING_NUM as nursingNum, WARDPRESCRIPT_NUM as wardPsNum,
-		EMP_NUM as empNum, handle_nurs as handleNurs, NURSING_CONTENT as nursingCon,
-		HANDLE_PRESCRIPT as hanPres, PRESCRIPT_DATE as presDate,
+		EMP_NUM as empNum, handle_nurs as handleNurs, UPDATE_NURS as updateNurs
+		, NURSING_CONTENT as nursingCon, HANDLE_PRESCRIPT as hanPres
+		, PRESCRIPT_DATE as presDate,
 		INPUT_DATE as inputDate, UPDATE_DATE as updateDate
 	</sql>
 
 	<insert id="write" parameterType="nursing">
 		insert into nursing( <include refid="baseCol"/> )
-		values(#{nursingNum}, #{wardPsNum}, #{empNum}, #{handleNurs}, #{nursingCon}
-				, #{hanPres}, #{presDate}, sysdate, sysdate)
+		values(#{nursingNum}, #{wardPsNum}, #{empNum}, #{handleNurs}, null
+				, #{nursingCon}, #{hanPres}, #{presDate}, sysdate, null)
 	</insert>
 	
 	<select id="selectList" resultType="nursing">
@@ -34,7 +36,7 @@
 		update nursing
 		set WARDPRESCRIPT_NUM = #{wardPsNum}, 
 			EMP_NUM = #{empNum}, 
-			handle_nurs = #{handleNurs},
+			UPDATE_NURS = #{updateNurs},
 			NURSING_CONTENT = #{nursingCon}, 
 			HANDLE_PRESCRIPT = #{hanPres},
 			PRESCRIPT_DATE = #{presDate},

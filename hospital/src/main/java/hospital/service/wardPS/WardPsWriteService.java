@@ -16,6 +16,7 @@ public class WardPsWriteService {
    public void execute(WardPsCommand wardPsCommand) {
       WardPsDTO dto = new WardPsDTO();
       BeanUtils.copyProperties(wardPsCommand, dto);
+      
       wardPsMapper.wardPsWrite(dto);
    }
 

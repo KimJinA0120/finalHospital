@@ -7,5 +7,11 @@
 		select concat(#{sep}, nvl(max(substr(${col_name}, #{len})), 100000) + 1) 
 		from ${table_name}
 	</select>
+	
+	<select id="userNum" resultType="string">
+		select emp_num from employee where emp_id = #{userId}
+		union
+		select patient_num from patient where patient_id = #{userId}
+	</select>
 
 </mapper>

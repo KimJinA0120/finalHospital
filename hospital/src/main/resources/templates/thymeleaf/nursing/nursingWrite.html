@@ -13,14 +13,14 @@
 담당간호사 : 	<input type="text" name="empNum" id="nursNum">
 			<button type="button" id="nursNumBtn">간호사번호 찾기</button> <br>
 <br>
-처치간호사 : 	<input type="text" name="handleNurs" id="handleNurs">
-			<button type="button" id="handleNursBtn">간호사번호 찾기</button> <br>
+처치간호사 : 	<input type="text" name="handleNurs" 
+				th:value="${userNum}" readonly="readonly"><br>
 <br>
 간호내용 : <br>
 <textarea rows="10" cols="40" name="nursingCon"></textarea><br>
 처치처방 : <br>
 <textarea rows="10" cols="40" name="hanPres"></textarea><br>
-처치날짜 : <input type="date" name="presDate"> <br>
+처치날짜 : <input type="datetime-local" name="presDate"> <br>
 <input type="submit" value="등록">
 </form>
 </body>

@@ -13,6 +13,9 @@ public class WardPsDTO {
    String wardPsNum;
    String hospNum;
    String empNum;
+   String writeDoc;
+   String updateDoc; // 수정한 의사 
+   
    String diagName;
    String diagCont;
    String medicPres;
