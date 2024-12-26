@@ -5,7 +5,7 @@
 <mapper namespace="hospital.mapper.HospitalizationMapper">
 
 <sql id="HospitalizationBasseColumns">
-HOSPITALIZATION_NUM, BED_NUM, PATIENT_NUM, IN_DATE, OUT_DATE, HOSPITALIZATION_STATUS, DOC_NUM, NUR_NUM
+	HOSPITALIZATION_NUM, BED_NUM, PATIENT_NUM, IN_DATE, OUT_DATE, HOSPITALIZATION_STATUS, DOC_NUM, NUR_NUM
 </sql>
 
 <insert id="hospitalizationInsert" parameterType="HospitalizationDTO">
@@ -53,7 +53,7 @@ HOSPITALIZATION_NUM, BED_NUM, PATIENT_NUM, IN_DATE, OUT_DATE, HOSPITALIZATION_ST
 	select 
 	<include refid="HospitalizationBasseColumns"/>
 	from hospitalization
-	where HOSPITALIZATION_NUM like 'EMER'||'%'
+	where HOSPITALIZATION_NUM like 'EME'||'%'
 </select>
 
 

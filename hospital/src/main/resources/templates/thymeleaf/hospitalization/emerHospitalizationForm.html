@@ -13,7 +13,7 @@ $(function(){
 </script>
 </head>
 <body>
-입원수속 <br />
+응급입원수속 <br />
 <form action="emerHospitalizationRegist" method="post" th:object="${hospitalizationCommand}" >
 입원번호 : <input type="text" name="hospitalizationNum" th:value="${hospitalizationCommand.hospitalizationNum}" readonly="readonly"><br />
 병상번호 : <input type="text" name="bedNum" id="emerBedNum" /> <button type="button" id="emerBedserch">병상검색</button><br />

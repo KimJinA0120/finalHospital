@@ -19,7 +19,6 @@ import hospital.service.hospitalization.HospitalizationWriteService;
 @Controller
 @RequestMapping("Hospitalization")
 public class HospitalizationController {
-	
 	@Autowired
 	AutoNumService autoNumService;
 	// 입원
@@ -37,9 +36,7 @@ public class HospitalizationController {
 	@Autowired
 	EmerHospitalizationListService emerHospitalizationListService;
 	
-	
-	
-	//////// 응급입원
+	//////// 응급입원 ////////
 	@RequestMapping("emerHospitalizationList") // 응급 입원 리스트
 	public String emerhospitalizationList(Model model) {
 		emerHospitalizationListService.execute(model);
@@ -47,7 +44,7 @@ public class HospitalizationController {
 	}
 	@RequestMapping("emerHospitalizationForm") // 응급입원 등록 화면
 	public String emerHospitalizationForm(Model model) {
-		String autoNum = autoNumService.execute("EMERHOS_", 9, "HOSPITALIZATION_NUM", "hospitalization");
+		String autoNum = autoNumService.execute("EME_", 5, "HOSPITALIZATION_NUM", "hospitalization");
 		HospitalizationCommand hospitalizationCommand = new HospitalizationCommand();
 		hospitalizationCommand.setHospitalizationNum(autoNum);
 		model.addAttribute("hospitalizationCommand", hospitalizationCommand);
@@ -73,9 +70,13 @@ public class HospitalizationController {
 		hospitalizationUpdateService.execute(hospitalizationCommand);
 		return "redirect:emerHospitalizationList";
 	}
+	@GetMapping("emerHospitalizationDelete") // 입원내역 삭제 
+	public String emerHospitalizationDelete(String hospitalizationNum) {
+		hospitalizationDeleteService.execute(hospitalizationNum);
+		return "redirect:emerHospitalizationList";
+	}
 	
-	
-	//////// 입원
+	//////// 입원 ////////
 	@RequestMapping("hospitalizationList") // 입원 리스트
 	public String hospitalizationList(Model model) {
 		hospitalizationListService.execute(model);

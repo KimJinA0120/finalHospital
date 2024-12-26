@@ -14,10 +14,10 @@ $(function(){
 
 </head>
 <body>
-입원수속 <br />
+응급입원수속 <br />
 <form action="emerHospitalizationUpdate" method="post">
 입원번호 : <input type="text" name="hospitalizationNum" th:value="${dto.hospitalizationNum}" readonly="readonly"><br />
-병상번호 : <input type="text" name="bedNum" th:value="${dto.bedNum}"><button type="button" id="bedserch">병상검색</button><br />
+병상번호 : <input type="text" name="bedNum" th:value="${dto.bedNum}"> <button type="button" id="bedserch">병상검색</button><br />
 환자번호 : <input type="text" name="patientNum" th:value="${dto.patientNum}"><br />
 입원날짜 : <input type="date" name="inDate" th:value="${#dates.format(dto.inDate, 'yyyy-MM-dd')}"><br />
 퇴원날짜 : <input type="date" name="outDate" th:value="${#dates.format(dto.outDate, 'yyyy-MM-dd')}"><br />
