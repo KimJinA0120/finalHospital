@@ -58,17 +58,17 @@ public class HospitalizationController {
 		hospitalizationWriteService.execute(hospitalizationCommand);
 		return "redirect:emerHospitalizationList";
 	}
-	@GetMapping("emerHospitalizationDetail")
+	@GetMapping("emerHospitalizationDetail") // 응급입원 상세
 	public String emerHospitalizationDetail(String hospitalizationNum, Model model) {
 		hospitalizationDetailService.execute(model, hospitalizationNum);
 		return "thymeleaf/hospitalization/emerHospitalizationInfo";
 	}
-	@GetMapping("emerHospitalizationUpdate")
+	@GetMapping("emerHospitalizationUpdate") // 응급입원 수정화면
 	public String emerHospitalizationUpdate(String hospitalizationNum, Model model) {
 		hospitalizationDetailService.execute(model, hospitalizationNum);
 		return "thymeleaf/hospitalization/emerHospitalizationModify";
 	}
-	@PostMapping("emerHospitalizationUpdate") // 입원 수정 
+	@PostMapping("emerHospitalizationUpdate") // 응급입원 수정 
 	public String emerHospitalizationUpdate(HospitalizationCommand hospitalizationCommand) {
 		hospitalizationUpdateService.execute(hospitalizationCommand);
 		return "redirect:emerHospitalizationList";
