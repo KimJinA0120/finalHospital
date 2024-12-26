@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>hospitalizationModify.html</title>
+<title>emerHospitalizationModify.html</title>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script type="text/javascript">
 $(function(){
@@ -15,7 +15,7 @@ $(function(){
 </head>
 <body>
 입원수속 <br />
-<form action="hospitalizationUpdate" method="post">
+<form action="emerHospitalizationUpdate" method="post">
 입원번호 : <input type="text" name="hospitalizationNum" th:value="${dto.hospitalizationNum}" readonly="readonly"><br />
 병상번호 : <input type="text" name="bedNum" th:value="${dto.bedNum}"><button type="button" id="bedserch">병상검색</button><br />
 환자번호 : <input type="text" name="patientNum" th:value="${dto.patientNum}"><br />

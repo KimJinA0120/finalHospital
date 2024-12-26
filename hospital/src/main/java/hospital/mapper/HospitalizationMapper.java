@@ -13,4 +13,6 @@ public interface HospitalizationMapper {
 	public HospitalizationDTO hospitalizationSelectOne(String hospitalizationNum);
 	public void hospitalizationUpdate(HospitalizationDTO dto);
 	public String hospitalizationDelete(String hospitalizationNum);
+	
+	public List<HospitalizationDTO> emerHospitalizationSelectList();
 }

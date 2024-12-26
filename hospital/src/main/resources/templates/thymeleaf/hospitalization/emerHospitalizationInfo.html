@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>emerHospitalizationInfo.html</title>
+</head>
+<body>
+입원번호 : [[${dto.hospitalizationNum}]]<br />
+환자번호 : [[${dto.bedNum}]]<br />
+병상번호 : [[${dto.patientNum}]]<br />
+입원날짜 : [[${#dates.format(dto.inDate, 'yyyy-MM-dd')}]]<br />
+퇴원날짜 : [[${#dates.format(dto.outDate, 'yyyy-MM-dd')}]]<br />
+입원상태 : [[${dto.hospitalizationStatus}]]<br />
+담당의사 : [[${dto.docNum}]]<br />
+담당간호사 : [[${dto.nurNum}]]<br />
+
+<a th:href="|emerHospitalizationUpdate?hospitalizationNum=${dto.hospitalizationNum}|">입원수정</a> | 
+<a th:href="|hospitalizationDelete?hospitalizationNum=${dto.hospitalizationNum}|">입원삭제</a> 
+</body>
+</html>

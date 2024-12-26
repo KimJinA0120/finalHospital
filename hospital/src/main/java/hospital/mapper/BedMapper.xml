@@ -23,6 +23,11 @@
 		where ward_num = #{wardNum}
 	</select>
 	
+	<select id="emerBedList" resultType="EmergencyDTO">
+		select EMERBED_NUM, WARD_NUM, EMERBED_STATUS
+		from emergency
+	</select>
+	
 	
 	
 	

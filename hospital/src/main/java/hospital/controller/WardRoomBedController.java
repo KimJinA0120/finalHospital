@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import hospital.service.WardRoomBed.BedListService;
+import hospital.service.WardRoomBed.EmerBedListService;
 import hospital.service.WardRoomBed.RoomListService;
 
 @Controller
@@ -16,6 +17,8 @@ public class WardRoomBedController {
 	BedListService bedListService;
 	@Autowired
 	RoomListService roomListService;
+	@Autowired
+	EmerBedListService emerBedListService;
 	
 	@RequestMapping("WardList")
 	public String wardList() {
@@ -32,6 +35,12 @@ public class WardRoomBedController {
 	public String roomList(String wardNum, Model model) {
 		roomListService.execute(model, wardNum);
 		return "thymeleaf/wardRoomBed/roomList";
+	}
+	
+	@GetMapping("emerBedList")
+	public String emergencyList(Model model) {
+		emerBedListService.execute(model);
+		return "thymeleaf/wardRoomBed/emerBedList";
 	}
 	
 

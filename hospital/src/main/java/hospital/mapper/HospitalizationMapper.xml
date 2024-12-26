@@ -19,6 +19,7 @@ HOSPITALIZATION_NUM, BED_NUM, PATIENT_NUM, IN_DATE, OUT_DATE, HOSPITALIZATION_ST
 	select
 	<include refid="HospitalizationBasseColumns" />
 	from hospitalization
+	where HOSPITALIZATION_NUM like 'HOS'||'%' 
 </select>
 
 <select id="hospitalizationSelectOne" resultType="HospitalizationDTO" parameterType="string">
@@ -45,6 +46,16 @@ HOSPITALIZATION_NUM, BED_NUM, PATIENT_NUM, IN_DATE, OUT_DATE, HOSPITALIZATION_ST
 	delete from hospitalization
 	where HOSPITALIZATION_NUM = #{hospitalizationNum}
 </delete>
+
+
+
+<select id="emerHospitalizationSelectList" resultType="hospitalizationDTO">
+	select 
+	<include refid="HospitalizationBasseColumns"/>
+	from hospitalization
+	where HOSPITALIZATION_NUM like 'EMER'||'%'
+</select>
+
 
 
 
