@@ -14,12 +14,12 @@ $(function(){
 </head>
 <body>
 응급입원수속 <br />
-<form action="emerHospitalizationRegist" method="post" th:object="${hospitalizationCommand}" >
-입원번호 : <input type="text" name="hospitalizationNum" th:value="${hospitalizationCommand.hospitalizationNum}" readonly="readonly"><br />
-병상번호 : <input type="text" name="bedNum" id="emerBedNum" /> <button type="button" id="emerBedserch">병상검색</button><br />
-환자번호 : <input type="text" name="patientNum" th:value="${hospitalizationCommand.patientNum}"><br />
-입원날짜 : <input type="date" name="inDate" th:value="${#dates.format(hospitalizationCommand.inDate, 'yyyy-MM-dd')}"><br />
-퇴원날짜 : <input type="date" name="outDate" th:value="${#dates.format(hospitalizationCommand.outDate, 'yyyy-MM-dd')}"><br />
+<form action="emerHospitalizationRegist" method="post" th:object="${emergencyPatientCommand}" >
+입원번호 : <input type="text" name="emerPatientNum" th:value="${emergencyPatientCommand.emerPatientNum}" readonly="readonly"><br />
+병상번호 : <input type="text" name="emerBedNum" id="emerBedNum" /> <button type="button" id="emerBedserch">병상검색</button><br />
+환자번호 : <input type="text" name="patientNum" th:value="${emergencyPatientCommand.patientNum}"><br />
+입원날짜 : <input type="date" name="inDate" th:value="${#dates.format(emergencyPatientCommand.inDate, 'yyyy-MM-dd')}"><br />
+퇴원날짜 : <input type="date" name="outDate" th:value="${#dates.format(emergencyPatientCommand.outDate, 'yyyy-MM-dd')}"><br />
 입원상태 : <input type="radio" name="hospitalizationStatus" value="입원" checked="checked"/>입원
 				<input type="radio" name="hospitalizationStatus" value="퇴원"/>퇴원<br />
 담당의사 : <input type="text" name="docNum"> <button type="button" id="docserch">의사검색</button><br />

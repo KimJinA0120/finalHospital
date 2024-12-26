@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import hospital.domain.EmergencyPatientDTO;
 import hospital.domain.HospitalizationDTO;
 
 @Mapper
@@ -15,4 +16,8 @@ public interface HospitalizationMapper {
 	public void hospitalizationDelete(String hospitalizationNum);
 	
 	public List<HospitalizationDTO> emerHospitalizationSelectList();
+	public void emerInsert(EmergencyPatientDTO dto);
+	public EmergencyPatientDTO emerSelectOne(String emerPatientNum);
+	public void emerUpdate(EmergencyPatientDTO dto);
+	public void emerDelete(String emerPatientNum);
 }

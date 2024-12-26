@@ -7,9 +7,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import hospital.command.EmergencyPatientCommand;
 import hospital.command.HospitalizationCommand;
 import hospital.service.AutoNumService;
+import hospital.service.hospitalization.EmerHospitalizationDeleteService;
+import hospital.service.hospitalization.EmerHospitalizationDetailService;
 import hospital.service.hospitalization.EmerHospitalizationListService;
+import hospital.service.hospitalization.EmerHospitalizationUpdateService;
+import hospital.service.hospitalization.EmerHospitalizationWriteService;
 import hospital.service.hospitalization.HospitalizationDeleteService;
 import hospital.service.hospitalization.HospitalizationDetailService;
 import hospital.service.hospitalization.HospitalizationListService;
@@ -35,6 +40,14 @@ public class HospitalizationController {
 	// 응급입원
 	@Autowired
 	EmerHospitalizationListService emerHospitalizationListService;
+	@Autowired
+	EmerHospitalizationWriteService emerHospitalizationWriteService;
+	@Autowired
+	EmerHospitalizationDetailService emerHospitalizationDetailService;
+	@Autowired
+	EmerHospitalizationUpdateService emerHospitalizationUpdateService;
+	@Autowired
+	EmerHospitalizationDeleteService emerHospitalizationDeleteService;
 	
 	//////// 응급입원 ////////
 	@RequestMapping("emerHospitalizationList") // 응급 입원 리스트
@@ -44,35 +57,35 @@ public class HospitalizationController {
 	}
 	@RequestMapping("emerHospitalizationForm") // 응급입원 등록 화면
 	public String emerHospitalizationForm(Model model) {
-		String autoNum = autoNumService.execute("EME_", 5, "HOSPITALIZATION_NUM", "hospitalization");
-		HospitalizationCommand hospitalizationCommand = new HospitalizationCommand();
-		hospitalizationCommand.setHospitalizationNum(autoNum);
-		model.addAttribute("hospitalizationCommand", hospitalizationCommand);
+		String autoNum = autoNumService.execute("EME_", 5, "EMERPATIENT_NUM", "EMERGENCY_PATIENT");
+		EmergencyPatientCommand emergencyPatientCommand = new EmergencyPatientCommand();
+		emergencyPatientCommand.setEmerPatientNum(autoNum);
+		model.addAttribute("emergencyPatientCommand", emergencyPatientCommand);
 		return "thymeleaf/hospitalization/emerHospitalizationForm";
 	}
 	@PostMapping("emerHospitalizationRegist") // 응급입원 등록 
-	public String emerHospitalizationRegist(HospitalizationCommand hospitalizationCommand) {
-		hospitalizationWriteService.execute(hospitalizationCommand);
+	public String emerHospitalizationRegist(EmergencyPatientCommand emergencyPatientCommand) {
+		emerHospitalizationWriteService.execute(emergencyPatientCommand);
 		return "redirect:emerHospitalizationList";
 	}
 	@GetMapping("emerHospitalizationDetail") // 응급입원 상세
-	public String emerHospitalizationDetail(String hospitalizationNum, Model model) {
-		hospitalizationDetailService.execute(model, hospitalizationNum);
+	public String emerHospitalizationDetail(String emerPatientNum, Model model) {
+		emerHospitalizationDetailService.execute(model, emerPatientNum);
 		return "thymeleaf/hospitalization/emerHospitalizationInfo";
 	}
 	@GetMapping("emerHospitalizationUpdate") // 응급입원 수정화면
-	public String emerHospitalizationUpdate(String hospitalizationNum, Model model) {
-		hospitalizationDetailService.execute(model, hospitalizationNum);
+	public String emerHospitalizationUpdate(String emerPatientNum, Model model) {
+		emerHospitalizationDetailService.execute(model, emerPatientNum);
 		return "thymeleaf/hospitalization/emerHospitalizationModify";
 	}
 	@PostMapping("emerHospitalizationUpdate") // 응급입원 수정 
-	public String emerHospitalizationUpdate(HospitalizationCommand hospitalizationCommand) {
-		hospitalizationUpdateService.execute(hospitalizationCommand);
+	public String emerHospitalizationUpdate(EmergencyPatientCommand emergencyPatientCommand) {
+		emerHospitalizationUpdateService.execute(emergencyPatientCommand);
 		return "redirect:emerHospitalizationList";
 	}
 	@GetMapping("emerHospitalizationDelete") // 입원내역 삭제 
-	public String emerHospitalizationDelete(String hospitalizationNum) {
-		hospitalizationDeleteService.execute(hospitalizationNum);
+	public String emerHospitalizationDelete(String emerPatientNum) {
+		emerHospitalizationDeleteService.execute(emerPatientNum);
 		return "redirect:emerHospitalizationList";
 	}
 	

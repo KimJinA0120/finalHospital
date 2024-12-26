@@ -6,16 +6,16 @@
 </head>
 <body>
 응급입원상세<br />
-입원번호 : [[${dto.hospitalizationNum}]]<br />
+응급입원번호 : [[${dto.emerPatientNum}]]<br />
 환자번호 : [[${dto.patientNum}]]<br />
-병상번호 : [[${dto.bedNum}]]<br />
+병상번호 : [[${dto.emerBedNum}]]<br />
 입원날짜 : [[${#dates.format(dto.inDate, 'yyyy-MM-dd')}]]<br />
 퇴원날짜 : [[${#dates.format(dto.outDate, 'yyyy-MM-dd')}]]<br />
 입원상태 : [[${dto.hospitalizationStatus}]]<br />
 담당의사 : [[${dto.docNum}]]<br />
 담당간호사 : [[${dto.nurNum}]]<br />
 
-<a th:href="|emerHospitalizationUpdate?hospitalizationNum=${dto.hospitalizationNum}|">입원수정</a> | 
-<a th:href="|emerHospitalizationDelete?hospitalizationNum=${dto.hospitalizationNum}|">입원삭제</a> 
+<a th:href="|emerHospitalizationUpdate?emerPatientNum=${dto.emerPatientNum}|">입원수정</a> | 
+<a th:href="|emerHospitalizationDelete?emerPatientNum=${dto.emerPatientNum}|">입원삭제</a> 
 </body>
 </html>

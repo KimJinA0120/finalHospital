@@ -47,16 +47,49 @@
 	where HOSPITALIZATION_NUM = #{hospitalizationNum}
 </delete>
 
+<!-- emergencyPatient -->
+<sql id="EmergencyPatientBaseColumns">
+	EMERPATIENT_NUM, EMERBED_NUM, PATIENT_NUM, IN_DATE, OUT_DATE, DOC_NUM, NUR_NUM, HOSPITALIZATION_STATUS
+</sql>
 
-
-<select id="emerHospitalizationSelectList" resultType="hospitalizationDTO">
+<select id="emerHospitalizationSelectList" resultType="EmergencyPatientDTO">
 	select 
-	<include refid="HospitalizationBasseColumns"/>
-	from hospitalization
-	where HOSPITALIZATION_NUM like 'EME'||'%'
+	<include refid="EmergencyPatientBaseColumns"/>
+	from EMERGENCY_PATIENT
 </select>
 
+<insert id="emerInsert" parameterType="EmergencyPatientDTO">
+	insert into EMERGENCY_PATIENT(<include refid="EmergencyPatientBaseColumns" /> )
+	values (#{emerPatientNum},#{emerBedNum},#{patientNum}
+			,#{inDate},#{outDate}
+			,#{docNum},#{nurNum},#{hospitalizationStatus}
+			)
+</insert>
 
+<select id="emerSelectOne" resultType="EmergencyPatientDTO" parameterType="string">
+	select <include refid="EmergencyPatientBaseColumns"/>
+	from EMERGENCY_PATIENT
+	where EMERPATIENT_NUM = #{emerPatientNum}
+</select>
+
+<update id="emerUpdate" parameterType="EmergencyPatientDTO">
+	update EMERGENCY_PATIENT
+	<trim prefix="set" suffixOverrides=",">
+		EMERBED_NUM=#{emerBedNum}, 
+		PATIENT_NUM=#{patientNum},
+		IN_DATE=#{inDate},
+		OUT_DATE=#{outDate},
+		HOSPITALIZATION_STATUS=#{hospitalizationStatus},
+		DOC_NUM=#{docNum},
+		NUR_NUM=#{nurNum}
+	</trim>
+	where EMERPATIENT_NUM = #{emerPatientNum}
+</update>
+
+<delete id="emerDelete" parameterType="string">
+	delete from EMERGENCY_PATIENT
+	where EMERPATIENT_NUM = #{emerPatientNum}
+</delete>
 
 
 </mapper>

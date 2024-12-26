@@ -6,8 +6,8 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script type="text/javascript">
 $(function(){
-	$("#bedserch").click(function(){
-		window.open("/WardRoomBed/bedList", "bedList", "width=315, height=200, top=100, left=100");
+	$("#emerBedserch").click(function(){
+		window.open("/WardRoomBed/emerBedList", "emerBedList", "width=400, height=230, top=100, left=100");
 	})
 })
 </script>
@@ -16,8 +16,8 @@ $(function(){
 <body>
 응급입원수속 <br />
 <form action="emerHospitalizationUpdate" method="post">
-입원번호 : <input type="text" name="hospitalizationNum" th:value="${dto.hospitalizationNum}" readonly="readonly"><br />
-병상번호 : <input type="text" name="bedNum" th:value="${dto.bedNum}"> <button type="button" id="bedserch">병상검색</button><br />
+입원번호 : <input type="text" name="emerPatientNum" th:value="${dto.emerPatientNum}" readonly="readonly"><br />
+병상번호 : <input type="text" name="emerBedNum" th:value="${dto.emerBedNum}"> <button type="button" id="emerBedserch">병상검색</button><br />
 환자번호 : <input type="text" name="patientNum" th:value="${dto.patientNum}"><br />
 입원날짜 : <input type="date" name="inDate" th:value="${#dates.format(dto.inDate, 'yyyy-MM-dd')}"><br />
 퇴원날짜 : <input type="date" name="outDate" th:value="${#dates.format(dto.outDate, 'yyyy-MM-dd')}"><br />
