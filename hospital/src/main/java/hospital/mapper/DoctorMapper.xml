@@ -47,6 +47,12 @@ medical_Room_Location=#{medicalRoomLocation}
 where emp_num=#{empNum}
 </update>
 
+<update id="doctorMedicalUpdate" parameterType="doctorDTO">
+update doctor set
+Medical_Subject=#{medicalSubject}
+where emp_num=#{empNum}
+</update>
+
 <delete id="doctorDelete" parameterType="String">
 delete from doctor where emp_num=#{empNum}
 </delete>

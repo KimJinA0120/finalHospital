@@ -28,4 +28,6 @@ public class EmployeeDTO {
     Date empHiredate;
     @DateTimeFormat(pattern="yyyy-MM-dd")
     Date empBirth;
+    
+    String departmentName;
 }

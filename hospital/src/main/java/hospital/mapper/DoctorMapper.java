@@ -24,4 +24,6 @@ public interface DoctorMapper {
 
 	public DoctorDTO doctorSelectOne(String empNum);
 
+	public void doctorMedicalUpdate(DoctorDTO doctorDTO);
+
 }

@@ -28,4 +28,5 @@ public class EmployeeCommand {
     Date empBirth;
     
     String jobCategory;
+    //String departmentName;
 }

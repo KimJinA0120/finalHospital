@@ -5,6 +5,13 @@
 <title>소속과 검색</title>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script type="text/javascript" src="/static/js/checkbox.js"></script>
+<script type="text/javascript">
+function sectionSelect(sectionNum,departmentName){
+	$(opener.document).find("#sectionNum").val(sectionNum);
+	$(opener.document).find("#departmentName").val(departmentName);
+	window.self.close();
+}
+</script>
 </head>
 <body>
 <table border=1 width="600">
@@ -23,7 +30,8 @@
 	</tr>
 	<tr th:each=" dto : ${list}">
 		
-		<td>[[${dto.sectionNum}]]</td>
+		<td><a name="sectionNum"id="sectionNum" href="#" 
+		th:onclick="sectionSelect([[${dto.sectionNum}]],[[${dto.departmentName}]])">[[${dto.sectionNum}]]</a></td>
 		<td>[[${dto.departmentName}]]</td>
 		<td>[[${dto.sectionName}]]</td>
 	

@@ -7,6 +7,15 @@
 <script type="text/javascript" src ="/static/js/daumAddressScript.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script type="text/javascript" src="/static/js/check.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#sectionSearch").click(function(){
+		window.open("sectionSearch","소속과검색"
+				,"width=620,height=400,left=30,top=50" )
+	});
+});
+</script>
+
 </head>
 <body>
 
@@ -34,8 +43,8 @@
 성별: <input type="radio" name="empGender" value="M" th:field="*{empGender}"> 남
 	<input type="radio" name="patinetGender" value="F" th:field="*{empGender}"> 여 <br/>
 직무 : <input type="text" name="position" th:field="*{position}"><br/>
-소속과 : <input type="text" name="sectionNum" th:field="*{sectionNum}">
-<button type="button" th:attr="onclick=|javascript:location.href='sectionSearch'|">소속과 검색</button><br/>
+소속과 : <input type="text" name="sectionNum" th:field="*{sectionNum}" readonly="readonly">
+<button type="button" id="sectionSearch">소속과 검색</button><br/>
 
 <br />
 

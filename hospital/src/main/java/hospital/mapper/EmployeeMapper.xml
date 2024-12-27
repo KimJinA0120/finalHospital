@@ -48,6 +48,7 @@ set emp_Name=#{empName }, emp_Phone=#{empPhone }
 	
 	 , emp_gender=#{empGender},  emp_Addr=#{empAddr}
 	 , emp_Addr_Detail=#{empAddrDetail }, emp_Post=#{empPost }
+	 , section_num=#{sectionNum}
 	 , position=#{position}, emp_Email=#{empEmail }
 	 , emp_birth=#{empBirth}
 where emp_NUM = #{empNum}

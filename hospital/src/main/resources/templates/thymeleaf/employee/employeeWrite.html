@@ -36,6 +36,13 @@ $(function() {
 		}
 	});
 });
+
+$(function(){
+	$("#sectionSearch").click(function(){
+		window.open("sectionSearch","소속과 검색",
+				"width=620,height=400,left=30,top=50")
+	});
+});
 </script>
 </head>
   <body>        
@@ -70,8 +77,9 @@ $(function() {
 	<input type="radio" name="empGender" value="F"> 여 <br/>
 	
 직무 : <input type="text" name="position" th:value="${employeeCommand.position}"><br/>
-소속과 : <input type="text" name="sectionNum">
-<button type="button" th:attr="onclick=|javascript:location.href='sectionSearch'|">소속과 검색</button><br/>
+소속과 : <input type="text" name="sectionNum" id="sectionNum">
+<button type="button" id="sectionSearch">소속과 검색</button><br/>
+부서이름: <input type="text" name="departmentName" id="departmentName"><br/>
 입사일: <input type="date" name="empHiredate"  th:value="${employeeCommand.empHiredate}" /> <br />
 <input type="submit" value="직원등록" />
 </form>

@@ -18,6 +18,12 @@ public class EmployeeDeleteService {
 		AuthInfoDTO auth = (AuthInfoDTO) session.getAttribute("auth");
 		String empId = auth.getUserId();
 		String empNum = employeeMapper.employeeNumSelect(empId);
+		
+		String section = empNum.substring(0, 3);
+		System.out.println(section);
+		if (section.equals("doc")) {
+			doctorDelete(empNum);
+		}
 
 		employeeMapper.employeeDelete(empNum);
 		
