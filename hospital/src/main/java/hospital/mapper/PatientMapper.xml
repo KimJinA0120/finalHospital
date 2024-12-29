@@ -66,4 +66,9 @@ select patient_Pw from patient where patient_id=#{patientId} and patient_Email=#
 <select id="patientCount" resultType="integer">
 select count(patient_num) from patient
 </select>
+
+<update id="patientPwUpdate" parameterType="patientDTO">
+update patient set patient_pw=#{patientPw}
+where patient_num=#{patientNum}
+</update>
 </mapper>

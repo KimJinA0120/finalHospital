@@ -9,7 +9,8 @@ import lombok.Data;
 public class AuthInfoDTO {
 	String userId;
 	String userPw;
+	String userName;
 	String userEmail;
 	String userPhone;
-	String sectionNum;
+	String grade;
 }

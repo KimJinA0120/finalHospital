@@ -1,13 +1,16 @@
 package hospital.service.employee;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import hospital.command.DoctorCommand;
 import hospital.command.EmployeeCommand;
+import hospital.command.PatientCommand;
 import hospital.domain.AuthInfoDTO;
 import hospital.domain.DoctorDTO;
 import hospital.domain.EmployeeDTO;
+import hospital.domain.PatientDTO;
 import hospital.mapper.DoctorMapper;
 import hospital.mapper.EmployeeMapper;
 import jakarta.servlet.http.HttpSession;
@@ -18,6 +21,8 @@ public class EmployeeUpdateService {
 	EmployeeMapper employeeMapper;
 	@Autowired
 	DoctorMapper doctorMapper;
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
 	public void execute(HttpSession session, EmployeeCommand employeeCommand) {
 		AuthInfoDTO auth = (AuthInfoDTO) session.getAttribute("auth");
@@ -76,5 +81,30 @@ public class EmployeeUpdateService {
 		doctorMapper.doctorUpdate(dto);
 
 	}
+	public void employeePwUpdate(HttpSession session, EmployeeCommand employeeCommand) {
+		AuthInfoDTO auth=(AuthInfoDTO)session.getAttribute("auth");
+		String empId=auth.getUserId();
+		String empNum=employeeMapper.employeeNumSelect(empId);
+		
+		EmployeeDTO dto=new EmployeeDTO();
+		dto.setEmpNum(empNum);
+		dto.setEmpPw(passwordEncoder.encode(employeeCommand.getEmpPw()));
+		dto.setEmpPwCon(employeeCommand.getEmpPwCon()); //비밀번호 일치여부를 확인하고 업데이트하자.
+		
+		employeeMapper.employeePwUpdate(dto);
+	}
+
+	public int employeePwCon(HttpSession session, EmployeeCommand employeeCommand) {
+		AuthInfoDTO auth=(AuthInfoDTO)session.getAttribute("auth");
+		
+		System.out.println(employeeCommand.getEmpPwCon());
+		
+		if(passwordEncoder.matches(employeeCommand.getEmpPwCon(), auth.getUserPw())) {
+			return 1;
+		}else return 0;
+		
+	}
+
+	
 
 }

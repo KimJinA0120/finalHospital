@@ -28,4 +28,6 @@ public interface EmployeeMapper {
 
 	public Integer sectionCount();
 
+	public void employeePwUpdate(EmployeeDTO dto);
+
 }

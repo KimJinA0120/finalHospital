@@ -12,7 +12,8 @@
 </head>
 <bod>
 <a th:href="@{patientDetail(patientNum=${dto.patientNum })}">내 정보 보기</a> |
-<a th:href="@{patientUpdate(patientNum=${dto.patientNum })}" id="patientDelete">내 정보 수정하기</a> | 
+<a th:href="@{patientUpdate(patientNum=${dto.patientNum })}" >내 정보 수정하기</a> |
+<a th:href="@{patPwCon(patientNum=${dto.patientNum})}" >비밀번호 변경하기</a>
 <a th:href="|patientDelete?patientNum${dto.patientNum}|">탈퇴 하기</a>                       
 
 </body>

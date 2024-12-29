@@ -7,14 +7,14 @@
  
 <select id="patientLoginSelectOne" parameterType="string" resultType="auth">
 select patient_id as userId, patient_pw as userPw, patient_name as userName
-, patient_email as userEmail
+, patient_email as userEmail, patient_phone as userPhone, 'patient' as grade
 from patient where patient_id=#{userId}
 
 </select>
 
 <select id="employeeLoginSelectOne" parameterType="string" resultType="auth">
 select emp_id as userId, emp_pw as userPw, emp_name as userName
-, emp_email as userEmail
+, emp_email as userEmail, emp_phone as userPhone, substr(emp_num,1,3) as grade 
 from employee where emp_id=#{userId}
 
 </select>

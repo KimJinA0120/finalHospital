@@ -93,5 +93,9 @@ select * from
 
 </select>
 
+<update id="patientPwUpdate" parameterType="patientDTO">
+update patient set patient_pw=#{patientPw}
+where patient_num=#{patientNum}
+</update>
 
 </mapper>

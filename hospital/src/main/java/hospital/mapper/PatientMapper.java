@@ -24,4 +24,6 @@ public interface PatientMapper {
 
 	public Integer patientCount();
 
+	public void patientPwUpdate(PatientDTO dto);
+
 }

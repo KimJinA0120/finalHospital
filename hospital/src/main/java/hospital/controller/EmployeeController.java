@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import hospital.command.DoctorCommand;
 import hospital.command.EmployeeCommand;
+import hospital.command.PatientCommand;
 import hospital.service.AutoNumService;
 import hospital.service.employee.EmployeeDeleteService;
 import hospital.service.employee.EmployeeDetailService;
@@ -52,21 +53,6 @@ public class EmployeeController {
 		return autoNum;
 	}
 	
-	/*
-	 * @Autowired IdcheckService idcheckService; // spring 방식
-	 * 
-	 * @PostMapping("employeeIdCheck") public @ResponseBody Integer
-	 * employeeIdCheck(String employeeId) { // html, jsp파일경로(x) return
-	 * idcheckService.execute(employeeId);
-	 * 
-	 * }
-	 * 
-	 * @Autowired EmailCheckService emailCheckService;
-	 * 
-	 * @PostMapping("employeeEmailCheck") public @ResponseBody Integer
-	 * employeeEmailCheck(String employeeEmail) { return
-	 * emailCheckService.execute(employeeEmail); }
-	 */
 	@GetMapping("sectionSearch")
 	public String sectionSearch(
 			@RequestParam(value="searchWord", required=false) String searchWord
@@ -156,6 +142,29 @@ public class EmployeeController {
 	public String doctorUpdate(DoctorCommand doctorCommand) {
 		employeeUpdateService.doctorUpdate(doctorCommand);
 		return "redirect:employeeList";
+	}
+	
+	@GetMapping("empPwCon")
+	public String empPwCon(){ //비밀번호 수정을 누르면 비밀번호 확인 페이지로 이동한다.
+		return "thymeleaf/employee/pwCon";
+	}
+	@PostMapping("empPwCon")
+	public String empPwCon(HttpSession session, EmployeeCommand employeeCommand) { //비밀번호를 확인한다.
+		int i=employeeUpdateService.employeePwCon(session, employeeCommand);
+		System.out.println(i);
+		if(i==1) {
+			return "redirect:empPwUpdate";
+		}else return "redirect:empPwCon";
+		
+	}
+	@GetMapping("empPwUpdate")
+	public String empPwUpdate() { //비밀번호 확인이 정상적으로 되면 비밀번호 업데이트 화면으로 이동한다.
+		return "thymeleaf/employee/pwUpdate";
+	}
+	@PostMapping("empPwUpdate")
+	public String empPwUpdate(HttpSession session, EmployeeCommand employeeCommand) { //비밀번호를 수정한다.
+		employeeUpdateService.employeePwUpdate(session, employeeCommand);
+		return "redirect:employeeMyPage";
 	}
 	
 }
