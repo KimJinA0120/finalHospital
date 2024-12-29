@@ -12,7 +12,8 @@
 </head>
 <body>
 <a th:href="@{employeeDetail(empNum=${dto.empNum })}">내 정보 보기</a> |
-<a th:href="@{employeeUpdate(empNum=${dto.empNum })}" id="employeeDelete">내 정보 수정하기</a> | 
+<a th:href="@{employeeUpdate(empNum=${dto.empNum })}" id="employeeDelete">내 정보 수정하기</a> |
+<a th:href="@{empPwCon(patientNum=${dto.empNum})}" >비밀번호 변경하기</a> 
 <a th:href="|employeeDelete?empNum${dto.empNum}|">탈퇴 하기</a>
 
 <br/><br/>       
