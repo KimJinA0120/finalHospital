@@ -23,19 +23,19 @@ $(function(){
 		});
 	});
 	
-	$("#userEamil").on("change keyup", function(){
+	$("#userEmail").on("change keyup", function(){
 		$.ajax({
 			type:"post",
-			url:"/checkRest/userEmailCheck",
+			url:"/login/userEmailCheck",
 			dataType:"text",
-			data:{"userEmail":$("#userEamil").val()},
+			data:{"userEmail":$("#userEmail").val()},
 			success:function(result){
 				if(result == "1"){
-					$("#emialCheck").text("사용중인 이메일입니다.");
-					$("#emialCheck").css("color","red");
+					$("#emailCheck").text("사용중인 이메일입니다.");
+					$("#emailCheck").css("color","red");
 				}else{
-					$("#emialCheck").text("사용가능한 이메일입니다.");
-					$("#emialCheck").css("color","blue");
+					$("#emailCheck").text("사용가능한 이메일입니다.");
+					$("#emailCheck").css("color","blue");
 				}
 			},
 			error:function(){

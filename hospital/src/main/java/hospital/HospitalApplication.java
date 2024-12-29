@@ -18,6 +18,11 @@ public class HospitalApplication {
 		
 		return "thymeleaf/index";
 	}
+	@RequestMapping("empIndex")
+	public String empIndex() {
+		
+		return "thymeleaf/empIndex";
+	}
 	
 
 }

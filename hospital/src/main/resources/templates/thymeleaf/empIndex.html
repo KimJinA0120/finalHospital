@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Index</title>
+</head>
+<body>
+empIndex, 직원로그인 후 진입하는 화면 <br>
+<a href="surgery/surgeryAppointmentList">수술예약</a><br>
+<a href="surgery/surgeryList">환자수술결과기록</a><br>
+<a href="inspection/inspectionList">검사예약</a><br>
+<a href="clinical/clinicalList">임상병리</a><br>
+<br>
+<a href="wardPS/wardPsList">병동처방</a><br>
+<a href="nursing/nursingList">간호처방</a><br>
+<br>
+<a href="WardRoomBed/WardList">병동리스트</a><br/>
+<a href="Hospitalization/hospitalizationList">입원관리</a><br/>
+<a href="Hospitalization/emerHospitalizationList">응급입원관리</a><br/>
+<br /><br />
+<a href="receipt/reservationForm">(환자용)예약</a> |
+
+<br /><br />
+<th:block  th:if="${session.auth==null}">
+
+<a href="login">로그인</a> 현재 로그아웃상태입니다.<br/>
+</th:block>
+<th:block th:if="${session.auth!=null}"> 
+<a href="login/logout">로그아웃</a> 현재 로그인 상태입니다.<br/>
+<a href="patient/patientList">환자목록</a><br/>
+<a href="receipt/receiptList">(직원용)접수/예약목록</a><br/>
+
+</th:block>
+직원<br/>
+<a href="employee/employeeWrite">직원등록</a>
+ <a href="employee/employeeList">직원목록</a>
+ <a href="employee/employeeMyPage">직원 마이페이지</a>
+</body>
+</html>

@@ -8,8 +8,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import hospital.command.LoginCommand;
+import hospital.service.CheckService;
 import hospital.service.LoginService;
 import jakarta.servlet.http.HttpSession;
 
@@ -48,7 +50,7 @@ public class LoginController {
 		}else {
 		Integer i=loginService.employeeLogin(loginCommand, session, result);
 			if(i==1) {
-				return "redirect:/";
+				return "redirect:/empIndex";
 			}else return "redirect:/login";
 		}
 	}
@@ -58,4 +60,18 @@ public class LoginController {
 		return "redirect:/";
 	}
 	
+	
+	
+	 @Autowired 
+	  CheckService checkService; // spring 방식
+	  
+	  @PostMapping("userIdCheck") 
+	  public @ResponseBody Integer userIdCheck(String userId) { // html, jsp파일경로(x) return
+		  return checkService.idCheck(userId);
+	  }
+	  
+	  @PostMapping("userEmailCheck") 
+	  public @ResponseBody Integer userEmailCheck(String userEmail) { 
+		  return checkService.emailCheck(userEmail); 
+	  }
 }

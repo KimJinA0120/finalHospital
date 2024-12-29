@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import hospital.command.PatientCommand;
 import hospital.service.AutoNumService;
+import hospital.service.CheckService;
 import hospital.service.patient.PatientDeleteService;
 import hospital.service.patient.PatientDetailService;
 import hospital.service.patient.PatientListService;
@@ -42,22 +44,6 @@ public class PatientController {
 		return "thymeleaf/patient/patientWrite";
 	}
 	
-	/*
-	 * @Autowired IdcheckService idcheckService; // spring 방식
-	 * 
-	 * @PostMapping("patientIdCheck") public @ResponseBody Integer
-	 * patientIdCheck(String patientId) { // html, jsp파일경로(x) return
-	 * idcheckService.execute(patientId);
-	 * 
-	 * }
-	 * 
-	 * @Autowired EmailCheckService emailCheckService;
-	 * 
-	 * @PostMapping("patientEmailCheck") public @ResponseBody Integer
-	 * patientEmailCheck(String patientEmail) { return
-	 * emailCheckService.execute(patientEmail); }
-	 */
-
 	@PostMapping("patientWrite")
 	public String patientWrite( //@Validated 
 			PatientCommand patientCommand
