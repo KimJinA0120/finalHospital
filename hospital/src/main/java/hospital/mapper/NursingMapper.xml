@@ -5,47 +5,98 @@
 <mapper namespace="hospital.mapper.NursingMapper">
 	<sql id="baseCol">
 		NURSING_NUM, WARDPRESCRIPT_NUM, EMP_NUM, handle_nurs
-		, UPDATE_NURS , NURSING_CONTENT
-		, HANDLE_PRESCRIPT, PRESCRIPT_DATE, INPUT_DATE, UPDATE_DATE
+		,
+		UPDATE_NURS , NURSING_CONTENT
+		, HANDLE_PRESCRIPT, PRESCRIPT_DATE,
+		INPUT_DATE, UPDATE_DATE
 	</sql>
-	
+
 	<sql id="SelbaseCol">
 		NURSING_NUM as nursingNum, WARDPRESCRIPT_NUM as wardPsNum,
-		EMP_NUM as empNum, handle_nurs as handleNurs, UPDATE_NURS as updateNurs
+		EMP_NUM as empNum, handle_nurs as handleNurs, UPDATE_NURS as
+		updateNurs
 		, NURSING_CONTENT as nursingCon, HANDLE_PRESCRIPT as hanPres
 		, PRESCRIPT_DATE as presDate,
-		INPUT_DATE as inputDate, UPDATE_DATE as updateDate
+		INPUT_DATE as inputDate, UPDATE_DATE as
+		updateDate
+	</sql>
+	
+	<sql id="SelbaseCol1">
+		NURSING_NUM as nursingNum, n.WARDPRESCRIPT_NUM as wardPsNum,
+		n.EMP_NUM as empNum, handle_nurs as handleNurs
+		, UPDATE_NURS as updateNurs , NURSING_CONTENT as nursingCon
+		, n.HANDLE_PRESCRIPT as hanPres, PRESCRIPT_DATE as presDate,
+		n.INPUT_DATE as inputDate, n.UPDATE_DATE as updateDate
 	</sql>
 
 	<insert id="write" parameterType="nursing">
-		insert into nursing( <include refid="baseCol"/> )
+		insert into nursing(
+		<include refid="baseCol" />
+		)
 		values(#{nursingNum}, #{wardPsNum}, #{empNum}, #{handleNurs}, null
-				, #{nursingCon}, #{hanPres}, #{presDate}, sysdate, null)
+		, #{nursingCon}, #{hanPres}, #{presDate}, sysdate, null)
 	</insert>
-	
-	<select id="selectList" resultType="nursing">
-		select <include refid="SelbaseCol"/> from nursing
+
+	<select id="count" resultType="integer">
+		select Count(*) from nursing
 	</select>
-	
+
+	<select id="selectList" parameterType="startEndPage"
+		resultType="nursing">
+		select *
+		from(select rownum rn, <include refid="SelbaseCol1" />
+		from nursing n join WARDPRESCRIPT wp
+		on n.WARDPRESCRIPT_NUM = wp.WARDPRESCRIPT_NUM
+		join HOSPITALIZATION h on wp.HOSPITALIZATION_NUM = h.HOSPITALIZATION_NUM
+		join PATIENT p on p.PATIENT_NUM = h.PATIENT_NUM
+		join bed b on h.bed_num = b.bed_num
+		join room r on b.room_num = r.room_num
+		join ward w on r.ward_num = w.ward_num
+		<if test="searchWord!=null">
+			where
+			p.patient_num like '%'||#{searchWord}||'%'
+			or patient_name like '%'||#{searchWord}||'%'
+
+			or h.HOSPITALIZATION_NUM like '%'||#{searchWord}||'%'
+
+			or r.ROOM_LOCATION like '%'||#{searchWord}||'%'
+			or w.WARD_LOCATION like '%'||#{searchWord}||'%'
+			or h.BED_NUM like '%'||#{searchWord}||'%'
+
+			or h.DOC_NUM like '%'||#{searchWord}||'%'
+			or h.NUR_NUM like '%'||#{searchWord}||'%'
+			
+			or h.HOSPITALIZATION_STATUS like '%'||#{searchWord}||'%'
+			
+			or wh.wardprescript_num like '%'||#{searchWord}||'%'
+			or wh.diagnostic_name like '%'||#{searchWord}||'%'
+			order by NURSING_NUM
+		</if>
+		) where rn between #{startRow} and #{endRow}
+	</select>
+
+
 	<select id="selectOne" resultType="nursing">
-		select <include refid="SelbaseCol"/> from nursing
+		select <include refid="SelbaseCol" /> from nursing
 		where NURSING_NUM = #{nursingNum}
 	</select>
 
 	<update id="update" parameterType="nursing">
 		update nursing
-		set WARDPRESCRIPT_NUM = #{wardPsNum}, 
-			EMP_NUM = #{empNum}, 
-			UPDATE_NURS = #{updateNurs},
-			NURSING_CONTENT = #{nursingCon}, 
-			HANDLE_PRESCRIPT = #{hanPres},
-			PRESCRIPT_DATE = #{presDate},
-			UPDATE_DATE = sysdate
+		set
+		WARDPRESCRIPT_NUM = #{wardPsNum},
+		EMP_NUM = #{empNum},
+		UPDATE_NURS = #{updateNurs},
+		NURSING_CONTENT = #{nursingCon},
+		HANDLE_PRESCRIPT = #{hanPres},
+		PRESCRIPT_DATE = #{presDate},
+		UPDATE_DATE = sysdate
 		where NURSING_NUM = #{nursingNum}
 	</update>
 
 	<delete id="delete" parameterType="string">
-		delete from nursing where NURSING_NUM = #{num}
+		delete from nursing where
+		NURSING_NUM = #{num}
 	</delete>
 
 </mapper>

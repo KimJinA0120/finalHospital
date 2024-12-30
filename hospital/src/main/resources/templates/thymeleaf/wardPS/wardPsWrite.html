@@ -29,7 +29,7 @@ $(function() {
          <span style="color:red" th:if="${#fields.hasErrors('hospNum')}" 
 							th:errors="*{hospNum}"></span> <br>
          
-담당의사번호 : <input type="text" name="empNum" th:value="${wardPsCommand.empNum}"
+담당의사번호 : <input type="text" name="empNum" id="empNum" th:value="${wardPsCommand.empNum}"
 				readonly="readonly"><br>
 처방의사번호 : <input type="text" name="writeDoc"
 				th:value="${userNum}" readonly="readonly"> <br>

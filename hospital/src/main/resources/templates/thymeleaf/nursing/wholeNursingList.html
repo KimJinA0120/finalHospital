@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>wholeNursingList</title>
+</head>
+<body>
+<a href="/">홈</a><br>
+<h1>간호처방</h1>
+<h4 align="right"><a href="nursingWrite">간호처방 작성</a></h4><br>
+<form action="wholeNursingList" method="get">
+	<table width=800px align="center">
+		<caption style="font-size:20px">간호일지 전체 기록</caption>
+		<tr>
+			<td colspan="3" align="center">
+				<input type="search" name="searchWord" size=60 th:value="${searchWord}"/>
+				<input type="submit" value="검색" />
+			</td>
+		</tr>
+	</table>
+</form>
+
+	<table border="1" width=800px align="center">
+		<tr>
+			<th>간호번호</th>
+			<th>병동처방번호</th>
+			<th>담당간호사</th>
+		</tr>
+		
+		<tr th:each="dto : ${list}">
+			<td><a th:href="|nursingInfo?num=${dto.nursingNum}|">[[${dto.nursingNum}]]</a></td>
+			<td>[[${dto.wardPsNum}]]</td>
+			<td>[[${dto.empNum}]]</td>
+		</tr>
+		
+		<tr>
+			<th colspan="3" style="text-align: center;">
+				<span th:if="${page <= 1}">[이전]</span>
+				<span th:if="${page > 1}">
+				<a th:href="|wholeNursingList?page=${page - 1}&searchWord=${searchWord}|">[이전]</a>
+				</span>
+				<th:block th:each="i : ${#numbers.sequence(startPageNum, endPageNum)}">
+					[<a th:href="|wholeNursingList?page=${i}&searchWord=${searchWord}|">[[${i}]]</a>]
+				</th:block>
+				<span th:if="${page < maxPage}">
+				<a th:href="@{wholeNursingList?(page=${page + 1},searchWord=${searchWord})}">[다음]</a>
+				</span>
+				<span th:if="${page >= maxPage}">
+				[다음]
+				</span>			
+			</th>
+		</tr>
+	</table>
+</body>
+</html>

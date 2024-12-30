@@ -3,17 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <title>nursingWrite</title>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.js"></script>
+<script type="text/javascript">
+$(function() {
+	$("#btn").click(function() {
+		window.open("../nursing/searchWardPs", "병동처방검색"
+					,"width=620, height=500, left=30, top=50");
+	});
+	
+});
+</script>
+
 </head>
 <body>
  <a href="javascript:history.back();">이전</a> <br>
 <form action="nursingWrite" method="post">
 간호번호 : <input type="text" name="nursingNum" readonly="readonly" th:value="${autoNum}"><br>
-병동처방번호 : <input type="text" name="wardPsNum" id="wardPsNum">
-			<button type="button" id="wardPsBtn">병동번호찾기</button> <br>
-담당간호사 : 	<input type="text" name="empNum" id="nursNum">
-			<button type="button" id="nursNumBtn">간호사번호 찾기</button> <br>
-<br>
-처치간호사 : 	<input type="text" name="handleNurs" 
+병동처방번호 : <input type="text" name="wardPsNum" id="wardPsNum" readonly="readonly">
+			<button type="button" id="btn">병동번호찾기</button> <br>
+담당간호사 : 	<input type="text" name="empNum" id="nursNum" readonly="readonly"><br>
+처치간호사 : 	<input type="text" name="handleNurs"
 				th:value="${userNum}" readonly="readonly"><br>
 <br>
 간호내용 : <br>

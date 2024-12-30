@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>searchWardPs</title>
+<style type="text/css">
+table, td, th {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+table tr:not(:first-child):not(:last-child):hover {
+    background-color: #E2E2E2;
+}
+</style>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript">
+
+function selectWardPs(wardPsNum, nurNum){
+	$(opener.document).find("#wardPsNum").val(wardPsNum);
+	$(opener.document).find("#nursNum").val(nurNum);
+	window.self.close();
+}
+
+</script>
+</head>
+<body>
+병동처방 검색 <br>
+<form action="searchWardPs" method="get">
+	<table width=600px align="center">
+		<tr>
+			<td colspan="6" align="center">
+				<input type="search" name="searchWord" size=60 th:value="${searchWord}"/>
+				<input type="submit" value="검색" />
+			</td>
+		</tr>
+	</table>
+</form>
+
+	<table border="1" width=600px align="center">
+		<tr>
+			<th colspan="2">입원실</th>
+			<th>환자이름</th>
+			<th>병동처방번호</th>
+			<th>진단명</th>
+			<th>담당의</th>
+		</tr>
+		
+		<tr th:each="dto : ${list}" th:onclick="selectWardPs([[${dto.HospitalizationDTO.hospitalizationNum }]], [[${dto.HospitalizationDTO.docNum }]])">
+			<td colspan="2">[[${dto.roomLoc}]]호 [[${dto.HospitalizationDTO.bedNum}]]</td>
+			<td>[[${dto.patientName}]]</td>
+			<td>[[${dto.wardPsNum}]]</td> 
+			<td>[[${dto.diagName}]]</td>
+			<td>[[${dto.HospitalizationDTO.docNum}]]</td>
+		</tr>
+		
+		<tr>
+		<th colspan="6" style="text-align: center;">
+			<span th:if="${page <= 1}">[이전]</span>
+			<span th:if="${page > 1}">
+			<a th:href="|searchWardPs?page=${page - 1}&searchWord=${searchWord}|">[이전]</a>
+			</span>
+			<th:block th:each="i : ${#numbers.sequence(startPageNum, endPageNum)}">
+				[<a th:href="|searchWardPs?page=${i}&searchWord=${searchWord}|">[[${i}]]</a>]
+			</th:block>
+			<span th:if="${page < maxPage}">
+			<a th:href="@{searchWardPs?(page=${page + 1},searchWord=${searchWord})}">[다음]</a>
+			</span>
+			<span th:if="${page >= maxPage}">
+			[다음]
+			</span>			
+		</th>
+	</tr>
+	</table>
+</body>
+</html>

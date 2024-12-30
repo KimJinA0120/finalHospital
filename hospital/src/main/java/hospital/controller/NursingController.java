@@ -1,14 +1,18 @@
 package hospital.controller;
 
+import java.security.PublicKey;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import hospital.command.NursCommand;
 import hospital.service.AutoNumService;
+import hospital.service.hosPatient.SearchHospService;
 import hospital.service.nursing.NursingDeleteService;
 import hospital.service.nursing.NursingInfoService;
 import hospital.service.nursing.NursingListService;
@@ -22,10 +26,13 @@ public class NursingController {
 	// 리스트
 	@Autowired
 	NursingListService nursingListService;
-	@RequestMapping("nursingList")
-	public String nursingList(Model model) {
-		nursingListService.execute(model);
-		return "thymeleaf/nursing/nursingList";
+	@RequestMapping("wholeNursingList")
+	public String nursingList(
+				@RequestParam(value = "page", required = false, defaultValue = "1") int page
+			   , @RequestParam(value = "searchWord", required = false) String searchWord
+			   , Model model) {
+		nursingListService.execute(page, searchWord ,model);
+		return "thymeleaf/nursing/wholeNursingList";
 	}
 	
 	
@@ -82,6 +89,26 @@ public class NursingController {
 	}
 	
 	
+	
+	///////////////////////////// 추가기능
+	
+	//// 처방번호 찾기
+	@Autowired
+	SearchHospService searchHospService;
+	@RequestMapping("searchWardPs")
+	public String searchWardPs(@RequestParam(value = "page", required = false, defaultValue = "1") int page
+			   , @RequestParam(value = "searchWord", required = false) String searchWord
+			   , Model model) {
+		searchHospService.selectWardPs(page, searchWord, model);
+		return "thymeleaf/hosPatient/searchWardPs";
+	}
+	
+	
+	@RequestMapping("nursingList")
+	public String nursingList() {
+		
+		return "thymeleaf/nursing/nursingList";
+	}
 	
 	
 }

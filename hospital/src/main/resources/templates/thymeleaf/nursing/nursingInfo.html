@@ -9,10 +9,11 @@
 <a href="nursingList">목록으로 돌아가기</a>
 <h1 align="center">간호번호 : [[${nursCommand.nursingNum}]]</h1>
 <h2 align="center">처방번호 : <a th:href="|../wardPS/wardPsInfo?num=${nursCommand.wardPsNum}|">[[${nursCommand.wardPsNum}]]</a></h2>
-<h3 align="center">처치일시 : [[${#dates.format(nursCommand.presDate, 'yyyy-MM-dd HH:mm')}]]</h3>
+<h3 align="center">처치일시 : [[${#dates.format(nursCommand.presDate, 'yyyy-MM-dd HH:mm')}]]
+ | 등록일시 : [[${#dates.format(nursCommand.inputDate, 'yyyy-MM-dd HH:mm:ss')}]]</h3>
 <p align="center"> 처치간호사 : <a href="#">[[${nursCommand.handleNurs}]]</a>
  | 담당간호사 : <a href="#">[[${nursCommand.empNum}]]</a> </p>
-<p align="center"> 등록일시 : [[${#dates.format(nursCommand.inputDate, 'yyyy-MM-dd HH:mm:ss')}]]
+<p align="center"> 수정자 : [[${nursCommand.updateNurs}]]
  | 수정일시 : [[${#dates.format(nursCommand.updateDate, 'yyyy-MM-dd HH:mm:ss')}]]</p>
 <hr>
 <div align="center">
