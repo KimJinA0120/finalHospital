@@ -25,7 +25,8 @@
 <br /><br />
 <th:block  th:if="${session.auth==null}">
 <a href="patient/patientWrite">환자 회원가입</a><br/>
-<a href="login">로그인</a><br/>
+<a href="login/patientLogin">환자 로그인</a><br/>
+<a href="login/employeeLogin">직원 로그인</a><br/>
 </th:block>
 <th:block th:if="${session.auth!=null}"> 
 <a href="login/logout">로그아웃</a><br/>

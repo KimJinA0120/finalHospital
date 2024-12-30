@@ -151,7 +151,6 @@ public class EmployeeController {
 	@PostMapping("empPwCon")
 	public String empPwCon(HttpSession session, EmployeeCommand employeeCommand) { //비밀번호를 확인한다.
 		int i=employeeUpdateService.employeePwCon(session, employeeCommand);
-		System.out.println(i);
 		if(i==1) {
 			return "redirect:empPwUpdate";
 		}else return "redirect:empPwCon";

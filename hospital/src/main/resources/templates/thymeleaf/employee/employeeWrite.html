@@ -35,19 +35,87 @@ $(function() {
 			});
 		}
 	});
-});
-
-$(function(){
+	
 	$("#sectionSearch").click(function(){
 		window.open("sectionSearch","소속과 검색",
 				"width=620,height=400,left=30,top=50")
+	});
+	
+	$("#frm").submit(function(){
+		if($("#empPw").val() != $("#empPwCon").val()){
+			alert("비밀번호와 비밀번호확인이 다릅니다.");
+			$("#empPw").val("");
+			$("#empPwCon").val("");
+			$("#empPw").focus();
+			return false;
+		}
+		if($("#empName").val()==null){
+			alert("이름을 입력해주세요");
+			$("#empName").focus();
+			return false;
+		}
+		if($("#empJumin").val()==null){
+			alert("주민번호를 입력해주세요");
+			$("#empJumin").focus();
+			return false;
+		}
+		if($("#empBirth").val()==null){
+			alert("생년월일을 입력해주세요");
+			$("#empBirth").focus();
+			return false;
+		}
+		if($("#userId").val()==null){
+			alert("아이디를 입력해주세요");
+			$("#userId").focus();
+			return false;
+		}
+		if($("#empPw").val()==null){
+			alert("비밀번호를 입력해주세요");
+			$("#empPw").focus();
+			return false;
+		}
+		if($("#empPwCon").val()==null){
+			alert("비밀번호확인을 입력해주세요");
+			$("#empPwCon").focus();
+			return false;
+		}
+		if($("#sample4_roadAddress").val()==null){
+			alert("주소를 입력해주세요");
+			$("#sample4_roadAddress").focus();
+			return false;
+		}
+		if($("#empPhone").val()==null){
+			alert("전화번호를 입력해주세요");
+			$("#empPhone").focus();
+			return false;
+		}
+		if($("#userEmail").val()==null){
+			alert("이메일을 입력해주세요");
+			$("#userEmail").focus();
+			return false;
+		}
+		if($("#position").val()==null){
+			alert("직무를 입력해주세요");
+			$("#position").focus();
+			return false;
+		}
+		if($("#sectionNum").val()==null){
+			alert("소속과를 입력해주세요");
+			$("#sectionNum").focus();
+			return false;
+		}
+		if($("#empHiredate").val()==null){
+			alert("입사일을 입력해주세요");
+			$("#empHiredate").focus();
+			return false;
+		}
 	});
 });
 </script>
 </head>
   <body>        
                     
-   <form action="employeeWrite" method="post"  > <!-- th:object="${employeeCommand}" -->
+   <form action="employeeWrite" method="post" id="frm"  > <!-- th:object="${employeeCommand}" -->
 직원번호: <select id="job_category" name="jobCategory">
 <option value="0" selected>--선택--</option>
 <option value="doc_">의사</option>
@@ -57,30 +125,30 @@ $(function(){
 </select> 
 <input type="text" name="empNum" th:value="${employeeCommand.empNum}"
 		id="empNum" readonly="readonly"/>번호 자동부여<br />
-이름 : <input type="text" name="empName"  th:value="${employeeCommand.empName}" /> <br />
-주민등록번호 : <input type="text" name="empJumin"  th:value="${employeeCommand.empJumin}" /> <br />	
-생년월일: <input type="date" name="empBirth"  th:value="${employeeCommand.empBirth}" /> <br />
+이름 : <input type="text" name="empName" id="empName"  th:value="${employeeCommand.empName}" /> <br />
+주민등록번호 : <input type="number" name="empJumin" id="empJumin" th:value="${employeeCommand.empJumin}" /> <br />	
+생년월일: <input type="date" name="empBirth" id="empBirth"  th:value="${employeeCommand.empBirth}" /> <br />
 아이디 : <input type="text" name="empId" id="userId" th:value="${employeeCommand.empId}" />
 				<span id="idCheck"></span>  <br />
-비밀번호 :    	<input type="password" name="empPw" /> <br />
-비밀번호확인 : 	<input type="password" name="empPwCon" /> <br />
+비밀번호 :    	<input type="password" name="empPw" id="empName"/> <br />
+비밀번호확인 : 	<input type="password" name="empPwCon" id="empName"/> <br />
 
 주소 : <input type="text" name="empAddr" id="sample4_roadAddress"  th:value="${employeeCommand.empAddr}" readonly="readonly" />
 				<button type="button" onclick="execDaumPostcode();">우편번호검색</button><br />
 상세주소 : <input type="text" name="empAddrDetail" th:value="${employeeCommand.empAddrDetail}"/><br />
 우편번호 : <input type="text" name="empPost" id="sample4_postcode" th:value="${employeeCommand.empPost}" readonly="readonly"/><br />
-전화번호 : <input type="tel" name="empPhone" th:value="${employeeCommand.empPhone}"/> <br />
+전화번호 : <input type="tel" name="empPhone" id="empPhone" th:value="${employeeCommand.empPhone}"/> <br />
 
 이메일 : 		<input type="email" name="empEmail" id="userEmail" th:value="${employeeCommand.empEmail}"/>
 	<span id="emailCheck"></span> <br />
 성별: <input type="radio" name="empGender" value="M" checked="checked"> 남
 	<input type="radio" name="empGender" value="F"> 여 <br/>
 	
-직무 : <input type="text" name="position" th:value="${employeeCommand.position}"><br/>
+직무 : <input type="text" name="position" id="position" th:value="${employeeCommand.position}"><br/>
 소속과 : <input type="text" name="sectionNum" id="sectionNum" readonly="readonly">
 <button type="button" id="sectionSearch">소속과 검색</button><br/>
 부서이름: <input type="text" name="departmentName" id="departmentName" readonly="readonly"><br/>
-입사일: <input type="date" name="empHiredate"  th:value="${employeeCommand.empHiredate}" /> <br />
+입사일: <input type="date" name="empHiredate" id="empHiredate" th:value="${employeeCommand.empHiredate}" /> <br />
 <input type="submit" value="직원등록" />
 </form>
 

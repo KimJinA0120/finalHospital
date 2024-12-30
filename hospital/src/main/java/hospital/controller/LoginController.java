@@ -22,36 +22,42 @@ public class LoginController {
 	LoginService loginService;
 
 	
-	@GetMapping("")
-	public String patientlogin(//@Validated 
+	@GetMapping("patientLogin")
+	public String patientlogin( 
 			LoginCommand loginCommand, 
 			Model model
 			) {
 		model.addAttribute("loginCommand", loginCommand);
-		return "thymeleaf/login";
+		return "thymeleaf/patientLogin";
 	}
 	@PostMapping("patientLogin")
-	public String patientLogin(@Validated LoginCommand loginCommand, HttpSession session,
-			BindingResult result) { //@Validated, BindingResult result
+	public String patientLogin(@Validated LoginCommand loginCommand,
+			BindingResult result, HttpSession session) {
+		loginService.patientLogin(loginCommand, session, result);
 		if(result.hasErrors()) { 
-			 return "redirect:/login"; 
+			 return "thymeleaf/login"; 
 		}else {
-		Integer i=loginService.patientLogin(loginCommand, session, result);
-			if(i==1) {
-				return "redirect:/";
-			}else return "redirect:/login";
+			return "redirect:/";
+			
 		}
 	}
+	@GetMapping("employeeLogin")
+	public String employeeLogin( 
+			LoginCommand loginCommand, 
+			Model model
+			) {
+		model.addAttribute("loginCommand", loginCommand);
+		return "thymeleaf/employeeLogin";
+	}
 	@PostMapping("employeeLogin")
-	public String employeeLogin(@Validated LoginCommand loginCommand, HttpSession session,
-			BindingResult result) { //@Validated, BindingResult result
+	public String employeeLogin(@Validated LoginCommand loginCommand
+			,BindingResult result, HttpSession session
+			) { 
+		loginService.employeeLogin(loginCommand, session, result);
 		if(result.hasErrors()) { 
-			 return "redirect:/login"; 
+			 return "thymeleaf/login";
 		}else {
-		Integer i=loginService.employeeLogin(loginCommand, session, result);
-			if(i==1) {
 				return "redirect:/empIndex";
-			}else return "redirect:/login";
 		}
 	}
 	@GetMapping("logout")

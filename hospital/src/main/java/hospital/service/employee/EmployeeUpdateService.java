@@ -97,8 +97,6 @@ public class EmployeeUpdateService {
 	public int employeePwCon(HttpSession session, EmployeeCommand employeeCommand) {
 		AuthInfoDTO auth=(AuthInfoDTO)session.getAttribute("auth");
 		
-		System.out.println(employeeCommand.getEmpPwCon());
-		
 		if(passwordEncoder.matches(employeeCommand.getEmpPwCon(), auth.getUserPw())) {
 			return 1;
 		}else return 0;

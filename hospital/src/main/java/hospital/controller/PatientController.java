@@ -96,7 +96,7 @@ public class PatientController {
 	@PostMapping("patPwCon")
 	public String patPwCon(HttpSession session, PatientCommand patientCommand) { //비밀번호를 확인한다.
 		int i=patientUpdateService.patientPwCon(session, patientCommand);
-		System.out.println(i);
+		
 		if(i==1) {
 			return "redirect:patPwUpdate";
 		}else return "redirect:patPwCon";

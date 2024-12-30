@@ -13,44 +13,80 @@ $(function(){
 		window.open("sectionSearch","소속과검색"
 				,"width=620,height=400,left=30,top=50" )
 	});
+	
+	$("#frm").submit(function(){
+		if($("#empName").val()==null){
+			alert("이름을 입력해주세요");
+			$("#empName").focus();
+			return false;
+		}
+		if($("#empBirth").val()==null){
+			alert("생년월일을 입력해주세요");
+			$("#empBirth").focus();
+			return false;
+		}
+		if($("#sample4_roadAddress").val()==null){
+			alert("주소를 입력해주세요");
+			$("#sample4_roadAddress").focus();
+			return false;
+		}
+		if($("#empPhone").val()==null){
+			alert("전화번호를 입력해주세요");
+			$("#empPhone").focus();
+			return false;
+		}
+		if($("#userEmail").val()==null){
+			alert("이메일을 입력해주세요");
+			$("#userEmail").focus();
+			return false;
+		}
+		if($("#position").val()==null){
+			alert("직무를 입력해주세요");
+			$("#position").focus();
+			return false;
+		}
+		if($("#sectionNum").val()==null){
+			alert("소속과를 입력해주세요");
+			$("#sectionNum").focus();
+			return false;
+		}
+	});
 });
 </script>
 
 </head>
 <body>
 
-<form action="employeeUpdate" method="post" th:object="${dto}" ><!--  dto -->
+<form action="employeeUpdate" method="post" th:object="${dto}" id="frm"><!--  dto -->
 <input type="hidden" name="empPw" value="!111Qqqq" />
 <input type="hidden" name="empPwCon" value="!111Qqqq" />
 <input type="text" th:field="*{empNum}" name="empNum" hidden="hidden"> <br />
 
 
-이름 : <input type="text" name="empName" th:field="*{empName}"/>
+이름 : <input type="text" name="empName" id="empName" th:field="*{empName}"/>
 <br />
 아이디 : <input type="text" name="empId" th:field="*{empId}" readonly="readonly"/>
 <br />
-생년월일 : <input type="date" name="empBirth" th:field="*{empBirth}"><br/>
+생년월일 : <input type="date" name="empBirth" id="empBirth"  th:field="*{empBirth}"><br/>
 
-주소 : <input type="text" name="empAddr" id="sample4_roadAddress" th:field="*{empAddr}" />
+주소 : <input type="text" name="empAddr" id="sample4_roadAddress" th:field="*{empAddr}" readonly="readonly"/>
 <button type="button" onclick="execDaumPostcode();">우편번호검색</button>
 <span th:if="${#fields.hasErrors('empAddr')}" th:errors="*{empAddr}" ></span><br />
 상세주소 : <input type="text" name="empAddrDetail" th:field="*{empAddrDetail}"/><br />
-우편번호 : <input type="text" name="empPost" id="sample4_postcode" th:field="*{empPost}"/><br />
-연락처 : <input type="tel" name="empPhone" th:field="*{empPhone}"/>
+우편번호 : <input type="text" name="empPost" id="sample4_postcode" th:field="*{empPost}" readonly="readonly"/><br />
+연락처 : <input type="tel" name="empPhone" id="empPhone" th:field="*{empPhone}"/>
 <br />
-이메일 : <input type="email" name="empEmail" id="empEamil" th:field="*{empEmail}"/>
-<span id="emialCheck"></span><br/>
+이메일 : <input type="email" name="empEmail" id="userEmail" th:field="*{empEmail}"/>
+<span id="emailCheck"></span><br/>
 성별: <input type="radio" name="empGender" value="M" th:field="*{empGender}"> 남
 	<input type="radio" name="patinetGender" value="F" th:field="*{empGender}"> 여 <br/>
-직무 : <input type="text" name="position" th:field="*{position}"><br/>
-소속과 : <input type="text" name="sectionNum" th:field="*{sectionNum}" readonly="readonly">
+직무 : <input type="text" name="position" id="position" th:field="*{position}"><br/>
+소속과 : <input type="text" name="sectionNum" id="sectionNum" th:field="*{sectionNum}" readonly="readonly">
 <button type="button" id="sectionSearch">소속과 검색</button><br/>
 
 <br />
 
-<input type="submit" value="직원정보 수정 완료" />  | 
-<input type="button" value="탈퇴하기" onclick="javascript:location.href='employeeDelete'"> 
-<input type="button" value="유저목록" onclick="javascript:location.href='employeeList'" hidden="hidden">                      
+<input type="submit" value="직원정보 수정 완료" />                     
 </form>
 </body>
 </html>

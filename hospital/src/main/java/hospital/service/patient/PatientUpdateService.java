@@ -60,9 +60,6 @@ public class PatientUpdateService {
 	public int patientPwCon(HttpSession session, PatientCommand patientCommand) {
 		AuthInfoDTO auth=(AuthInfoDTO)session.getAttribute("auth");
 		
-		System.out.println(patientCommand.getPatientPwCon());
-		
-		String patientPw=auth.getUserPw();
 		if(passwordEncoder.matches(patientCommand.getPatientPwCon(), auth.getUserPw())) {
 			return 1;
 		}else return 0;

@@ -3,13 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript">
+$(function(){
+	$("#frm").submit(function(){
+		if($("#empPw").val()!=$("#empPwCon").val()){
+			alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.")
+			$("#empPw").val("");
+			$("#empPwCon").val("");
+			$("#empPw").focus();
+		}
+		if($("#empPw").val()==null){
+			alert("변경할 비밀번호를 입력하여주세요");
+			$("#empPw").focus();
+		}
+		if($("#empPwCon").val()==null){
+			alert("비밀번호확인을 입력하여주세요");
+			$("#empPwCon").focus();
+		}
+		
+	});
+});
+</script>
 </head>
 <body>
-비밀번호 변경<br/>
+직원 비밀번호 변경<br/>
 변경할 비밀번호를 입력하여주세요<br/>
-<form action="empPwUpdate"  method="post">
-변경할 비밀번호: <input type="password" name="empPw"><br/>
-변경할 비밀번호 확인 : <input type="password" name="empPwCon">
+<form action="empPwUpdate"  method="post" id="frm">
+변경할 비밀번호: <input type="password" name="empPw" id="empPw"><br/>
+변경할 비밀번호 확인 : <input type="password" name="empPwCon" id="empPwCon">
 <input type="submit" value="입력완료">
 </form>
 </body>

@@ -23,7 +23,7 @@ empIndex, 직원로그인 후 진입하는 화면 <br>
 <br /><br />
 <th:block  th:if="${session.auth==null}">
 
-<a href="login">로그인</a> 현재 로그아웃상태입니다.<br/>
+<a href="login/employeeLogin">로그인</a> 현재 로그아웃상태입니다.<br/>
 </th:block>
 <th:block th:if="${session.auth!=null}"> 
 <a href="login/logout">로그아웃</a> 현재 로그인 상태입니다.<br/>
