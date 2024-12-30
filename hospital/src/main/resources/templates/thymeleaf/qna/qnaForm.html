@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="/qna/qnaForm" method="post">
+<table width="600" border="1">
+	<tr><td><select name="qnaType">
+			<option value="문의">문의</option>
+			<option value="건의">건의</option>
+		</select></td>
+		<td align="right"><input type="submit" id="btnInsert" value="등록하기" /></td>
+	</tr>
+	<tr><th>게시글번호</th>
+		<td><input type="text" name="qnaNum" th:value="${autoNum}" /></td>
+	</tr>
+	<tr><th>제목</th>
+		<td><input type="text" name="qnaTitle" /></td>
+	</tr>
+	<tr><th>내용</th>
+		<td><textarea cols="50" rows="10" name="qnaQContent"></textarea></td>
+	</tr>
+</table>
+</form>
+</body>
+</html>

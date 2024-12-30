@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.//EN"
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hospital.mapper.MedicalMapper">
+<insert id="medicalInsert" parameterType="medical">
+	insert into medical(medical_num, receipt_num, patient_num, diagnostic_name
+			, diagnostic_content, medicine_prescript
+			, examination_prescript, handle_prescript, input_date, emp_num)
+	values(#{medicalNum}, #{receiptNum}, #{patientNum}, #{diagnosticName}
+			, #{diagnosticContent}, #{medicinePrescript}, #{examinationPrescript}
+			, #{handlePrescript}, sysdate, #{empNum})
+</insert>
+<!-- <update id="medicalMerge" parameterType="medical">
+merge into medical m 
+	using (select receipt_num from receipt where receipt_num=#{receiptNum}) r
+	on (m.receipt_num = r.receipt_num)
+	when matched then
+	update set diagnostic_name =#{diagnosticName}, diagnostic_content =#{diagnosticContent}
+	, medicine_prescript =#{medicinePrescript}, examination_prescript =#{examinationPrescript}
+	, handle_prescript =#{handlePrescript}, input_date =sysdate
+	when not matched then
+	insert(medical_num, receipt_num, patient_num, diagnostic_name
+			, diagnostic_content, medicine_prescript
+			, examination_prescript, handle_prescript, input_date, emp_num)
+	values(#{medicalNum}, #{receiptNum}, #{patientNum}, #{diagnosticName}
+			, #{diagnosticContent}, #{medicinePrescript}, #{examinationPrescript}
+			, #{handlePrescript}, sysdate, #{empNum})
+</update> -->
+<select id="medicalSelectList" resultType="medical">
+	select medical_num, receipt_num, patient_num, input_date
+	from medical
+	order by medical_num
+</select>
+<select id="medicalCount" resultType="integer">
+	select count(*) from medical
+</select>
+<select id="medicalSelectOne" parameterType="string" resultType="medical">
+	select medical_num, receipt_num, patient_num, diagnostic_name, diagnostic_content, medicine_prescript
+			, examination_prescript, handle_prescript, input_date, emp_num
+	from medical
+	where medical_num = #{medicalNum}
+</select>
+<update id="medicalUpdate" parameterType="medical">
+	update medical
+	set diagnostic_name = #{diagnosticName}, diagnostic_content = #{diagnosticContent}
+	, medicine_prescript = #{medicinePrescript}, examination_prescript = #{examinationPrescript}
+	, handle_prescript = #{handlePrescript}, input_date = sysdate
+	where medical_num = #{medicalNum}
+</update>
+</mapper>

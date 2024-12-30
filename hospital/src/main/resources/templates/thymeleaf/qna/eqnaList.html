@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<table width="600" border=1 align="center">
+	<tr><th>게시글번호</th><th>제목</th></tr>
+	<tr th:each="dto : ${list}">
+		<th>[[${dto.qnaNum}]]</th>
+		<th><a th:href="|qnaAnswer?qnaNum=${dto.qnaNum}|">[[${dto.qnaType}]] : [[${dto.qnaTitle}]]</a></th>
+	</tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+	"-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="qnaMapperSql">
+<insert id="qnaInsert" parameterType="qna">
+	insert into qna(qna_num, patient_num, qna_type, qna_title, qna_qcontent
+			, qna_qdate)
+	values(#{qnaNum}, #{patientNum}, #{qnaType}, #{qnaTitle}, #{qnaQContent}
+			, sysdate)
+</insert>
+<select id="qnaList" parameterType="hashmap" resultType="qna">
+	select qna_num, emp_num, p.patient_num, qna_type, qna_title, qna_qcontent, qna_qdate
+			, qna_adate, qna_acontent, patient_id
+	from qna q left outer join patient p 
+	on q.patient_num = p.patient_num
+	<trim prefix="where" prefixOverrides="AND | OR">
+		<if test="qnaNum != null">
+			qna_num = #{qnaNum}
+		</if>
+	</trim>	
+</select>
+<delete id="qnaDelete" parameterType="string">
+	delete from qna where qna_num = #{qnaNum}
+</delete>
+<update id="qnaUpdate" parameterType="qna">
+	update qna
+	set qna_title = #{qnaTitle}
+		, qna_qcontent = #{qnaQContent}
+		, qna_type = #{qnaType}
+	where qna_num = #{qnaNum}
+</update>
+<update id="qnaAnswerUpdate" >
+	update qna
+	set emp_num = #{empNum}
+		, qna_acontent = #{qnaAContent}
+		, qna_adate = sysdate
+	where qna_num = #{qnaNum}
+</update>
+</mapper>

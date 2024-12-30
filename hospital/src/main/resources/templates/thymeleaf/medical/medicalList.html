@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+외래진료EMR리스트
+<button type="button" th:attr="onclick=|javascript:location.href='medicalForm'|">진료EMR 작성</button>
+<table border="1">
+    <form action="medicalList" method="get">
+		<tr>
+			<td colspan=4>
+				<input type="search" name="searchWord" size=60 th:value="${searchWord}"/>
+				<input type="submit" value="검색" />
+			</td>
+		</tr>
+	</form>
+      <tr><td>진료번호</td><td>접수/예약번호</td><td>환자번호</td><td>입력일시</td></tr>
+ 		<tr th:each="dto : ${list}">
+ 			<td><a th:href="|medicalInfo?medicalNum=${dto.medicalNum}|">[[${dto.medicalNum}]]</a></td>
+ 			<td>[[${dto.receiptNum}]]</td>
+ 			<td>[[${dto.patientNum}]]</td>
+ 			<td>[[${#dates.format(dto.inputDate, 'yyyy-MM-dd HH:mm')}]]</td>
+ 		</tr>
+ 		<tr>
+		<th colspan="6" style="text-align: center;">
+			<span th:if="${page <= 1}">[이전]</span>
+			<span th:if="${page > 1}">
+			<a th:href="|medicalList?page=${page - 1}&searchWord=${searchWord}|">[이전]</a>
+			</span>
+			<th:block th:each="i : ${#numbers.sequence(startPageNum, endPageNum)}">
+				[<a th:href="|medicalList?page=${i}&searchWord=${searchWord}|">[[${i}]]</a>]
+			</th:block>
+			<span th:if="${page < maxPage}">
+			<a th:href="@{medicalList?(page=${page + 1},searchWord=${searchWord})}">[다음]</a>
+			</span>
+			<span th:if="${page >= maxPage}">
+			[다음]
+			</span>			
+		</th>
+		</tr>
+ 	</table>
+</body>
+</html>

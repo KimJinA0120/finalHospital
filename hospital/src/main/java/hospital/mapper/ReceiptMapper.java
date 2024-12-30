@@ -20,4 +20,6 @@ public interface ReceiptMapper {
 			,@Param(value="searchWord") String searchWord);
 	public int patSelectListCount(String searchWord);
 	
+	public String getPatientNum();
+	
 }
