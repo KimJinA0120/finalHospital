@@ -9,13 +9,56 @@
 	<a href="inspectionWrite">검사예약</a> <br>
 	<a href="/">홈으로</a>
 </div>
+<br>
+	<form action="inspectionList" method="get" align="center">
+			<tr>
+				<td>
+					<select name="kind">
+						<option>방사선</option>
+						<option>임상병리</option>
+						<option>모두</option>
+					</select>
+				</td>
+				<td colspan="4">
+					검색 : 
+					<input type="search" name="searchWord" size="50" th:value="${searchWord}"/>
+					<input type="submit" value="검색"/>
+				</td>
+			</tr>
+	</form>
+	<br>
 	<table border="1" width="600" align="center">
-		<tr><th>검사예약번호</th><th>검사명</th><th>검사날짜</th><th>검사시행상황</th></tr>
+		<tr><th>검사종류</th><th>검사예약번호</th><th>검사명</th><th>검사날짜</th><th>검사시행상황</th></tr>
 		<tr th:each="dto : ${list}">
+			<th th:if="${dto.inspectionKind=='cinical'}">
+				임상병리
+			</th>
+			<th th:if="${dto.inspectionKind=='radiation'}">
+				방사선
+			</th>
 			<th><a th:href="|inspectionDetail?inspectionNum=${dto.inspectionNum}|">[[${dto.inspectionNum}]]</a></th>
 			<th>[[${dto.inspectionName}]]</th>
 			<th>[[${#temporals.format(dto.inspectionDate,'yyyy-MM-dd HH:mm')}]]</th>
 			<th>[[${dto.inspectionStatus}]]</th>
+		</tr>
+		<tr align="center"><td colspan="7">
+			<th:block th:if="${page <= 1}">
+				[이전]
+			</th:block>
+			<th:block th:if="${page > 1}">
+				<a th:href="@{inspectionList(page=${page-1}, searchWord=${searchWord}, kind=${kind})}">[이전]</a>
+			</th:block>
+			
+			<th:block th:each=" i : ${#numbers.sequence(startPageNum, endPageNum)}">
+				<a th:href="@{inspectionList(page=${i}, searchWord=${searchWord}, kind=${kind})}">[[${i}]]</a>
+			</th:block>
+			
+			<th:block th:if="${page >= maxPage}">
+				[다음]
+			</th:block>
+			<th:block th:if="${page < maxPage}">
+				<a th:href="@{inspectionList(page=${page+1},searchWord=${searchWord}, kind=${kind})}">[다음]</a>
+			</th:block>
 		</tr>
 	</table>
 </body>

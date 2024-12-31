@@ -15,4 +15,5 @@ public class InspectionDTO {
 	String wardprescriptNum;
 	String medicalNum;
 	String inspectionStatus;
+	String inspectionKind;
 }

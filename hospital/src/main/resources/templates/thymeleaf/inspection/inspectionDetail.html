@@ -26,7 +26,15 @@
 </table>
 <br>
 <div align="center">
+	<th:block th:if="${dto.inspectionStatus=='검사미시행'}">
+	<p th:if="${dto.inspectionKind=='cinical'}">
+		<a th:href="|../clinical/clinicalWrite?inspectionNum=${dto.inspectionNum}|">검사결과 기록작성</a> <br>
+	</p>
+	<p th:if="${dto.inspectionKind=='radiation'}">
+		<a th:href="|../radiation/radiationWrite?inspectionNum=${dto.inspectionNum}|">검사결과 기록 작성</a> <br>
+	</p>
 	<a th:href="|inspectionModify?inspectionNum=${dto.inspectionNum}|">수정하기</a> <br>
+	</th:block>
 	<a th:href="|inspectionDelete?inspectionNum=${dto.inspectionNum}|">삭제하기</a>
 </div>
 </body>

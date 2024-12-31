@@ -10,7 +10,7 @@ $(function(){
 		window.open("/surgery/operatingRoomList", "operatingRoomList", "width=315, height=200, top=100, left=100");
 	})
 	$("#semp").click(function(){
-		window.open("/employee/sempSearch", "sempSearch", "width=600, height=400, top=100, left=100");
+		window.open("/employee/doctorSearch", "doctorSearch", "width=600, height=400, top=100, left=100");
 	})
 })
 </script>
@@ -29,7 +29,7 @@ $(function(){
 		</tr>
 		<tr>
 			<th>수술날짜</th>
-			<td><input type="date" name="surgeryDate"/></td>
+			<td><input type="date" name="surgeryDate" id="surgeryDate"/></td>
 		</tr>
 		<tr>
 			<th>집도의</th>

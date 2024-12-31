@@ -17,13 +17,13 @@ public class SurgeryAppointmentListService {
 	SurgeryMapper surgeryMapper;
 	@Autowired
 	StartEndPageService startEndPageService;
-	public void execute(int page, String searchWord, Model model) {
+	public void execute(int page, String searchWord, String kind, Model model) {
 		int limit = 10;
-		StartEndPageDTO sepDTO = startEndPageService.execute(page, limit, searchWord);
+		StartEndPageDTO sepDTO = startEndPageService.execute(page, limit, searchWord, null);
 		
 		List<SurgeryAppointmentDTO> list = surgeryMapper.surgeryAppointmentList(sepDTO);
 		
 		int count = surgeryMapper.surgeryAppointmentCount(searchWord);
-		startEndPageService.execute(page, limit, count, searchWord, list, model);
+		startEndPageService.execute(page, limit, count, searchWord, list, model, null);
 	}
 }

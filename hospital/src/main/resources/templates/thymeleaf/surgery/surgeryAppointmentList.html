@@ -9,6 +9,7 @@
 <body>
 	<div align="center">
 		<a href="surgeryAppointment">수술예약하기</a> <br>
+		<a href="surgeryScheduler">수술예약 스케쥴러</a> <br>
 		<a href="/">홈으로</a> <br>
 	</div>
 	<form action="surgeryAppointmentList" method="get" align="center">
@@ -43,7 +44,7 @@
 			</th:block>
 			
 			<th:block th:each=" i : ${#numbers.sequence(startPageNum, endPageNum)}">
-				<a th:href="@{sureryAppointmentLisst(page=${i}, searchWord=${searchWord})}">[[${i}]]</a>
+				<a th:href="@{surgeryAppointmentList(page=${i}, searchWord=${searchWord})}">[[${i}]]</a>
 			</th:block>
 			
 			<th:block th:if="${page >= maxPage}">

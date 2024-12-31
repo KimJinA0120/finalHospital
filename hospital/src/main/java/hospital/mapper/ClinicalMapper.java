@@ -11,4 +11,5 @@ import hospital.domain.ClinicalInspectionDTO;
 public interface ClinicalMapper {
 	public int clinicalInsert(ClinicalDTO dto);
 	public List<ClinicalInspectionDTO> clinicalAllSelect();
+	public ClinicalDTO clinicalOneSelect(String clinicalNum);
 }

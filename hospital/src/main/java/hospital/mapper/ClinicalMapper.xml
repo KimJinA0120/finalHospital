@@ -28,4 +28,8 @@
 	from clinical c join inspection i
 	on c.inspection_num = i.inspection_num
 </select>
+<select id="clinicalOneSelect" parameterType="string" resultType="clinical">
+	select <include refid="clinicalColumns"/> from clinical
+	where clinical_num = #{clinicalNum}
+</select>
 </mapper>

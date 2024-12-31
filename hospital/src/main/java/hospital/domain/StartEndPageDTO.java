@@ -12,5 +12,6 @@ public class StartEndPageDTO {
 	int startRow;
 	int endRow;
 	String searchWord;
+	String kind;
 	
 }

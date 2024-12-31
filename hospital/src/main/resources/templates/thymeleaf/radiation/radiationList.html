@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>방사선 검사 리스트</title>
+</head>
+<body>
+<table border="1" width="600" align="center">
+	<tr><th>방사선 번호</th><th>검사명</th><th>의료기사</th><th>검사날짜</th></tr>
+	<tr th:each="dto : ${list}">
+		<td><a th:href="|radiationDetail?radiationNum=${dto.radiationDTO.radiationNum}|">[[${dto.radiationDTO.radiationNum}]]</a></td>
+		<td>[[${dto.inspectionDTO.inspectionName}]]</td>
+		<td>[[${dto.radiationDTO.empNum}]]</td>
+		<td>[[${#temporals.format(dto.inspectionDTO.inspectionDate,'yyyy-MM-dd HH:mm')}]]</td>
+	</tr>
+</table>
+<div align="center">
+<a href="../inspection/inspectionList">검사 예약 리스트로 돌아가기</a>
+</div>
+</body>
+</html>

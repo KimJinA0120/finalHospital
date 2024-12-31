@@ -4,14 +4,51 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="hospital.mapper.InspectionMapper">
 	<sql id="inspectionColumns">
-		INSPECTION_NUM, WARDPRESCRIPT_NUM, MEDICAL_NUM, INSPECTION_NAME, INSPECTION_DATE, INSPECTION_STATUS
+		INSPECTION_NUM, WARDPRESCRIPT_NUM, MEDICAL_NUM, INSPECTION_NAME, INSPECTION_DATE, INSPECTION_STATUS, INSPECTION_KIND
 	</sql>
 	<insert id="inspectionInsert" parameterType="inspection">
 		insert into inspection ( <include refid="inspectionColumns"/>)
-		values (#{inspectionNum}, #{wardprescriptNum}, #{medicalNum}, #{inspectionName}, #{inspectionDate}, '검사미시행')
+		values (#{inspectionNum}, #{wardprescriptNum}, #{medicalNum}, #{inspectionName}, #{inspectionDate}, '검사미시행', #{inspectionKind})
 	</insert>
-	<select id="inspectionAllSelect" resultType="inspection">
-		select <include refid="inspectionColumns"/> from inspection
+	<update id="inspectionStatusUpdate" parameterType="string">
+		update inspection
+		set INSPECTION_STATUS = '검사완료'
+		where INSPECTION_NUM = #{inspectionNum}
+	</update>
+	<select id="inspectionAllSelect" resultType="inspection" parameterType="startEndPage">
+		select * from ( 
+			select ROW_NUMBER() over (order by inspection_num) as rn,
+			 	<include refid="inspectionColumns"/>
+			from inspection
+		<trim prefix="where" prefixOverrides="AND | OR">
+			<if test="searchWord != null">
+				(inspection_num like '%' || #{searchWord} || '%'
+				or inspection_name like '%' || #{searchWord} || '%')
+			</if>
+			<if test="kind == '방사선'">
+				and inspection_kind = 'radiation'
+			</if>
+			<if test="kind == '임상병리'">
+				and inspection_kind = 'cinical'
+			</if>
+		</trim>
+		)
+		where rn between #{startRow} and #{endRow}
+	</select>
+	<select id="inspectionCount" parameterType="string" resultType="integer">
+		select count(*) from inspection
+		<trim prefix="where" prefixOverrides="AND | OR">
+		<if test='searchWord != null'>
+			(inspection_num like '%' || #{searchWord} || '%'
+			or inspection_name like '%' || #{searchWord} || '%')
+		</if>
+		<if test='kind == "방사선"'>
+			and inspection_kind = 'radiation'
+		</if>
+		<if test='kind == "임상병리"'>
+			and inspection_kind = 'cinical'
+		</if>
+		</trim>
 	</select>
 	<select id="inspectionOneSelect" parameterType="string" resultType="inspection">
 		select <include refid="inspectionColumns"/> from inspection

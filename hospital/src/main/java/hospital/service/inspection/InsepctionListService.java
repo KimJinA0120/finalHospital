@@ -7,14 +7,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import hospital.domain.InspectionDTO;
+import hospital.domain.StartEndPageDTO;
 import hospital.mapper.InspectionMapper;
+import hospital.service.StartEndPageService;
 
 @Service
 public class InsepctionListService {
 	@Autowired
 	InspectionMapper inspectionMapper;
-	public void execute(Model model) {
-		List<InspectionDTO> list = inspectionMapper.inspectionAllSelect();
-		model.addAttribute("list", list);
+	@Autowired
+	StartEndPageService startEndPageService;
+	public void execute(int page, String searchWord, String kind, Model model) {
+		int limit = 10;
+		StartEndPageDTO sepDTO = startEndPageService.execute(page, limit, searchWord, kind);
+		
+		List<InspectionDTO> list = inspectionMapper.inspectionAllSelect(sepDTO);
+		
+		int count = inspectionMapper.inspectionCount(searchWord, kind);
+		startEndPageService.execute(page, limit, count, searchWord, list, model, kind);
 	}
 }

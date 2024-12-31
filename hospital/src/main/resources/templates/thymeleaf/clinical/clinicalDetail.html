@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>임상병리 상세페이지</title>
+</head>
+<body>
+<table border="1" width="600" align="center">
+	<tr><th>방사선 번호</th><td>[[${dto.clinicalNum}]]</td></tr>
+	<tr><th>소견서 내용</th><td>[[${dto.clinicalContent}]]</td></tr>
+	<tr><th>의료기사</th><td>[[${dto.empNum}]]</td></tr>
+	<tr><th>검사예약번호</th><td><a th:href="|../inspection/inspectionDetail?inspectionNum=${dto.inspectionNum}|">[[${dto.inspectionNum}]]</a></td></tr>
+</table>
+</body>
+</html>

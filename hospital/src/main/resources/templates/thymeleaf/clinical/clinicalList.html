@@ -5,17 +5,17 @@
 <title>임상병리 리스트</title>
 </head>
 <body>
-<div align="center">
-	<a href="clinicalWrite">검사 소견서 작성</a>
-</div>
 	<table border="1" width="600" align="center">
 		<tr><th>임상병리 번호</th><th>검사명</th><th>의료기사</th><th>검사날짜</th></tr>
 		<tr th:each="dto : ${list}">
-			<td>[[${dto.clinicalDTO.clinicalNum}]]</td>
+			<td><a th:href="|clinicalDetail?clinicalNum=${dto.clinicalDTO.clinicalNum}|">[[${dto.clinicalDTO.clinicalNum}]]</a></td>
 			<td>[[${dto.inspectionDTO.inspectionName}]]</td>
 			<td>[[${dto.clinicalDTO.empNum}]]</td>
 			<td>[[${#temporals.format(dto.inspectionDTO.inspectionDate,'yyyy-MM-dd HH:mm')}]]</td>
 		</tr>
 	</table>
+<div align="center">
+	<a href="../inspection/inspectionList">검사 예약 리스트로 돌아가기</a>
+</div>
 </body>
 </html>

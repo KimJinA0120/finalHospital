@@ -57,8 +57,9 @@ public class SurgeryController {
 	public String surgeryAppointmentList(
 			@RequestParam(value="page", required = false, defaultValue = "1") int page,
 			@RequestParam(value="searchWord", required = false) String searchWord,
+			@RequestParam(value="kind", required = false) String kind,
 			Model model) {
-		surgeryAppointmentListService.execute(page, searchWord, model);
+		surgeryAppointmentListService.execute(page, searchWord, kind, model);
 		return "thymeleaf/surgery/surgeryAppointmentList";
 	}
 	@PostMapping("surApsDelete") // 리스트에서 수술예약 선택 삭제
@@ -147,9 +148,16 @@ public class SurgeryController {
 	public String surApList(
 			@RequestParam(value="page", required= false, defaultValue = "1") int page, 
 			@RequestParam(value="searchWord", required= false) String searchWord, 
+			@RequestParam(value="kind", required=false) String kind,
 			Model model) {
-		surgeryAppointmentListService.execute(page, searchWord, model);
+		surgeryAppointmentListService.execute(page, searchWord, kind, model);
 		return "thymeleaf/surgery/surApList";
+	}
+	
+	//수술스케쥴러
+	@GetMapping("surgeryScheduler")
+	public String surgeryScheduler() {
+		return "thymeleaf/surgery/surgeryScheduler";
 	}
 	
 }

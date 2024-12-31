@@ -12,6 +12,9 @@
 <table border="1" width="600" align="center">
 	<tr><th>검사예약 번호</th>
 		<td><input type="text" name="inspectionNum" th:value="${autoNum}" readonly="readonly"/></td></tr>
+	<tr><th>검사종류</th>
+		<td><input type="radio" name="inspectionKind" value="radiation"/>방사선
+			<input type="radio" name="inspectionKind" value="cinical"/>임상병리</td></tr>
 	<tr><th>검사명</th>
 		<td><input type="text" name="inspectionName"/></td></tr>
 	<tr><th>검사날짜</th>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hospital.mapper.RadiationMapper">
+<sql id="radiationColumns">
+	RADIATION_NUM, INSPECTION_NUM, EMP_NUM, DECODE_CONTENT
+</sql>
+<insert id="radiationInsert" parameterType="radiation">
+	insert into radiation( <include refid="radiationColumns"/> )
+	values(#{radiationNum}, #{inspectionNum}, #{empNum}, #{decodeContent})
+</insert>
+<resultMap type="radiatInspect" id="radiatInspectResultMap">
+	<association property="radiationDTO" javaType="radiation">
+		<id column="RADIATION_NUM" jdbcType="VARCHAR" property="radiationNum"/>
+		<result column="INSPECTION_NUM" jdbcType="VARCHAR" property="inspectionNum"/>
+		<result column="EMP_NUM" jdbcType="VARCHAR" property="empNum"/>
+	</association>
+	<association property="inspectionDTO" javaType="inspection">
+		<id column="INSPECTION_NUM" jdbcType="VARCHAR" property="inspectionNum"/>
+		<result column="INSPECTION_NAME" jdbcType="VARCHAR" property="inspectionName"/>
+		<result column="INSPECTION_DATE" jdbcType="DATE" property="inspectionDate"/>
+	</association>
+</resultMap>
+<select id="radiationAllSelect" resultMap="radiatInspectResultMap">
+	select radiation_num, emp_num
+		, r.inspection_num, inspection_name, inspection_date
+		from radiation r join inspection i
+		on r.inspection_num = i.inspection_num
+</select>
+<select id="radiationOneSelect" resultType="radiation" parameterType="string">
+	select <include refid="radiationColumns"/> from radiation
+	where radiation_num = #{radiationNum}
+</select>
+</mapper>

@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import hospital.command.InspectionCommand;
 import hospital.service.AutoNumService;
@@ -32,8 +33,12 @@ public class InspectionController {
 	InspectionDeleteService inspectionDeleteService;
 	
 	@GetMapping("inspectionList") // 검사예약 리스트
-	public String inspectionList(Model model) {
-		insepctionListService.execute(model);
+	public String inspectionList(
+			@RequestParam(value="page", required = false, defaultValue = "1") int page,
+			@RequestParam(value="searchWord", required = false) String searchWord,
+			@RequestParam(value="kind", required = false) String kind,
+			Model model) {
+		insepctionListService.execute(page, searchWord, kind, model);
 		return "thymeleaf/inspection/inspectionList";
 	}
 	@GetMapping("inspectionWrite") // 검사예약 화면

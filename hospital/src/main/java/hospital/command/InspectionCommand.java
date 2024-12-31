@@ -14,4 +14,5 @@ public class InspectionCommand {
 	LocalDateTime inspectionDate;
 	String wardprescriptNum;
 	String medicalNum;
+	String inspectionKind;
 }
