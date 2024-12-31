@@ -33,7 +33,7 @@ public class EmployeeUpdateService {
 		dto.setEmpNum(employeeCommand.getEmpNum());
 		
 		  dto.setEmpName(employeeCommand.getEmpName());
-		  dto.setEmpJumin(employeeCommand.getEmpJumin());
+		  //dto.setEmpJumin(employeeCommand.getEmpJumin());
 		  dto.setEmpBirth(employeeCommand.getEmpBirth());
 		  dto.setEmpGender(employeeCommand.getEmpGender());
 		  dto.setEmpId(employeeCommand.getEmpId());

@@ -24,7 +24,7 @@ public class EmployeeWriteService {
 		EmployeeDTO dto = new EmployeeDTO();
 		dto.setEmpNum(employeeCommand.getEmpNum());
 		dto.setEmpName(employeeCommand.getEmpName());
-		dto.setEmpJumin(employeeCommand.getEmpJumin());
+		dto.setEmpJumin(employeeCommand.getEmpJuminF()+employeeCommand.getEmpJuminB());
 		dto.setEmpBirth(employeeCommand.getEmpBirth());
 		dto.setEmpGender(employeeCommand.getEmpGender());
 		dto.setEmpId(employeeCommand.getEmpId());

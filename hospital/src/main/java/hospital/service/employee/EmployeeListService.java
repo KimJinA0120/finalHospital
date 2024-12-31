@@ -22,37 +22,37 @@ public class EmployeeListService {
 	@Autowired
 	StartEndPageService startEndPageService;
 
-	public void execute(String searchWord, Integer page, Model model) {
+	public void execute(String searchWord, Integer page, Model model) { //cngn null자리에 Kind 추가하기
 		int limit=10;
 		
-		StartEndPageDTO sepDTO=startEndPageService.execute(page, limit, searchWord);
+		StartEndPageDTO sepDTO=startEndPageService.execute(page, limit, searchWord, null);
 		List<EmployeeDTO> list=employeeMapper.employeeSelectAll(sepDTO);
 		
 		Integer count=employeeMapper.employeeCount();
-		startEndPageService.execute(page,limit,count,searchWord,list, model);
+		startEndPageService.execute(page,limit,count,searchWord,list, model, null);
 		//model.addAttribute("list", list);
 		
 	}
 
-	public void employeeSearch(String searchWord, Integer page, Model model) {
+	public void employeeSearch(String searchWord, Integer page, Model model) { //추후 null자리에 kind 추가하기
 		int limit=3;
 		
-		StartEndPageDTO sepDTO=startEndPageService.execute(page, limit, searchWord);
+		StartEndPageDTO sepDTO=startEndPageService.execute(page, limit, searchWord, null);
 		List<EmployeeDTO> list=employeeMapper.employeeSelectAll(sepDTO);
 		
 		Integer count=employeeMapper.employeeCount();
-		startEndPageService.execute(page,limit,count,searchWord,list, model);
+		startEndPageService.execute(page,limit,count,searchWord,list, model, null);
 		
 	}
 
 	public void doctorSearch(String searchWord, Integer page, Model model) {
 		int limit=5;
 		
-		StartEndPageDTO sepDTO=startEndPageService.execute(page, limit, searchWord);
+		StartEndPageDTO sepDTO=startEndPageService.execute(page, limit, searchWord, null);
 		List<DoctorDTO> list=doctorMapper.doctorSelectAll(sepDTO);
 		
 		Integer count=doctorMapper.doctorCount();
-		startEndPageService.execute(page,limit,count,searchWord,list, model);
+		startEndPageService.execute(page,limit,count,searchWord,list, model, null);
 		
 	}
 

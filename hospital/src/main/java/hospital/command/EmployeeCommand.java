@@ -14,7 +14,8 @@ public class EmployeeCommand {
     String empPw ;
     String empPwCon;
     String empPhone ;
-    String empJumin ;
+    String empJuminF ;
+    String empJuminB ;
     String empGender ;
     String empAddr ;
     String empAddrDetail ;

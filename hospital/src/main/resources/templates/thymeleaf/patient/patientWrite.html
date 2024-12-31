@@ -24,9 +24,14 @@ $(function(){
 			$("#patientName").focus();
 			return false;
 		}
-		if($("#patientJumin").val()==null){
-			alert("주민번호를 입력해주세요");
-			$("#patientJumin").focus();
+		if($("#patientJuminF").val()==null){
+			alert("주민번호 앞자리를 입력해주세요");
+			$("#patientJuminF").focus();
+			return false;
+		}
+		if($("#patientJuminB").val()==null){
+			alert("주민번호 뒷자리를 입력해주세요");
+			$("#patientJuminB").focus();
 			return false;
 		}
 		if($("#patientBirth").val()==null){
@@ -75,7 +80,8 @@ $(function(){
 환자번호: 	<input type="text" name="patientNum" th:value="${patientCommand.patientNum}" readonly="readonly"/>번호 자동부여<br />
 	
 이름 : <input type="text" name="patientName" id="patientName"  th:value="${patientCommand.patientName}" /> <br />
-주민등록번호 : <input type="number" name="patientJumin" id="patientJumin" th:value="${patientCommand.patientJumin}" /> <br />	
+주민등록번호 : <input type="number" name="patientJuminF" id="patientJuminF" th:value="${patientCommand.patientJuminF}" />
+<input type="number" name="patientJuminB" id="patientJuminB" th:value="${patientCommand.patientJuminB}" /> <br />	
 생년월일: <input type="date" name="patientBirth" id="patientBirth"  th:value="${patientCommand.patientBirth}" /> <br />
 아이디 : <input type="text" name="patientId" id="userId" th:value="${patientCommand.patientId}" />
 				<span id="idCheck"></span>  <br />

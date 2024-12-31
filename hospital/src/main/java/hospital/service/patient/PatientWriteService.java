@@ -21,7 +21,7 @@ public class PatientWriteService {
 		PatientDTO dto = new PatientDTO();
 		dto.setPatientNum(patientCommand.getPatientNum());
 		dto.setPatientName(patientCommand.getPatientName());
-		dto.setPatientJumin(patientCommand.getPatientJumin());
+		dto.setPatientJumin(patientCommand.getPatientJuminF()+patientCommand.getPatientJuminB());
 		dto.setPatientBirth(patientCommand.getPatientBirth());
 		dto.setPatientGender(patientCommand.getPatientGender());
 		dto.setPatientId(patientCommand.getPatientId());

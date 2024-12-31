@@ -10,7 +10,8 @@ import lombok.Data;
 public class PatientCommand {
 	String patientNum ;
     String patientName ;
-    String patientJumin;
+    String patientJuminF;
+    String patientJuminB;
     @DateTimeFormat(pattern="yyyy-MM-dd")
     Date patientBirth ;
     String patientGender;

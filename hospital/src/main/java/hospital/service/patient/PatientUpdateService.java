@@ -25,7 +25,7 @@ public class PatientUpdateService {
 		PatientDTO dto = new PatientDTO();
 		dto.setPatientNum(patientCommand.getPatientNum());
 		dto.setPatientName(patientCommand.getPatientName());
-		dto.setPatientJumin(patientCommand.getPatientJumin());
+		//dto.setPatientJumin(patientCommand.getPatientJumin());
 		dto.setPatientBirth(patientCommand.getPatientBirth());
 		dto.setPatientGender(patientCommand.getPatientGender());
 		dto.setPatientId(patientCommand.getPatientId());

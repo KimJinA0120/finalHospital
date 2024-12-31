@@ -21,11 +21,11 @@ public class PatientListService {
 	public void execute(Integer page, String searchWord, Model model) {
 		int limit=10;
 		
-		StartEndPageDTO sepDTO=startEndPageService.execute(page, limit, searchWord);
+		StartEndPageDTO sepDTO=startEndPageService.execute(page, limit, searchWord, null);
 		List<PatientDTO> list=patientMapper.patientSelectAll(sepDTO);
 		
 		Integer count=patientMapper.patientCount();
-		startEndPageService.execute(page, limit, count,  searchWord, list, model);
+		startEndPageService.execute(page, limit, count,  searchWord, list, model, null);
 		
 		//model.addAttribute("list", list);
 		
@@ -34,11 +34,11 @@ public class PatientListService {
 	public void patientSearch(Integer page, String searchWord, Model model) {
 		int limit=10;
 		
-		StartEndPageDTO sepDTO=startEndPageService.execute(page, limit, searchWord);
+		StartEndPageDTO sepDTO=startEndPageService.execute(page, limit, searchWord, null);
 		List<PatientDTO> list=patientMapper.patientSelectAll(sepDTO);
 		
 		Integer count=patientMapper.patientCount();
-		startEndPageService.execute(page, limit, count,  searchWord, list, model);
+		startEndPageService.execute(page, limit, count,  searchWord, list, model, null);
 		
 		//model.addAttribute("list", list);
 		
