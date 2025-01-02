@@ -20,11 +20,11 @@ public class NursingListService {
 	StartEndPageService startEndPageService;
 	public void execute(int page, String searchWord, Model model) {
 		int limit=10;
-		StartEndPageDTO sepDTO = startEndPageService.execute(page, limit, searchWord);
+		StartEndPageDTO sepDTO = startEndPageService.execute(page, limit, searchWord, null);
 		List<NursingDTO> list = nursingMapper.selectList(sepDTO);
 		Integer count = nursingMapper.count();
 		
-		startEndPageService.execute(page,limit,count,searchWord,list, model);
+		startEndPageService.execute(page,limit,count,searchWord,list, model, null);
 	}
 
 }

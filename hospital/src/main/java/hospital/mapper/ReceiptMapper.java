@@ -14,12 +14,6 @@ public interface ReceiptMapper {
 	public int receiptCount(String searchWord);
 	public int receiptInsert(ReceiptDTO receiptDTO);
 	public int reservationInsert(ReceiptDTO receiptDTO);
-	public List<ReceiptDTO> patSelectList(
-			@Param(value="startRow") int startRow
-			,@Param(value="endRow")  int endRow
-			,@Param(value="searchWord") String searchWord);
-	public int patSelectListCount(String searchWord);
-	
-	public String getPatientNum();
+	public List<ReceiptDTO> reservationSelectList(String patientNum);
 	
 }

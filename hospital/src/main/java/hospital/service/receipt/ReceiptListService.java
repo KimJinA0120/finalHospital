@@ -19,13 +19,13 @@ public class ReceiptListService {
 	StartEndPageService startEndPageService;
 	
 	public void execute(Integer page, String searchWord, Model model) {
-		int limit = 3;
+		Integer limit = 10;
 		
-		StartEndPageDTO sepDTO = startEndPageService.execute(limit, page, searchWord);
+		StartEndPageDTO sepDTO = startEndPageService.execute(page, limit, searchWord, null);
 		List<ReceiptDTO> list = receiptMapper.receiptSelectList(sepDTO);
 		
-		int count = receiptMapper.receiptCount(searchWord);
-		startEndPageService.execute(page, limit, count, searchWord, list, model);
+		Integer count = receiptMapper.receiptCount(searchWord);
+		startEndPageService.execute(page, limit, count, searchWord, list, model, null);
 		
 	}
 }

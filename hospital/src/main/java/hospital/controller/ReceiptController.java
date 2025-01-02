@@ -1,7 +1,5 @@
 package hospital.controller;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,13 +7,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import hospital.command.ReceiptCommand;
+import hospital.domain.AuthInfoDTO;
+import hospital.mapper.LoginMapper;
+import hospital.mapper.PatientMapper;
 import hospital.service.AutoNumService;
-import hospital.service.receipt.PatientsService;
+import hospital.service.employee.EmployeeListService;
+import hospital.service.patient.PatientListService;
+import hospital.service.receipt.PatientReservationService;
 import hospital.service.receipt.ReceiptInsertService;
 import hospital.service.receipt.ReceiptListService;
+import jakarta.servlet.http.HttpSession;
 
 
 @Controller
@@ -28,7 +31,15 @@ public class ReceiptController {
 	@Autowired
 	AutoNumService autoNumService;
 	@Autowired
-	PatientsService patientsService;
+	PatientListService patientListService;
+	@Autowired
+	EmployeeListService employeeListService;
+	@Autowired
+	LoginMapper loginMapper;
+	@Autowired
+	PatientMapper patientMapper;
+	@Autowired
+	PatientReservationService patientReservationService;
 	
 	@GetMapping("receiptList")
 	public String receiptList(@RequestParam(value = "page", required = false, defaultValue = "1") Integer page
@@ -51,17 +62,20 @@ public class ReceiptController {
 		return "redirect:receiptList";
 	}
 	
-	@GetMapping("patients")
-	public String patients() {
-		
-		return "thymeleaf/receipt/patients";
+	@GetMapping("patientSearch")
+	public String patientSearch(@RequestParam(value="searchWord", required=false) String searchWord
+			, @RequestParam(value="page", required=false, defaultValue="1") Integer page
+			, Model model) {
+		patientListService.patientSearch(page, searchWord, model);
+		return "thymeleaf/patient/patientSearch";
 	}
-	@PostMapping("patientsList")
-	public @ResponseBody Map<String, Object> patientsList(
-			@RequestParam(value = "page" , required = false , defaultValue = "1") int page
-			,@RequestParam(value = "searchWord", required = false) String searchWord) {
-		Map<String, Object> map = patientsService.execute(page, searchWord);
-		return map;
+	
+	@GetMapping("doctorSearch")
+	public String doctorSearch(@RequestParam(value="searchWord", required=false) String searchWord
+			, @RequestParam(value="page", required=false, defaultValue="1") Integer page
+			, Model model) {
+		employeeListService.doctorSearch(searchWord, page, model);
+		return "thymeleaf/employee/doctorSearch";
 	}
 	
 	@GetMapping("emp_reservationForm")
@@ -78,9 +92,12 @@ public class ReceiptController {
 	}
 	
 	@GetMapping("reservationForm")
-	public String reservationForm(Model model) {
+	public String reservationForm(Model model, HttpSession session) {
 		String autoNum = autoNumService.execute("r_", 3, "receipt_num", "receipt");
+		AuthInfoDTO auth = (AuthInfoDTO) session.getAttribute("auth");
+		String patientNum = patientMapper.patientNumSelect(auth.getUserId());
 		model.addAttribute("autoNum", autoNum);
+		model.addAttribute("patientNum", patientNum);
 		return "thymeleaf/receipt/reservationForm";
 	}
 	
@@ -88,6 +105,12 @@ public class ReceiptController {
 	public String reservationInsert(ReceiptCommand receiptCommand) {
 		receiptInsertService.execute1(receiptCommand);
 		return "redirect:/";
+	}
+	
+	@GetMapping("patientReservation")
+	public String patientReservation(HttpSession session, Model model) { 
+		patientReservationService.execute(session, model);
+		return "thymeleaf/receipt/patientReservation";
 	}
 	
 }

@@ -2,7 +2,23 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>진료예약</title>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#btn").click(function(){
+		window.open("../patient/patientSearch", "환자검색"
+					,"width=620, height=500, left=30, top=50");
+	});
+	
+	$("#btn1").click(function(){
+		window.open("../employee/doctorSearch", "의사검색"
+					,"width=620, height=500, left=30, top=50");
+	});
+});
+</script>
+</script>
 </head>
 <body>
 <form action="emp_reservationInsert" method="post">

@@ -1,5 +1,7 @@
 package hospital.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import hospital.command.MedicalCommand;
 import hospital.service.AutoNumService;
@@ -14,6 +17,7 @@ import hospital.service.medical.MedicalInfoService;
 import hospital.service.medical.MedicalInsertService;
 import hospital.service.medical.MedicalListService;
 import hospital.service.medical.MedicalUpdateService;
+import hospital.service.medical.ReceiptsService;
 
 
 @Controller
@@ -29,6 +33,9 @@ public class MedicalController {
 	MedicalInfoService medicalInfoService;
 	@Autowired
 	MedicalUpdateService medicalUpdateService;
+	@Autowired
+	ReceiptsService receiptsService;
+	
 	
 	@GetMapping("medicalForm")
 	public String medicalForm(Model model) {
@@ -68,4 +75,15 @@ public class MedicalController {
 		return "redirect:medicalInfo?medicalNum=" + medicalCommand.getMedicalNum();
 	}
 	
+	@GetMapping("receipts")
+	public String receipts() {
+		return "thymeleaf/medical/receipts";
+	}
+	@PostMapping("receiptsList")
+	public @ResponseBody Map<String, Object> receiptsList(
+			@RequestParam(value = "page" , required = false , defaultValue = "1") int page
+			,@RequestParam(value = "searchWord", required = false) String searchWord) {
+		Map<String, Object> map = receiptsService.execute(page, searchWord);
+		return map;
+	}
 }

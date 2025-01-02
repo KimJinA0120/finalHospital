@@ -1,4 +1,4 @@
-package hospital.service.receipt;
+package hospital.service.medical;
 
 import java.util.HashMap;
 import java.util.List;
@@ -8,13 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hospital.domain.ReceiptDTO;
-import hospital.mapper.ReceiptMapper;
+import hospital.mapper.MedicalMapper;
 import hospital.service.StartEndPageService;
 
 @Service
-public class PatientsService {
+public class ReceiptsService {
 	@Autowired
-	ReceiptMapper receiptMapper;
+	MedicalMapper medicalMapper;
 	@Autowired
 	StartEndPageService startEndPageService;
 	
@@ -23,8 +23,8 @@ public class PatientsService {
 		int limit = 3;
 		int startRow = ((page - 1) * limit) + 1; 
 		int endRow = startRow + limit - 1;
-		List<ReceiptDTO> list = receiptMapper.patSelectList(startRow, endRow, searchWord);
-		int count = receiptMapper.patSelectListCount(searchWord);
+		List<ReceiptDTO> list = medicalMapper.receiptSelectList(startRow, endRow, searchWord);
+		int count = medicalMapper.receiptListCount(searchWord);
 		int limitPage = 10; 
 		int startPageNum = (int)((double) page / limitPage + 0.95 - 1) * limitPage + 1;
 		int endPageNum = startPageNum + limitPage - 1;
@@ -41,4 +41,5 @@ public class PatientsService {
 		map.put("maxPage", maxPage);
 		return map;
 	}
+
 }

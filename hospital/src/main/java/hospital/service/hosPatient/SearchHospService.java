@@ -52,12 +52,12 @@ public class SearchHospService {
 
 	public void selectWardPs(int page, String searchWord, Model model) {
 		int limit=10;
-		StartEndPageDTO sepDTO = startEndPageService.execute(page, limit, searchWord);
+		StartEndPageDTO sepDTO = startEndPageService.execute(page, limit, searchWord, null);
 		
 		List<HosPatientDTO> list = hosPatientMapper.searchWardPs(sepDTO);
 		Integer count = hosPatientMapper.searchCount();
 		
-		startEndPageService.execute(page,limit,count,searchWord,list, model);
+		startEndPageService.execute(page,limit,count,searchWord,list, model, null);
 		
 	}
 

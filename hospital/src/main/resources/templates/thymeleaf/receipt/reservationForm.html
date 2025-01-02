@@ -3,15 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <title>진료예약</title>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#btn1").click(function(){
+		window.open("../employee/doctorSearch", "의사검색"
+					,"width=620, height=500, left=30, top=50");
+	});
+});
+
+</script>
 </head>
 <body>
  <form action="reservationInsert" method="post">
     <table border="1">
       <tr><td>예약번호</td><td><input type="text" name="receiptNum" id="receiptNum"  th:value="${autoNum}" readonly="readonly"></td></tr>
-      <tr><td>환자번호</td><td><input type="text" name="patientNum" id="patientNum"></td></tr>
-      <tr><td>담당의사번호</td><td><input type="text" name="empNum">
+      <tr><td>환자번호</td><td><input type="text" name="patientNum" id="patientNum"  th:value="${patientNum}" readonly="readonly"></td></tr>
+      <tr><td>담당의사번호</td><td><input type="text" name="empNum" readonly="readonly" required="required">
       				<button type="button" id="btn1">의사검색</button></td></tr>
-      <tr><td>예약일시</td><td><input type="datetime-local" name="reservationDate"></td></tr>
+      <tr><td>예약일시</td><td><input type="datetime-local" name="reservationDate" required="required"></td></tr>
      </table>
         <button type="submit">예약하기</button>
     </form>

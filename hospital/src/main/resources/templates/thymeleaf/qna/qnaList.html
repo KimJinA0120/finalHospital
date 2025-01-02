@@ -2,11 +2,19 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>문의/건의</title>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script type="text/javascript">
 $(function(){
 	$("#qna1").click(function(){
+		if([[${#strings.isEmpty(session.auth)}]]){
+			popupWindow = window.open("/login/item.login", "login"
+						,"width=315, height=200, top=100, left=100");	
+			popupWindow.onbeforeunload = function(){
+				window.location.reload();
+				}
+		}
+			else{
 			popupWindow = window.open("/qna/qnaForm","문의/건의"
 					,"width=700, heigth=650, top=100, left=100");
 			let popupCheckInterval = setInterval(function(){
@@ -15,6 +23,7 @@ $(function(){
 					qna(); 
 				}
 			}, 500);
+		}
 	});
 });
 

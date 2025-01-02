@@ -1,7 +1,6 @@
 package hospital.command;
 
 
-import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 @Data

@@ -28,12 +28,26 @@ merge into medical m
 			, #{handlePrescript}, sysdate, #{empNum})
 </update> -->
 <select id="medicalSelectList" resultType="medical">
-	select medical_num, receipt_num, patient_num, input_date
+	select * from(select row_number() over(order by medical_num) as rn
+	, medical_num, receipt_num, patient_num, input_date
 	from medical
-	order by medical_num
+	<where>
+		<if test="searchWord != null">
+		medical_num like '%' || #{searchWord} || '%'
+	 	or patient_num like '%' || #{searchWord} || '%'
+	 	</if>
+	 </where>
+	)
+where rn between #{startRow} and #{endRow}	
 </select>
-<select id="medicalCount" resultType="integer">
+<select id="medicalCount" parameterType="string" resultType="integer">
 	select count(*) from medical
+	<where>
+		<if test="searchWord != null">
+		medical_num like '%' || #{searchWord} || '%'
+	 	or patient_num like '%' || #{searchWord} || '%'
+	 	</if>
+	 </where>
 </select>
 <select id="medicalSelectOne" parameterType="string" resultType="medical">
 	select medical_num, receipt_num, patient_num, diagnostic_name, diagnostic_content, medicine_prescript
@@ -48,4 +62,27 @@ merge into medical m
 	, handle_prescript = #{handlePrescript}, input_date = sysdate
 	where medical_num = #{medicalNum}
 </update>
+<select id="receiptSelectList" resultType="receipt">
+	select * from(
+	 select row_number() over(order by receipt_num) as rn
+	, receipt_num, patient_num, emp_num, receipt_date, reservation_date
+	from receipt
+	<where>
+		<if test="searchWord != null">
+		 receipt_num like '%' || #{searchWord} || '%'
+	 	or patient_num like '%' || #{searchWord} || '%'
+	 	</if>
+	 </where>
+	 )
+where rn between #{startRow} and #{endRow}
+</select>
+<select id="receiptListCount" resultType="integer">
+	select count(*) from receipt
+	<where>
+		<if test="searchWord != null">
+			receipt_num like '%' || #{searchWord} || '%'
+			or patient_num like '%' || #{searchWord} || '%'
+		</if>
+	</where>
+</select>
 </mapper>

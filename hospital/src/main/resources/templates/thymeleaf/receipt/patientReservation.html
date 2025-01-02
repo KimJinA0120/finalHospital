@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>예약확인</title>
+</head>
+<body>
+예약확인
+<table border="1">
+      <tr><td>예약일시</td><td>접수/예약번호</td><td>환자번호</td><td>담당의사</td></tr>
+ 		<tr th:each="dto : ${list}">
+ 			<td>[[${#temporals.format(dto.reservationDate, 'yyyy-MM-dd HH:mm')}]]</td>
+ 			<td>[[${dto.receiptNum}]]</td>
+ 			<td>[[${dto.patientNum}]]</td>
+ 			<td>[[${dto.empNum}]]</td>
+ 		</tr>
+ 	</table>
+</body>
+</html>

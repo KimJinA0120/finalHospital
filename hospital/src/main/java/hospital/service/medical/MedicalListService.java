@@ -19,13 +19,13 @@ public class MedicalListService {
 	StartEndPageService startEndPageService;
 	
 	public void execute(Integer page, String searchWord, Model model) {
-		int limit = 3;
+		Integer limit = 10;
 		
-		StartEndPageDTO sepDTO = startEndPageService.execute(limit, page, searchWord);
+		StartEndPageDTO sepDTO = startEndPageService.execute(page, limit, searchWord, null);
 		List<MedicalDTO> list = medicalMapper.medicalSelectList(sepDTO);
 		
-		int count = medicalMapper.medicalCount(searchWord);
-		startEndPageService.execute(page, limit, count, searchWord, list, model);
+		Integer count = medicalMapper.medicalCount(searchWord);
+		startEndPageService.execute(page, limit, count, searchWord, list, model, null);
 	}
 
 }
