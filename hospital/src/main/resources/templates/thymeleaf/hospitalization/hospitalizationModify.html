@@ -8,8 +8,14 @@
 $(function(){
 	$("#bedserch").click(function(){
 		window.open("/WardRoomBed/bedList", "bedList", "width=315, height=200, top=100, left=100");
-	})
-})
+	});
+	$("#docserch").click(function(){
+		window.open("/employee/doctorSearch", "doctorSearch", "width=800, height=800, top=100, left=100");
+	});
+	$("#nurserch").click(function(){
+		window.open("/employee/nurseSearch", "nurseSearch", "width=350, height=230, top=100, left=100");
+	});
+});
 </script>
 
 </head>
@@ -18,13 +24,13 @@ $(function(){
 <form action="hospitalizationUpdate" method="post">
 입원번호 : <input type="text" name="hospitalizationNum" th:value="${dto.hospitalizationNum}" readonly="readonly"><br />
 병상번호 : <input type="text" name="bedNum" th:value="${dto.bedNum}"><button type="button" id="bedserch">병상검색</button><br />
-환자번호 : <input type="text" name="patientNum" th:value="${dto.patientNum}"><br />
+환자번호 : <input type="text" name="patientNum" id="patientNum" th:value="${dto.patientNum}" readonly="readonly"><br />
 입원날짜 : <input type="date" name="inDate" th:value="${#dates.format(dto.inDate, 'yyyy-MM-dd')}"><br />
 퇴원날짜 : <input type="date" name="outDate" th:value="${#dates.format(dto.outDate, 'yyyy-MM-dd')}"><br />
 입원상태 : <input type="radio" name="hospitalizationStatus" value="입원" />입원
 				<input type="radio" name="hospitalizationStatus" value="퇴원"/>퇴원<br />
-담당의사 : <input type="text" name="docNum" th:value="${dto.docNum}"> <button type="button" id="docserch">의사검색</button><br />
-담당간호사 : <input type="text" name="nurNum" th:value="${dto.nurNum}"> <button type="button" id="nurserch">간호사검색</button><br />
+담당의사 : <input type="text" name="docNum" id="docNum" th:value="${dto.docNum}"> <button type="button" id="docserch">의사검색</button><br />
+담당간호사 : <input type="text" name="nurNum" id="nurNum" th:value="${dto.nurNum}"> <button type="button" id="nurserch">간호사검색</button><br />
 <input type="submit" value="입원등록">
 </form>
 </body>
