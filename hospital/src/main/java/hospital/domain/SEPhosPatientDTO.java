@@ -14,5 +14,5 @@ public class SEPhosPatientDTO {
 	String searchWord;
 	
 	String location;
-	String hpStatus;
+	String roomN;
 }
