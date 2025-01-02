@@ -7,17 +7,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import hospital.domain.HospitalizationDTO;
+import hospital.domain.StartEndPageDTO;
 import hospital.mapper.HospitalizationMapper;
+import hospital.service.StartEndPageService;
 
 @Service
 public class EmerHospitalizationListService {
 	@Autowired
 	HospitalizationMapper hospitalizationMapper;
+	@Autowired
+	StartEndPageService startEndPageService;
 	
-	public void execute(Model model) {
-		List<HospitalizationDTO> list = hospitalizationMapper.emerHospitalizationSelectList();
-		model.addAttribute("list", list);
-		
+	public void execute(Integer page, String searchWord, Model model) {
+		int limit = 5;
+		StartEndPageDTO sepDTO = startEndPageService.execute(page, limit, searchWord, null);
+		List<HospitalizationDTO> list = hospitalizationMapper.emerHospitalizationSelectList(sepDTO);
+		int count = hospitalizationMapper.emerHospitalizatonCount(searchWord);
+		startEndPageService.execute(page, limit, count, searchWord, list, model, null);
 	}
 
 }

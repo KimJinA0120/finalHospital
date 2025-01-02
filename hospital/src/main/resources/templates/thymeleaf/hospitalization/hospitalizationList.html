@@ -12,6 +12,14 @@
 <a href="../Hospitalization/hospitalizationDelete">입원삭제</a><br/> -->
 
 <table border="1">
+<form action="hospitalizationList" method="get">
+		<tr>
+			<td colspan=5>
+				<input type="search" name="searchWord" size=60 th:value="${searchWord}"/>
+				<input type="submit" value="검색" />
+			</td>
+		</tr>
+</form>
 <tr>
 	<td>입원번호</td><td>입원환자</td><td>입원병상</td><td>입원상태</td>
 </tr>
@@ -21,6 +29,23 @@
 	<td>[[${dto.bedNum}]]</td>
 	<td>[[${dto.hospitalizationStatus}]]</td>
 </tr>
+<tr>
+		<th colspan="5" style="text-align: center;">
+			<span th:if="${page <= 1}">[이전]</span>
+			<span th:if="${page > 1}">
+			<a th:href="|hospitalizationList?page=${page - 1}&searchWord=${searchWord}|">[이전]</a>
+			</span>
+			<th:block th:each="i : ${#numbers.sequence(startPageNum, endPageNum)}">
+				[<a th:href="|hospitalizationList?page=${i}&searchWord=${searchWord}|">[[${i}]]</a>]
+			</th:block>
+			<span th:if="${page < maxPage}">
+			<a th:href="@{hospitalizationList?(page=${page + 1},searchWord=${searchWord})}">[다음]</a>
+			</span>
+			<span th:if="${page >= maxPage}">
+			[다음]
+			</span>			
+		</th>
+		</tr>
 </table>
 </body>
 </html>

@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import hospital.command.EmergencyPatientCommand;
 import hospital.command.HospitalizationCommand;
@@ -51,8 +52,11 @@ public class HospitalizationController {
 	
 	//////// 응급입원 ////////
 	@RequestMapping("emerHospitalizationList") // 응급 입원 리스트
-	public String emerhospitalizationList(Model model) {
-		emerHospitalizationListService.execute(model);
+	public String emerhospitalizationList(
+			@RequestParam(value = "page", required = false, defaultValue = "1") Integer page
+			, @RequestParam(value = "searchWord", required = false) String searchWord
+			,Model model) {
+		emerHospitalizationListService.execute(page, searchWord, model);
 		return "thymeleaf/hospitalization/emerHospitalizationList";
 	}
 	@RequestMapping("emerHospitalizationForm") // 응급입원 등록 화면
@@ -91,8 +95,11 @@ public class HospitalizationController {
 	
 	//////// 입원 ////////
 	@RequestMapping("hospitalizationList") // 입원 리스트
-	public String hospitalizationList(Model model) {
-		hospitalizationListService.execute(model);
+	public String hospitalizationList(
+			@RequestParam(value = "page", required = false, defaultValue = "1") Integer page
+			, @RequestParam(value = "searchWord", required = false) String searchWord
+			,Model model) {
+		hospitalizationListService.execute(page, searchWord, model);
 		return "thymeleaf/hospitalization/hospitalizationList";
 	}
 	@GetMapping("hospitalizationForm") // 입원 등록 화면

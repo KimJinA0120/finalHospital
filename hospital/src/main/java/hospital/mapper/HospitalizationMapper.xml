@@ -15,11 +15,29 @@
 			,#{docNum},#{nurNum})
 </insert>
 
-<select id="hospitalizationSelectList" resultType="HospitalizationDTO">
-	select
-	<include refid="HospitalizationBasseColumns" />
-	from hospitalization
-	where HOSPITALIZATION_NUM like 'HOS'||'%' 
+<select id="hospitalizationSelectList" resultType="HospitalizationDTO" parameterType="startEndPage">
+	select * from (
+		select ROW_NUMBER() over (order by HOSPITALIZATION_NUM) as rn,
+				<include refid="HospitalizationBasseColumns"/>
+		from hospitalization
+	<trim prefix="where" prefixOverrides="AND | OR">
+		<if test="searchWord != null">
+		(HOSPITALIZATION_NUM like '%' || #{searchWord} ||'%'
+		or PATIENT_NUM like '%' || #{searchWord} || '%')
+		</if>
+	</trim>
+	)
+	where rn between #{startRow} and #{endRow}
+</select>
+
+<select id="hospitalizatonCount" parameterType="string" resultType="integer">
+	select count(*) from hospitalization
+	<trim prefix="where" prefixOverrides="AND | OR">
+		<if test="searchWord != null">
+		(HOSPITALIZATION_NUM like '%' || #{searchWord} ||'%'
+		or PATIENT_NUM like '%' || #{searchWord} || '%')
+		</if>
+	</trim>
 </select>
 
 <select id="hospitalizationSelectOne" resultType="HospitalizationDTO" parameterType="string">
@@ -52,10 +70,29 @@
 	EMERPATIENT_NUM, EMERBED_NUM, PATIENT_NUM, IN_DATE, OUT_DATE, DOC_NUM, NUR_NUM, HOSPITALIZATION_STATUS
 </sql>
 
-<select id="emerHospitalizationSelectList" resultType="EmergencyPatientDTO">
-	select 
-	<include refid="EmergencyPatientBaseColumns"/>
-	from EMERGENCY_PATIENT
+<select id="emerHospitalizationSelectList" resultType="EmergencyPatientDTO" parameterType="startEndPage">
+	select * from (
+		select ROW_NUMBER() over (order by EMERPATIENT_NUM) as rn,
+				<include refid="EmergencyPatientBaseColumns"/>
+		from EMERGENCY_PATIENT
+	<trim prefix="where" prefixOverrides="AND | OR">
+	<if test="searchWord != null">
+		(EMERPATIENT_NUM like '%' || #{searchWord} ||'%'
+		or PATIENT_NUM like '%' || #{searchWord} || '%')
+	</if>
+	</trim>
+	)
+	where rn between #{startRow} and #{endRow}
+</select>
+
+<select id="emerHospitalizatonCount" parameterType="string" resultType="integer">
+	select count(*) from EMERGENCY_PATIENT
+	<trim prefix="where" prefixOverrides="AND | OR">
+	<if test="searchWord != null">
+		(EMERPATIENT_NUM like '%' || #{searchWord} ||'%'
+		or PATIENT_NUM like '%' || #{searchWord} || '%')
+	</if>
+	</trim>
 </select>
 
 <insert id="emerInsert" parameterType="EmergencyPatientDTO">
