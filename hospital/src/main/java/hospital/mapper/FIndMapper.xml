@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.//EN"
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hospital.mapper.FindMapper">
+
+<select id="findPatientId" parameterType="findDTO" resultType="String">
+select patient_id as userId 
+from patient 
+where patient_name=#{userName} 
+and patient_phone=#{userPhone} 
+and patient_email=#{userEmail}
+</select>
+
+<select id="findEmpId" parameterType="findDTO" resultType="String">
+select emp_id as userId 
+from employee 
+where emp_name=#{userName} 
+and emp_phone=#{userPhone} 
+and emp_email=#{userEmail}
+</select>
+
+<select id="findPatient" parameterType="findDTO" resultType="integer">
+select 1 from patient where patient_name=#{userName}
+and patient_id=#{userId}
+and patient_phone=#{userPhone}
+</select>
+
+<select id="findEmployee" parameterType="findDTO" resultType="integer">
+select 1 from employee where emp_name=#{userName}
+and emp_id=#{userId}
+and emp_phone=#{userPhone}
+</select>
+
+<update id="patientTemPoraryPw" parameterType="findDTO">
+update patient set
+patient_pw=#{userPw}
+where patient_id=#{userId} 
+and patient_name=#{userName}
+and patient_Phone=#{userPhone}
+</update>
+
+<update id="empTemPoraryPw" parameterType="findDTO">
+update employee set
+emp_pw=#{userPw}
+where emp_id=#{userId} 
+and emp_name=#{userName}
+and emp_Phone=#{userPhone}
+</update>
+
+<select id="findPatientNum" parameterType="patientDTO">
+select patient_Num from patient where patient_name=#{patientName}
+and patient_jumin=#{patientJumin}
+</select>
+</mapper>

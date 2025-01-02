@@ -35,7 +35,7 @@ public class LoginController {
 			BindingResult result, HttpSession session) {
 		loginService.patientLogin(loginCommand, session, result);
 		if(result.hasErrors()) { 
-			 return "thymeleaf/login"; 
+			 return "thymeleaf/patientLogin"; 
 		}else {
 			return "redirect:/";
 			
@@ -55,7 +55,7 @@ public class LoginController {
 			) { 
 		loginService.employeeLogin(loginCommand, session, result);
 		if(result.hasErrors()) { 
-			 return "thymeleaf/login";
+			 return "thymeleaf/employeeLogin";
 		}else {
 				return "redirect:/empIndex";
 		}

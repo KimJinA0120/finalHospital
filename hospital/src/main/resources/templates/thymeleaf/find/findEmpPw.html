@@ -14,9 +14,9 @@ $(function(){
 			alert("전화번호를 입력해주세요");
 			$("#userPhone").focus();
 		}
-		if($("#userEmail").val==null){
-			alert("이메일을 입력해주세요");
-			$("#userEmail").focus();
+		if($("#userId").val==null){
+			alert("아이디를 입력해주세요");
+			$("#userId").focus();
 		}
 		
 	});
@@ -24,12 +24,13 @@ $(function(){
 </script>
 </head>
 <body>
-아이디 찾기<br/>
-<form action="findId" method="post" id="frm">
-이름 : <input type="text" name="userName" id="userName"/><br/>
-전화번호 : <input type="text" name="userPhone" id="userPhone"/><br/>
-이메일: <input type="email" name="userEmail" id="userEmail"/><br/>
-<input type="submit" value="아이디 찾기">
+비밀번호 찾기<br/>
+<form action="findEmpPw" method="post" id="frm">
+이름 : <input type="text" name="userName" id="userName"/>
+아이디: <input type="text" name="userId" id="userId"/>
+전화번호 : <input type="text" name="userPhone" id="userPhone"/>
+
+<input type="submit" value="비밀번호 찾기">
 </form>
 </body>
 </html>

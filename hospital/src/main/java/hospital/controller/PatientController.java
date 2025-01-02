@@ -51,6 +51,11 @@ public class PatientController {
 		patientWriteService.execute(patientCommand);
 		return "redirect:/";
 	}
+	@GetMapping("patientRegist")
+	public String patientRegist(String patientNum, PatientCommand patientCommand, Model model) {
+		
+		return "thymeleaf/patient/patientWrite";
+	}
 	@GetMapping("patientList")
 	public String patientList(@RequestParam(value="searchWord", required=false) String searchWord
 			, @RequestParam(value="page", required=false, defaultValue="1") Integer page
