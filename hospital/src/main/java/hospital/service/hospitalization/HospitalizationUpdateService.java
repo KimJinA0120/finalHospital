@@ -18,6 +18,7 @@ public class HospitalizationUpdateService {
 		BeanUtils.copyProperties(hospitalizationCommand, dto);
 		
 		hospitalizationMapper.hospitalizationUpdate(dto);
+		hospitalizationMapper.bedStatusUpdate(dto);
 	}
 
 }

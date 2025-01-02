@@ -7,9 +7,18 @@
 <script type="text/javascript">
 $(function(){
 	$("#bedserch").click(function(){
-		window.open("/WardRoomBed/bedList", "bedList", "width=315, height=200, top=100, left=100");
-	})
-})
+		window.open("/WardRoomBed/bedList", "bedList", "width=350, height=230, top=100, left=100");
+	});
+	$("#patserch").click(function(){
+		window.open("/WardRoomBed/bedList", "bedList", "width=350, height=230, top=100, left=100");
+	});
+	$("#docserch").click(function(){
+		window.open("/WardRoomBed/bedList", "bedList", "width=350, height=230, top=100, left=100");
+	});
+	$("#nurserch").click(function(){
+		window.open("/WardRoomBed/bedList", "bedList", "width=350, height=230, top=100, left=100");
+	});
+});
 </script>
 </head>
 <body>
@@ -17,13 +26,13 @@ $(function(){
 <form action="hospitalizationRegist" method="post" th:object="${hospitalizationCommand}" >
 입원번호 : <input type="text" name="hospitalizationNum" th:value="${hospitalizationCommand.hospitalizationNum}" readonly="readonly"><br />
 병상번호 : <input type="text" name="bedNum" id="bedNum" /> <button type="button" id="bedserch">병상검색</button><br />
-환자번호 : <input type="text" name="patientNum" th:value="${hospitalizationCommand.patientNum}"><br />
+환자번호 : <input type="text" name="patientNum" id="patientNum" th:value="${hospitalizationCommand.patientNum}"> <button type="button" id="patserch">환자검색</button><br />
 입원날짜 : <input type="date" name="inDate" th:value="${#dates.format(hospitalizationCommand.inDate, 'yyyy-MM-dd')}"><br />
 퇴원날짜 : <input type="date" name="outDate" th:value="${#dates.format(hospitalizationCommand.outDate, 'yyyy-MM-dd')}"><br />
 입원상태 : <input type="radio" name="hospitalizationStatus" value="입원" checked="checked"/>입원
 				<input type="radio" name="hospitalizationStatus" value="퇴원"/>퇴원<br />
-담당의사 : <input type="text" name="docNum"> <button type="button" id="docserch">의사검색</button><br />
-담당간호사 : <input type="text" name="nurNum"> <button type="button" id="nurserch">간호사검색</button><br />
+담당의사 : <input type="text" name="docNum" id="docNum"> <button type="button" id="docserch">의사검색</button><br />
+담당간호사 : <input type="text" name="nurNum" id="nurNum"> <button type="button" id="nurserch">간호사검색</button><br />
 <input type="submit" value="입원등록">
 </form>
 </body>

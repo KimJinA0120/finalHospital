@@ -24,4 +24,7 @@ public interface HospitalizationMapper {
 	
 	public int hospitalizatonCount(String searchWord);
 	public int emerHospitalizatonCount(String searchWord);
+	
+	public void bedStatusUpdate(HospitalizationDTO dto);
+	public void emerBedStatusUpdate(EmergencyPatientDTO dto);
 }

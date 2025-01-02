@@ -128,5 +128,32 @@
 	where EMERPATIENT_NUM = #{emerPatientNum}
 </delete>
 
+<update id="bedStatusUpdate" parameterType="HospitalizationDTO">
+    MERGE INTO bed b
+    USING hospitalization h
+    ON (b.BED_NUM = h.BED_NUM 
+        AND h.HOSPITALIZATION_STATUS IN ('입원', '퇴원') 
+        AND h.HOSPITALIZATION_NUM = #{hospitalizationNum})
+    WHEN MATCHED THEN
+        UPDATE SET b.BED_STATUS = CASE
+                                      WHEN h.HOSPITALIZATION_STATUS = '입원' THEN '사용중'
+                                      WHEN h.HOSPITALIZATION_STATUS = '퇴원' THEN '사용가능'
+                                  END
+</update>
+
+<update id="emerBedStatusUpdate" parameterType="EmergencyPatientDTO">
+	MERGE INTO emergency b
+    USING EMERGENCY_PATIENT e
+    ON (b.EMERBED_NUM = e.EMERBED_NUM 
+        AND e.HOSPITALIZATION_STATUS IN ('입원', '퇴원') 
+        AND e.EMERPATIENT_NUM = #{emerPatientNum})
+    WHEN MATCHED THEN
+        UPDATE SET b.EMERBED_STATUS = CASE
+                                      WHEN e.HOSPITALIZATION_STATUS = '입원' THEN '사용중'
+                                      WHEN e.HOSPITALIZATION_STATUS = '퇴원' THEN '사용가능'
+                                  END
+</update>
+
+
 
 </mapper>

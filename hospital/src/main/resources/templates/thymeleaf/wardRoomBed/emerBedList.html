@@ -19,9 +19,11 @@ function emerBedSelect(emerBedNum){
 			<td>[[${dto.emerBedNum}]]</td>
 			<td>[[${dto.wardNum}]]</td>
 			<td>[[${dto.emerBedStatus}]]</td>
+			<th:block th:if="${dto.emerBedStatus}=='사용가능'">
 			<td><button type="button" 
 					th:attr="onclick=|javascript:emerBedSelect('${dto.emerBedNum}')|">선택</button>
 			</td>
+			</th:block>
 		</tr>
 	</table>
 </body>

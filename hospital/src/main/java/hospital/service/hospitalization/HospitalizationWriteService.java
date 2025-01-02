@@ -18,7 +18,7 @@ public class HospitalizationWriteService {
 		BeanUtils.copyProperties(hospitalizationCommand, dto);
 		
 		hospitalizationMapper.hospitalizationInsert(dto);
-		
+		hospitalizationMapper.bedStatusUpdate(dto);
 	}
 
 }

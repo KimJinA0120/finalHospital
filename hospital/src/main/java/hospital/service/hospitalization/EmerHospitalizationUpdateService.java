@@ -18,6 +18,7 @@ public class EmerHospitalizationUpdateService {
 		BeanUtils.copyProperties(emergencyPatientCommand, dto);
 		
 		hospitalizationMapper.emerUpdate(dto);
+		hospitalizationMapper.emerBedStatusUpdate(dto);
 	}
 
 }

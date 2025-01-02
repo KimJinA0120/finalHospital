@@ -19,9 +19,11 @@ function bedSelect(bedNum){
 			<td>[[${dto.bedNum}]]</td>
 			<td>[[${dto.roomNum}]]</td>
 			<td>[[${dto.bedStatus}]]</td>
+			<th:block th:if="${dto.bedStatus}=='사용가능'">
 			<td><button type="button" 
 					th:attr="onclick=|javascript:bedSelect('${dto.bedNum}')|">선택</button>
 			</td>
+			</th:block>
 		</tr>
 	</table>
 </body>
