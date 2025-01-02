@@ -116,7 +116,6 @@ public class WardPsController {
 		   , @RequestParam(value = "location", required = false) String location
 		   , @RequestParam(value = "roomN", required = false) String roomN
 		   , Model model) {
-	   System.out.println("컨트롤러"+roomN);
 	   searchHospService.execute(page, searchWord, location, roomN, model);
 	   return "thymeleaf/hosPatient/searchHosp";
    }

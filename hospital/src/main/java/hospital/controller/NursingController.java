@@ -94,11 +94,14 @@ public class NursingController {
 	//// 처방번호 찾기
 	@Autowired
 	SearchHospService searchHospService;
-	@RequestMapping("searchWardPs")
-	public String searchWardPs(@RequestParam(value = "page", required = false, defaultValue = "1") int page
+	@GetMapping("searchWardPs")
+	public String searchWardPs(
+				@RequestParam(value = "page", required = false, defaultValue = "1") int page
 			   , @RequestParam(value = "searchWord", required = false) String searchWord
+			   , @RequestParam(value = "location", required = false) String location
+			   , @RequestParam(value = "roomN", required = false) String roomN
 			   , Model model) {
-		searchHospService.selectWardPs(page, searchWord, model);
+		searchHospService.selectWardPs(page, searchWord, location, roomN, model);
 		return "thymeleaf/hosPatient/searchWardPs";
 	}
 	

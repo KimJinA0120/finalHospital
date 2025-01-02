@@ -28,7 +28,6 @@ public class SearchHospService {
 		int limit=10;
 		if(searchWord != null && searchWord != "") {
 			searchWord = searchWord.trim();
-			System.out.println(searchWord);
 		}
 		
 		SEPhosPatientDTO hpSEP 
@@ -44,14 +43,20 @@ public class SearchHospService {
 		
 	}
 
-	public void selectWardPs(int page, String searchWord, Model model) {
+	public void selectWardPs(int page, String searchWord, String location, String roomN, Model model) {
 		int limit=10;
-		StartEndPageDTO sepDTO = startEndPageService.execute(page, limit, searchWord, null);
+		SEPhosPatientDTO hpSEP 
+		= sepHpService.execute(page, limit, searchWord, location, roomN);
 		
-		List<HosPatientDTO> list = hosPatientMapper.searchWardPs(sepDTO);
-		Integer count = hosPatientMapper.searchCount();
+		List<HosPatientDTO> list = hosPatientMapper.searchWardPs(hpSEP);
 		
-		startEndPageService.execute(page,limit,count,searchWord,list, model, null);
+		List<RoomDTO> room = hosPatientMapper.selectDropDown(location);
+		
+		Integer count = hosPatientMapper.searchCount(); // 입원번호 숫자
+		sepHpService.execute(page,limit,count,searchWord,list
+							, location, room, roomN, model);
+		
+		
 		
 	}
 
