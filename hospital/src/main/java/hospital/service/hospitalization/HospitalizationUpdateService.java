@@ -19,6 +19,7 @@ public class HospitalizationUpdateService {
 		
 		hospitalizationMapper.hospitalizationUpdate(dto);
 		hospitalizationMapper.bedStatusUpdate(dto);
+		hospitalizationMapper.bedStatusNew(dto);
 	}
 
 }

@@ -11,6 +11,7 @@ public class EmerHospitalizationDeleteService {
 	HospitalizationMapper hospitalizationMapper;
 	
 	public void execute(String emerPatientNum) {
+		hospitalizationMapper.emerBedStatusDelUpdate(emerPatientNum);
 		hospitalizationMapper.emerDelete(emerPatientNum);
 	}
 

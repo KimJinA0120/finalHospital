@@ -23,12 +23,12 @@ $(function(){
 응급입원수속 <br />
 <form action="emerHospitalizationUpdate" method="post">
 입원번호 : <input type="text" name="emerPatientNum" th:value="${dto.emerPatientNum}" readonly="readonly"><br />
-병상번호 : <input type="text" name="emerBedNum" th:value="${dto.emerBedNum}"> <button type="button" id="emerBedserch">병상검색</button><br />
+병상번호 : <input type="text" name="emerBedNum" id="emerBedNum" th:value="${dto.emerBedNum}"> <button type="button" id="emerBedserch">병상검색</button><br />
 환자번호 : <input type="text" name="patientNum" th:value="${dto.patientNum}" readonly="readonly"><br />
 입원날짜 : <input type="date" name="inDate" th:value="${#dates.format(dto.inDate, 'yyyy-MM-dd')}"><br />
 퇴원날짜 : <input type="date" name="outDate" th:value="${#dates.format(dto.outDate, 'yyyy-MM-dd')}"><br />
-입원상태 : <input type="radio" name="hospitalizationStatus" value="입원" />입원
-				<input type="radio" name="hospitalizationStatus" value="퇴원"/>퇴원<br />
+입원상태 : <input type="radio" name="hospitalizationStatus" value="입원" th:checked="${dto.hospitalizationStatus == '입원'}"/>입원
+				<input type="radio" name="hospitalizationStatus" value="퇴원" th:checked="${dto.hospitalizationStatus == '퇴원'}"/>퇴원<br />
 담당의사 : <input type="text" name="docNum" id="docNum" th:value="${dto.docNum}"> <button type="button" id="docserch">의사검색</button><br />
 담당간호사 : <input type="text" name="nurNum" id="nurNum" th:value="${dto.nurNum}"> <button type="button" id="nurserch">간호사검색</button><br />
 <input type="submit" value="입원등록">

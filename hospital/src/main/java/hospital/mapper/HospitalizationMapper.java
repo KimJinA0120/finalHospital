@@ -27,4 +27,10 @@ public interface HospitalizationMapper {
 	
 	public void bedStatusUpdate(HospitalizationDTO dto);
 	public void emerBedStatusUpdate(EmergencyPatientDTO dto);
+	
+	public void bedStatusNew(HospitalizationDTO dto);
+	public void emerBedStatusNew(EmergencyPatientDTO dto);
+	
+	public void bedStatusDelUpdate(String hospitalizationNum);
+	public void emerBedStatusDelUpdate(String emerPatientNum);
 }
