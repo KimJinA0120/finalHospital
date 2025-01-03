@@ -18,15 +18,15 @@ public class SectionListService {
 	@Autowired
 	StartEndPageService startEndPageService;
 
-	public void execute(String searchWord, Integer page, Model model) { //null자리에 kind 추가하기
+	public void execute(String searchWord, Integer page, Model model, String kind) { //null자리에 kind 추가하기
 		int limit=5;
 		
-		StartEndPageDTO sepDTO=startEndPageService.execute(page, limit, searchWord, null);
+		StartEndPageDTO sepDTO=startEndPageService.execute(page, limit, searchWord, kind);
 		System.out.println(sepDTO);
 		List<SectionDTO> list=employeeMapper.sectionSearch(sepDTO);
 		
 		Integer count=employeeMapper.sectionCount();
-		startEndPageService.execute(page,limit,count,searchWord,list, model, null);
+		startEndPageService.execute(page,limit,count,searchWord,list, model, kind);
 		
 	}
 	

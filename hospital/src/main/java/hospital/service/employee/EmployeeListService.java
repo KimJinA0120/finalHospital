@@ -34,25 +34,25 @@ public class EmployeeListService {
 		
 	}
 
-	public void employeeSearch(String searchWord, Integer page, Model model) { //추후 null자리에 kind 추가하기
+	public void employeeSearch(String searchWord, Integer page, Model model,String kind) { //추후 null자리에 kind 추가하기
 		int limit=3;
 		
-		StartEndPageDTO sepDTO=startEndPageService.execute(page, limit, searchWord, null);
+		StartEndPageDTO sepDTO=startEndPageService.execute(page, limit, searchWord, kind);
 		List<EmployeeDTO> list=employeeMapper.employeeSelectAll(sepDTO);
 		
 		Integer count=employeeMapper.employeeCount();
-		startEndPageService.execute(page,limit,count,searchWord,list, model, null);
+		startEndPageService.execute(page,limit,count,searchWord,list, model, kind);
 		
 	}
 
-	public void doctorSearch(String searchWord, Integer page, Model model) {
+	public void doctorSearch(String searchWord, Integer page, Model model, String kind) {
 		int limit=5;
 		
-		StartEndPageDTO sepDTO=startEndPageService.execute(page, limit, searchWord, null);
+		StartEndPageDTO sepDTO=startEndPageService.execute(page, limit, searchWord, kind);
 		List<DoctorDTO> list=doctorMapper.doctorSelectAll(sepDTO);
 		
 		Integer count=doctorMapper.doctorCount();
-		startEndPageService.execute(page,limit,count,searchWord,list, model, null);
+		startEndPageService.execute(page,limit,count,searchWord,list, model, kind);
 		
 	}
 

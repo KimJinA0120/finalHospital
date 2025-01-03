@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +34,11 @@ public class PatientController {
 	PatientDeleteService patientDeleteService;
 	@Autowired
 	AutoNumService autoNumService;
+	
+	@GetMapping("patientWriteCon")
+	public String patientWriteCon() {
+		return "thymeleaf/patient/patientCon";
+	}
 
 	@GetMapping("patientWrite")
 	public String patientWrite(PatientCommand patientCommand, Model model) {
@@ -43,12 +49,12 @@ public class PatientController {
 	}
 	
 	@PostMapping("patientWrite")
-	public String patientWrite( //@Validated 
+	public String patientWrite( @Validated 
 			PatientCommand patientCommand
 			, BindingResult result 
 			) {
-		//if(result.hasErrors()) { return "thymeleaf/patient/patientWrite"; }
-		patientWriteService.execute(patientCommand);
+		if(result.hasErrors()) { return "thymeleaf/patient/patientWrite"; }
+		patientWriteService.execute(patientCommand, result);
 		return "redirect:/";
 	}
 	@GetMapping("patientRegist")

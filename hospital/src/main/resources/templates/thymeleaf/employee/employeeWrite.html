@@ -8,6 +8,7 @@
 <script type="text/javascript" src ="/static/js/daumAddressScript.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script type="text/javascript" src="/static/js/check.js"></script>
+<script type="text/javascript" src="/static/js/checkInputUser.js"></script>
 <script type="text/javascript">
 $(function() {
 	$("#job_category").on("change", function() {
@@ -17,7 +18,7 @@ $(function() {
 		
 		// 선택된 값이 비어있으면 AJAX 호출하지 않음
 		if (selectedValue == "0") {
-			alert("직업을 선택해주세요.");
+			alert("부서를 선택해주세요.");
 			return false;
 			
 		} else {
@@ -37,68 +38,21 @@ $(function() {
 	});
 	
 	$("#sectionSearch").click(function(){
-		window.open("sectionSearch","소속과 검색",
+		// 선택된 옵션의 값 가져오기
+		var selectedValue = $("#job_category option:selected").val();
+		
+		// 선택된 값이 비어있으면 AJAX 호출하지 않음
+		if (selectedValue == "0") {
+			alert("부서를 선택해주세요.");
+			return false;
+			
+		} else {
+		window.open("sectionSearch?kind="+selectedValue,"소속과 검색",
 				"width=620,height=400,left=30,top=50")
+		}
 	});
 	
 	$("#frm").submit(function(){
-		if($("#empPw").val() != $("#empPwCon").val()){
-			alert("비밀번호와 비밀번호확인이 다릅니다.");
-			$("#empPw").val("");
-			$("#empPwCon").val("");
-			$("#empPw").focus();
-			return false;
-		}
-		if($("#empName").val()==null){
-			alert("이름을 입력해주세요");
-			$("#empName").focus();
-			return false;
-		}
-		if($("#empJuminF").val()==null){
-			alert("주민번호 앞자리를 입력해주세요");
-			$("#empJuminF").focus();
-			return false;
-		}
-		if($("#empJuminB").val()==null){
-			alert("주민번호 뒷자리를 입력해주세요");
-			$("#empJuminB").focus();
-			return false;
-		}
-		if($("#empBirth").val()==null){
-			alert("생년월일을 입력해주세요");
-			$("#empBirth").focus();
-			return false;
-		}
-		if($("#userId").val()==null){
-			alert("아이디를 입력해주세요");
-			$("#userId").focus();
-			return false;
-		}
-		if($("#empPw").val()==null){
-			alert("비밀번호를 입력해주세요");
-			$("#empPw").focus();
-			return false;
-		}
-		if($("#empPwCon").val()==null){
-			alert("비밀번호확인을 입력해주세요");
-			$("#empPwCon").focus();
-			return false;
-		}
-		if($("#sample4_roadAddress").val()==null){
-			alert("주소를 입력해주세요");
-			$("#sample4_roadAddress").focus();
-			return false;
-		}
-		if($("#empPhone").val()==null){
-			alert("전화번호를 입력해주세요");
-			$("#empPhone").focus();
-			return false;
-		}
-		if($("#userEmail").val()==null){
-			alert("이메일을 입력해주세요");
-			$("#userEmail").focus();
-			return false;
-		}
 		if($("#position").val()==null){
 			alert("직무를 입력해주세요");
 			$("#position").focus();
@@ -118,42 +72,53 @@ $(function() {
 });
 </script>
 </head>
-  <body>        
+<body>        
                     
-   <form action="employeeWrite" method="post" id="frm"  > <!-- th:object="${employeeCommand}" -->
-직원번호: <select id="job_category" name="jobCategory">
+   <form action="employeeWrite" method="post" id="frm" th:object="${employeeCommand}" > <!-- th:object="${employeeCommand}" -->
+부서 : <select id="job_category" name="jobCategory">
 <option value="0" selected>--선택--</option>
 <option value="doc_">의사</option>
 <option value="nur_">간호사</option>
 <option value="mdt_">의료기사</option>
 <option value="emp_">일반직원</option>
-</select> 
-<input type="text" name="empNum" th:value="${employeeCommand.empNum}"
-		id="empNum" readonly="readonly"/>번호 자동부여<br />
-이름 : <input type="text" name="empName" id="empName"  th:value="${employeeCommand.empName}" /> <br />
-주민등록번호 : <input type="number" name="empJuminF" id="empJuminF" th:value="${employeeCommand.empJuminF}" />
-<input type="number" name="empJuminB" id="empJuminB" th:value="${employeeCommand.empJuminB}" /> <br />	
-생년월일: <input type="date" name="empBirth" id="empBirth"  th:value="${employeeCommand.empBirth}" /> <br />
-아이디 : <input type="text" name="empId" id="userId" th:value="${employeeCommand.empId}" />
+</select> <br/>
+직원번호 : <input type="text" name="empNum" th:value="${employeeCommand.empNum}"
+		id="empNum" readonly="readonly"/> 번호 자동부여<br />
+이름 : <input type="text" name="empName" id="userName"  th:value="${employeeCommand.empName}" /> <br />
+주민등록번호 : <input type="number" name="empJuminF" id="userJuminF" th:value="${employeeCommand.empJuminF}" placeholder="숫자 6자리" />
+		   <input type="number" name="empJuminB" id="userJuminB" th:value="${employeeCommand.empJuminB}" placeholder="숫자 7자리"/> <br />	
+		   <span style="color:red" th:if="${#fields.hasErrors('empJuminF')}" th:errors="*{empJuminF}"></span>
+		   <span style="color:red" th:if="${#fields.hasErrors('empJuminB')}" th:errors="*{empJuminB}"></span><br/>
+생년월일: <input type="date" name="empBirth" id="userBirth"  th:value="${employeeCommand.empBirth}" /> <br />
+아이디 : <input type="text" name="empId" id="userId" th:value="${employeeCommand.empId}" placeholder="영어,숫자(6~20자)"/>
+<span  style="color:red" th:if="${#fields.hasErrors('empId')}" th:errors="*{empId}"></span><br/>
 				<span id="idCheck"></span>  <br />
-비밀번호 :    	<input type="password" name="empPw" id="empPw"/> <br />
-비밀번호확인 : 	<input type="password" name="empPwCon" id="empPwCon"/> <br />
+비밀번호 :    	<input type="password" name="empPw" id="userPw" placeholder="대소문자, 숫자, 특수문자 모두 포함하여 8자 이상"/>
+			<span style="color:red"  th:if="${#fields.hasErrors('empPw')}" th:errors="*{empPw}"></span> <br />
+비밀번호확인 : 	<input type="password" name="empPwCon" id="userPwCon" placeholder="비밀번호 재입력"/> <br />
 
 주소 : <input type="text" name="empAddr" id="sample4_roadAddress"  th:value="${employeeCommand.empAddr}" readonly="readonly" />
 				<button type="button" onclick="execDaumPostcode();">우편번호검색</button><br />
 상세주소 : <input type="text" name="empAddrDetail" th:value="${employeeCommand.empAddrDetail}"/><br />
 우편번호 : <input type="text" name="empPost" id="sample4_postcode" th:value="${employeeCommand.empPost}" readonly="readonly"/><br />
-전화번호 : <input type="tel" name="empPhone" id="empPhone" th:value="${employeeCommand.empPhone}"/> <br />
+전화번호 : <input type="tel" name="empPhone" id="userPhone" th:value="${employeeCommand.empPhone}" placeholder="'-'제외 숫자 9~11자"/>
+		<span style="color:red"  th:if="${#fields.hasErrors('empPhone')}" th:errors="*{empPhone}"></span> <br />
 
 이메일 : 		<input type="email" name="empEmail" id="userEmail" th:value="${employeeCommand.empEmail}"/>
 	<span id="emailCheck"></span> <br />
 성별: <input type="radio" name="empGender" value="M" checked="checked"> 남
 	<input type="radio" name="empGender" value="F"> 여 <br/>
 	
-직무 : <input type="text" name="position" id="position" th:value="${employeeCommand.position}"><br/>
-소속과 : <input type="text" name="sectionNum" id="sectionNum" readonly="readonly">
+직무 : <select id="position" name="position">
+<option value="인턴">인턴</option>
+<option value="사원">사원</option>
+<option value="대리">대리</option>
+<option value="팀장">팀장</option> 
+<option value="과장">과장</option> 
+<option value="부장">부장</option> 
+</select><br/>
+소속과 : <input type="text" name="sectionNum" id="sectionNum" th:value="${employeeCommand.sectionNum}" readonly="readonly">
 <button type="button" id="sectionSearch">소속과 검색</button><br/>
-부서이름: <input type="text" name="departmentName" id="departmentName" readonly="readonly"><br/>
 입사일: <input type="date" name="empHiredate" id="empHiredate" th:value="${employeeCommand.empHiredate}" /> <br />
 <input type="submit" value="직원등록" />
 </form>

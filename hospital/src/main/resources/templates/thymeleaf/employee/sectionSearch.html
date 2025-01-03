@@ -42,13 +42,13 @@ function sectionSelect(sectionNum,departmentName){
 		<th colspan="10">
 		<span th:if="${page <= 1}">[이전]</span>
 		<span th:if="${page > 1}">
-			<a th:href="|sectionSearch?page=${page - 1}&searchWord=${searchWord}|">[이전]</a>
+			<a th:href="|sectionSearch?page=${page - 1}&searchWord=${searchWord}&kind=${kind}|">[이전]</a>
 		</span>   								<!-- 	1,          10  -->
 		<th:block th:each=" i : ${#numbers.sequence(startPageNum, endPageNum)}">
-			[<a th:href="|sectionSearch?page=${i}&searchWord=${searchWord}|">[[${i}]]</a>]
+			[<a th:href="|sectionSearch?page=${i}&searchWord=${searchWord}&kind=${kind}|">[[${i}]]</a>]
 		</th:block>
 		<span th:if="${page < maxPage}">
-			<a th:href="@{sectionSearch(page=${page + 1},searchWord=${searchWord})}">[다음]</a>
+			<a th:href="@{sectionSearch(page=${page + 1},searchWord=${searchWord},kind=${kind})}">[다음]</a>
 		</span>
 		<span th:if="${page >= maxPage}">
 			[다음]

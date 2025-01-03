@@ -23,16 +23,24 @@ values( #{empNum}, #{empName}, #{empId}
 select *
  from
 ( select rownum rn, <include refid="baseColumn"/>
- from employee  
- <if test="searchWord!=null">
- where
+ from employee 
+ <if test="kind!=null or searchWord!=null"> <!-- 하나라도 있으면 -->
+ where 
+ 	<if test="kind!=null">
+  	emp_Num like '%'||#{kind}||'%'
+ 	</if> 
+ 	<if test="kind!=null and searchWord!=null"> <!-- 둘 다 있으면 -->
+ 	and
+ 	</if>
+ 	<if test="searchWord!=null">
  	emp_num like '%'||#{searchWord}||'%'
  	or emp_name like '%'||#{searchWord}||'%'
  	or position like '%'||#{searchWord}||'%'
  	or section_num like '%'||#{searchWord}||'%'
  	or emp_id like '%'||#{searchWord}||'%'
  	order by emp_Num
- </if>
+ 	</if>
+  </if>
  ) where rn between #{startRow} and #{endRow}
 </select>
 
@@ -81,14 +89,18 @@ select count(section_num) from section
 select * from
 ( select rownum rn, section_num, department_name, section_name, section_phone, section_location
  from section s join department d on s.department_num=d.department_num 
- <if test="searchWord!=null">
- where
- 	section_num like '%'||#{searchWord}||'%'
- 	or section_name like '%'||#{searchWord}||'%'
- 	or d.department_num like '%'||#{searchWord}||'%'
- 	or department_name like '%'||#{searchWord}||'%'
- 	order by section_Num
- </if>
+ <trim prefix="where" prefixOverrides="AND|OR">
+ 	<if test="kind!=null">
+  	section_num like '%'||#{kind}||'%'
+ 	</if> 
+	 <if test="searchWord!=null">
+	 	section_num like '%'||#{searchWord}||'%'
+	 	or section_name like '%'||#{searchWord}||'%'
+	 	or d.department_num like '%'||#{searchWord}||'%'
+	 	or department_name like '%'||#{searchWord}||'%'
+	 </if>
+ </trim>
+ order by section_Num
  ) where rn between #{startRow} and #{endRow}
 
 </select>

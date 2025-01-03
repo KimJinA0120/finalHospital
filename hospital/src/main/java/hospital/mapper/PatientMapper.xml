@@ -71,4 +71,8 @@ select count(patient_num) from patient
 update patient set patient_pw=#{patientPw}
 where patient_num=#{patientNum}
 </update>
+
+<select id="patientJuminCon" parameterType="String" resultType="String">
+select '있음' from patient where patient_jumin=#{patientJumin}
+</select>
 </mapper>

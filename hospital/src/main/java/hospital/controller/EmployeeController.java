@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import hospital.command.DoctorCommand;
 import hospital.command.EmployeeCommand;
-import hospital.command.PatientCommand;
 import hospital.service.AutoNumService;
 import hospital.service.employee.EmployeeDeleteService;
 import hospital.service.employee.EmployeeDetailService;
@@ -57,31 +57,34 @@ public class EmployeeController {
 	public String sectionSearch(
 			@RequestParam(value="searchWord", required=false) String searchWord
 			, @RequestParam(value="page", required=false, defaultValue="1") Integer page
-			, Model model) {
-		sectionListService.execute(searchWord, page, model);
+			, Model model
+			, @RequestParam(value="kind",required=false) String kind) {
+		sectionListService.execute(searchWord, page, model, kind);
 		return "thymeleaf/employee/sectionSearch";
 	}
 	@GetMapping("employeeSearch")
 	public String employeeSearch(@RequestParam(value="searchWord", required=false) String searchWord
 			, @RequestParam(value="page", required=false, defaultValue="1") Integer page
-			, Model model){
-		employeeListService.employeeSearch(searchWord, page, model);
+			, Model model
+			, @RequestParam(value="kind",required=false)String kind){
+		employeeListService.employeeSearch(searchWord, page, model, kind);
 		return "thymeleaf/employee/employeeSearch";
 	}
 	@GetMapping("doctorSearch")
 	public String doctorSearch(@RequestParam(value="searchWord", required=false) String searchWord
 			, @RequestParam(value="page", required=false, defaultValue="1") Integer page
-			, Model model) {
-		employeeListService.doctorSearch(searchWord, page, model);
+			, Model model
+			, @RequestParam(value="kind", required=false) String kind) {
+		employeeListService.doctorSearch(searchWord, page, model, kind);
 		return "thymeleaf/employee/doctorSearch";
 	}
 
 	@PostMapping("employeeWrite")
-	public String employeeWrite( //@Validated 
+	public String employeeWrite(@Validated 
 			EmployeeCommand employeeCommand
 			, BindingResult result 
 			) {
-		//if(result.hasErrors()) { return "thymeleaf/employee/employeeWrite"; }
+		if(result.hasErrors()) { return "thymeleaf/employee/employeeWrite"; }
 		employeeWriteService.execute(employeeCommand);
 		if(employeeCommand.getJobCategory().equals("doc_")) {
 			employeeWriteService.doctorWrite(employeeCommand);
@@ -129,7 +132,7 @@ public class EmployeeController {
 	public String doctorList(@RequestParam(value="searchWord", required=false) String searchWord
 			, @RequestParam(value="page", required=false, defaultValue="1") Integer page
 			, Model model) {
-		employeeListService.doctorSearch(searchWord, page, model);
+		employeeListService.doctorSearch(searchWord, page, model, null);
 		return "thymeleaf/employee/doctorList";
 	}
 	
