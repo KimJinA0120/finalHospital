@@ -104,11 +104,6 @@ public class WardPsController {
    @Autowired
    SearchHospService searchHospService;
    
-	/*
-	 * @GetMapping("searchHosp") public String searchHosp() { return
-	 * "thymeleaf/hosPatient/searchHosp"; }
-	 */
-   
    @GetMapping("searchHosp")
    public String searchHosp(
 		   @RequestParam(value = "page", required = false, defaultValue = "1") int page

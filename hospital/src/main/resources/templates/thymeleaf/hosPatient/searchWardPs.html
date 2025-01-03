@@ -33,7 +33,11 @@ function Selroom() {
 	var par2 = $("#searchWord").val();
 	var selectedValue = $("#location option:selected").val();
 	var par4 = $("#roomN option:selected").val();
-	location.href = "searchWardPs?searchWord="+par2 +"&location=" + selectedValue +"&roomN="+par4;
+	if(par2 != null && par2 != ""){
+		location.href = "searchWardPs?searchWord="+par2 +"&location=" + selectedValue +"&roomN="+par4;
+	}else {
+		location.href = "searchWardPs?location=" + selectedValue +"&roomN="+par4;
+	}
 }
 
 </script>
@@ -44,7 +48,7 @@ function Selroom() {
 	<table width=600px align="center">
 	<form action="searchWardPs" method="get" id="frm">
 		<tr>
-			<td colspan="5" align="center">
+			<td colspan="6" align="center">
 				<input type="search" name="searchWord" size=60 th:value="${searchWord}" id="searchWord"/>
 				<input type="submit" id="sub" value="검색">
 			</td>
@@ -88,10 +92,11 @@ function Selroom() {
 			
 		</tr>
 		
-		<tr th:each="dto : ${list}" th:onclick="selectWardPs([[${dto.wardPsNum }]], [[${dto.HospitalizationDTO.nurNum }]])">
+		<tr th:each="dto : ${list}" 
+		th:onclick="selectWardPs([[${dto.wardPsDTO.wardPsNum }]], [[${dto.HospitalizationDTO.nurNum }]])">
 			<td colspan="2">[[${dto.roomLoc}]]호 [[${dto.HospitalizationDTO.bedNum}]]</td>
 			<td>[[${dto.HospitalizationDTO.patientNum}]] [[${dto.patientName}]]</td>
-			<td>[[${dto.wardPsNum}]] [[${dto.diagName}]]</td> 
+			<td>[[${dto.wardPsDTO.wardPsNum}]] [[${dto.wardPsDTO.diagName}]]</td> 
 			<td>[[${dto.HospitalizationDTO.docNum}]]</td>
 			<td>[[${dto.HospitalizationDTO.nurNum}]]</td> 
 			

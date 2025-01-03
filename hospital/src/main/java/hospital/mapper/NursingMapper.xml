@@ -3,6 +3,23 @@
    "-//mybatis.org//DTD Mapper 3.0//EN" 
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="hospital.mapper.NursingMapper">
+	
+	<resultMap type="nursing" id="nursingResultMap">
+		<constructor>
+			<idArg column="NURSING_NUM" javaType="string" />
+			<arg column="WARDPRESCRIPT_NUM" javaType="string" />
+			<arg column="EMP_NUM" javaType="string" />
+			<arg column="HANDLE_NURS" javaType="string" />
+			<arg column="UPDATE_NURS" javaType="string" />
+			<arg column="NURSING_CONTENT" javaType="string" />
+			<arg column="HANDLE_PRESCRIPT" javaType="string" />
+			<arg column="PRESCRIPT_DATE" javaType="java.util.Date" />
+			<arg column="INPUT_DATE" javaType="java.util.Date" />
+			<arg column="UPDATE_DATE" javaType="java.util.Date" />
+		</constructor>
+	</resultMap>
+	
+	
 	<sql id="baseCol">
 		NURSING_NUM, WARDPRESCRIPT_NUM, EMP_NUM, handle_nurs
 		,
@@ -20,14 +37,6 @@
 		INPUT_DATE as inputDate, UPDATE_DATE as
 		updateDate
 	</sql>
-	
-	<sql id="SelbaseCol1">
-		NURSING_NUM as nursingNum, n.WARDPRESCRIPT_NUM as wardPsNum,
-		n.EMP_NUM as empNum, handle_nurs as handleNurs
-		, UPDATE_NURS as updateNurs , NURSING_CONTENT as nursingCon
-		, n.HANDLE_PRESCRIPT as hanPres, PRESCRIPT_DATE as presDate,
-		n.INPUT_DATE as inputDate, n.UPDATE_DATE as updateDate
-	</sql>
 
 	<insert id="write" parameterType="nursing">
 		insert into nursing(
@@ -36,46 +45,7 @@
 		values(#{nursingNum}, #{wardPsNum}, #{empNum}, #{handleNurs}, null
 		, #{nursingCon}, #{hanPres}, #{presDate}, sysdate, null)
 	</insert>
-
-	<select id="count" resultType="integer">
-		select Count(*) from nursing
-	</select>
-
-	<select id="selectList" parameterType="startEndPage"
-		resultType="nursing">
-		select *
-		from(select rownum rn, <include refid="SelbaseCol1" />
-		from nursing n join WARDPRESCRIPT wp
-		on n.WARDPRESCRIPT_NUM = wp.WARDPRESCRIPT_NUM
-		join HOSPITALIZATION h on wp.HOSPITALIZATION_NUM = h.HOSPITALIZATION_NUM
-		join PATIENT p on p.PATIENT_NUM = h.PATIENT_NUM
-		join bed b on h.bed_num = b.bed_num
-		join room r on b.room_num = r.room_num
-		join ward w on r.ward_num = w.ward_num
-		<if test="searchWord!=null">
-			where
-			p.patient_num like '%'||#{searchWord}||'%'
-			or patient_name like '%'||#{searchWord}||'%'
-
-			or h.HOSPITALIZATION_NUM like '%'||#{searchWord}||'%'
-
-			or r.ROOM_LOCATION like '%'||#{searchWord}||'%'
-			or w.WARD_LOCATION like '%'||#{searchWord}||'%'
-			or h.BED_NUM like '%'||#{searchWord}||'%'
-
-			or h.DOC_NUM like '%'||#{searchWord}||'%'
-			or h.NUR_NUM like '%'||#{searchWord}||'%'
-			
-			or h.HOSPITALIZATION_STATUS like '%'||#{searchWord}||'%'
-			
-			or wh.wardprescript_num like '%'||#{searchWord}||'%'
-			or wh.diagnostic_name like '%'||#{searchWord}||'%'
-			order by NURSING_NUM
-		</if>
-		) where rn between #{startRow} and #{endRow}
-	</select>
-
-
+	
 	<select id="selectOne" resultType="nursing">
 		select <include refid="SelbaseCol" /> from nursing
 		where NURSING_NUM = #{nursingNum}
@@ -98,5 +68,140 @@
 		delete from nursing where
 		NURSING_NUM = #{num}
 	</delete>
+	
+	
+	<!-- 리스트 -->
+	<!-- 카운트 -->
+	<select id="count" resultType="integer">
+		select Count(*) from nursing
+	</select>
+	
+	<!-- resultMap -->
+	
+	<!-- 입원정보 생성자 resultMap -->
+	<resultMap type="HospitalizationDTO" id="hospResultMap">
+		<constructor>
+			<idArg column="HOSPITALIZATION_NUM" javaType="string" />
+			<arg column="BED_NUM" javaType="string" />
+			<arg column="PATIENT_NUM" javaType="string" />
+			<arg column="IN_DATE" javaType="java.util.Date" />
+			<arg column="OUT_DATE" javaType="java.util.Date" />
+			<arg column="HOSPITALIZATION_STATUS" javaType="string" />
+			<arg column="DOC_NUM" javaType="string" />
+			<arg column="NUR_NUM" javaType="string" />
+		</constructor>
+	</resultMap>
+	
+	<!-- 병동처방 생성자 -->
+	<resultMap type="wardPS" id="wardPsResultMap">
+		<id column="WARDPRESCRIPT_NUM" javaType="string" 
+		jdbcType="VARCHAR" property="wardPsNum" />
+		<result column="HOSPITALIZATION_NUM" javaType="string" 
+		jdbcType="VARCHAR" property="hospNum" />
+		<result column="EMP_NUM" javaType="string" 
+		jdbcType="VARCHAR" property="empNum" />
+		<result column="WRITE_DOC" javaType="string" 
+		jdbcType="VARCHAR" property="writeDoc" />
+		<result column="UPDATE_DOC" javaType="string" 
+		jdbcType="VARCHAR" property="updateDoc" />
+		<result column="DIAGNOSTIC_NAME" javaType="string" 
+		jdbcType="VARCHAR" property="diagName" />
+		<result column="DIAGNOSTIC_CONTENT" javaType="string" 
+		jdbcType="VARCHAR" property="diagCont"/>
+		<result column="MEDICINE_PRESCRIPT" javaType="string" 
+		jdbcType="VARCHAR" property="medicPres"/>
+		<result column="EXAMINATION_PRESCRIPT" javaType="string" 
+		jdbcType="VARCHAR" property="examPres"/>
+		<result column="HANDLE_PRESCRIPT" javaType="string" 
+		jdbcType="VARCHAR" property="hanPres"/>
+		<result column="IN_DATE" javaType="java.util.Date" 
+		jdbcType="DATE" property="inputDate"/>
+		<result column="OUT_DATE" javaType="java.util.Date" 
+		jdbcType="DATE" property="updateDate"/>
+	</resultMap>
+	
+	
+	<resultMap type="hosPatient" id="hosPatientResultMap">
+		<result column="patient_name" jdbcType="VARCHAR"
+			javaType="string" property="patientName" />
+		<result column="ROOM_LOCATION" jdbcType="BIGINT"
+			javaType="integer" property="roomLoc" />
+		<result column="room_num" jdbcType="VARCHAR" javaType="string"
+			property="roomNum" />
+		<result column="ward_num" jdbcType="VARCHAR" javaType="string"
+			property="wardNum" />
+		<association property="hospitalizationDTO"
+			javaType="HospitalizationDTO" resultMap="hospResultMap" />
+		<association property="wardPsDTO"
+			javaType="wardPS" resultMap="wardPsResultMap" />
+		<association property="nursingDTO"
+			javaType="nursing" resultMap="nursingResultMap" />
+	</resultMap>
+	
+	<!-- sql -->
+	<sql id="HospBaseCol">
+		h.BED_NUM, h.PATIENT_NUM, h.IN_DATE
+		, h.OUT_DATE, h.HOSPITALIZATION_STATUS, h.DOC_NUM, h.NUR_NUM
+	</sql>
+	
+	<sql id="nursCol">
+		NURSING_NUM as nursingNum, n.EMP_NUM as empNum as responNurs, handle_nurs as handleNurs
+		, UPDATE_NURS as updateNurs, NURSING_CONTENT as nursingCon
+		, n.HANDLE_PRESCRIPT as hanPres, PRESCRIPT_DATE as presDate,
+		n.INPUT_DATE as inputDate, n.UPDATE_DATE as updateDate
+	</sql>
+	
+	<sql id="wardPsCol">
+		 wp.WARDPRESCRIPT_NUM, wp.HOSPITALIZATION_NUM
+      , wp.EMP_NUM as responDoc, wp.WRITE_DOC, wp.UPDATE_DOC,
+      wp.DIAGNOSTIC_NAME, wp.DIAGNOSTIC_CONTENT, wp.MEDICINE_PRESCRIPT
+      , wp.EXAMINATION_PRESCRIPT, wp.HANDLE_PRESCRIPT, wp.INPUT_DATE, wp.UPDATE_DATE
+	</sql>
+	
+
+	<!-- 기본리스트 -->
+	<select id="selectList" parameterType="hpSEP"
+		resultMap="hosPatientResultMap">
+		select * from( select rownum rn, p.patient_name, r.ROOM_LOCATION, w.WARD_LOCATION
+			, <include refid="HospBaseCol" />, <include refid="wardPsCol"/>
+			, <include refid="nursCol"/>
+			from nursing n join WARDPRESCRIPT wp
+				on n.WARDPRESCRIPT_NUM = wp.WARDPRESCRIPT_NUM
+				join HOSPITALIZATION h
+				on h.hospitalization_num = wp.hospitalization_num
+				join PATIENT p 
+				on p.PATIENT_NUM = h.PATIENT_NUM
+				join bed b 
+				on h.bed_num = b.bed_num
+				join room r 
+				on b.room_num = r.room_num
+				join ward w 
+				on r.ward_num = w.ward_num
+				<trim prefix="where" prefixOverrides="AND|OR">
+					<if test="location!=null">
+						r.ward_num like '%'||#{location}||'%'
+					</if>
+					<if test="roomN!=null">
+						and b.room_num = #{roomN}
+					</if>
+					<if test="searchWord!=null">
+						and (h.patient_num like '%'||#{searchWord}||'%'
+						or patient_name like '%'||#{searchWord}||'%'
+						or h.HOSPITALIZATION_NUM like '%'||#{searchWord}||'%'
+						or h.BED_NUM like '%'||#{searchWord}||'%'
+						or h.DOC_NUM like '%'||#{searchWord}||'%'
+						or h.NUR_NUM like '%'||#{searchWord}||'%'
+						or wp.wardprescript_num like '%'||#{searchWord}||'%'
+						or wp.diagnostic_name like '%'||#{searchWord}||'%')
+					</if>
+		
+					and h.HOSPITALIZATION_STATUS like '%입원%'
+				</trim>
+				order by n.NURSING_NUM
+				) where rn between #{startRow} and #{endRow}
+	</select>
+
+
+	
 
 </mapper>

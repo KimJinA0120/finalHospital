@@ -3,6 +3,26 @@
    "-//mybatis.org//DTD Mapper 3.0//EN" 
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="hospital.mapper.WardPsMapper">
+   
+   <!-- 병동처방 생성자 resultMap -->
+	<resultMap type="wardPS" id="wardPsResultMap">
+		<constructor>
+			<idArg column="WARDPRESCRIPT_NUM" javaType="string" />
+			<arg column="HOSPITALIZATION_NUM" javaType="string" />
+			<arg column="EMP_NUM" javaType="string" />
+			<arg column="WRITE_DOC" javaType="string" />
+			<arg column="UPDATE_DOC" javaType="string" />
+			<arg column="DIAGNOSTIC_NAME" javaType="string" />
+			<arg column="DIAGNOSTIC_CONTENT" javaType="string" />
+			<arg column="MEDICINE_PRESCRIPT" javaType="string" />
+			<arg column="EXAMINATION_PRESCRIPT" javaType="string" />
+			<arg column="HANDLE_PRESCRIPT" javaType="string" />
+			<arg column="IN_DATE" javaType="java.util.Date" />
+			<arg column="OUT_DATE" javaType="java.util.Date" />
+		</constructor>
+	</resultMap>
+   
+   
    <sql id="baseCol">
       WARDPRESCRIPT_NUM, HOSPITALIZATION_NUM
       , EMP_NUM, WRITE_DOC, UPDATE_DOC,

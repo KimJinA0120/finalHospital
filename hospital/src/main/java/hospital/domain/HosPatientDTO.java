@@ -11,8 +11,7 @@ public class HosPatientDTO {
 	Integer roomLoc; // 병실위치=호수
 	String roomNum; // 병실번호
 	String wardNum;
-	String wardPsNum;
-	String diagName;
 	HospitalizationDTO hospitalizationDTO; // 입원정보
-	
+	WardPsDTO wardPsDTO;
+	NursingDTO nursingDTO;
 }

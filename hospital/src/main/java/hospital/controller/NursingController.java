@@ -25,14 +25,21 @@ public class NursingController {
 	// 리스트
 	@Autowired
 	NursingListService nursingListService;
-	@RequestMapping("wholeNursingList")
-	public String nursingList(
-				@RequestParam(value = "page", required = false, defaultValue = "1") int page
+	
+	@GetMapping("wholeNursingList")
+	public String wholeNursingList(
+			@RequestParam(value = "page", required = false, defaultValue = "1") int page
 			   , @RequestParam(value = "searchWord", required = false) String searchWord
+			   , @RequestParam(value = "location", required = false) String location
+			   , @RequestParam(value = "roomN", required = false) String roomN
+			   , @RequestParam(value = "hpState", required = false) String hpState
 			   , Model model) {
-		nursingListService.execute(page, searchWord ,model);
+		nursingListService.wholeList(page, searchWord, location, roomN, hpState, model);
 		return "thymeleaf/nursing/wholeNursingList";
 	}
+	
+
+	
 	
 	
 	// 등록
@@ -105,12 +112,15 @@ public class NursingController {
 		return "thymeleaf/hosPatient/searchWardPs";
 	}
 	
-	
-	@RequestMapping("nursingList")
-	public String nursingList() {
-		
+	@GetMapping("nursingList")
+	public String nursingList(
+			@RequestParam(value = "page", required = false, defaultValue = "1") int page
+			   , @RequestParam(value = "searchWord", required = false) String searchWord
+			   , @RequestParam(value = "location", required = false) String location
+			   , @RequestParam(value = "roomN", required = false) String roomN
+			   , Model model) {
+		searchHospService.execute(page, searchWord, location, roomN, model);
 		return "thymeleaf/nursing/nursingList";
 	}
-	
 	
 }

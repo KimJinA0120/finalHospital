@@ -14,19 +14,19 @@ import hospital.domain.SEPhosPatientDTO;
 public class SepHpService {
 
 	public SEPhosPatientDTO execute(int page, int limit, String searchWord
-									, String location, String roomN) {
+									, String location, String roomN, String hpState) {
 		int startRow = ((page-1) * limit) + 1;
 		int endRow = startRow + limit - 1;
 		
 		SEPhosPatientDTO hpSEP 
-		= new SEPhosPatientDTO(startRow, endRow, searchWord, location, roomN);
+		= new SEPhosPatientDTO(startRow, endRow, searchWord, location, roomN, hpState);
 		return hpSEP;
 	}
 
 	
 	public void execute(int page, int limit, Integer count, String searchWord
 						, List<HosPatientDTO> list, String location
-						, List<RoomDTO> room, String roomN
+						, List<RoomDTO> room, String roomN, String hpState
 						, Model model) {
 		
 		int limitPage = 10; // 1 ~ 10, 11 ~ 20, 21 ~ 30, ...
@@ -39,6 +39,7 @@ public class SepHpService {
 		if(searchWord == null) searchWord="";
 		if(location == null) location = "";
 		if(roomN==null) roomN="";
+		if(hpState==null) hpState="";
 		
 		model.addAttribute("list", list);
 		model.addAttribute("searchWord", searchWord);
@@ -51,6 +52,7 @@ public class SepHpService {
 		model.addAttribute("location", location);
 		model.addAttribute("room", room);
 		model.addAttribute("roomN", roomN);
+		model.addAttribute("hpState", hpState);
 		
 	}
 

@@ -4,8 +4,9 @@
      "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="hospital.mapper.HosPatientMapper">
 
-<!-- 드롭다운  -->
-	<select id="selectDropDown" parameterType="string" resultType="RoomDTO">
+	<!-- 드롭다운 -->
+	<select id="selectDropDown" parameterType="string"
+		resultType="RoomDTO">
 		select room_Num, ward_num, room_Location from room
 		<if test="location != null">
 			where ward_num like '%'||#{location}||'%'
@@ -15,7 +16,7 @@
 		</if>
 	</select>
 
-	<!-- 입원정보 생성자 resultMap -->
+	<!-- 입원정보 생성자 resultMap --> <!-- constructor : 생성자를 통한 맵핑, 생성자 파라미터에 명시된 순서대로 arg를 입력해야함 -->
 	<resultMap type="HospitalizationDTO" id="hospResultMap">
 		<constructor>
 			<idArg column="HOSPITALIZATION_NUM" javaType="string" />
@@ -29,100 +30,135 @@
 		</constructor>
 	</resultMap>
 
+	<!-- 병동처방 생성자 -->
+	<resultMap type="wardPS" id="wardPsResultMap">
+		<id column="WARDPRESCRIPT_NUM" javaType="string" jdbcType="VARCHAR" property="wardPsNum" />
+		<result column="HOSPITALIZATION_NUM" javaType="string" jdbcType="VARCHAR" property="hospNum" />
+		<result column="EMP_NUM" javaType="string" jdbcType="VARCHAR" property="empNum" />
+		<result column="WRITE_DOC" javaType="string" jdbcType="VARCHAR" property="writeDoc" />
+		<result column="UPDATE_DOC" javaType="string" jdbcType="VARCHAR" property="updateDoc" />
+		<result column="DIAGNOSTIC_NAME" javaType="string" jdbcType="VARCHAR" property="diagName" />
+		<result column="DIAGNOSTIC_CONTENT" javaType="string" jdbcType="VARCHAR" property="diagCont"/>
+		<result column="MEDICINE_PRESCRIPT" javaType="string" jdbcType="VARCHAR" property="medicPres"/>
+		<result column="EXAMINATION_PRESCRIPT" javaType="string" jdbcType="VARCHAR" property="examPres"/>
+		<result column="HANDLE_PRESCRIPT" javaType="string" jdbcType="VARCHAR" property="hanPres"/>
+		<result column="IN_DATE" javaType="java.util.Date" jdbcType="DATE" property="inputDate"/>
+		<result column="OUT_DATE" javaType="java.util.Date" jdbcType="DATE" property="updateDate"/>
+	</resultMap>
+
 	<resultMap type="hosPatient" id="hosPatientResultMap">
 		<result column="patient_name" jdbcType="VARCHAR"
 			javaType="string" property="patientName" />
-		<result column="ROOM_LOCATION" jdbcType="BIGINT" javaType="integer"
-			property="roomLoc" />
+		<result column="ROOM_LOCATION" jdbcType="BIGINT"
+			javaType="integer" property="roomLoc" />
 		<result column="room_num" jdbcType="VARCHAR" javaType="string"
 			property="roomNum" />
 		<result column="ward_num" jdbcType="VARCHAR" javaType="string"
 			property="wardNum" />
-		<result column="wardprescript_num" jdbcType="VARCHAR" javaType="string"
-			property="wardPsNum" />
-		<result column="diagnostic_name" jdbcType="VARCHAR" javaType="string"
-			property="diagName" />
 		<association property="hospitalizationDTO"
 			javaType="HospitalizationDTO" resultMap="hospResultMap" />
+		<association property="wardPsDTO" javaType="wardPS"
+			resultMap="wardPsResultMap" />
 	</resultMap>
-	
+
 	<sql id="HospBaseCol">
-		h.HOSPITALIZATION_NUM, h.BED_NUM, h.PATIENT_NUM, h.IN_DATE
+		h.BED_NUM, h.PATIENT_NUM, h.IN_DATE, h.HOSPITALIZATION_NUM
 		, h.OUT_DATE, h.HOSPITALIZATION_STATUS, h.DOC_NUM, h.NUR_NUM
 	</sql>
 
-<!-- 병동처방에서 입원번호 찾기 기능 -->
-	<select id="searchList" resultMap="hosPatientResultMap" parameterType="hpSEP">
-		select * 
-		from(select rownum rn, p.patient_name, r.ROOM_LOCATION, r.room_num,
-				r.ward_num , <include refid="HospBaseCol"/>
-				from PATIENT p join HOSPITALIZATION h 
-				on p.PATIENT_NUM = h.PATIENT_NUM
-				join bed b on h.bed_num = b.bed_num
-				join room r on b.room_num = r.room_num
-		
-				 <trim prefix="where" prefixOverrides="AND|OR">
-				 	<if test="location!=null">
-				 	 r.ward_num like '%'||#{location}||'%'
-				 	</if>
-				 	<if test="roomN!=null">
-				 	 and b.room_num = #{roomN}
-				 	</if>
-					<if test="searchWord!=null">
-				 	and (p.patient_num like '%'||#{searchWord}||'%'
-				 	or patient_name like '%'||#{searchWord}||'%'
-				 	or h.HOSPITALIZATION_NUM like '%'||#{searchWord}||'%'
-				 	or h.BED_NUM like '%'||#{searchWord}||'%'
-				 	or h.DOC_NUM like '%'||#{searchWord}||'%')
-				 	</if>
-				 	
-				 	and h.HOSPITALIZATION_STATUS like '%입원%'
-				</trim>
-			order by h.HOSPITALIZATION_NUM
-		  ) where rn between #{startRow} and #{endRow}
-	</select>
+	<sql id="wardPsCol">
+		wp.WARDPRESCRIPT_NUM, wp.EMP_NUM, wp.WRITE_DOC, wp.UPDATE_DOC,
+      wp.DIAGNOSTIC_NAME, wp.DIAGNOSTIC_CONTENT, wp.MEDICINE_PRESCRIPT
+      , wp.EXAMINATION_PRESCRIPT, wp.HANDLE_PRESCRIPT, wp.INPUT_DATE, wp.UPDATE_DATE
+	</sql>
 	
 	
-	
+	<!-- 병동처방 -->
 	<select id="searchCount" resultType="integer">
 		select count(*) from HOSPITALIZATION
+		where HOSPITALIZATION_STATUS like '%입원%'
 	</select>
-	
-	
-	
-	<select id="searchWardPs" resultMap="hosPatientResultMap" parameterType="hpSEP">
-		select * 
-		from( select rownum rn, p.patient_name, r.ROOM_LOCATION, w.WARD_LOCATION
-				, wp.wardprescript_num , wp.diagnostic_name, <include refid="HospBaseCol"/>
-		from PATIENT p join HOSPITALIZATION h 
+	<!-- 병동처방에서 입원번호 찾기 기능 -->
+	<select id="searchList" resultMap="hosPatientResultMap"
+		parameterType="hpSEP">
+		select *
+		from(select rownum as rn, p.patient_name, r.ROOM_LOCATION, r.room_num,
+		r.ward_num, <include refid="HospBaseCol" />
+		
+		from PATIENT p join HOSPITALIZATION h
 		on p.PATIENT_NUM = h.PATIENT_NUM
-		join WARDPRESCRIPT wp 
-		on h.hospitalization_num = wp.hospitalization_num
-		join bed b on h.bed_num = b.bed_num
-		join room r on b.room_num = r.room_num
-		join ward w on r.ward_num = w.ward_num
+		join bed b 
+		on h.bed_num = b.bed_num
+		join room r 
+		on b.room_num = r.room_num
+
 		<trim prefix="where" prefixOverrides="AND|OR">
-				 	<if test="location!=null">
-				 	 r.ward_num like '%'||#{location}||'%'
-				 	</if>
-				 	<if test="roomN!=null">
-				 	 and b.room_num = #{roomN}
-				 	</if>
-					<if test="searchWord!=null">
-				 	and (p.patient_num like '%'||#{searchWord}||'%'
-				 	or patient_name like '%'||#{searchWord}||'%'
-				 	or h.HOSPITALIZATION_NUM like '%'||#{searchWord}||'%'
-				 	or h.BED_NUM like '%'||#{searchWord}||'%'
-				 	or h.DOC_NUM like '%'||#{searchWord}||'%'
-				 	or h.NUR_NUM like '%'||#{searchWord}||'%'
-				 	or wp.wardprescript_num like '%'||#{searchWord}||'%'
-				 	or wp.diagnostic_name like '%'||#{searchWord}||'%')
-				 	</if>
-				 	
-				 	and h.HOSPITALIZATION_STATUS like '%입원%'
+				h.HOSPITALIZATION_STATUS like '%입원%'
+			<if test="location!=null">
+				and r.ward_num like '%'||#{location}||'%'
+			</if>
+			<if test="roomN!=null">
+				and b.room_num like '%'||#{roomN}||'%'
+			</if>
+			<if test="searchWord!=null">
+				and (h.patient_num like '%'||#{searchWord}||'%'
+				or patient_name like '%'||#{searchWord}||'%'
+				or h.HOSPITALIZATION_NUM like '%'||#{searchWord}||'%'
+				or h.BED_NUM like '%'||#{searchWord}||'%'
+				or h.DOC_NUM like '%'||#{searchWord}||'%')
+			</if>
+				
 		</trim>
-		 ) where rn between #{startRow} and #{endRow}
-		 
+		order by h.HOSPITALIZATION_NUM
+		) where rn between #{startRow} and #{endRow}
 	</select>
 
+
+	<!-- 간호 쪽 -->
+	<select id="nursingCount" resultType="integer">
+		select count(*) from WARDPRESCRIPT
+	</select>
+	
+	<!-- 간호일지에서 병동처방번호와 담당간호사 찾기 -->
+	<select id="searchWardPs" resultMap="hosPatientResultMap"
+		parameterType="hpSEP">
+		select *
+		from( select rownum rn, p.patient_name, r.ROOM_LOCATION, w.WARD_LOCATION
+			, <include refid="HospBaseCol" />, <include refid="wardPsCol"/>
+		from PATIENT p join HOSPITALIZATION h
+		on p.PATIENT_NUM = h.PATIENT_NUM
+		join WARDPRESCRIPT wp
+		on h.hospitalization_num = wp.hospitalization_num
+		join bed b 
+		on h.bed_num = b.bed_num
+		join room r 
+		on b.room_num = r.room_num
+		join ward w 
+		on r.ward_num = w.ward_num
+		<trim prefix="where" prefixOverrides="AND|OR">
+			<if test="location!=null">
+				r.ward_num like '%'||#{location}||'%'
+			</if>
+			<if test="roomN!=null">
+				and b.room_num = #{roomN}
+			</if>
+			<if test="searchWord!=null">
+				and (h.patient_num like '%'||#{searchWord}||'%'
+				or patient_name like '%'||#{searchWord}||'%'
+				or h.HOSPITALIZATION_NUM like '%'||#{searchWord}||'%'
+				or h.BED_NUM like '%'||#{searchWord}||'%'
+				or h.DOC_NUM like '%'||#{searchWord}||'%'
+				or h.NUR_NUM like '%'||#{searchWord}||'%'
+				or wp.wardprescript_num like '%'||#{searchWord}||'%'
+				or wp.diagnostic_name like '%'||#{searchWord}||'%')
+			</if>
+
+			and h.HOSPITALIZATION_STATUS like '%입원%'
+		</trim>
+		order by wp.wardprescript_num
+		) where rn between #{startRow} and #{endRow}
+
+	</select>
+
+	
 </mapper>

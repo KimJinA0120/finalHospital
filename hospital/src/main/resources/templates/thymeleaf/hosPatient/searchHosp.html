@@ -35,7 +35,13 @@ function Selroom() {
 	var par2 = $("#searchWord").val();
 	var selectedValue = $("#location option:selected").val();
 	var par4 = $("#roomN option:selected").val();
-	location.href = "searchHosp?searchWord="+par2 +"&location=" + selectedValue +"&roomN="+par4;
+	if(par2 != null && par2 != ""){
+		location.href = "searchHosp?searchWord="+par2 +"&location=" + selectedValue +"&roomN="+par4;
+	}else {
+		location.href = "searchHosp?location=" + selectedValue +"&roomN="+par4;
+	}
+	
+	
 }
 		
 		

@@ -20,4 +20,8 @@ public interface HosPatientMapper {
 
 	public List<RoomDTO> selectDropDown(String location);
 
+	public Integer nursingCount();
+
+	public List<HosPatientDTO> hosPatList(SEPhosPatientDTO hpSEP);
+
 }

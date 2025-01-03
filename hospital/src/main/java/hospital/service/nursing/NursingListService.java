@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import hospital.domain.NursingDTO;
-import hospital.domain.StartEndPageDTO;
+import hospital.domain.HosPatientDTO;
+import hospital.domain.RoomDTO;
+import hospital.domain.SEPhosPatientDTO;
+import hospital.mapper.HosPatientMapper;
 import hospital.mapper.NursingMapper;
-import hospital.service.StartEndPageService;
+import hospital.service.hosPatient.SepHpService;
 
 @Service
 public class NursingListService {
@@ -17,14 +19,28 @@ public class NursingListService {
 	@Autowired
 	NursingMapper nursingMapper;
 	@Autowired
-	StartEndPageService startEndPageService;
-	public void execute(int page, String searchWord, Model model) {
+	SepHpService sepHpService;
+	@Autowired
+	HosPatientMapper hosPatientMapper;
+	
+	public void execute(int page, String searchWord, String location
+						, String roomN, Model model) {
 		int limit=10;
-		StartEndPageDTO sepDTO = startEndPageService.execute(page, limit, searchWord, null);
-		List<NursingDTO> list = nursingMapper.selectList(sepDTO);
+		SEPhosPatientDTO hpSEP 
+		= sepHpService.execute(page, limit, searchWord, location, roomN, null);
+		
+		List<HosPatientDTO> list = nursingMapper.selectList(hpSEP);
 		Integer count = nursingMapper.count();
 		
-		startEndPageService.execute(page,limit,count,searchWord,list, model, null);
+		List<RoomDTO> room = hosPatientMapper.selectDropDown(location);
+		
+		sepHpService.execute(page,limit,count,searchWord,list,location,room,roomN, null, model);
 	}
-
+	
+	public void wholeList(int page, String searchWord, String location, String roomN
+			, String hpState, Model model) {
+		
+		
+	}
+	
 }
