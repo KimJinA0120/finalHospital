@@ -20,7 +20,7 @@ $(function(){
     <table border="1">
       <tr><td>예약번호</td><td><input type="text" name="receiptNum" id="receiptNum"  th:value="${autoNum}" readonly="readonly"></td></tr>
       <tr><td>환자번호</td><td><input type="text" name="patientNum" id="patientNum"  th:value="${patientNum}" readonly="readonly"></td></tr>
-      <tr><td>담당의사번호</td><td><input type="text" name="empNum" readonly="readonly" required="required">
+      <tr><td>담당의사번호</td><td><input type="text" name="empNum" id="docNum" readonly="readonly" required="required">
       				<button type="button" id="btn1">의사검색</button></td></tr>
       <tr><td>예약일시</td><td><input type="datetime-local" name="reservationDate" required="required"></td></tr>
      </table>
