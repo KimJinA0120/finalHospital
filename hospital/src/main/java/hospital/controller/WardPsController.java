@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import hospital.command.WardPsCommand;
 import hospital.service.AutoNumService;
@@ -101,19 +103,23 @@ public class WardPsController {
    ////////////// 입원번호 찾기
    @Autowired
    SearchHospService searchHospService;
+   
+	/*
+	 * @GetMapping("searchHosp") public String searchHosp() { return
+	 * "thymeleaf/hosPatient/searchHosp"; }
+	 */
+   
    @GetMapping("searchHosp")
    public String searchHosp(
 		   @RequestParam(value = "page", required = false, defaultValue = "1") int page
 		   , @RequestParam(value = "searchWord", required = false) String searchWord
 		   , @RequestParam(value = "location", required = false) String location
-//		   , @RequestParam(value = "hpStatus", required = false) String hpStatus
+		   , @RequestParam(value = "roomN", required = false) String roomN
 		   , Model model) {
-	   String hpStatus = "";
-	   searchHospService.execute(page, searchWord, location, hpStatus, model);
+	   searchHospService.execute(page, searchWord, location, roomN, model);
 	   return "thymeleaf/hosPatient/searchHosp";
    }
-   
-   
+
  
    
 }

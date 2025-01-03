@@ -13,8 +13,8 @@ table tr:not(:first-child):not(:last-child):hover {
     background-color: #E2E2E2;
 }
 </style>
-<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
-<script type="text/javascript" src="/static/js/check.js"></script>
+<script  src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
 
 <script type="text/javascript">
 
@@ -24,73 +24,58 @@ function selecthosp(hospitalizationNum, docNum){
 	window.self.close();
 }
 
+function selectLoc() {
+	var selectedValue = $("#location option:selected").val();
+	
+ 	location.href = "searchHosp?location=" + selectedValue;
 
+}	
 
-$(function() {
-	$("#location").on("change", function() {
+function Selroom() {
+	var par2 = $("#searchWord").val();
+	var selectedValue = $("#location option:selected").val();
+	var par4 = $("#roomN option:selected").val();
+	location.href = "searchHosp?searchWord="+par2 +"&location=" + selectedValue +"&roomN="+par4;
+}
 		
-		// 선택된 옵션의 값 가져오기
-		var selectedValue = $("#location option:selected").val();
 		
-		// 선택된 값이 비어있으면 AJAX 호출하지 않음
-		if (selectedValue == "0") {
-			return false;
-			
-		} else {
-			$.ajax({
-				type : "get",
-				url : "../wardPS/searchHosp",
-				data : {"location" : selectedValue},
-				dataType : "text",
-				success : function(result) {
-					console.log(result);
-					item = '<select style="width:20%; text-align: center">';
-					item += '<option value="0" selected="selected">전체</option>';
-					/*$.each(result.room, function(idx, room) {
-						item += '<option value= "room.roomNum">room.roomLocation</option>';
-						item += '</select>';
-					})*/
-					
-					$("#hpStatus").html(item);
-				},
-				error: function() {
-					alert("오류");
-				}
-			});
-		}
-	});
-});
-
-
 </script>
+
 
 </head>
 <body>
 입원번호 검색 <br>
 
 	<table width=600px align="center">
-	<form action="searchHosp" method="get">
+	<form action="searchHosp" method="get" id="frm">
 		<tr>
 			<td colspan="5" align="center">
-				<input type="search" name="searchWord" size=60 th:value="${searchWord}"/>
-				<input type="submit" value="검색" />
+				<input type="search" name="searchWord" size=60 th:value="${searchWord}" id="searchWord"/>
+				<input type="submit" id="sub" value="검색">
 			</td>
 		</tr>
 		
 		<tr align="right">
 			<td colspan="5">
-				<select id="location" style="width:20%; text-align: center">
-					<option value="0" selected="selected">전체</option>
-					<option value="normal" >4층 일반병동</option>
-					<option value="critical" >5층 중환자실</option>
+				<select name="location" id="location" th:value="${location}" onchange="selectLoc()"
+				 style="width:20%; text-align: center">
+					<option value="none" disabled="disabled" selected="selected">전체</option>
+					<option value="normal" 
+					th:selected="${location} == 'normal'">4층 일반병동</option>
+					<option value="critical" 
+						th:selected="${location} == 'critical'">5층 중환자실</option>
 				</select>
 				
-				<div id="hpStatus">
+				<select name="roomN" id="roomN" th:value="${roomN}" onchange="Selroom()"
+					style="width:20%; text-align: center">
+					<option value="none" disabled="disabled" selected="selected">-------</option>
+					<option th:each="room : ${room}" th:value="${room.roomNum}" 
+					th:selected="${room.roomNum} == ${roomN}">[[${room.roomLocation}]]</option>
 				
-				</div>
-
+				</select>
 				
 			</td>
+			
 		</tr>
 		
 	</form>
@@ -117,13 +102,13 @@ $(function() {
 		<th colspan="5" style="text-align: center;">
 			<span th:if="${page <= 1}">[이전]</span>
 			<span th:if="${page > 1}">
-			<a th:href="|searchHosp?page=${page - 1}&searchWord=${searchWord}|">[이전]</a>
+			<a th:href="|searchHosp?page=${page - 1}&searchWord=${searchWord}&location=${location}&roomN=${roomN}|">[이전]</a>
 			</span>
 			<th:block th:each="i : ${#numbers.sequence(startPageNum, endPageNum)}">
-				[<a th:href="|searchHosp?page=${i}&searchWord=${searchWord}|">[[${i}]]</a>]
+				[<a th:href="|searchHosp?page=${i}&searchWord=${searchWord}&location=${location}&roomN=${roomN}|">[[${i}]]</a>]
 			</th:block>
 			<span th:if="${page < maxPage}">
-			<a th:href="@{searchHosp?(page=${page + 1},searchWord=${searchWord})}">[다음]</a>
+			<a th:href="@{searchHosp?(page=${page + 1},searchWord=${searchWord},location=${location},roomN=${roomN})}">[다음]</a>
 			</span>
 			<span th:if="${page >= maxPage}">
 			[다음]

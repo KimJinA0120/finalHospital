@@ -5,6 +5,13 @@
 <title>Insert title here</title>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script type="text/javascript" src="/static/js/checkbox.js"></script>
+<script type="text/javascript">
+function patientSelect(patientNum){
+	$(opener.document).find("#patientNum").val(patientNum);
+	
+	window.self.close();
+}
+</script>
 </head>
 <body>
 <a href="patientWrite">환자등록</a><br />
@@ -33,6 +40,10 @@
 		<td>[[${dto.patientAddr}]]</td>
 		<td>[[${dto.patientPhone}]]</td>
 		<td>[[${dto.patientGender}]]</td>
+		
+		<td><button type="button" 
+					th:attr="onclick=|javascript:patientSelect('${dto.patientNum}')|">선택</button>
+		</td>
 		
 	</tr>
  </form> 

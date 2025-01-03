@@ -16,7 +16,7 @@ public interface HosPatientMapper {
 
 	public Integer searchCount();
 
-	public List<HosPatientDTO> searchWardPs(StartEndPageDTO sepDTO);
+	public List<HosPatientDTO> searchWardPs(SEPhosPatientDTO hpSEP);
 
 	public List<RoomDTO> selectDropDown(String location);
 
