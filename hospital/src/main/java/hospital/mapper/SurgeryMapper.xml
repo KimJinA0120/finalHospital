@@ -4,12 +4,12 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="hospital.mapper.SurgeryMapper">
 	<sql id="surgeryAppointmentBase">
-		SURGERY_APPOINTMENT_NUM, SEMP_NUM, OPERATING_ROOM_NUM, WARDPRESCRIPT_NUM, SURGERY_NAME, SURGERY_DATE, AEMP_NUM
+		SURGERY_APPOINTMENT_NUM, SEMP_NUM, OPERATING_ROOM_NUM, WARDPRESCRIPT_NUM, SURGERY_NAME, SURGERY_DATE, AEMP_NUM, SURGERY_END_DATE
 	</sql>
 	<insert id="SurgeryAppointment" parameterType="surgeryAppointment">
 		insert into surgery_appointment ( <include refid="surgeryAppointmentBase"/> )
 		values (#{surgeryAppointmentNum}, #{sempNum}, #{operatingRoomNum}
-			, #{wardprescriptNum}, #{surgeryName}, #{surgeryDate}, #{aempNum})
+			, #{wardprescriptNum}, #{surgeryName}, #{surgeryDate}, #{aempNum}, #{surgeryEndDate})
 	</insert>
 	<select id="surgeryAppointmentList" resultType="surgeryAppointment" parameterType="startEndPage">
 		select * from (
@@ -52,6 +52,7 @@
 			OPERATING_ROOM_NUM = #{operatingRoomNum},
 			SURGERY_NAME = #{surgeryName},
 			SURGERY_DATE = #{surgeryDate},
+			SURGERY_END_DATE = #{surgeryEndDate},
 			AEMP_NUM = #{aempNum}
 		where SURGERY_APPOINTMENT_NUM = #{surgeryAppointmentNum}
 	</update>
@@ -83,5 +84,9 @@
 	
 	<select id="operatingRoomList" resultType="operatingRoom">
 		select operating_room_num , operating_room_location from operating_room
+	</select>
+	
+	<select id="surgeryAppointmentAllSelect" resultType="surgeryAppointment">
+		select <include refid="surgeryAppointmentBase"/> from surgery_appointment
 	</select>
 </mapper>

@@ -1,6 +1,6 @@
 package hospital.domain;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import org.apache.ibatis.type.Alias;
 
@@ -11,7 +11,8 @@ import lombok.Data;
 public class SurgeryAppointmentDTO {
 	String surgeryAppointmentNum;
 	String surgeryName;
-	Date surgeryDate;
+	LocalDateTime surgeryDate;
+	LocalDateTime surgeryEndDate;
 	String sempNum;
 	String aempNum;
 	String operatingRoomNum;

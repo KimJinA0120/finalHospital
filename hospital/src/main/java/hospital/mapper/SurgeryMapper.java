@@ -26,4 +26,6 @@ public interface SurgeryMapper {
 	public int surgeryUpdate(SurgeryDTO dto);
 	
 	public List<OperatingRoomDTO> operatingRoomList();
+	
+	public List<SurgeryAppointmentDTO> surgeryAppointmentAllSelect();
 }

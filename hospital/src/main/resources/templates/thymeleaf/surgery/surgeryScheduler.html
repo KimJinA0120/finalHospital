@@ -3,9 +3,83 @@
 <head>
 <meta charset="UTF-8">
 <title>수술실 리스트</title>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+    	  $(function () {
+    		  var request = $.ajax({
+    			  url: "/surgery/surScheduler",
+    			  method: "GET",
+    			  dataType: "json"
+    		  });
+    		  
+    		  request.done(function(data){
+    			  console.log(data);
+    			  
+    			  var calendarEl = document.getElementById('calendar');
+    		        
+    		        var calendar = new FullCalendar.Calendar(calendarEl, {
+    		        	navLinks: true,
+    		        	editable: true,
+    		        	dayMaxEvents: true,
+    		        	displayEventTime:true,
+    		        	allDaySlot:false,
+    		        	headerToolbar: {
+    		        		left:'prev,next',
+    		        		center: 'title',
+    		        		right: 'addEventButtons dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+    		        	},
+    		        	customButtons: {
+    		        		addEventButtons: {
+    		        			text: "수술일정 추가",
+    		        			click: function(){
+    		        					window.open("/surgery/surgeryAppointment", "surgeryAppointment", "width=800, height=500, top=300, left=300");
+    		        			}
+    		        		}
+    		        	},
+    		        	events: data,
+    		        	eventClick: function(info){
+    		        		console.log(info.event);
+    		        		window.open("/surgery/surgeryAppointmentDetail?surgeryAppointmentNum="+info.event._def.extendedProps.surgeryAppointmentNum, "surgeryAppointmentDetail", "width=600, height=800, top=400, left=400");
+    		        	},
+    		        	eventDrop: function(info){
+    		        		var events = new Array();
+    		        		var obj = new Object();
+    		        		
+    		        		obj.title = info.event._def.title;
+    		        		obj.start = info.event._instance.range.start;
+    		        		obj.end = info.event._instance.range.end;
+    		        		obj.aempNum = info.event._def.extendedProps.aempNum;
+    		        		obj.operatingRoomNum = info.event._def.extendedProps.operatingRoomNum;
+    		        		obj.sempNum = info.event._def.extendedProps.sempNum;
+    		        		obj.surgeryAppointmentNum = info.event._def.extendedProps.surgeryAppointmentNum;
+    		        		obj.wardprescriptNum = info.event._def.extendedProps.wardprescriptNum;
+    		        		events.push(obj);
+    		        		
+    		        		console.log(events);
+    		        		
+    		        		console.log(JSON.stringify(events));
+    		        		$(function surScheduleUpdate(){
+    		        			$.ajax({
+    		        				url: "/surgery/surScheduleUpdate",
+    		        				type: "POST",
+    		        				dataType: "json",
+    		        				data: JSON.stringify(events),
+    		        				contentType: "application/json"
+    		        			})
+    		        		})
+    		        	}
+    		        });
+    		        calendar.render();
+    		      });
+    		  })
+    	  });
 
-</head>
-<body>
-
-</body>
+    </script>
+  </head>
+  <body>
+  	<div align="center"><h1>수술 스케쥴러</h1></div>
+    <div id='calendar'></div>
+  </body>
 </html>

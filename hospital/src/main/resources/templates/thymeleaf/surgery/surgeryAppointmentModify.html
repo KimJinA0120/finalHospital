@@ -3,40 +3,61 @@
 <head>
 <meta charset="UTF-8">
 <title>수술예약 수정화면</title>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#update").click(function(){
+		$("#frm").ajaxSubmit({
+			type: "POST",
+			url: "surgeryAppointmentModify",
+			success: function(result){
+				window.opener.location.reload();
+				window.self.close();
+			},
+			error: function(){
+				alert("서버오류");
+			}
+		})
+	})
+})
+</script>
 </head>
 <body>
-<form action="surgeryAppointmentModify" method="post">
+<form action="surgeryAppointmentModify" method="post" id="frm">
 	<table border="1" width="600">
 		<tr>
 			<th>수술예약번호</th>
-			<td><input type="text" name="surgeryAppointmentNum" th:value="${dto.surgeryAppointmentNum}" readonly="readonly"/></td>
+			<td colspan="3"><input type="text" name="surgeryAppointmentNum" th:value="${dto.surgeryAppointmentNum}" readonly="readonly"/></td>
 		</tr>
 		<tr>
 			<th>수술명</th>
-			<td><input type="text" name="surgeryName" th:value="${dto.surgeryName}"/></td>
+			<td colspan="3"><input type="text" name="surgeryName" th:value="${dto.surgeryName}"/></td>
 		</tr>
 		<tr>
-			<th>수술날짜</th>
-			<td><input type="date" name="surgeryDate" th:value="${#dates.format(dto.surgeryDate, 'yyyy-MM-dd')}"/></td>
+			<th>수술시작 시간</th>
+			<td><input type="datetime-local" name="surgeryDate" th:value="${#temporals.format(dto.surgeryDate, 'yyyy-MM-dd HH:mm')}"/></td>
+			<th>수술끝 시간</th>
+			<td><input type="datetime-local" name="surgeryEndDate" th:value="${#temporals.format(dto.surgeryEndDate, 'yyyy-MM-dd HH:mm')}"/></td>
 		</tr>
 		<tr>
 			<th>집도의</th>
-			<td><input type="text" name="sempNum" th:value="${dto.sempNum}"/></td>
+			<td colspan="3"><input type="text" name="sempNum" th:value="${dto.sempNum}"/></td>
 		</tr>
 		<tr>
 			<th>마취의</th>
-			<td><input type="text" name="aempNum" th:value="${dto.aempNum}"/></td>
+			<td colspan="3"><input type="text" name="aempNum" th:value="${dto.aempNum}"/></td>
 		</tr>
 		<tr>
 			<th>수술실</th>
-			<td><input type="text" name="operatingRoomNum" th:value="${dto.operatingRoomNum}"/></td>
+			<td colspan="3"><input type="text" name="operatingRoomNum" th:value="${dto.operatingRoomNum}"/></td>
 		</tr>
 		<tr>
 			<th>처방번호</th>
-			<td><input type="text" name="wardprescriptNum" th:value="${dto.wardprescriptNum}"/></td>
+			<td colspan="3"><input type="text" name="wardprescriptNum" th:value="${dto.wardprescriptNum}"/></td>
 		</tr>
 		<tr>
-			<th colspan="2"><input type="submit" value="수정 완료"/></th>
+			<th colspan="2"><button type="button" id="update">수정완료</button></th>
 		</tr>
 	</table>
 </form>

@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>수술 예약</title>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
 <script type="text/javascript">
 $(function(){
 	$("#surroom").click(function(){
@@ -12,43 +13,61 @@ $(function(){
 	$("#semp").click(function(){
 		window.open("/employee/doctorSearch", "doctorSearch", "width=600, height=400, top=100, left=100");
 	})
+	$("#aemp").click(function(){
+		window.open("/employee/doctorSearch", "doctorSearch", "width=600, height=400, top=100, left=100");
+	})
+	$("#write").click(function(){
+		$("#frm").ajaxSubmit({
+			type: "POST",
+			url: "surgeryAppointment",
+			success: function(result){
+				window.opener.location.reload();
+				window.self.close();
+			},
+			error: function(){
+				alert("서버오류");
+			}
+		})
+	})
 })
 </script>
 
 </head>
 <body>
-<form action="surgeryAppointment" method="post">
-	<table border="1" width="600">
+<form action="surgeryAppointment" method="post" id="frm">
+	<table width="600">
 		<tr>
 			<th>수술예약번호</th>
-			<td><input type="text" name="surgeryAppointmentNum" th:value="${autoNum}" readonly="readonly"/></td>
+			<td colspan="3"><input type="text" name="surgeryAppointmentNum" th:value="${autoNum}" readonly="readonly"/></td>
 		</tr>
 		<tr>
 			<th>수술명</th>
-			<td><input type="text" name="surgeryName"/></td>
+			<td colspan="3"><input type="text" name="surgeryName" id="surgeryName"/></td>
 		</tr>
 		<tr>
-			<th>수술날짜</th>
-			<td><input type="date" name="surgeryDate" id="surgeryDate"/></td>
+			<th>시작시간</th>
+			<td><input type="datetime-local" name="surgeryDate" id="surgeryDate"/></td>
+			<th>종료시간</th>
+			<td><input type="datetime-local" name="surgeryEndDate" id="surgeryEndDate"/></td>
 		</tr>
 		<tr>
 			<th>집도의</th>
-			<td><input type="text" name="sempNum"/> <button type="button" id="semp">집도의 선택</button></td>
+			<td colspan="3"><input type="text" name="sempNum" id="docNum"/> <button type="button" id="semp">집도의 선택</button></td>
 		</tr>
 		<tr>
 			<th>마취의</th>
-			<td><input type="text" name="aempNum"/> <button type="button" id="aemp">마취의 선택</button></td>
+			<td colspan="3"><input type="text" name="aempNum" id="docNum2"/> <button type="button" id="aemp">마취의 선택</button></td>
 		</tr>
 		<tr>
 			<th>수술실</th>
-			<td><input type="text" name="operatingRoomNum" id="operatingRoom"/> <button type="button" id="surroom">수술실 찾기</button></td>
+			<td colspan="3"><input type="text" name="operatingRoomNum" id="operatingRoom"/> <button type="button" id="surroom">수술실 찾기</button></td>
 		</tr>
 		<tr>
 			<th>처방번호</th>
-			<td><input type="text" name="wardprescriptNum"/></td>
+			<td colspan="3"><input type="text" name="wardprescriptNum"/></td>
 		</tr>
 		<tr>
-			<th colspan="2"><input type="submit" value="수술 예약"/></th>
+			<th colspan="5"><button type="button" id="write">수술예약</button></th>
 		</tr>
 	</table>
 </form>
