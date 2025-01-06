@@ -30,11 +30,9 @@ public class NursingController {
 	public String wholeNursingList(
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page
 			   , @RequestParam(value = "searchWord", required = false) String searchWord
-			   , @RequestParam(value = "location", required = false) String location
-			   , @RequestParam(value = "roomN", required = false) String roomN
-			   , @RequestParam(value = "hpState", required = false) String hpState
+			   , @RequestParam(value = "kind", required = false) String kind
 			   , Model model) {
-		nursingListService.wholeList(page, searchWord, location, roomN, hpState, model);
+		nursingListService.execute(page, searchWord, kind, model);
 		return "thymeleaf/nursing/wholeNursingList";
 	}
 	
@@ -112,6 +110,8 @@ public class NursingController {
 		return "thymeleaf/hosPatient/searchWardPs";
 	}
 	
+	
+	// 간호처방 클릭시 처음으로 진입하는 페이지. 입원 중인 환자 목록 페이지
 	@GetMapping("nursingList")
 	public String nursingList(
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page

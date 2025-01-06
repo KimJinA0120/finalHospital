@@ -123,8 +123,8 @@
 	<select id="searchWardPs" resultMap="hosPatientResultMap"
 		parameterType="hpSEP">
 		select *
-		from( select rownum rn, p.patient_name, r.ROOM_LOCATION, w.WARD_LOCATION
-			, <include refid="HospBaseCol" />, <include refid="wardPsCol"/>
+		from( select rownum rn, p.patient_name, r.ROOM_LOCATION, r.room_num
+			,r.ward_num, <include refid="HospBaseCol" />, <include refid="wardPsCol"/>
 		from PATIENT p join HOSPITALIZATION h
 		on p.PATIENT_NUM = h.PATIENT_NUM
 		join WARDPRESCRIPT wp
@@ -133,8 +133,6 @@
 		on h.bed_num = b.bed_num
 		join room r 
 		on b.room_num = r.room_num
-		join ward w 
-		on r.ward_num = w.ward_num
 		<trim prefix="where" prefixOverrides="AND|OR">
 			<if test="location!=null">
 				r.ward_num like '%'||#{location}||'%'

@@ -15,5 +15,4 @@ public class SEPhosPatientDTO {
 	
 	String location;
 	String roomN;
-	String hpState;
 }

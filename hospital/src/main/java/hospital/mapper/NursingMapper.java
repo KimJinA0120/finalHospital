@@ -22,6 +22,8 @@ public interface NursingMapper {
 
 	public Integer count();
 
-	public List<HosPatientDTO> selectList(SEPhosPatientDTO hpSEP);
+	public List<NursingDTO> selectList(StartEndPageDTO sepDTO);
+
+	
 
 }
