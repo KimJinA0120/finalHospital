@@ -3,18 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <title>roomList.html</title>
-
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript">
+function roomSelect(roomNum){
+	$(opener.document).find("#roomNum").val(roomNum);
+	
+	window.self.close();
+}
 </script>
 </head>
 <body>
-
+<br>
 	<table border="1">
 		<tr><th>병동 번호</th><th>병실 번호</th><th>병실 위치</th></tr>
 		<tr th:each="dto : ${list}">
 			<td>[[${dto.wardNum}]]</td>
-			<td>[[${dto.roomNum}]]</td>
+			<td><a th:href="|bedList?roomNum=${dto.roomNum}|">[[${dto.roomNum}]]</a></td>
 			<td>[[${dto.roomLocation}]]</td>
+			<td><button type="button" 
+					th:attr="onclick=|javascript:roomSelect('${dto.roomNum}')|">선택</button>
+			</td>
 		</tr>
 	</table>
+	
 </body>
 </html>

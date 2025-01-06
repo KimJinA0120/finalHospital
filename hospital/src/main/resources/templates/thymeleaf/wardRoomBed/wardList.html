@@ -3,20 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <title>wardList.html</title>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript">
+function wardSelect(wardNum){
+	$(opener.document).find("#wardNum").val(wardNum);
+	
+	window.self.close();
+}
+</script>
 </head>
 <body>
 병동리스트<br />
-
+<a href="../WardRoomBed/wardForm">병동추가</a><br>
+<a href="../WardRoomBed/roomForm">병실추가</a><br>
+<a href="../WardRoomBed/bedForm">병상추가</a><br>
 
 <table border="1">
-	<tr><td>
-		<a href="roomList?wardNum=emergency">1층 응급병동</a>
-	</td></tr><tr><td>
-		<a href="roomList?wardNum=normal">4층 일반병동</a>
-	</td></tr><tr><td>
-		<a href="roomList?wardNum=critical">5층 중환자병동</a>
-	</td></tr>
-</table>
+		<tr><th>병동 번호</th><th>병동위치</th></tr>
+		<tr th:each="dto : ${list}">
+			<td><a th:href="|roomList?wardNum=${dto.wardNum}|">[[${dto.wardNum}]]</a></td>
+			<td>[[${dto.wardLocation}]]</td>
+			<td><button type="button" 
+					th:attr="onclick=|javascript:wardSelect('${dto.wardNum}')|">선택</button>
+			</td>
+		</tr>
+	</table>
 
 
 </body>

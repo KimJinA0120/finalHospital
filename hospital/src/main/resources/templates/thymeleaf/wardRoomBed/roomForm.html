@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>roomForm.html</title>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#wardserch").click(function(){
+		window.open("/WardRoomBed/WardList", "wardList", "width=350, height=230, top=100, left=100");
+	});
+});
+</script>
+</head>
+<body>
+병실 등록<br>
+<form action="roomRegist" method="post">
+병동번호 : <input type="text" name="wardNum" id="wardNum" /> <button type="button" id="wardserch">병동검색</button><br>
+병실번호 : <input type="text" name="roomNum"/><br>
+병실위치 : <input type="text" name="roomLocation"/><br>
+<input type="submit" value="등록"/> 
+</form>
+</body>
+</html>

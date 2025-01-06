@@ -20,7 +20,9 @@
 	<select id="roomList" resultType="RoomDTO" parameterType="string">
 		select ROOM_NUM, WARD_NUM, ROOM_LOCATION
 		from room
+		<if test="#{wardNum} != null">
 		where ward_num = #{wardNum}
+		</if>
 	</select>
 	
 	<select id="emerBedList" resultType="EmergencyDTO">
@@ -28,6 +30,25 @@
 		from emergency
 	</select>
 	
+	<select id="wardList" resultType="WardDTO">
+		select WARD_NUM, WARD_LOCATION
+		from ward
+	</select>
+	
+	<insert id="wardInsert" parameterType="WardDTO">
+		insert into ward (WARD_NUM, WARD_LOCATION)
+		values (#{wardNum}, #{wardLocation})
+	</insert>
+	
+	<insert id="roomInsert" parameterType="RoomDTO">
+		insert into room (ROOM_NUM, WARD_NUM, ROOM_LOCATION)
+		values (#{roomNum}, #{wardNum}, #{roomLocation})
+	</insert>
+	
+	<insert id="bedInsert" parameterType="BedDTO">
+		insert into bed (BED_NUM, ROOM_NUM, BED_STATUS)
+		values (#{bedNum}, #{roomNum}, #{bedStatus})
+	</insert>
 	
 	
 	
