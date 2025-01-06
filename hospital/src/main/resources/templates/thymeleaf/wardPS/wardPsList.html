@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>wardPsList</title>
+<style type="text/css">
+table, td, th {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+table tr:not(:first-child):not(:last-child):hover {
+    background-color: #E2E2E2;
+}
+</style>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript">
+function selectPatient(hospNum, room, bed, name){
+	location.href = "patientwardPsList?hospNum="+hospNum+"&room="+room
+										+"&bed="+bed+"&name="+name;
+}
+
+function SelLoc() {
+	var selectedValue = $("#location option:selected").val();
+	location.href = "wardPsList?location="+selectedValue;
+}
+
+function Selroom() {
+	var par2 = $("#searchWord").val();
+	var selectedValue = $("#location option:selected").val();
+	var par4 = $("#roomN option:selected").val();
+	if(par2 != null && par2 != ""){
+		location.href = "wardPsList?searchWord="+par2 +"&location=" + selectedValue +"&roomN="+par4;
+	}else {
+		location.href = "wardPsList?location=" + selectedValue +"&roomN="+par4;
+	}
+}
+</script>
+</head>
+<body>
+<a href="/">홈</a>
+<h1>병동처방</h1>
+	<h4 align="right">
+		<a href="wardPsWrite">병동처방 작성</a>
+	</h4>
+	
+	<br>
+	<a href="WholeWardPsList">현/과거 병동처방 기록 목록</a>
+	
+	<br>
+	<table width=800px align="center">
+		<form action="wardPsList" method="get" id="frm">
+			<tr>
+				<td colspan="6" align="center"><input type="search"
+					name="searchWord" size=60 th:value="${searchWord}" id="searchWord" />
+					<input type="submit" id="sub" value="검색"></td>
+			</tr>
+
+			<tr align="right">
+				<td colspan="6"><select name="location" id="location"
+					th:value="${location}" onchange="SelLoc()"
+					style="width: 20%; text-align: center">
+						<option value="all" selected="selected">전체</option>
+						<option value="normal" th:selected="${location} == 'normal'">4층
+							일반병동</option>
+						<option value="critical" th:selected="${location} == 'critical'">5층
+							중환자실</option>
+				</select> 
+				
+				<select name="roomN" id="roomN" th:value="${roomN}"
+					onchange="Selroom()" style="width: 20%; text-align: center">
+						<option value="all" selected="selected">전체</option>
+						<option th:each="room : ${room}" th:value="${room.roomNum}"
+							th:selected="${room.roomNum} == ${roomN}">[[${room.roomLocation}]]</option>
+
+				</select></td>
+
+			</tr>
+
+		</form>
+
+
+	</table>
+
+	<table border="1" width=800px align="center">
+		<tr>
+			<th>입원실</th>
+			<th>병상</th>
+			<th>환자이름</th>
+			<th>입원번호</th>
+			<th>담당의</th>
+			<th>담당간호사</th>
+		</tr>
+
+		<tr th:each="dto : ${list}"
+			th:onclick="selectPatient([[${dto.HospitalizationDTO.hospitalizationNum}]]
+										, [[${dto.roomLoc}]], [[${dto.HospitalizationDTO.bedNum}]]
+										, [[${dto.patientName}]])">
+			<td>[[${dto.roomLoc}]]호 </td>
+			<td>[[${dto.HospitalizationDTO.bedNum}]]</td>
+			<td>[[${dto.patientName}]]</td>
+			<td>[[${dto.HospitalizationDTO.hospitalizationNum}]]</td>
+			<td>[[${dto.HospitalizationDTO.docNum}]]</td>
+			<td>[[${dto.HospitalizationDTO.nurNum}]]</td>
+		</tr>
+
+		<tr>
+			<th colspan="6" style="text-align: center;"><span
+				th:if="${page <= 1}">[이전]</span> <span th:if="${page > 1}"> <a
+					th:href="|wardPsList?page=${page - 1}&searchWord=${searchWord}&location=${location}&roomN=${roomN}|">[이전]</a>
+			</span> <th:block
+					th:each="i : ${#numbers.sequence(startPageNum, endPageNum)}">
+				[<a
+						th:href="|wardPsList?page=${i}&searchWord=${searchWord}&location=${location}&roomN=${roomN}|">[[${i}]]</a>]
+			</th:block> <span th:if="${page < maxPage}"> <a
+					th:href="@{wardPsList?(page=${page + 1},searchWord=${searchWord},location=${location},roomN=${roomN})}">[다음]</a>
+			</span> <span th:if="${page >= maxPage}"> [다음] </span></th>
+		</tr>
+	</table>
+</body>
+</html>
