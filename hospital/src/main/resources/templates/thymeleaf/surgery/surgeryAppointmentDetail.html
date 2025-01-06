@@ -24,7 +24,7 @@ $(function(){
 </script>
 </head>
 <body>
-<a th:href="|surgeryWrite?surgeryAppointmentNum=${dto.surgeryAppointmentNum}|">수술결과 기록하기</a>
+<a th:href="@{surgeryWrite(surgeryAppointmentNum=${dto.surgeryAppointmentNum},sempNum=${dto.sempNum})}">수술결과 기록하기</a>
 	<table border="1" width="600">
 		<tr><th>수술예약번호</th>
 			<td colspan="3">[[${dto.surgeryAppointmentNum}]]</td></tr>

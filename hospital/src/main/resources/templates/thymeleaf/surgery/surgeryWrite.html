@@ -22,7 +22,7 @@ $(function(){
 		<tr><th>수술결과내용</th>
 			<td><textarea cols="50" rows="10" name="surgeryContent"></textarea></td></tr>
 		<tr><th>작성자</th>
-			<td><input type="text" name="sempNum" id="semp"/></td></tr>
+			<td><input type="text" name="sempNum" id="semp" th:value="${sempNum}"/></td></tr>
 		<tr><th colspan="2"><input type="submit" value="기록 작성"/></th></tr>
 	</table>
 </form>

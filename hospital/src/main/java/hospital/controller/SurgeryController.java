@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import hospital.command.SurgeryAppointmentCommand;
 import hospital.command.SurgeryCommand;
 import hospital.service.AutoNumService;
+import hospital.service.employee.EmployeeListService;
 import hospital.service.surgery.OperatingRoomListService;
 import hospital.service.surgery.ScheduleService;
 import hospital.service.surgery.SurApsDeleteService;
@@ -122,11 +124,14 @@ public class SurgeryController {
 		return "thymeleaf/surgery/surgeryList";
 	}
 	@GetMapping("surgeryWrite") // 수술기록 화면
-	public String surgeryWrite(String surgeryAppointmentNum, Model model) {
+	public String surgeryWrite(String surgeryAppointmentNum, String sempNum, Model model) {
 		String autoNum = autoNumService.execute("Surgery_", 9, "SURGERY_NUM", "surgery");
 		model.addAttribute("autoNum", autoNum);
 		if(surgeryAppointmentNum != null) {
 			model.addAttribute("surgeryAppointmentNum", surgeryAppointmentNum);
+		}
+		if(sempNum != null) {
+			model.addAttribute("sempNum", sempNum);
 		}
 		return "thymeleaf/surgery/surgeryWrite";
 	}
@@ -194,7 +199,7 @@ public class SurgeryController {
 	@PostMapping("surScheduleUpdate")
 	@ResponseBody
 	public String surScheduleUpdate(@RequestBody List<Map<String, Object>> events, SurgeryAppointmentCommand surgeryAppointmentCommand) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+		 DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.KOREA);
 		
 		for(int i = 0; i < events.size(); i++) {
 			surgeryAppointmentCommand.setAempNum((String) events.get(i).get("aempNum"));
@@ -208,10 +213,10 @@ public class SurgeryController {
 			String surgeryDateString = (String) events.get(i).get("start");
 			String surgeryEndDateString = (String) events.get(i).get("end");
 			try {
-				LocalDateTime surgeryDate = LocalDateTime.parse(surgeryDateString);
+				LocalDateTime surgeryDate = LocalDateTime.parse(surgeryDateString, dateTimeFormatter);
 				surgeryAppointmentCommand.setSurgeryDate(surgeryDate);
 				
-				LocalDateTime surgeryEndDate = LocalDateTime.parse(surgeryEndDateString);
+				LocalDateTime surgeryEndDate = LocalDateTime.parse(surgeryEndDateString, dateTimeFormatter);
 				surgeryAppointmentCommand.setSurgeryEndDate(surgeryEndDate);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -222,5 +227,17 @@ public class SurgeryController {
 		return "thymeleaf/surgery/surgeryScheduler";
 	}
 	
+	@Autowired
+	EmployeeListService employeeListService;
+	// 마취의 찾기
+	@GetMapping("aempSearch")
+	public String aempSearch(
+			@RequestParam(value="searchWord", required=false) String searchWord
+			, @RequestParam(value="page", required=false, defaultValue="1") Integer page
+			, Model model
+			, @RequestParam(value="kind", required=false) String kind) {
+		employeeListService.doctorSearch(searchWord, page, model, kind);
+		return "thymeleaf/surgery/aempSearch";
+	}
 	
 }

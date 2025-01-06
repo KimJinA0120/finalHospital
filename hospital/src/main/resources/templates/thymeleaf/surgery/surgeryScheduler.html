@@ -26,15 +26,21 @@
     		        	displayEventTime:true,
     		        	allDaySlot:false,
     		        	headerToolbar: {
-    		        		left:'prev,next',
+    		        		left:'prev,next homeButtons',
     		        		center: 'title',
-    		        		right: 'addEventButtons dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+    		        		right: 'addEventButtons dayGridMonth,timeGridWeek,listWeek'
     		        	},
     		        	customButtons: {
     		        		addEventButtons: {
     		        			text: "수술일정 추가",
     		        			click: function(){
     		        					window.open("/surgery/surgeryAppointment", "surgeryAppointment", "width=800, height=500, top=300, left=300");
+    		        			}
+    		        		},
+    		        		homeButtons: {
+    		        			text: "홈으로",
+    		        			click: function(){
+    		        				location.href="/";
     		        			}
     		        		}
     		        	},

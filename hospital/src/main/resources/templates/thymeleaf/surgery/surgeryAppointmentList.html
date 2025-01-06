@@ -20,8 +20,8 @@
 			</td>
 	</form>
 	<form action="surApsDelete" method="post" id="frm">
-	<table border="1" width="600" align="center">
-		<tr><th>수술예약번호</th><th>수술명</th><th>수술날짜</th><th>집도의</th><th>마취의</th><th>수술실</th>
+	<table border="1" align="center">
+		<tr><th>수술예약번호</th><th>수술명</th><th>수술시간</th><th>집도의</th><th>마취의</th><th>수술실</th>
 			<th><input type="checkbox" id="checkBoxs"/>
 				<input type="submit" value="삭제"/>
 			</th>
@@ -29,7 +29,7 @@
 		<tr th:each="dto : ${list}">
 			<td><a th:href="|surgeryAppointmentDetail?surgeryAppointmentNum=${dto.surgeryAppointmentNum}|">[[${dto.surgeryAppointmentNum}]]</a></td>
 			<td>[[${dto.surgeryName}]]</td>
-			<td>[[${#dates.format(dto.surgeryDate,'yyyy-MM-dd')}]]</td>
+			<td>[[${#temporals.format(dto.surgeryDate,'yyyy-MM-dd HH:mm')}]] ~ [[${#temporals.format(dto.surgeryEndDate,'HH:mm')}]]</td>
 			<td>[[${dto.sempNum}]]</td>
 			<td>[[${dto.aempNum}]]</td>
 			<td>[[${dto.operatingRoomNum}]]</td>

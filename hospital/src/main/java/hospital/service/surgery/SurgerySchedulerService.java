@@ -25,7 +25,6 @@ public class SurgerySchedulerService {
 		Map<String, Object> hash = new HashMap<String, Object>();
 		
 		for(int i=0; i < list.size(); i++) {
-			// surgery start / end 필요할듯?
 			hash.put("aempNum", list.get(i).getAempNum());
 			hash.put("sempNum", list.get(i).getSempNum());
 			hash.put("operatingRoomNum", list.get(i).getOperatingRoomNum());
@@ -34,6 +33,19 @@ public class SurgerySchedulerService {
 			hash.put("wardprescriptNum", list.get(i).getWardprescriptNum());
 			hash.put("start", list.get(i).getSurgeryDate());
 			hash.put("end", list.get(i).getSurgeryEndDate());
+			if(list.get(i).getOperatingRoomNum().equals("surroom_1")) {
+				hash.put("color", "#BCF5A9");
+			}else if(list.get(i).getOperatingRoomNum().equals("surroom_2")) {
+				hash.put("color", "#A9F5F2");
+			}else if(list.get(i).getOperatingRoomNum().equals("surroom_3")) {
+				hash.put("color", "#F5A9E1");
+			}else if(list.get(i).getOperatingRoomNum().equals("surroom_4")) {
+				hash.put("color", "#E6E6E6");
+			}else if(list.get(i).getOperatingRoomNum().equals("surroom_5")) {
+				hash.put("color", "#F5D0A9");
+			}else {
+				hash.put("color", "#F2F5A9");
+			}
 			
 			System.out.println(list.get(i).getSurgeryName());
 			jsonArr.add(hash);
