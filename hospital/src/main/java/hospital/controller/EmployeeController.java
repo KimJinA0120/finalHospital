@@ -117,8 +117,19 @@ public class EmployeeController {
 	}
 
 	@PostMapping("employeeUpdate")
-	public String employeeUpdate(HttpSession session, EmployeeCommand employeeCommand) {
-		employeeUpdateService.execute(session, employeeCommand);
+	public String employeeUpdate(HttpSession session
+			, EmployeeCommand employeeCommand
+			, BindingResult result, Model model) {
+		if(employeeCommand.getEmpPhone().length()<9 || employeeCommand.getEmpPhone().length()>11) {
+			  result.rejectValue("empPhone", "employeeCommand.empPhone", "'-' 제외 숫자 9~11자");
+		}else {
+			employeeUpdateService.execute(session, employeeCommand);
+		}
+		
+		if(result.hasErrors()) {
+			//employeeDetailService.execute(session, model);
+			return "thymeleaf/employee/employeeUpdate";
+		}else
 		return "redirect:employeeDetail?employeeNum=" + employeeCommand.getEmpNum();
 	}
 

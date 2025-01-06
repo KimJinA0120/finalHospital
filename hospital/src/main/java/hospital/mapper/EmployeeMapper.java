@@ -24,9 +24,9 @@ public interface EmployeeMapper {
 
 	public List<SectionDTO> sectionSearch(StartEndPageDTO sepDTO);
 
-	public Integer employeeCount();
+	public Integer employeeCount(String kind);
 
-	public Integer sectionCount();
+	public Integer sectionCount(String kind);
 
 	public void employeePwUpdate(EmployeeDTO dto);
 

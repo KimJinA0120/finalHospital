@@ -28,7 +28,7 @@ public class EmployeeListService {
 		StartEndPageDTO sepDTO=startEndPageService.execute(page, limit, searchWord, null);
 		List<EmployeeDTO> list=employeeMapper.employeeSelectAll(sepDTO);
 		
-		Integer count=employeeMapper.employeeCount();
+		Integer count=employeeMapper.employeeCount(null);
 		startEndPageService.execute(page,limit,count,searchWord,list, model, null);
 		//model.addAttribute("list", list);
 		
@@ -40,7 +40,7 @@ public class EmployeeListService {
 		StartEndPageDTO sepDTO=startEndPageService.execute(page, limit, searchWord, kind);
 		List<EmployeeDTO> list=employeeMapper.employeeSelectAll(sepDTO);
 		
-		Integer count=employeeMapper.employeeCount();
+		Integer count=employeeMapper.employeeCount(kind);
 		startEndPageService.execute(page,limit,count,searchWord,list, model, kind);
 		
 	}

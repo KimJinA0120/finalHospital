@@ -25,6 +25,7 @@ public class EmployeeDetailService {
 		EmployeeDTO dto=employeeMapper.employeeSelectOne(empNum);
 		
 		model.addAttribute("dto", dto);
+		model.addAttribute("employeeCommand", dto);
 		
 	}
 

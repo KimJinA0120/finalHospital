@@ -23,8 +23,11 @@
 		<tr><td>이메일</td><td> [[${dto.patientEmail }]]</td></tr>
 		<tr><td>성별</td><td>[[${dto.patientGender}]]</td></tr>
 <tr> <td colspan="2">
-<a th:href="@{patientUpdate(patientNum=${dto.patientNum })}">유저 수정</a> | 
-<a th:href="|patientDelete?patientNum${dto.patientNum}|" id="patientDelete">탈퇴 하기</a> </td> </tr>
+<a th:href="@{patientUpdate(patientNum=${dto.patientNum })}">유저 수정</a>
+<th:block th:if="${session.auth.userId==dto.patientNum}">
+ | <a th:href="|patientDelete?patientNum${dto.patientNum}|" id="patientDelete">탈퇴 하기</a>
+</th:block>
+</td> </tr>
 </table>                
 </body>
 </html>

@@ -7,7 +7,7 @@
  
 <select id="patientLoginSelectOne" parameterType="string" resultType="auth">
 select patient_id as userId, patient_pw as userPw, patient_name as userName
-, patient_email as userEmail, patient_phone as userPhone, 'patient' as grade
+, patient_email as userEmail, patient_phone as userPhone, 'pat' as grade
 from patient where patient_id=#{userId}
 
 </select>

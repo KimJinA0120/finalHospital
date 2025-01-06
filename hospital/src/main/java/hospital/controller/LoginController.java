@@ -1,8 +1,5 @@
 package hospital.controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -62,7 +59,7 @@ public class LoginController {
 		if(result.hasErrors()) { 
 			 return "thymeleaf/employeeLogin";
 		}else {
-				return "redirect:/empIndex";
+				return "redirect:/";
 		}
 	}
 	@GetMapping("logout")

@@ -5,6 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import hospital.domain.AuthInfoDTO;
+import jakarta.servlet.http.HttpSession;
+
 @SpringBootApplication
 @Controller
 public class HospitalApplication {
@@ -13,14 +16,15 @@ public class HospitalApplication {
 		SpringApplication.run(HospitalApplication.class, args);
 	}
 	@RequestMapping("/")
-	public String index() {
+	public String index(HttpSession session) {
+		AuthInfoDTO auth=(AuthInfoDTO)session.getAttribute("auth");
+		if(auth==null||auth.getGrade().equals("pat")) { //세션이 없거나 등급이 환자인 경우
+			return "thymeleaf/index";
+		}else {
+			return "thymeleaf/empIndex";
+		}
 		
-		return "thymeleaf/index";
-	}
-	@RequestMapping("empIndex")
-	public String empIndex() {
 		
-		return "thymeleaf/empIndex";
 	}
 	@RequestMapping("404")
 	public String error() {

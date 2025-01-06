@@ -14,13 +14,17 @@ public class PatientDetailService {
 	@Autowired
 	PatientMapper patientMapper;
 	
-	public void execute(HttpSession session, Model model) {
+	public void execute(HttpSession session,String patientNum, Model model) {
 		AuthInfoDTO auth=(AuthInfoDTO)session.getAttribute("auth");
-		String patientId=auth.getUserId();
-		String patientNum=patientMapper.patientNumSelect(patientId);
+		if(auth.getGrade().equals("pat")) {
+			String patientId=auth.getUserId();
+			patientNum=patientMapper.patientNumSelect(patientId);
+		}
+		
 		PatientDTO dto=patientMapper.patientSelectOne(patientNum);
 		
 		model.addAttribute("dto", dto);
+		model.addAttribute("patientCommand", dto);
 		
 	}
 

@@ -3,6 +3,7 @@ package hospital.service.employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 
 import hospital.command.DoctorCommand;
 import hospital.command.EmployeeCommand;
@@ -31,7 +32,6 @@ public class EmployeeUpdateService {
 
 		EmployeeDTO dto = new EmployeeDTO();
 		dto.setEmpNum(employeeCommand.getEmpNum());
-		
 		  dto.setEmpName(employeeCommand.getEmpName());
 		  //dto.setEmpJumin(employeeCommand.getEmpJumin());
 		  dto.setEmpBirth(employeeCommand.getEmpBirth());
@@ -45,7 +45,9 @@ public class EmployeeUpdateService {
 		  dto.setEmpAddrDetail(employeeCommand.getEmpAddrDetail());
 		  dto.setEmpPost(employeeCommand.getEmpPost());
 		  dto.setEmpEmail(employeeCommand.getEmpEmail());
+		  
 		  dto.setEmpPhone(employeeCommand.getEmpPhone());
+		  
 		  dto.setSectionNum(employeeCommand.getSectionNum());
 		  dto.setPosition(employeeCommand.getPosition());
 		  dto.setEmpHiredate(employeeCommand.getEmpHiredate());
@@ -54,7 +56,7 @@ public class EmployeeUpdateService {
 
 		String section = employeeCommand.getEmpNum().substring(0, 3);
 		System.out.println(section);
-		if (section.equals("doc")) {
+		if (section.equals("doc")) { //sectionNum 앞 세자리가 doc일 경우, 의사정보 업데이트
 			DoctorDTO doctorDTO = new DoctorDTO();
 			String medicalSubject = doctorMapper.selectSectionName(employeeCommand.getSectionNum());
 			doctorDTO.setEmpNum(employeeCommand.getEmpNum());
@@ -65,8 +67,8 @@ public class EmployeeUpdateService {
 		}
 
 		employeeMapper.employeeUpdate(dto);
-
 	}
+
 
 	public void doctorUpdate(DoctorCommand doctorCommand) { // 진료실 위치만 수정 가능
 		DoctorDTO dto = new DoctorDTO();

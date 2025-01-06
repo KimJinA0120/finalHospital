@@ -78,25 +78,35 @@ public class PatientController {
 	}
 	@GetMapping("patientMyPage")
 	public String patientMypage(HttpSession session, Model model) {
-		patientDetailService.execute(session, model);
+		patientDetailService.execute(session, null, model);
 		return "thymeleaf/patient/patientMy";
 	}
 
 	@GetMapping("patientDetail")
-	public String patientDetail(HttpSession session, Model model) {
-		patientDetailService.execute(session, model);
+	public String patientDetail(HttpSession session, String patientNum, Model model) {
+		patientDetailService.execute(session, patientNum, model);
 		return "thymeleaf/patient/patientDetail";
 	}
 
 	@GetMapping("patientUpdate")
 	public String patientUpdate(HttpSession session, Model model) {
-		patientDetailService.execute(session, model);
+		patientDetailService.execute(session, null, model);
 		return "thymeleaf/patient/patientUpdate";
 	}
 
 	@PostMapping("patientUpdate")
-	public String patientUpdate(HttpSession session, PatientCommand patientCommand) {
-		patientUpdateService.execute(session, patientCommand);
+	public String patientUpdate(HttpSession session
+			, PatientCommand patientCommand
+			, BindingResult result, Model model) {
+		if(patientCommand.getPatientPhone().length()<9 || patientCommand.getPatientPhone().length()>11) {
+			  result.rejectValue("patientPhone", "patientCommand.patientPhone", "'-' 제외 숫자 9~11자");
+		}else {
+			patientUpdateService.execute(session, patientCommand);
+		}
+		
+		if(result.hasErrors()) {
+			return "thymeleaf/patient/patientUpdate";
+		}else
 		return "redirect:patientDetail?patientNum=" + patientCommand.getPatientNum();
 	}
 	

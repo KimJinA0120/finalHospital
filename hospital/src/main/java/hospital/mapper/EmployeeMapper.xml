@@ -70,12 +70,22 @@ delete from employee where emp_NUM = #{employeeNum}
 select emp_num from employee where emp_id=#{employeeId}
 </select>
 
-<select id="employeeCount" resultType="integer">
+<select id="employeeCount" resultType="integer" parameterType="String">
 select count(emp_Num) from employee  
+<trim prefix="where" prefixOverrides="AND|OR">
+	<if test="kind!=null">
+	emp_Num like '%'||#{kind}||'%'
+	</if>
+</trim>
 </select>
 
-<select id="sectionCount" resultType="integer">
+<select id="sectionCount" resultType="integer" parameterType="String">
 select count(section_num) from section
+<trim prefix="where" prefixOverrides="AND|OR">
+	<if test="kind!=null">
+	section_num like '%'||#{kind}||'%'
+	</if>
+</trim>
 </select>
 
 <select id="sectionSearch" resultType="sectionDTO" parameterType="startEndPage">
