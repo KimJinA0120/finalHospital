@@ -6,7 +6,7 @@
 </head>
 <body>
 <h2>병동간호</h2>
-<a href="nursingList">목록으로 돌아가기</a>
+<a href="nursingList">간호일지 목록</a> | <a href="javascript:history.back();">이전</a> <br>
 <h1 align="center">간호번호 : [[${nursCommand.nursingNum}]]</h1>
 <h2 align="center">처방번호 : <a th:href="|../wardPS/wardPsInfo?num=${nursCommand.wardPsNum}|">[[${nursCommand.wardPsNum}]]</a></h2>
 <h3 align="center">처치일시 : [[${#dates.format(nursCommand.presDate, 'yyyy-MM-dd HH:mm')}]]

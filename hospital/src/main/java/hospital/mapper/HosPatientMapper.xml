@@ -42,8 +42,8 @@
 		<result column="MEDICINE_PRESCRIPT" javaType="string" jdbcType="VARCHAR" property="medicPres"/>
 		<result column="EXAMINATION_PRESCRIPT" javaType="string" jdbcType="VARCHAR" property="examPres"/>
 		<result column="HANDLE_PRESCRIPT" javaType="string" jdbcType="VARCHAR" property="hanPres"/>
-		<result column="IN_DATE" javaType="java.util.Date" jdbcType="DATE" property="inputDate"/>
-		<result column="OUT_DATE" javaType="java.util.Date" jdbcType="DATE" property="updateDate"/>
+		<result column="INPUT_DATE" javaType="java.util.Date" jdbcType="DATE" property="inputDate"/>
+		<result column="UPDATE_DATE" javaType="java.util.Date" jdbcType="DATE" property="updateDate"/>
 	</resultMap>
 
 	<resultMap type="hosPatient" id="hosPatientResultMap">
@@ -156,6 +156,20 @@
 		order by wp.wardprescript_num
 		) where rn between #{startRow} and #{endRow}
 
+	</select>
+	
+	<select id="selectPatientNum" parameterType="string" resultType="string">
+		select patient_num from HOSPITALIZATION
+		where HOSPITALIZATION_NUM like '%'||#{hospNum}||'%'
+	</select>
+	
+	<select id="selectPatPs" resultType="patPS">
+		select w.WARDPRESCRIPT_NUM as wardPsNum, w.DIAGNOSTIC_NAME as diagName
+		, n.nursing_num as nursingNum
+		from nursing n full outer join WARDPRESCRIPT w
+		on n.WARDPRESCRIPT_NUM = w.WARDPRESCRIPT_NUM
+		where w.HOSPITALIZATION_NUM like '%'||#{hospNum}||'%'
+		order by w.INPUT_DATE
 	</select>
 
 	

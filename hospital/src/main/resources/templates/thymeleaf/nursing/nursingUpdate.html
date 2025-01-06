@@ -17,12 +17,16 @@ $(function() {
 </head>
 <body>
  <a href="javascript:history.back();">이전</a> <br>
-<form action="nursingUpdate" method="post">
+<form action="nursingUpdate" method="post" th:object="${nursCommand}">
 간호번호 : <input type="text" name="nursingNum" readonly="readonly" 
 			th:field="${nursCommand.nursingNum}"><br>
+
 병동처방번호 : <input type="text" name="wardPsNum" id="wardPsNum" 
 				th:field="${nursCommand.wardPsNum}" readonly="readonly">
-			<button type="button" id="btn">병동번호찾기</button> <br>
+			<button type="button" id="btn">병동번호찾기</button> 
+			<span style="color:red" th:if="${#fields.hasErrors('wardPsNum')}" 
+							th:errors="*{wardPsNum}"></span><br>
+							
 담당간호사 : 	<input type="text" name="empNum" id="nursNum" 
 				th:field="${nursCommand.empNum}" readonly="readonly"><br>
 <br>
@@ -30,11 +34,15 @@ $(function() {
 				th:field="${nursCommand.handleNurs}" readonly="readonly"><br>
 수정자 : <input type="text" name="updateNurs" th:value="${userNum}" readonly="readonly"><br>
 <br>
-간호내용 : <br>
+간호내용 : <span style="color:red" th:if="${#fields.hasErrors('nursingCon')}" 
+							th:errors="*{nursingCon}"></span><br>
 <textarea rows="10" cols="40" name="nursingCon">[[${nursCommand.nursingCon}]]</textarea><br>
 처치처방 : <br>
 <textarea rows="10" cols="40" name="hanPres">[[${nursCommand.hanPres}]]</textarea><br>
-처치날짜 : <input type="date" name="presDate" th:value="${#dates.format(nursCommand.presDate, 'yyyy-MM-dd')}"><br>
+처치날짜 : <input type="datetime-local" name="presDate" 
+			th:value="${#dates.format(nursCommand.presDate, 'yyyy-MM-dd HH:mm:ss')}">
+			<span style="color:red" th:if="${#fields.hasErrors('presDate')}" 
+							th:errors="*{presDate}"></span><br>
 <input type="submit" value="수정">
 </form>
 </body>

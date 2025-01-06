@@ -27,7 +27,7 @@ public class SearchHospService {
 		int limit=10;
 		
 		SEPhosPatientDTO hpSEP 
-		= sepHpService.execute(page, limit, searchWord, location, roomN);
+		= sepHpService.execute(page, limit, searchWord, location, roomN, null);
 		
 		List<HosPatientDTO> list = hosPatientMapper.searchList(hpSEP);
 		
@@ -35,7 +35,7 @@ public class SearchHospService {
 		
 		Integer count = hosPatientMapper.searchCount(); // 입원번호 숫자
 		sepHpService.execute(page,limit,count,searchWord,list
-							, location, room, roomN, model);
+							, location, room, roomN, null, model);
 		
 	}
 
@@ -43,7 +43,7 @@ public class SearchHospService {
 							, String roomN, Model model) {
 		int limit=10;
 		SEPhosPatientDTO hpSEP 
-		= sepHpService.execute(page, limit, searchWord, location, roomN);
+		= sepHpService.execute(page, limit, searchWord, location, roomN, null);
 		
 		List<HosPatientDTO> list = hosPatientMapper.searchWardPs(hpSEP);
 		
@@ -51,7 +51,7 @@ public class SearchHospService {
 		
 		Integer count = hosPatientMapper.nursingCount(); // 입원번호 숫자
 		sepHpService.execute(page,limit,count,searchWord,list
-							, location, room, roomN, model);
+							, location, room, roomN, null, model);
 		
 		
 		

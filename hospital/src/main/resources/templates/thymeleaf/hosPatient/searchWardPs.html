@@ -22,12 +22,10 @@ function selectWardPs(wardPsNum, nurNum){
 	window.self.close();
 }
 
-function selectLoc() {
+function SelLoc() {
 	var selectedValue = $("#location option:selected").val();
-	
- 	location.href = "searchWardPs?location=" + selectedValue;
-
-}	
+	location.href = "searchWardPs?location="+selectedValue;
+}
 
 function Selroom() {
 	var par2 = $("#searchWord").val();
@@ -56,7 +54,7 @@ function Selroom() {
 		
 		<tr align="right">
 			<td colspan="6">
-				<select name="location" id="location" th:value="${location}" onchange="selectLoc()"
+				<select name="location" id="location" th:value="${location}" onchange="SelLoc()"
 				 style="width:20%; text-align: center">
 					<option value="none" disabled="disabled" selected="selected">전체</option>
 					<option value="normal" 

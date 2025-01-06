@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import hospital.domain.HosPatientDTO;
+import hospital.domain.PatPsDTO;
 import hospital.domain.RoomDTO;
 import hospital.domain.SEPhosPatientDTO;
 import hospital.domain.StartEndPageDTO;
@@ -23,5 +24,9 @@ public interface HosPatientMapper {
 	public Integer nursingCount();
 
 	public List<HosPatientDTO> hosPatList(SEPhosPatientDTO hpSEP);
+
+	public String selectPatientNum(String hospNum);
+
+	public List<PatPsDTO> selectPatPs(String hospNum);
 
 }

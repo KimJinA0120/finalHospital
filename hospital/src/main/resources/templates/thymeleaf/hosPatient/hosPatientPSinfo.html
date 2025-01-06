@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>hosPatientPSinfo 입원환자 처방기록</title>
+
+</head>
+<body>
+<a href="javascript:history.back()">이전 페이지</a> <br>
+<h3 align="center">[[${room}]]호 - [[${bed}]] : [[${name}]] 환자</h3>
+<h3 align="center">입원번호 : [[${hospNum}]] |  환자번호 : [[${patNum}]] </h3>
+ <table border="1" width="800px" align="center">
+        <thead>
+            <tr>
+                <th>병동처방</th>
+                <th>간호일지 번호</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="dto : ${list}">
+            	<td><a th:href="|../wardPS/wardPsInfo?num=${dto.wardPsNum}|">[[${dto.wardPsNum}]] [[${dto.diagName}]]</a></td>
+            	<td><a th:href="|../nursing/nursingInfo?num=${dto.nursingNum}|">[[${dto.nursingNum}]]</a></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

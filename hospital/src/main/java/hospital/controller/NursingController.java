@@ -4,6 +4,8 @@ package hospital.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import hospital.command.NursCommand;
 import hospital.service.AutoNumService;
+import hospital.service.hosPatient.PatientPreScript;
 import hospital.service.hosPatient.SearchHospService;
 import hospital.service.nursing.NursingDeleteService;
 import hospital.service.nursing.NursingInfoService;
@@ -36,23 +39,25 @@ public class NursingController {
 		return "thymeleaf/nursing/wholeNursingList";
 	}
 	
-
-	
-	
-	
 	// 등록
 	@Autowired
 	AutoNumService autoNumService;
 	@GetMapping("nursingWrite")
 	public String nursingWrite(Model model) {
 		String autoNum = autoNumService.execute("nursing_", 9, "nursing_num", "nursing");
-		model.addAttribute("autoNum", autoNum);
+		NursCommand nursCommand = new NursCommand();
+		nursCommand.setNursingNum(autoNum);
+		model.addAttribute("nursCommand", nursCommand);
 		return "thymeleaf/nursing/nursingWrite";
 	}
 	@Autowired
 	NursingWriteService nursingWriteService;
 	@PostMapping("nursingWrite")
-	public String nursingWrite(NursCommand nursCommand) {
+	public String nursingWrite(@Validated NursCommand nursCommand
+								, BindingResult result) {
+		if (result.hasErrors()) {
+			  return "thymeleaf/nursing/nursingWrite";
+		} 
 		nursingWriteService.execute(nursCommand);
 		return "redirect:nursingList";
 	}
@@ -77,7 +82,11 @@ public class NursingController {
 	@Autowired
 	NursingUpdateService nursingUpdateService;
 	@PostMapping("nursingUpdate")
-	public String nursingUpdate(NursCommand nursCommand) {
+	public String nursingUpdate(@Validated NursCommand nursCommand
+								,BindingResult result) {
+		if (result.hasErrors()) {
+			   return "thymeleaf/wardPS/wardPsUpdate";
+		}
 		nursingUpdateService.execute(nursCommand);
 		return "redirect:nursingInfo?num="+nursCommand.getNursingNum();
 	}
@@ -122,5 +131,17 @@ public class NursingController {
 		searchHospService.execute(page, searchWord, location, roomN, model);
 		return "thymeleaf/nursing/nursingList";
 	}
+	
+	
+	// 현재 입원 중인 환자의 처방전과 간호일지 링크를 불러오는 페이지.
+		@Autowired
+		PatientPreScript patientPreScript;
+		@GetMapping("patientNursingList")
+		public String patientNursingList(String hospNum, String room
+										, String bed, String name
+										,Model model) {
+			patientPreScript.execute(hospNum, room, bed, name, model);
+			return "thymeleaf/hosPatient/hosPatientPSinfo";
+		}
 	
 }

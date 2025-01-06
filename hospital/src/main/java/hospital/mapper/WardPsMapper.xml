@@ -6,20 +6,30 @@
    
    <!-- 병동처방 생성자 resultMap -->
 	<resultMap type="wardPS" id="wardPsResultMap">
-		<constructor>
-			<idArg column="WARDPRESCRIPT_NUM" javaType="string" />
-			<arg column="HOSPITALIZATION_NUM" javaType="string" />
-			<arg column="EMP_NUM" javaType="string" />
-			<arg column="WRITE_DOC" javaType="string" />
-			<arg column="UPDATE_DOC" javaType="string" />
-			<arg column="DIAGNOSTIC_NAME" javaType="string" />
-			<arg column="DIAGNOSTIC_CONTENT" javaType="string" />
-			<arg column="MEDICINE_PRESCRIPT" javaType="string" />
-			<arg column="EXAMINATION_PRESCRIPT" javaType="string" />
-			<arg column="HANDLE_PRESCRIPT" javaType="string" />
-			<arg column="IN_DATE" javaType="java.util.Date" />
-			<arg column="OUT_DATE" javaType="java.util.Date" />
-		</constructor>
+		<id column="WARDPRESCRIPT_NUM" javaType="string" 
+		jdbcType="VARCHAR" property="wardPsNum" />
+		<result column="HOSPITALIZATION_NUM" javaType="string" 
+		jdbcType="VARCHAR" property="hospNum" />
+		<result column="EMP_NUM" javaType="string" 
+		jdbcType="VARCHAR" property="empNum" />
+		<result column="WRITE_DOC" javaType="string" 
+		jdbcType="VARCHAR" property="writeDoc" />
+		<result column="UPDATE_DOC" javaType="string" 
+		jdbcType="VARCHAR" property="updateDoc" />
+		<result column="DIAGNOSTIC_NAME" javaType="string" 
+		jdbcType="VARCHAR" property="diagName" />
+		<result column="DIAGNOSTIC_CONTENT" javaType="string" 
+		jdbcType="VARCHAR" property="diagCont"/>
+		<result column="MEDICINE_PRESCRIPT" javaType="string" 
+		jdbcType="VARCHAR" property="medicPres"/>
+		<result column="EXAMINATION_PRESCRIPT" javaType="string" 
+		jdbcType="VARCHAR" property="examPres"/>
+		<result column="HANDLE_PRESCRIPT" javaType="string" 
+		jdbcType="VARCHAR" property="hanPres"/>
+		<result column="INPUT_DATE" javaType="java.util.Date" 
+		jdbcType="DATE" property="inputDate"/>
+		<result column="UPDATE_DATE" javaType="java.util.Date" 
+		jdbcType="DATE" property="updateDate"/>
 	</resultMap>
    
    
@@ -46,14 +56,57 @@
       		, #{hanPres}, sysdate, null )
    </insert>
    
-   <select id="selectList" resultType="wardPS">
-      select <include refid="SelbaseCol"/> from WARDPRESCRIPT
+   
+   
+   <select id="count" resultType="integer">
+   	select count(WARDPRESCRIPT_NUM) from WARDPRESCRIPT
    </select>
+   
+   <sql id="wardPsCol">
+		w.WARDPRESCRIPT_NUM, w.HOSPITALIZATION_NUM
+		, w.EMP_NUM, w.WRITE_DOC, w.UPDATE_DOC
+		,w.DIAGNOSTIC_NAME, w.DIAGNOSTIC_CONTENT, w.MEDICINE_PRESCRIPT
+      , w.EXAMINATION_PRESCRIPT, w.HANDLE_PRESCRIPT, w.INPUT_DATE, w.UPDATE_DATE
+	</sql>
+	
+   <select id="selectList" resultMap="wardPsResultMap" parameterType="hpSEP">
+      select *
+		from(select rownum as rn, <include refid="wardPsCol" />
+		from WARDPRESCRIPT w 
+		LEFT JOIN HOSPITALIZATION h
+			on w.HOSPITALIZATION_NUM = h.HOSPITALIZATION_NUM
+		LEFT JOIN bed b 
+			on h.bed_num = b.bed_num
+		LEFT JOIN room r 
+			on b.room_num = r.room_num
+
+		<trim prefix="where" prefixOverrides="AND|OR">
+			<if test="hpState != null">
+				h.HOSPITALIZATION_STATUS like '%'||#{hpState}||'%'
+			</if>
+			<if test="location!=null">
+				and r.ward_num like '%'||#{location}||'%'
+			</if>
+			<if test="roomN!=null">
+				and b.room_num like '%'||#{roomN}||'%'
+			</if>
+			<if test="searchWord!=null">
+				and (h.patient_num like '%'||#{searchWord}||'%'
+				or h.HOSPITALIZATION_NUM like '%'||#{searchWord}||'%'
+				or h.BED_NUM like '%'||#{searchWord}||'%'
+				or h.DOC_NUM like '%'||#{searchWord}||'%')
+			</if>
+				
+		</trim>
+		) where rn between #{startRow} and #{endRow}
+   </select>
+   
    
    <select id="selectOne" resultType="wardPS">
    		select <include refid="SelbaseCol"/> from WARDPRESCRIPT
    		where WARDPRESCRIPT_NUM = #{num}
    </select>
+   
    
    <update id="wardPsUpdate" parameterType="wardPS">
    		update WARDPRESCRIPT
