@@ -5,32 +5,39 @@
 <title>Insert title here</title>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script type="text/javascript" src="/static/js/checkbox.js"></script>
+<script type="text/javascript">
+function employeeSelect(empNum,empName){
+	$(opener.document).find("#empNum").val(empNum);
+	$(opener.document).find("#empName").val(empName);
+	window.self.close();
+}
+</script>
 </head>
 <body>
-<a href="employeeWrite">직원등록</a><br />
-직원수 : [[${count}]]<br />
-<table border=1 width="1000">
+<!-- 직원수 : [[${count}]]<br /> -->
+<table border=1 width="600">
 	 <form action="employeeSearch" method="get">
 	<tr>
 		<td colspan="10">직원 검색:
 			<input type="search" name="searchWord" size=60 th:value="${searchWord}">
+			<input type="search" name="kind" th:value="${kind}" hidden="hidden">
 			<input type="submit" value="검색">
 		</td>
 	</tr>
 	</form> 
 
 	<tr>
-		<td>번호</td><td>이름</td><td>아이디</td><td>생년월일</td> <td>주소</td><td>전화번호</td><td>성별</td><td>입사일</td>
+		<td>번호</td><td>이름</td><td>직무</td><td>소속과</td><td>전화번호</td><td>성별</td><td>입사일</td>
 		
 	</tr>
 	<tr th:each=" dto : ${list}">
 	
-		<td><a th:href="|employeeDetail?empNum=${dto.empNum}|">[[${dto.empNum}]]</a></td>
-		<td><a th:href="@{employeeDetail(empNum=${dto.empNum})}">[[${dto.empName}]]</a></td>
-		<td>[[${dto.empId}]]</td>
-	
-		<td>[[${#dates.format(dto.empBirth,'yyyy-MM-dd')}]]</td>
-		<td>[[${dto.empAddr}]]</td>
+		<td><a name="empNum" id="empNum" href="#"
+		th:onclick="employeeSelect([[${dto.empNum}]],[[${dto.empName}]])">[[${dto.empNum}]]</a></td>
+		<td>[[${dto.empName}]]</td>
+		<td>[[${dto.position}]]</td>
+		<td>[[${dto.sectionNum}]]</td>
+		
 		<td>[[${dto.empPhone}]]</td>
 		<td>[[${dto.empGender}]]</td>
 		<td>[[${#dates.format(dto.empHiredate,'yyyy-MM-dd')}]]</td>
@@ -41,13 +48,13 @@
 		<th colspan="10">
 		<span th:if="${page <= 1}">[이전]</span>
 		<span th:if="${page > 1}">
-			<a th:href="|employeeSearch?page=${page - 1}&searchWord=${searchWord}|">[이전]</a>
+			<a th:href="|employeeSearch?page=${page - 1}&searchWord=${searchWord}&kind=${kind}|">[이전]</a>
 		</span>   								<!-- 	1,          10  -->
 		<th:block th:each=" i : ${#numbers.sequence(startPageNum, endPageNum)}">
-			[<a th:href="|employeeSearch?page=${i}&searchWord=${searchWord}|">[[${i}]]</a>]
+			[<a th:href="|employeeSearch?page=${i}&searchWord=${searchWord}&kind=${kind}|">[[${i}]]</a>]
 		</th:block>
 		<span th:if="${page < maxPage}">
-			<a th:href="@{employeeSearch(page=${page + 1},searchWord=${searchWord})}">[다음]</a>
+			<a th:href="@{employeeSearch(page=${page + 1},searchWord=${searchWord},kind=${kind})">[다음]</a>
 		</span>
 		<span th:if="${page >= maxPage}">
 			[다음]

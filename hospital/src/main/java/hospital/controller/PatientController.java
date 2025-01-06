@@ -37,7 +37,7 @@ public class PatientController {
 	
 	@GetMapping("patientWriteCon")
 	public String patientWriteCon() {
-		return "thymeleaf/patient/patientCon";
+		return "thymeleaf/patient/patientWriteCon";
 	}
 
 	@GetMapping("patientWrite")
@@ -54,7 +54,7 @@ public class PatientController {
 			, BindingResult result 
 			) {
 		if(result.hasErrors()) { return "thymeleaf/patient/patientWrite"; }
-		patientWriteService.execute(patientCommand, result);
+		patientWriteService.execute(patientCommand);
 		return "redirect:/";
 	}
 	@GetMapping("patientRegist")

@@ -19,6 +19,7 @@ function sectionSelect(sectionNum,departmentName){
 	<tr>
 		<td colspan="10">소속과 검색:
 			<input type="search" name="searchWord" size=60 th:value="${searchWord}">
+			<input type="text" name="kind" th:value="${kind}" hidden="hidden">
 			<input type="submit" value="검색">
 		</td>
 	</tr>
@@ -30,7 +31,7 @@ function sectionSelect(sectionNum,departmentName){
 	</tr>
 	<tr th:each=" dto : ${list}">
 		
-		<td><a name="sectionNum"id="sectionNum" href="#" 
+		<td><a name="sectionNum" id="sectionNum" href="#" 
 		th:onclick="sectionSelect([[${dto.sectionNum}]],[[${dto.departmentName}]])">[[${dto.sectionNum}]]</a></td>
 		<td>[[${dto.departmentName}]]</td>
 		<td>[[${dto.sectionName}]]</td>

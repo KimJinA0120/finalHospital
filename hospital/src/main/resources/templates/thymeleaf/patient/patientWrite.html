@@ -3,31 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
-    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script type="text/javascript" src ="/static/js/daumAddressScript.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" src ="/static/js/daumAddressScript.js"></script>
 <script type="text/javascript" src="/static/js/check.js"></script>
 <script type="text/javascript" src="/static/js/checkInputUser.js"></script>
-
-<script type="text/javascript" >
-$(function(){
-	$("#frm").submit(function(){
-		
-	});
-	
-});
-</script>
-<script type="text/javascript" src="/static/js/checkInputUser.js"></script>
+<script type="text/javascript" src="/static/js/checkJumin.js"></script>
 </head>
 <body>        
                     
    <form action="patientWrite" method="post"  id="frm" th:object="${patientCommand}"> <!-- th:object="${patientCommand}" -->
-환자번호: 	<input type="text" name="patientNum" th:value="${patientCommand.patientNum}" readonly="readonly" hidden="hidden"/><!-- 번호 자동부여 --><br />
+환자번호: 	<input type="text" name="patientNum" th:value="${patientCommand.patientNum}" readonly="readonly" hidden="hidden" /><!-- 번호 자동부여 --><br />
 	
 이름 : <input type="text" name="patientName" id="userName"  th:value="${patientCommand.patientName}" /> <br />
 주민등록번호 : <input type="number" name="patientJuminF" id="userJuminF" th:value="${patientCommand.patientJuminF}" placeholder="숫자 6자리" /> -
-		   <input type="number" name="patientJuminB" id="userJuminB" th:value="${patientCommand.patientJuminB}" placeholder="숫자 7자리"/> <br />
+		   <input type="number" name="patientJuminB" id="userJuminB" th:value="${patientCommand.patientJuminB}" placeholder="숫자 7자리"/> 
+		   <button type="button" id="juminCheck">중복확인</button> <span id="patientJumin"></span><br />
 		   <span style="color:red" th:if="${#fields.hasErrors('patientJuminF')}" th:errors="*{patientJuminF}"></span>
 		   <span style="color:red" th:if="${#fields.hasErrors('patientJuminB')}" th:errors="*{patientJuminB}"></span><br/>	
 생년월일: <input type="date" name="patientBirth" id="userBirth"  th:value="${patientCommand.patientBirth}" /> <br />

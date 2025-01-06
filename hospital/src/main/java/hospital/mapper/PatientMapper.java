@@ -26,6 +26,6 @@ public interface PatientMapper {
 
 	public void patientPwUpdate(PatientDTO dto);
 
-	public String patientJuminCon(String patientJumin);
+	//public String patientJuminCon(String patientJumin);
 
 }

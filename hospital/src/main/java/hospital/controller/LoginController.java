@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -84,9 +85,13 @@ public class LoginController {
 	  public @ResponseBody Integer userEmailCheck(String userEmail) { 
 		  return checkService.emailCheck(userEmail); 
 	  }
+	  @PostMapping("patientJuminCheck")
+	  public @ResponseBody Integer patientJuminCheck(String patientJuminF, String patientJuminB) {
+		  return checkService.patientJuminCheck(patientJuminF, patientJuminB);
+	  }
 	  
 	  
-	  @GetMapping("item.login")
+/*	  @GetMapping("item.login")
 		public String item() {
 			return "thymeleaf/login";
 		}
@@ -108,6 +113,6 @@ public class LoginController {
 			   out.print(str);
 			   out.close();
 			
-		}
+		}*/
 
 }

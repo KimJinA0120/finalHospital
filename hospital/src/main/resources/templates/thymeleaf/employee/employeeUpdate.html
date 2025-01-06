@@ -2,12 +2,12 @@
 <html>
 <head>
     <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>직원정보 수정</title>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src ="/static/js/daumAddressScript.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script type="text/javascript" src="/static/js/check.js"></script>
-<script type="text/javascript" src="/static/js/checkInputUser.js"></script>
+<script type="text/javascript" src="/static/js/checkInputUser2.js"></script>
 <script type="text/javascript">
 $(function(){
 	$("#sectionSearch").click(function(){
@@ -16,12 +16,12 @@ $(function(){
 	});
 	
 	$("#frmm").submit(function(){
-		if($("#position").val()==null){
+		if($("#position").val().trim() === ""){
 			alert("직무를 입력해주세요");
 			$("#position").focus();
 			return false;
 		}
-		if($("#sectionNum").val()==null){
+		if($("#sectionNum").val().trim() === ""){
 			alert("소속과를 입력해주세요");
 			$("#sectionNum").focus();
 			return false;

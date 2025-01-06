@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>직원등록</title>
 
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src ="/static/js/daumAddressScript.js"></script>
@@ -47,23 +47,28 @@ $(function() {
 			return false;
 			
 		} else {
+			if(selectedValue=="mdt_"){
+				selectedValue="med";
+			} else if(selectedValue=="emp_"){
+				selectedValue="admin_";
+			}
 		window.open("sectionSearch?kind="+selectedValue,"소속과 검색",
 				"width=620,height=400,left=30,top=50")
 		}
 	});
 	
 	$("#frm").submit(function(){
-		if($("#position").val()==null){
+		if($("#position").val().trim() === ""){
 			alert("직무를 입력해주세요");
 			$("#position").focus();
 			return false;
 		}
-		if($("#sectionNum").val()==null){
+		if($("#sectionNum").val().trim() === ""){
 			alert("소속과를 입력해주세요");
 			$("#sectionNum").focus();
 			return false;
 		}
-		if($("#empHiredate").val()==null){
+		if($("#empHiredate").val().trim() === ""){
 			alert("입사일을 입력해주세요");
 			$("#empHiredate").focus();
 			return false;

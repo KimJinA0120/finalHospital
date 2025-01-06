@@ -20,5 +20,10 @@ public class CheckService {
 		// TODO Auto-generated method stub
 		return checkMapper.checkEmail(userEmail);
 	}
+	
+	public Integer patientJuminCheck(String patientJuminF, String patientJuminB) {
+		String patientJumin=patientJuminF+patientJuminB;
+		return checkMapper.patientJuminCon(patientJumin);
+	}
 
 }

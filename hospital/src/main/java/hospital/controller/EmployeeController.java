@@ -66,7 +66,7 @@ public class EmployeeController {
 	public String employeeSearch(@RequestParam(value="searchWord", required=false) String searchWord
 			, @RequestParam(value="page", required=false, defaultValue="1") Integer page
 			, Model model
-			, @RequestParam(value="kind",required=false)String kind){
+			, @RequestParam(value="kind",required=false) String kind){
 		employeeListService.employeeSearch(searchWord, page, model, kind);
 		return "thymeleaf/employee/employeeSearch";
 	}
