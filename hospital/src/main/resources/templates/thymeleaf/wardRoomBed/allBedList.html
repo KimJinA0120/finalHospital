@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>bedList.html</title>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript" src="/static/js/checkbox.js"></script>
+</head>
+<body>
+	<table border="1">
+	<form action="bedsDelete" method="post" id="frm">
+		<tr>
+		<th>병상 번호</th>
+		<th>병실 번호</th>
+		<th>병상 상태</th>
+		<th><input type="checkbox" id="checkBoxs"/><input type="submit" value="선택삭제"/></th>
+		</tr>
+		<tr th:each="dto : ${list}">
+			<td>[[${dto.bedNum}]]</td>
+			<td>[[${dto.roomNum}]]</td>
+			<td>[[${dto.bedStatus}]]</td>
+			<td><input type="checkbox" name="nums" th:value="${dto.bedNum}" /></td>
+		</tr>
+	</table>
+	</form>
+	<br>
+	<table border="1">
+	<form action="emerbedsDelete" method="post" id="frm">
+		<tr>
+		<th>응급병상 번호</th>
+		<th>병동 번호</th>
+		<th>응급병상 상태</th>
+		<th><input type="checkbox" id="checkBoxs"/><input type="submit" value="선택삭제"/></th>
+		</tr>
+		<tr th:each="dto : ${emerlist}">
+			<td>[[${dto.emerBedNum}]]</td>
+			<td>[[${dto.wardNum}]]</td>
+			<td>[[${dto.emerBedStatus}]]</td>
+			<td><input type="checkbox" name="nums" th:value="${dto.emerBedNum}" /></td>
+		</tr>
+	</table>
+</body>
+</html>

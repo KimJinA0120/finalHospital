@@ -6,7 +6,7 @@
 	<select id="bedList" resultType="bedDTO">
 		select BED_NUM, ROOM_NUM, BED_STATUS
 		from bed
-		where room_num like 'norm'||'%'
+		
 	</select>
 	
 	<!-- <resultMap type="RoomDTO" id="roomResultMap">
@@ -49,6 +49,43 @@
 		insert into bed (BED_NUM, ROOM_NUM, BED_STATUS)
 		values (#{bedNum}, #{roomNum}, #{bedStatus})
 	</insert>
+	
+	<insert id="emerBedInsert" parameterType="EmergencyDTO">
+		insert into emergency (EMERBED_NUM, WARD_NUM, EMERBED_STATUS)
+		values (#{emerBedNum}, #{wardNum}, #{emerBedStatus})
+	</insert>
+	
+	<select id="allRoomList" resultType="RoomDTO">
+		select ROOM_NUM, WARD_NUM, ROOM_LOCATION
+		from room
+	</select>
+    
+    <delete id="wardsDelete" parameterType="string">
+    	delete from ward
+    	where ward_num in <foreach collection="wards" item="wardNum" open="(" close=")" index="index" separator=",">
+    						#{wardNum}
+    						</foreach>
+    </delete>
+	<delete id="roomsDelete" parameterType="string">
+		delete from room
+		where room_num in <foreach collection="rooms" item="roomNum" open="(" close=")" index="index" separator=",">
+    						#{roomNum}
+    						</foreach>
+	</delete>
+	<delete id="bedsDelete" parameterType="string">
+		delete from bed
+		where bed_num in <foreach collection="beds" item="bedNum" open="(" close=")" index="index" separator=",">
+    						#{bedNum}
+    						</foreach>
+	</delete>
+	<delete id="emerBedsDelete" parameterType="string">
+		delete from emergency
+		where emerbed_num in <foreach collection="emerBeds" item="emerBedNum" open="(" close=")" index="index" separator=",">
+    						#{emerBedNum}
+    						</foreach>
+	</delete>
+	
+	
 	
 	
 	
