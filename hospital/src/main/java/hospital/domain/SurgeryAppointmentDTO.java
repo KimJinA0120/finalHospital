@@ -18,4 +18,5 @@ public class SurgeryAppointmentDTO {
 	String aempNum;
 	String operatingRoomNum;
 	String wardprescriptNum;
+	String surgeryStatus;
 }

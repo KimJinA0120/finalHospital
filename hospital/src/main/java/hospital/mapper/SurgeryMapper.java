@@ -9,6 +9,7 @@ import hospital.domain.OperatingRoomDTO;
 import hospital.domain.StartEndPageDTO;
 import hospital.domain.SurgeryAppointmentDTO;
 import hospital.domain.SurgeryDTO;
+import hospital.domain.SurgeryListDTO;
 
 @Mapper
 public interface SurgeryMapper {
@@ -21,9 +22,12 @@ public interface SurgeryMapper {
 	public int surgeryAppointmentCount(String searchWord);
 	
 	public int surgeryWrite(SurgeryDTO dto);
-	public List<SurgeryDTO> surgeryList();
-	public SurgeryDTO surgeryOneSelect(String surgeryNum);
+	public List<SurgeryListDTO> surgeryList(StartEndPageDTO sepDTO);
+	public SurgeryDTO surgeryOneSelect(
+			@Param("surgeryNum")String surgeryNum,
+			@Param("surgeryAppointmentNum")String surgeryAppointmentNum);
 	public int surgeryUpdate(SurgeryDTO dto);
+	public int surgeryStatusUpdate(String surgeryAppointmentNum);
 	
 	public List<OperatingRoomDTO> operatingRoomList();
 	

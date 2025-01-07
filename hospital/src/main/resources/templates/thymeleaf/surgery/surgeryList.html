@@ -65,14 +65,47 @@
 	</div>
 </header>
 <br>
+	<br>
+	<form action="surgeryList" method="get" align="center">
+		<tr><td colspan="6">
+				검색 : 
+				<input type="search" name="searchWord" size="60" th:value="${searchWord}"/>
+				
+
+				<input type="submit" value="검색" class="btn" style="background-color: #4b5945; color: white"/>
+
+			</td>
+	</form>
+	<br>
 	<table border="1">
-		<tr align="center" style="background-color: #b2c9ad; color: black"><th>수술번호</th><th>수술예약번호</th><th>입력일시</th><th>작성자</th></tr>
+		<tr align="center" style="background-color: #b2c9ad; color: black"><th>수술번호</th><th>수술예약번호</th><th>수술명</th><th>수술날짜</th><th>입력일시</th><th>작성자</th></tr>
 		<tr align="center" th:each="dto : ${list}">
-			<td style="color: #8eb486"><a th:href="|surgeryDetail?surgeryNum=${dto.surgeryNum}|">[[${dto.surgeryNum}]]</a></td>
-			<td>[[${dto.surgeryAppointmentNum}]]</td>
-			<td>[[${#dates.format(dto.inputDate,'yyyy-MM-dd')}]]</td>
-			<td>[[${dto.sempNum}]]</td>
+			<td style="color: #8eb486"><a th:href="|surgeryDetail?surgeryNum=${dto.surgeryDTO.surgeryNum}|">[[${dto.surgeryDTO.surgeryNum}]]</a></td>
+			<td>[[${dto.surgeryAppointmentDTO.surgeryAppointmentNum}]]</td>
+			<td>[[${dto.surgeryAppointmentDTO.surgeryName}]]</td>
+			<td>[[${#temporals.format(dto.surgeryAppointmentDTO.surgeryDate,'yyyy-MM-dd HH:mm')}]] ~ [[${#temporals.format(dto.surgeryAppointmentDTO.surgeryEndDate,'HH:mm')}]]</td>
+			<td>[[${#dates.format(dto.surgeryDTO.inputDate,'yyyy-MM-dd')}]]</td>
+			<td>[[${dto.surgeryDTO.sempNum}]]</td>
 		</tr>
+		<tr align="center"><td colspan="7">
+			<th:block th:if="${page <= 1}">
+				[이전]
+			</th:block>
+			<th:block th:if="${page > 1}">
+				<a th:href="@{surgeryList(page=${page-1}, searchWord=${searchWord})}">[이전]</a>
+			</th:block>
+			
+			<th:block th:each=" i : ${#numbers.sequence(startPageNum, endPageNum)}">
+				<a th:href="@{surgeryList(page=${i}, searchWord=${searchWord})}">[[${i}]]</a>
+			</th:block>
+			
+			<th:block th:if="${page >= maxPage}">
+				[다음]
+			</th:block>
+			<th:block th:if="${page < maxPage}">
+				<a th:href="@{surgeryList(page=${page+1},searchWord=${searchWord})}">[다음]</a>
+			</th:block>
+		</td></tr>
 	</table>
 </body>
 </html>

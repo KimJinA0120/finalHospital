@@ -17,5 +17,6 @@ public class SurgeryWriteService {
 		BeanUtils.copyProperties(surgeryCommand, dto);
 		
 		surgeryMapper.surgeryWrite(dto);
+		surgeryMapper.surgeryStatusUpdate(dto.getSurgeryAppointmentNum());
 	}
 }

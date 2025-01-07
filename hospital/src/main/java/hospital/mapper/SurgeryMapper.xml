@@ -4,12 +4,12 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="hospital.mapper.SurgeryMapper">
 	<sql id="surgeryAppointmentBase">
-		SURGERY_APPOINTMENT_NUM, SEMP_NUM, OPERATING_ROOM_NUM, WARDPRESCRIPT_NUM, SURGERY_NAME, SURGERY_DATE, AEMP_NUM, SURGERY_END_DATE
+		SURGERY_APPOINTMENT_NUM, SEMP_NUM, OPERATING_ROOM_NUM, WARDPRESCRIPT_NUM, SURGERY_NAME, SURGERY_DATE, AEMP_NUM, SURGERY_END_DATE, SURGERY_STATUS
 	</sql>
 	<insert id="SurgeryAppointment" parameterType="surgeryAppointment">
 		insert into surgery_appointment ( <include refid="surgeryAppointmentBase"/> )
 		values (#{surgeryAppointmentNum}, #{sempNum}, #{operatingRoomNum}
-			, #{wardprescriptNum}, #{surgeryName}, #{surgeryDate}, #{aempNum}, #{surgeryEndDate})
+			, #{wardprescriptNum}, #{surgeryName}, #{surgeryDate}, #{aempNum}, #{surgeryEndDate}, '수술미시행')
 	</insert>
 	<select id="surgeryAppointmentList" resultType="surgeryAppointment" parameterType="startEndPage">
 		select * from (
@@ -68,18 +68,60 @@
 		insert into surgery ( <include refid="surgeryColumnBase"/> )
 		values ( #{surgeryNum}, #{surgeryAppointmentNum}, #{surgeryContent}, sysdate, #{sempNum})
 	</insert>
-	<select id="surgeryList" resultType="surgery">
-		select <include refid="surgeryColumnBase"/> from surgery
+	<resultMap type="surgeryList" id="surgeryListResultMap">
+		<association property="surgeryDTO" javaType="surgery">
+			<id column="SURGERY_NUM" jdbcType="VARCHAR" property="surgeryNum"/>
+			<result column="SURGERY_APPOINTMENT_NUM" jdbcType="VARCHAR" property="surgeryAppointmentNum"/>
+			<result column="INPUT_DATE" jdbcType="DATE" property="inputDate"/>
+			<result column="SEMP_NUM" jdbcType="VARCHAR" property="sempNum"/>
+		</association>
+		<association property="surgeryAppointmentDTO" javaType="surgeryAppointment">
+			<id column="SURGERY_APPOINTMENT_NUM" jdbcType="VARCHAR" property="surgeryAppointmentNum"/>
+			<result column="SURGERY_NAME" jdbcType="VARCHAR" property="surgeryName"/>
+			<result column="SURGERY_DATE" jdbcType="DATE" property="surgeryDate"/>
+			<result column="SURGERY_END_DATE" jdbcType="DATE" property="surgeryEndDate"/>
+			<result column="SURGERY_STATUS" jdbcType="VARCHAR" property="surgeryStatus"/>
+		</association>
+	</resultMap>
+	<select id="surgeryList" resultMap="surgeryListResultMap">
+		select * from (
+			select ROW_NUMBER() over (order by SURGERY_NUM) as rn,
+				 SURGERY_NUM, INPUT_DATE, s.SEMP_NUM
+				 ,a.SURGERY_APPOINTMENT_NUM, SURGERY_NAME, SURGERY_DATE, SURGERY_END_DATE, SURGERY_STATUS
+			from surgery s join surgery_appointment a
+			on s.surgery_appointment_num = a.surgery_appointment_num
+		<where>
+			<if test="searchWord != null">
+				SURGERY_NUM like '%' || #{searchWord} || '%'
+				or s.SEMP_NUM like '%' || #{searchWord} || '%'
+				or s.SURGERY_APPOINTMENT_NUM like '%' || #{searchWord} || '%'
+				or SURGERY_NAME like '%' || #{searchWord} || '%'
+			</if>
+		</where>
+		)
+		where rn between #{startRow} and #{endRow}
 	</select>
 	<select id="surgeryOneSelect" resultType="surgery" parameterType="string">
 		select <include refid="surgeryColumnBase"/> from surgery
-		where surgery_num = #{surgeryNum}
+		<trim prefix="where" prefixOverrides="AND | OR">
+			<if test="surgeryNum != null">
+				surgery_num = #{surgeryNum}
+			</if>
+			<if test="surgeryAppointmentNum != null">
+				surgery_appointment_num = #{surgeryAppointmentNum}
+			</if>
+		</trim>
 	</select>
 	<update id="surgeryUpdate" parameterType="surgery">
 		update surgery
 		set SURGERY_CONTENT = #{surgeryContent},
 			INPUT_DATE = #{inputDate}
 		where SURGERY_NUM = #{surgeryNum}
+	</update>
+	<update id="surgeryStatusUpdate" parameterType="string">
+		update surgery_appointment
+		set surgery_status = '수술완료'
+		where surgery_appointment_num = #{surgeryAppointmentNum}
 	</update>
 	
 	<select id="operatingRoomList" resultType="operatingRoom">

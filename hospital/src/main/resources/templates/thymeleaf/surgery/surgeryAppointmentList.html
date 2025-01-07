@@ -67,12 +67,12 @@
 										<ul class="nav menu">
 											<li><a href="#">수술/검사<i class="icofont-rounded-down"></i></a>
 												<ul class="dropdown">
-													<li><a href="surgery/surgeryScheduler">수술스케쥴러</a></li>
-													<li><a href="surgery/surgeryList">환자수술결과기록</a></li>
+													<li><a href="../surgery/surgeryScheduler">수술스케쥴러</a></li>
+													<li><a href="../surgery/surgeryList">환자수술결과기록</a></li>
 													<li><a href="#">수술실</a></li>
-													<li><a href="inspection/inspectionList">검사예약</a></li>
-													<li><a href="radiation/radiationList">방사선</a></li>
-													<li><a href="clinical/clinicalList">임상병리</a></li>
+													<li><a href="../inspection/inspectionList">검사예약</a></li>
+													<li><a href="../radiation/radiationList">방사선</a></li>
+													<li><a href="../clinical/clinicalList">임상병리</a></li>
 												</ul>
 											</li>
 											<li><a href="#">처방/간호<i class="icofont-rounded-down"></i></a>
@@ -169,7 +169,7 @@
 		<input type="submit" value="삭제" class="btn" style="background-color: #4b5945; color: white"/>
 		</div>
 
-		<tr style="background-color: #b2c9ad; color: black" align="center"><th>수술예약번호</th><th>수술명</th><th>수술시간</th><th>집도의</th><th>마취의</th><th>수술실</th>
+		<tr style="background-color: #b2c9ad; color: black" align="center"><th>수술예약번호</th><th>수술명</th><th>수술시간</th><th>집도의</th><th>마취의</th><th>수술실</th><th>수술상황</th>
 			<th width="90"><input type="checkbox" id="checkBoxs"/>
 			</th>
 		</tr>
@@ -180,6 +180,7 @@
 			<td>[[${dto.sempNum}]]</td>
 			<td>[[${dto.aempNum}]]</td>
 			<td>[[${dto.operatingRoomNum}]]</td>
+			<td>[[${dto.surgeryStatus}]]</td>
 			<th><input type="checkbox" name="nums" th:value="${dto.surgeryAppointmentNum}"/></th>
 		</tr>
 		<tr align="center"><td colspan="7">

@@ -119,8 +119,12 @@ public class SurgeryController {
 	
 	// 수술결과 기록
 	@GetMapping("surgeryList") // 수술기록 리스트
-	public String surgeryList(Model model) {
-		surgeryListService.execute(model);
+	public String surgeryList(
+			@RequestParam(value="page", required = false, defaultValue = "1") int page,
+			@RequestParam(value="searchWord", required = false) String searchWord,
+			@RequestParam(value="kind", required = false) String kind,
+			Model model) {
+		surgeryListService.execute(page, searchWord, kind, model);
 		return "thymeleaf/surgery/surgeryList";
 	}
 	@GetMapping("surgeryWrite") // 수술기록 화면
@@ -138,16 +142,16 @@ public class SurgeryController {
 	@PostMapping("surgeryWrite") // 수술 기록하기
 	public String surgeryWrite(SurgeryCommand surgeryCommand) {
 		surgeryWriteService.execute(surgeryCommand);
-		return "200";
+		return "redirect:surgeryList";
 	}
 	@GetMapping("surgeryDetail") // 수술 상세보기
-	public String surgeryDetail(String surgeryNum, Model model) {
-		surgeryDetailService.execute(surgeryNum, model);
+	public String surgeryDetail(String surgeryNum, String surgeryAppointmentNum, Model model) {
+		surgeryDetailService.execute(surgeryNum, surgeryAppointmentNum, model);
 		return "thymeleaf/surgery/surgeryDetail";
 	}
 	@GetMapping("surgeryModify")  // 수술내용 수정화면
-	public String surgeryModify(String surgeryNum, Model model) {
-		surgeryDetailService.execute(surgeryNum, model);
+	public String surgeryModify(String surgeryNum, String surgeryAppointmentNum, Model model) {
+		surgeryDetailService.execute(surgeryNum, surgeryAppointmentNum, model);
 		return "thymeleaf/surgery/surgeryModify";
 	}
 	@PostMapping("surgeryUpdate")
@@ -208,6 +212,7 @@ public class SurgeryController {
 			surgeryAppointmentCommand.setSurgeryAppointmentNum((String) events.get(i).get("surgeryAppointmentNum"));
 			surgeryAppointmentCommand.setSurgeryName((String) events.get(i).get("title"));
 			surgeryAppointmentCommand.setWardprescriptNum((String) events.get(i).get("wardprescriptNum"));
+			surgeryAppointmentCommand.setSurgeryStatus((String) events.get(i).get("surgeryStatus"));
 			
 			// 스케쥴날짜(Object) -> string으로 변화 -> date로 변환 후 command에 삽입
 			String surgeryDateString = (String) events.get(i).get("start");

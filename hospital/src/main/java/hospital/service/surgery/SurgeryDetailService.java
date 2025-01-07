@@ -11,8 +11,8 @@ import hospital.mapper.SurgeryMapper;
 public class SurgeryDetailService {
 	@Autowired
 	SurgeryMapper surgeryMapper;
-	public void execute(String surgeryNum, Model model) {
-		SurgeryDTO dto = surgeryMapper.surgeryOneSelect(surgeryNum);
+	public void execute(String surgeryNum, String surgeryAppointmentNum, Model model) {
+		SurgeryDTO dto = surgeryMapper.surgeryOneSelect(surgeryNum, surgeryAppointmentNum);
 		model.addAttribute("dto", dto);
 	}
 }

@@ -13,15 +13,16 @@ function surApSelect(surgeryAppointmentNum, sempNum){
 </script>
 </head>
 <body>
-	<table border="1" width="600">
-		<tr><th>수술예약번호</th><th>수술명</th><th>수술날짜</th><th>집도의</th><th>마취의</th><th>수술실</th></tr>
+	<table border="1" width="700">
+		<tr><th>수술예약번호</th><th>수술명</th><th>수술날짜</th><th>집도의</th><th>마취의</th><th>수술실</th><th>수술상황</th></tr>
 		<tr th:each="dto : ${list}">
 			<td>[[${dto.surgeryAppointmentNum}]]</td>
 			<td>[[${dto.surgeryName}]]</td>
-			<td>[[${#dates.format(dto.surgeryDate,'yyyy-MM-dd')}]]</td>
+			<td>[[${#temporals.format(dto.surgeryDate,'yyyy-MM-dd HH:mm')}]] ~ [[${#temporals.format(dto.surgeryEndDate,'HH:mm')}]]</td>
 			<td>[[${dto.sempNum}]]</td>
 			<td>[[${dto.aempNum}]]</td>
 			<td>[[${dto.operatingRoomNum}]]</td>
+			<td>[[${dto.surgeryStatus}]]</td>
 			<td><button type="button" 
 					th:attr="onclick=|javascript:surApSelect('${dto.surgeryAppointmentNum}','${dto.sempNum}')|">선택</button>
 			</td>

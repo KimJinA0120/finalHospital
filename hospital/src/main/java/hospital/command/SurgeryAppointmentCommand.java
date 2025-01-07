@@ -21,4 +21,5 @@ public class SurgeryAppointmentCommand {
 	String aempNum;
 	String operatingRoomNum;
 	String wardprescriptNum;
+	String surgeryStatus;
 }
