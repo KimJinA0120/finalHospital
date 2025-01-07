@@ -1,33 +1,180 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>수술 예약 리스트</title>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="keywords" content="Site keywords here">
+		<meta name="description" content="">
+		<meta name='copyright' content=''>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		
+		<!-- Title -->
+		<title>수술 예약 리스트</title>
+		
+		<!-- Favicon -->
+        <link rel="icon" href="static/img/favicon.png">
+		
+		<!-- Google Fonts -->
+		<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+		<!-- Nice Select CSS -->
+		<link rel="stylesheet" href="/static/css/nice-select.css">
+		<!-- Font Awesome CSS -->
+        <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+		<!-- icofont CSS -->
+        <link rel="stylesheet" href="/static/css/icofont.css">
+		<!-- Slicknav -->
+		<link rel="stylesheet" href="/static/css/slicknav.min.css">
+		<!-- Owl Carousel CSS -->
+        <link rel="stylesheet" href="/static/css/owl-carousel.css">
+		<!-- Datepicker CSS -->
+		<link rel="stylesheet" href="/static/css/datepicker.css">
+		<!-- Animate CSS -->
+        <link rel="stylesheet" href="/static/css/animate.min.css">
+		<!-- Magnific Popup CSS -->
+        <link rel="stylesheet" href="/static/css/magnific-popup.css">
+		
+		<!-- Medipro CSS -->
+        <link rel="stylesheet" href="/static/css/normalize.css">
+        <link rel="stylesheet" href="/static/css/style.css">
+        <link rel="stylesheet" href="/static/css/responsive.css">
+        
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script type="text/javascript" src="/static/js/checkbox.js"></script>
 </head>
 <body>
-	<div align="center">
-		<a href="surgeryAppointment">수술예약하기</a> <br>
-		<a href="surgeryScheduler">수술예약 스케쥴러</a> <br>
-		<a href="/">홈으로</a> <br>
-	</div>
+	<header class="header" >
+		<div class="header-inner">
+				<div class="container">
+					<div class="inner">
+						<div class="row">
+							<div class="col-lg-3 col-md-3 col-12">
+								<!-- Start Logo -->
+								<div class="logo">
+									<a href="/"><img src="/static/img/logo.png" alt="#"></a>
+								</div>
+								<!-- End Logo -->
+								<!-- Mobile Nav -->
+								<div class="mobile-nav"></div>
+								<!-- End Mobile Nav -->
+							</div>
+							<div class="col-lg-7 col-md-9 col-12">
+								<!-- Main Menu -->
+								<div class="main-menu">
+									<nav class="navigation">
+										<ul class="nav menu">
+											<li><a href="#">수술/검사<i class="icofont-rounded-down"></i></a>
+												<ul class="dropdown">
+													<li><a href="surgery/surgeryScheduler">수술스케쥴러</a></li>
+													<li><a href="surgery/surgeryList">환자수술결과기록</a></li>
+													<li><a href="#">수술실</a></li>
+													<li><a href="inspection/inspectionList">검사예약</a></li>
+													<li><a href="radiation/radiationList">방사선</a></li>
+													<li><a href="clinical/clinicalList">임상병리</a></li>
+												</ul>
+											</li>
+											<li><a href="#">처방/간호<i class="icofont-rounded-down"></i></a>
+												<ul class="dropdown">
+													<li><a href="wardPS/wardPsList">병동처방</a></li>
+													<li><a href="nursing/nursingList">간호처방 </a></li>
+												</ul>
+											</li>
+											<li><a href="#">입원/병동/병실/응급실<i class="icofont-rounded-down"></i></a>
+												<ul class="dropdown">
+													<li><a href="WardRoomBed/WardList">병동리스트</a></li>
+													<li><a href="Hospitalization/hospitalizationList">입원관리 </a></li>
+													<li><a href="Hospitalization/emerHospitalizationList">응급입원관리 </a></li>
+												</ul>
+											</li>
+											<li><a href="#">접수/외래진료/문의<i class="icofont-rounded-down"></i></a>
+												<ul class="dropdown">
+													<li><a href="receipt/reservationForm">(환자용)예약</a></li>
+													<li><a href="receipt/patientReservation">(환자용)예약 확인하기</a></li>
+													<li><a href="receipt/receiptList">(직원용)접수/예약목록</a></li>
+													<li><a href="qna/qnaList">(환자용)문의/건의</a></li>
+													<li><a href="qna/eqnaList">(직원용)문의/건의</a></li>
+												</ul>
+											</li>
+											<li><a href="#">사용자<i class="icofont-rounded-down"></i></a>
+												<ul class="dropdown">
+													<th:block  th:if="${session.auth==null}">
+														<li><a href="patient/patientWrite">환자 회원가입</a></li>
+														<li><a href="login/patientLogin">환자 로그인</a></li>
+														<li><a href="login/employeeLogin">직원 로그인</a></li>
+													</th:block>
+													<th:block th:if="${session.auth!=null}"> 
+														<li><a href="login/logout">로그아웃</a></li>
+														<li><a href="patient/patientList">환자목록</a></li>
+														<li><a href="patient/patientMyPage">환자 마이페이지</a></li>
+														<li><a href="find/findPatientNum">환자번호 찾기, 환자번호 연동하기??</a></li>
+													</th:block>
+														<li><a href="employee/employeeWrite">직원등록</a></li>
+														<li><a href="employee/employeeList">직원목록</a></li>
+														<li><a href="employee/employeeMyPage">직원 마이페이지</a></li>
+												</ul>
+											</li>
+										
+											
+											<li><a href="#">Pages <i class="icofont-rounded-down"></i></a>
+												<ul class="dropdown">
+													<li><a href="404">404 Error</a></li>
+												</ul>
+											</li>
+											<li><a href="#">Blogs <i class="icofont-rounded-down"></i></a>
+												<ul class="dropdown">
+													<li><a href="blog-single">Blog Details</a></li>
+												</ul>
+											</li>
+											<li><a href="contact">Contact Us</a></li>
+										</ul>
+									</nav>
+								</div>
+								<!--/ End Main Menu -->
+							</div>
+							<div class="col-lg-2 col-12">
+								<div class="get-quote">
+									<a href="appointment" class="btn">Book Appointment</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		<div class="col-12" align="center">
+			<div class="button">
+				<a href="surgeryAppointment" class="btn" style="background-color: #4b5945; color: white">수술예약하기</a>
+				<a href="surgeryScheduler" class="btn second" style="background-color: #4b5945; color: white">수술예약 스케쥴러</a>
+				<a href="/" class="btn third" style="background-color: #4b5945; color: white">홈으로</a>
+			</div>
+		</div>
+	<br>
 	<form action="surgeryAppointmentList" method="get" align="center">
 		<tr><td colspan="6">
 				검색 : 
 				<input type="search" name="searchWord" size="60" th:value="${searchWord}"/>
-				<input type="submit" value="검색"/>
+				
+
+				<input type="submit" value="검색" class="btn" style="background-color: #4b5945; color: white"/>
+
 			</td>
 	</form>
+	<br>
 	<form action="surApsDelete" method="post" id="frm">
 	<table border="1" align="center">
-		<tr><th>수술예약번호</th><th>수술명</th><th>수술시간</th><th>집도의</th><th>마취의</th><th>수술실</th>
-			<th><input type="checkbox" id="checkBoxs"/>
-				<input type="submit" value="삭제"/>
+
+		<div align="right">
+		<input type="submit" value="삭제" class="btn" style="background-color: #4b5945; color: white"/>
+		</div>
+
+		<tr style="background-color: #b2c9ad; color: black" align="center"><th>수술예약번호</th><th>수술명</th><th>수술시간</th><th>집도의</th><th>마취의</th><th>수술실</th>
+			<th width="90"><input type="checkbox" id="checkBoxs"/>
 			</th>
 		</tr>
-		<tr th:each="dto : ${list}">
-			<td><a th:href="|surgeryAppointmentDetail?surgeryAppointmentNum=${dto.surgeryAppointmentNum}|">[[${dto.surgeryAppointmentNum}]]</a></td>
+		<tr th:each="dto : ${list}" align="center">
+			<td><a th:href="|surgeryAppointmentDetail?surgeryAppointmentNum=${dto.surgeryAppointmentNum}|" style="color: #8eb486">[[${dto.surgeryAppointmentNum}]]</a></td>
 			<td>[[${dto.surgeryName}]]</td>
 			<td>[[${#temporals.format(dto.surgeryDate,'yyyy-MM-dd HH:mm')}]] ~ [[${#temporals.format(dto.surgeryEndDate,'HH:mm')}]]</td>
 			<td>[[${dto.sempNum}]]</td>
