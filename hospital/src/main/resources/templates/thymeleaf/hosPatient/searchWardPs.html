@@ -91,10 +91,10 @@ function Selroom() {
 		</tr>
 		
 		<tr th:each="dto : ${list}" 
-		th:onclick="selectWardPs([[${dto.wardPsDTO.wardPsNum }]], [[${dto.HospitalizationDTO.nurNum }]])">
+		th:onclick="selectWardPs([[${dto.wardPsNum }]], [[${dto.HospitalizationDTO.nurNum }]])">
 			<td colspan="2">[[${dto.roomLoc}]]호 [[${dto.HospitalizationDTO.bedNum}]]</td>
 			<td>[[${dto.HospitalizationDTO.patientNum}]] [[${dto.patientName}]]</td>
-			<td>[[${dto.wardPsDTO.wardPsNum}]] [[${dto.wardPsDTO.diagName}]]</td> 
+			<td>[[${dto.wardPsNum}]] [[${dto.diagName}]]</td> 
 			<td>[[${dto.HospitalizationDTO.docNum}]]</td>
 			<td>[[${dto.HospitalizationDTO.nurNum}]]</td> 
 			

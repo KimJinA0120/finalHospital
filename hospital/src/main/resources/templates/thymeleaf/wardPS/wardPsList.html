@@ -35,12 +35,31 @@ function Selroom() {
 	}
 }
 </script>
+<script th:inline="javascript">
+	
+	function moveWrite() {
+		var empNum = [[${userNum}]];
+		if (empNum != null && empNum != "") {
+			if (empNum.startsWith('doc')) {
+				location.href = "wardPsWrite";
+			}else{
+				alert('접근권한이 없습니다.');
+				location.href = "/";
+			}
+		} else {
+			alert('로그인이 필요한 서비스입니다.');
+			location.href = "/";
+		}
+		
+	}
+	
+</script>
 </head>
 <body>
-<a href="/">홈</a> | <a href="myPatientList">내 담당 환자</a><br>
+<a href="/">홈</a> | <a th:href="|myPatientList?empNum=${userNum}|">내 담당 환자</a><br>
 <h1>병동처방</h1>
 	<h4 align="right">
-		<a href="wardPsWrite">병동처방 작성</a>
+		<a href="javascript:moveWrite()">병동처방 작성</a>
 	</h4>
 	<a href="WholeWardPsList">현/과거 병동처방 기록 목록</a>
 	<br>
