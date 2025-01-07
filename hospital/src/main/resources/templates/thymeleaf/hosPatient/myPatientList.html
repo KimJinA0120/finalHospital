@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>myPatientList</title>
+</head>
+<body>
+<a href="javascript:history.back()">이전</a> <br>
+<h2>[[${empNum}]] [[${empName}]]</h2>
+<table border="1" align="center" width="800px">
+	<caption>환자 목록</caption>
+	<tr>
+			<th>입원실</th>
+			<th>병상</th>
+			<th>환자이름</th>
+			<th>입원번호</th>
+			<th>담당의</th>
+			<th>담당간호사</th>
+		</tr>
+
+		<tr th:each="dto : ${list}">
+			<td>[[${dto.roomLoc}]]호 </td>
+			<td>[[${dto.HospitalizationDTO.bedNum}]]</td>
+			<td>[[${dto.patientName}]]</td>
+			<td>[[${dto.HospitalizationDTO.hospitalizationNum}]]</td>
+			<td>[[${dto.HospitalizationDTO.docNum}]]</td>
+			<td>[[${dto.HospitalizationDTO.nurNum}]]</td>
+		</tr>
+</table>
+</body>
+</html>
