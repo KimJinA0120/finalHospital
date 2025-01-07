@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import hospital.domain.NursingDTO;
 
 import hospital.domain.StartEndPageDTO;
-import hospital.mapper.HosPatientMapper;
 import hospital.mapper.NursingMapper;
 import hospital.service.StartEndPageService;
 import hospital.service.hosPatient.SepHpService;
@@ -21,8 +20,6 @@ public class NursingListService {
 	NursingMapper nursingMapper;
 	@Autowired
 	SepHpService sepHpService;
-	@Autowired
-	HosPatientMapper hosPatientMapper;
 	@Autowired
 	StartEndPageService startEndPageService;
 	public void execute(int page, String searchWord, String kind, Model model) {

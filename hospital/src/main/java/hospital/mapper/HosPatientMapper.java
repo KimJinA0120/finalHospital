@@ -3,12 +3,11 @@ package hospital.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import hospital.domain.HosPatientDTO;
-import hospital.domain.PatPsDTO;
 import hospital.domain.RoomDTO;
 import hospital.domain.SEPhosPatientDTO;
-import hospital.domain.StartEndPageDTO;
 
 @Mapper
 public interface HosPatientMapper {
@@ -23,10 +22,14 @@ public interface HosPatientMapper {
 
 	public Integer nursingCount();
 
-	public List<HosPatientDTO> hosPatList(SEPhosPatientDTO hpSEP);
+	public List<HosPatientDTO> selectPatPs(String hospNum);
 
-	public String selectPatientNum(String hospNum);
+	public HosPatientDTO wardPatInfo(String hospNum);
 
-	public List<PatPsDTO> selectPatPs(String hospNum);
+	public List<HosPatientDTO> myWardPatient(@Param(value = "colNm") String colNm
+											,@Param(value = "empNum") String empNum);
+
+	public String empName(String empNum);
+
 
 }

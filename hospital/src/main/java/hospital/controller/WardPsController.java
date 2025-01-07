@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import hospital.command.WardPsCommand;
 import hospital.service.AutoNumService;
+import hospital.service.hosPatient.MyPatientListService;
 import hospital.service.hosPatient.PatientPreScript;
 import hospital.service.hosPatient.SearchHospService;
 import hospital.service.wardPS.WardPsDeleteService;
@@ -69,10 +70,8 @@ public class WardPsController {
    @Autowired
    PatientPreScript patientPreScript;
    @GetMapping("patientwardPsList")
-   public String patientwardPsList(String hospNum, String room
-									, String bed, String name
-									,Model model) {
-	   patientPreScript.execute(hospNum, room, bed, name, model);
+   public String patientwardPsList(String hospNum, Model model) {
+	   patientPreScript.execute(hospNum, model);
 	   return "thymeleaf/hosPatient/hosPatientPSinfo";
    }
    
@@ -139,6 +138,15 @@ public class WardPsController {
 	   searchHospService.execute(page, searchWord, location, roomN, model);
 	   return "thymeleaf/wardPS/wardPsList";
    }
+   
+ /// 내 담당환자 목록
+ 		@Autowired
+ 		MyPatientListService myPatientListService;
+ 		@GetMapping("myPatientList")
+ 		public String myPatientList(String empNum, Model model) {
+ 			myPatientListService.execute("doc_num", empNum, model);
+ 			return "thymeleaf/hosPatient/myPatientList";
+ 		}
  
    
 }

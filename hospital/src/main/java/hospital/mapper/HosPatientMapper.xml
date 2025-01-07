@@ -16,7 +16,9 @@
 		</if>
 	</select>
 
-	<!-- 입원정보 생성자 resultMap --> <!-- constructor : 생성자를 통한 맵핑, 생성자 파라미터에 명시된 순서대로 arg를 입력해야함 -->
+
+	<!-- 입원정보 생성자 resultMap --> 
+	<!-- constructor : 생성자를 통한 맵핑, 생성자 파라미터에 명시된 순서대로 arg를 입력해야함 -->
 	<resultMap type="HospitalizationDTO" id="hospResultMap">
 		<constructor>
 			<idArg column="HOSPITALIZATION_NUM" javaType="string" />
@@ -30,22 +32,7 @@
 		</constructor>
 	</resultMap>
 
-	<!-- 병동처방 생성자 -->
-	<resultMap type="wardPS" id="wardPsResultMap">
-		<id column="WARDPRESCRIPT_NUM" javaType="string" jdbcType="VARCHAR" property="wardPsNum" />
-		<result column="HOSPITALIZATION_NUM" javaType="string" jdbcType="VARCHAR" property="hospNum" />
-		<result column="EMP_NUM" javaType="string" jdbcType="VARCHAR" property="empNum" />
-		<result column="WRITE_DOC" javaType="string" jdbcType="VARCHAR" property="writeDoc" />
-		<result column="UPDATE_DOC" javaType="string" jdbcType="VARCHAR" property="updateDoc" />
-		<result column="DIAGNOSTIC_NAME" javaType="string" jdbcType="VARCHAR" property="diagName" />
-		<result column="DIAGNOSTIC_CONTENT" javaType="string" jdbcType="VARCHAR" property="diagCont"/>
-		<result column="MEDICINE_PRESCRIPT" javaType="string" jdbcType="VARCHAR" property="medicPres"/>
-		<result column="EXAMINATION_PRESCRIPT" javaType="string" jdbcType="VARCHAR" property="examPres"/>
-		<result column="HANDLE_PRESCRIPT" javaType="string" jdbcType="VARCHAR" property="hanPres"/>
-		<result column="INPUT_DATE" javaType="java.util.Date" jdbcType="DATE" property="inputDate"/>
-		<result column="UPDATE_DATE" javaType="java.util.Date" jdbcType="DATE" property="updateDate"/>
-	</resultMap>
-
+	<!-- hosPatientDTO result 생성자 -->
 	<resultMap type="hosPatient" id="hosPatientResultMap">
 		<result column="patient_name" jdbcType="VARCHAR"
 			javaType="string" property="patientName" />
@@ -55,22 +42,22 @@
 			property="roomNum" />
 		<result column="ward_num" jdbcType="VARCHAR" javaType="string"
 			property="wardNum" />
+		<result column="WARDPRESCRIPT_NUM" jdbcType="VARCHAR" 
+		javaType="string" property="wardPsNum"/>
+		<result column="DIAGNOSTIC_NAME" jdbcType="VARCHAR" 
+		javaType="string" property="diagName"/>
+		<result column="NURSING_NUM" jdbcType="VARCHAR" 
+		javaType="string" property="nursingNum"/>
 		<association property="hospitalizationDTO"
 			javaType="HospitalizationDTO" resultMap="hospResultMap" />
-		<association property="wardPsDTO" javaType="wardPS"
-			resultMap="wardPsResultMap" />
 	</resultMap>
 
 	<sql id="HospBaseCol">
 		h.BED_NUM, h.PATIENT_NUM, h.IN_DATE, h.HOSPITALIZATION_NUM
 		, h.OUT_DATE, h.HOSPITALIZATION_STATUS, h.DOC_NUM, h.NUR_NUM
 	</sql>
-
-	<sql id="wardPsCol">
-		wp.WARDPRESCRIPT_NUM, wp.EMP_NUM, wp.WRITE_DOC, wp.UPDATE_DOC,
-      wp.DIAGNOSTIC_NAME, wp.DIAGNOSTIC_CONTENT, wp.MEDICINE_PRESCRIPT
-      , wp.EXAMINATION_PRESCRIPT, wp.HANDLE_PRESCRIPT, wp.INPUT_DATE, wp.UPDATE_DATE
-	</sql>
+	
+	
 	
 	
 	<!-- 병동처방 -->
@@ -114,6 +101,9 @@
 	</select>
 
 
+
+
+
 	<!-- 간호 쪽 -->
 	<select id="nursingCount" resultType="integer">
 		select count(*) from WARDPRESCRIPT
@@ -124,7 +114,8 @@
 		parameterType="hpSEP">
 		select *
 		from( select rownum rn, p.patient_name, r.ROOM_LOCATION, r.room_num
-			,r.ward_num, <include refid="HospBaseCol" />, <include refid="wardPsCol"/>
+			,r.ward_num, wp.WARDPRESCRIPT_NUM, wp.DIAGNOSTIC_NAME
+			, <include refid="HospBaseCol" />
 		from PATIENT p join HOSPITALIZATION h
 		on p.PATIENT_NUM = h.PATIENT_NUM
 		join WARDPRESCRIPT wp
@@ -158,19 +149,45 @@
 
 	</select>
 	
-	<select id="selectPatientNum" parameterType="string" resultType="string">
-		select patient_num from HOSPITALIZATION
-		where HOSPITALIZATION_NUM like '%'||#{hospNum}||'%'
+	<!-- 입원 환자 하나의 정보 -->
+	<select id="wardPatInfo" resultMap="hosPatientResultMap">
+		select p.patient_name, r.room_location, r.room_num, <include refid="HospBaseCol" />
+		from HOSPITALIZATION h left join PATIENT p
+		on p.PATIENT_NUM = h.PATIENT_NUM
+		left join bed b
+		on h.bed_num = b.bed_num
+		left join room r
+		on b.room_num = r.room_num
+		where h.HOSPITALIZATION_NUM like '%'||#{hospNum}||'%'
 	</select>
 	
-	<select id="selectPatPs" resultType="patPS">
+	
+	<!-- 환자의 처방정보 -->
+	<select id="selectPatPs" resultType="hosPatient">
 		select w.WARDPRESCRIPT_NUM as wardPsNum, w.DIAGNOSTIC_NAME as diagName
-		, n.nursing_num as nursingNum
+				, n.nursing_num as nursingNum
 		from nursing n full outer join WARDPRESCRIPT w
-		on n.WARDPRESCRIPT_NUM = w.WARDPRESCRIPT_NUM
+			on n.WARDPRESCRIPT_NUM = w.WARDPRESCRIPT_NUM
 		where w.HOSPITALIZATION_NUM like '%'||#{hospNum}||'%'
 		order by w.INPUT_DATE
 	</select>
-
+	
+	
+	<!-- 내 담당 환자 -->
+	<select id="empName" resultType="string">
+		select EMP_NAME from employee
+		where emp_num = #{empNum}
+	</select>
+	
+	<select id="myWardPatient" resultMap="hosPatientResultMap">
+		select p.patient_name, r.room_location, r.room_num, <include refid="HospBaseCol" />
+		from HOSPITALIZATION h left join PATIENT p
+		on p.PATIENT_NUM = h.PATIENT_NUM
+		left join bed b
+		on h.bed_num = b.bed_num
+		left join room r
+		on b.room_num = r.room_num
+		where ${colNm} = #{empNum}
+	</select>
 	
 </mapper>

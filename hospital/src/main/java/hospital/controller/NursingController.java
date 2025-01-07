@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import hospital.command.NursCommand;
 import hospital.service.AutoNumService;
+import hospital.service.hosPatient.MyPatientListService;
 import hospital.service.hosPatient.PatientPreScript;
 import hospital.service.hosPatient.SearchHospService;
 import hospital.service.nursing.NursingDeleteService;
@@ -137,11 +138,22 @@ public class NursingController {
 		@Autowired
 		PatientPreScript patientPreScript;
 		@GetMapping("patientNursingList")
-		public String patientNursingList(String hospNum, String room
-										, String bed, String name
-										,Model model) {
-			patientPreScript.execute(hospNum, room, bed, name, model);
+		public String patientNursingList(String hospNum, Model model) {
+			patientPreScript.execute(hospNum, model);
 			return "thymeleaf/hosPatient/hosPatientPSinfo";
 		}
+		
+		
+		/// 내 담당환자 목록
+		@Autowired
+		MyPatientListService myPatientListService;
+		@GetMapping("myPatientList")
+		public String myPatientList(String empNum, Model model) {
+			myPatientListService.execute("nur_num", empNum, model);
+			return "thymeleaf/hosPatient/myPatientList";
+		}
 	
+		
+		
+		
 }
