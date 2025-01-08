@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Data Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <canvas id="myChart" width="800" height="400"></canvas>
+
+    <script>
+        const ctx = document.getElementById('myChart').getContext('2d');
+        
+        let stockData = {
+            labels: [], // 거래시간
+            datasets: [
+                {
+                    label: '거래량',
+                    data: [], // 거래량
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1,
+                    fill: false,
+                    yAxisID: 'y1' // 첫 번째 y축 사용
+                },
+                {
+                    label: '체결가격',
+                    data: [], // 체결가격
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1,
+                    fill: false,
+                    yAxisID: 'y2' // 두 번째 y축 사용
+                }
+            ]
+        };
+
+        const myChart = new Chart(ctx, {
+            type: 'line',
+            data: stockData,
+            options: {
+                scales: {
+                	x: {
+                        display: false 
+                    },
+                    y1: {
+                        type: 'linear',
+                        position: 'left',
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: '거래량'
+                        },
+                        afterDataLimits: (scale) => { 
+							 scale.max = scale.max * 1.2;
+				     	 }
+                    },
+                    y2: {
+                        type: 'linear',
+                        position: 'right',
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: '체결가격'
+                        },
+                        grid: {
+                            drawOnChartArea: false // 두 번째 y축의 그리드 라인을 숨김
+                        },
+                        ticks: {
+                            stepSize: 55000 
+                        }
+                    }
+                }
+            }
+        });
+
+        // WebSocket 연결
+        const socket = new WebSocket('ws://localhost:2000');
+
+        socket.onmessage = function(event) {
+            
+            
+            if (stockData.labels.length >= 30) {
+            	stockData.labels.shift();
+            	stockData.datasets[0].data.shift();
+            	stockData.datasets[1].data.shift();
+            } else {
+
+            	const message = JSON.parse(event.data);
+                stockData.labels.push(message.timestamp);
+                stockData.datasets[0].data.push(message.volume); // 거래량
+                stockData.datasets[1].data.push(message.price); // 체결가격
+            }
+
+            myChart.update(); // 차트 업데이트
+        };
+    </script>
+</body>
+</html>

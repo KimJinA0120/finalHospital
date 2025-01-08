@@ -74,7 +74,7 @@ public class ReceiptController {
 	public String doctorSearch(@RequestParam(value="searchWord", required=false) String searchWord
 			, @RequestParam(value="page", required=false, defaultValue="1") Integer page
 			, Model model) {
-		employeeListService.doctorSearch(searchWord, page, model);
+		employeeListService.doctorSearch(searchWord, page, model, null);
 		return "thymeleaf/employee/doctorSearch";
 	}
 	

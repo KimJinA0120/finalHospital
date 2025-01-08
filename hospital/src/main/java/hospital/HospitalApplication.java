@@ -47,7 +47,4 @@ public class HospitalApplication {
 		return "thymeleaf/appointment";
 	}
 	
-	
-	
-
 }

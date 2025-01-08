@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>일별 시세 보기</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>일별 시세 보기</h1>
+    <table id="stockTable">
+        <thead>
+            <tr>
+                <th>날짜</th>
+                <th>종가</th>
+                <th>등락률</th>
+                <th>거래량</th>
+                <th>거래대금</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- 데이터가 여기에 추가됩니다 -->
+        </tbody>
+    </table>
+
+    <script>
+        // WebSocket 연결
+        const socket = new WebSocket('ws://localhost:2000');
+
+        socket.onmessage = function(event) {
+            const message = JSON.parse(event.data);
+
+            // 새로운 데이터 행 생성
+            const newRow = document.createElement('tr');
+
+            // 각 데이터 셀 추가
+            const dateCell = document.createElement('td');
+            dateCell.textContent = message.timestamp; // 날짜
+            newRow.appendChild(dateCell);
+
+            const priceCell = document.createElement('td');
+            priceCell.textContent = message.price; // 종가
+            newRow.appendChild(priceCell);
+
+            const changeRateCell = document.createElement('td');
+            changeRateCell.textContent = message.changeRate; // 등락률
+            newRow.appendChild(changeRateCell);
+
+            const volumeCell = document.createElement('td');
+            volumeCell.textContent = message.volume; // 거래량
+            newRow.appendChild(volumeCell);
+
+            const tradingValueCell = document.createElement('td');
+            tradingValueCell.textContent = message.price; // 거래대금
+            newRow.appendChild(tradingValueCell);
+
+            // 표에 새 행 추가
+            document.querySelector('#stockTable tbody').appendChild(newRow);
+        };
+    </script>
+</body>
+</html>
