@@ -33,6 +33,7 @@ public class SurgerySchedulerService {
 			hash.put("wardprescriptNum", list.get(i).getWardprescriptNum());
 			hash.put("start", list.get(i).getSurgeryDate());
 			hash.put("end", list.get(i).getSurgeryEndDate());
+			hash.put("surgeryStatus", list.get(i).getSurgeryStatus());
 			if(list.get(i).getOperatingRoomNum().equals("surroom_1")) {
 				hash.put("color", "#BCF5A9");
 			}else if(list.get(i).getOperatingRoomNum().equals("surroom_2")) {

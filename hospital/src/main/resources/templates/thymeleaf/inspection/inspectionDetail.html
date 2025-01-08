@@ -17,11 +17,11 @@
 		<td>[[${#temporals.format(dto.inspectionDate,'yyyy-MM-dd HH:mm')}]]</td></tr>
 	<th:block th:if="${dto.wardprescriptNum!=null}">
 	<tr><th>병동처방번호</th>
-		<td>[[${dto.wardprescriptNum}]]</td></tr>
+		<td><a th:href="|../wardPs/wardPsInfo?num=${dto.wardprescriptNum}|">[[${dto.wardprescriptNum}]]</a></td></tr>
 	</th:block>
 	<th:block th:if="${dto.medicalNum!=null}">
 	<tr><th>진료번호</th>
-		<td>[[${dto.medicalNum}]]</td></tr>
+		<td><a th:href="|../medical/medicalInfo?medicalNum=${dto.medicalNum}|">[[${dto.medicalNum}]]</a></td></tr>
 	</th:block>
 </table>
 <br>
@@ -34,8 +34,8 @@
 		<a th:href="|../radiation/radiationWrite?inspectionNum=${dto.inspectionNum}|">검사결과 기록 작성</a> <br>
 	</p>
 	<a th:href="|inspectionModify?inspectionNum=${dto.inspectionNum}|">수정하기</a> <br>
-	</th:block>
 	<a th:href="|inspectionDelete?inspectionNum=${dto.inspectionNum}|">삭제하기</a>
+	</th:block>
 </div>
 </body>
 </html>

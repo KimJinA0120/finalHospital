@@ -23,7 +23,7 @@ public class SurgeryListService {
 		
 		List<SurgeryListDTO> list = surgeryMapper.surgeryList(sepDTO);
 		
-		int count = surgeryMapper.surgeryAppointmentCount(searchWord);
+		int count = surgeryMapper.surgeryAppointmentCount(searchWord, null);
 		startEndPageService.execute(page, limit, count, searchWord, list, model, null);
 		
 	}

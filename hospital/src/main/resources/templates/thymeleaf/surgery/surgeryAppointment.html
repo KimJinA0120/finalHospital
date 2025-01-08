@@ -38,11 +38,21 @@
 <link rel="stylesheet" href="/static/css/style.css">
 <link rel="stylesheet" href="/static/css/responsive.css">
         
+<style type="text/css">
+	div{
+		font-size: 25px;
+		margin: 10px;
+		color: black;
+	}
+</style>
 <title>수술 예약</title>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
 <script type="text/javascript">
 $(function(){
+	$("#wardNum").click(function(){
+		window.open("/surgery/wardSearch", "wardSearch", "width=800, height=400, top=100, left=100");
+	})
 	$("#surroom").click(function(){
 		window.open("/surgery/operatingRoomList", "operatingRoomList", "width=315, height=200, top=100, left=100");
 	})
@@ -57,8 +67,12 @@ $(function(){
 			type: "POST",
 			url: "surgeryAppointment",
 			success: function(result){
-				window.opener.location.reload();
-				window.self.close();
+				if(window.opener){
+					window.opener.location.reload();
+					window.self.close();
+				}else{
+					location.href="surgeryAppointmentList";	
+				}
 			},
 			error: function(){
 				alert("서버오류");
@@ -70,43 +84,47 @@ $(function(){
 
 </head>
 <body>
+<div align="center">
+	수술예약
+</div>
 <form action="surgeryAppointment" method="post" id="frm">
 	<table width="600" align="center" border="1">
 		<tr align="center">
-			<th style="background-color: #CEF6E3">수술예약번호</th>
+			<th style="background-color: #b2c9ad; color: black">수술예약번호</th>
 			<td colspan="8"><input type="text" name="surgeryAppointmentNum" th:value="${autoNum}" readonly="readonly" class="col-12"/></td>
 		</tr>
 		<tr align="center">
-			<th style="background-color: #CEF6E3">수술명</th>
+			<th style="background-color: #b2c9ad; color: black">수술명</th>
 			<td colspan="8"><input type="text" name="surgeryName" id="surgeryName" class="col-12"/></td>
 		</tr>
 		<tr align="center">
-			<th style="background-color: #CEF6E3">시작시간</th>
+			<th style="background-color: #b2c9ad; color: black">시작시간</th>
 			<td><input type="datetime-local" name="surgeryDate" id="surgeryDate" class="col-12"/></td>
-			<th colspan="3" style="background-color: #CEF6E3">종료시간</th>
-			<td colspan="2"><input type="datetime-local" name="surgeryEndDate" id="surgeryEndDate"  class="col-12"/></td>
+			<th colspan="2" style="background-color: #b2c9ad; color: black">종료시간</th>
+			<td colspan="3"><input type="datetime-local" name="surgeryEndDate" id="surgeryEndDate"  class="col-12"/></td>
 		</tr>
 		<tr align="center">
-			<th style="background-color: #CEF6E3">집도의</th>
+			<th style="background-color: #b2c9ad; color: black">집도의</th>
 			<td colspan="6"><input type="text" name="sempNum" id="docNum" class="col-12"/></td>
-			<td><button type="button" id="semp" class="btn" style="background-color: #0A122A; color: white">집도의 선택</button></td>
+			<td><button type="button" id="semp" class="btn col-12" style="background-color: #0A122A; color: white">집도의 선택</button></td>
 		</tr>
 		<tr align="center">
-			<th style="background-color: #CEF6E3">마취의</th>
+			<th style="background-color: #b2c9ad; color: black">마취의</th>
 			<td colspan="6"><input type="text" name="aempNum" id="aempNum" class="col-12"/> </td>
-			<td><button type="button" id="aemp" class="btn" style="background-color: #0A122A; color: white">마취의 선택</button></td>
+			<td><button type="button" id="aemp" class="btn col-12" style="background-color: #0A122A; color: white">마취의 선택</button></td>
 		</tr>
 		<tr align="center">
-			<th style="background-color: #CEF6E3">수술실</th>
+			<th style="background-color: #b2c9ad; color: black">수술실</th>
 			<td colspan="6"><input type="text" name="operatingRoomNum" id="operatingRoom" class="col-12"/></td>
-			<td><button type="button" id="surroom" class="btn" style="background-color: #0A122A; color: white">수술실 찾기</button></td>
+			<td><button type="button" id="surroom" class="btn col-12" style="background-color: #0A122A; color: white">수술실 찾기</button></td>
 		</tr>
 		<tr align="center">
-			<th style="background-color: #CEF6E3">처방번호</th>
-			<td colspan="8"><input type="text" name="wardprescriptNum" class="col-12"/></td>
+			<th style="background-color: #b2c9ad; color: black" >처방번호</th>
+			<td colspan="6"><input type="text" name="wardprescriptNum" class="col-12" id="wardPsNum"/></td>
+			<td><button type="button" id="wardNum" class="btn col-12" style="background-color: #0A122A; color: white">처방번호 찾기</button></td>
 		</tr>
 		<tr align="center">
-			<th colspan="8"><button type="button" id="write" class="btn" style="background-color: #0A122A; color: white">수술예약</button></th>
+			<th colspan="8"><button type="button" id="write" class="btn col-12" style="background-color: #4b5945; color: white">수술예약</button></th>
 		</tr>
 	</table>
 </form>

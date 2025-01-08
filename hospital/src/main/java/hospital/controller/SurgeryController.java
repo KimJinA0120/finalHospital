@@ -23,6 +23,7 @@ import hospital.command.SurgeryAppointmentCommand;
 import hospital.command.SurgeryCommand;
 import hospital.service.AutoNumService;
 import hospital.service.employee.EmployeeListService;
+import hospital.service.medical.MedicalListService;
 import hospital.service.surgery.OperatingRoomListService;
 import hospital.service.surgery.ScheduleService;
 import hospital.service.surgery.SurApsDeleteService;
@@ -36,6 +37,7 @@ import hospital.service.surgery.SurgeryListService;
 import hospital.service.surgery.SurgerySchedulerService;
 import hospital.service.surgery.SurgeryUpdateService;
 import hospital.service.surgery.SurgeryWriteService;
+import hospital.service.wardPS.WardPsListService;
 
 @Controller
 @RequestMapping("surgery")
@@ -71,11 +73,12 @@ public class SurgeryController {
 	// 수술 예약
 	@GetMapping("surgeryAppointmentList") // 수술예약 리스트
 	public String surgeryAppointmentList(
+			String operatingRoomNum,
 			@RequestParam(value="page", required = false, defaultValue = "1") int page,
 			@RequestParam(value="searchWord", required = false) String searchWord,
 			@RequestParam(value="kind", required = false) String kind,
 			Model model) {
-		surgeryAppointmentListService.execute(page, searchWord, kind, model);
+		surgeryAppointmentListService.execute(operatingRoomNum, page, searchWord, kind, model);
 		return "thymeleaf/surgery/surgeryAppointmentList";
 	}
 	@PostMapping("surApsDelete") // 리스트에서 수술예약 선택 삭제
@@ -173,7 +176,7 @@ public class SurgeryController {
 			@RequestParam(value="searchWord", required= false) String searchWord, 
 			@RequestParam(value="kind", required=false) String kind,
 			Model model) {
-		surgeryAppointmentListService.execute(page, searchWord, kind, model);
+		surgeryAppointmentListService.execute(null, page, searchWord, kind, model);
 		return "thymeleaf/surgery/surApList";
 	}
 	
@@ -243,6 +246,40 @@ public class SurgeryController {
 			, @RequestParam(value="kind", required=false) String kind) {
 		employeeListService.doctorSearch(searchWord, page, model, kind);
 		return "thymeleaf/surgery/aempSearch";
+	}
+	
+	//수술실리스트
+	@GetMapping("operatingRoom")
+	public String operatingRoom(Model model) {
+		operatingRoomListService.execute(model);
+		return "thymeleaf/surgery/operatingRoom";
+	}
+	
+	//처방번호 찾기
+	@Autowired
+	WardPsListService wardPsListService;
+	@GetMapping("wardSearch")
+	public String wardSearch(
+				@RequestParam(value = "page", required = false, defaultValue = "1") int page
+			   , @RequestParam(value = "searchWord", required = false) String searchWord
+			   , @RequestParam(value = "location", required = false) String location
+			   , @RequestParam(value = "roomN", required = false) String roomN
+			   , @RequestParam(value = "hpState", required = false) String hpState
+			   , Model model) {
+		wardPsListService.execute(page, searchWord, location, roomN, hpState, model);
+		return "thymeleaf/surgery/wardSearch";
+	}
+	
+	//진료번호 찾기
+	@Autowired
+	MedicalListService medicalListService;
+	@GetMapping("medicalSearch")
+	public String medicalSearch(
+			@RequestParam(value = "page", required = false, defaultValue = "1") Integer page
+			, @RequestParam(value = "searchWord", required = false) String searchWord
+			,Model model) {
+		medicalListService.execute(page, searchWord, model);
+		return "thymeleaf/surgery/medicalSearch";
 	}
 	
 }

@@ -11,30 +11,45 @@
 		values (#{surgeryAppointmentNum}, #{sempNum}, #{operatingRoomNum}
 			, #{wardprescriptNum}, #{surgeryName}, #{surgeryDate}, #{aempNum}, #{surgeryEndDate}, '수술미시행')
 	</insert>
-	<select id="surgeryAppointmentList" resultType="surgeryAppointment" parameterType="startEndPage">
+	<select id="surgeryAppointmentList" resultType="surgeryAppointment" parameterType="hashmap">
 		select * from (
 			select ROW_NUMBER() over (order by SURGERY_APPOINTMENT_NUM) as rn,
 				<include refid="surgeryAppointmentBase"/> 
 			from surgery_appointment
-		<where>
+		<trim prefix="where" prefixOverrides="AND | OR">
 			<if test="searchWord != null">
-				SEMP_NUM like '%' || #{searchWord} || '%'
+				(SEMP_NUM like '%' || #{searchWord} || '%'
 				or AEMP_NUM like '%' || #{searchWord} || '%'
-				or SURGERY_APPOINTMENT_NUM like '%' || #{searchWord} || '%'
+				or SURGERY_APPOINTMENT_NUM like '%' || #{searchWord} || '%')
 			</if>
-		</where>
+			<if test="kind == '미시행'">
+				and SURGERY_STATUS = '수술미시행'
+			</if>
+			<if test="kind == '완료'">
+				and SURGERY_STATUS = '수술완료'
+			</if>
+			<if test="operatingRoomNum != null">
+				and OPERATING_ROOM_NUM = #{operatingRoomNum}
+			</if>
+		</trim>
 		)
 		where rn between #{startRow} and #{endRow}
 	</select>
 	<select id="surgeryAppointmentCount" parameterType="string" resultType="integer">
 		select count(*) from surgery_appointment
-		<if test='searchWord != null'>
-			<where>
-				SEMP_NUM like '%' || #{searchWord} || '%'
+		<trim prefix="where" prefixOverrides="AND | OR">
+			<if test="searchWord != null">
+				(SEMP_NUM like '%' || #{searchWord} || '%'
 				or AEMP_NUM like '%' || #{searchWord} || '%'
-				or SURGERY_APPOINTMENT_NUM like '%' || #{searchWord} || '%'
-			</where>
-		</if>
+				or SURGERY_APPOINTMENT_NUM like '%' || #{searchWord} || '%')
+			</if>
+			<if test="kind == '미시행'">
+				and SURGERY_STATUS = '수술미시행'
+			</if>
+			<if test="kind == '완료'">
+				and SURGERY_STATUS = '수술완료'
+			</if>
+		</trim>
 	</select>
 	<delete id="surApsDelete" parameterType="string">
 		delete from surgery_appointment where SURGERY_APPOINTMENT_NUM in

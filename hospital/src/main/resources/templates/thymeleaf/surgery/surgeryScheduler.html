@@ -34,7 +34,7 @@
     		        		addEventButtons: {
     		        			text: "수술일정 추가",
     		        			click: function(){
-    		        					window.open("/surgery/surgeryAppointment", "surgeryAppointment", "width=800, height=306, top=300, left=300");
+    		        					window.open("/surgery/surgeryAppointment", "surgeryAppointment", "width=800, height=310, top=300, left=300");
     		        			}
     		        		},
     		        		homeButtons: {
@@ -67,21 +67,30 @@
     		        		obj.sempNum = info.event._def.extendedProps.sempNum;
     		        		obj.surgeryAppointmentNum = info.event._def.extendedProps.surgeryAppointmentNum;
     		        		obj.wardprescriptNum = info.event._def.extendedProps.wardprescriptNum;
-    		        		obj.surgeryStatus = info.event_def.extendedProps.surgeryStatus;
+    		        		obj.surgeryStatus = info.event._def.extendedProps.surgeryStatus;
     		        		events.push(obj);
     		        		
     		        		console.log(events);
     		        		
-    		        		console.log(JSON.stringify(events));
-    		        		$(function surScheduleUpdate(){
-    		        			$.ajax({
-    		        				url: "/surgery/surScheduleUpdate",
-    		        				type: "POST",
-    		        				dataType: "json",
-    		        				data: JSON.stringify(events),
-    		        				contentType: "application/json"
+    		        		
+							console.log(info.event._def.extendedProps.surgeryStatus)
+    		        		if(info.event._def.extendedProps.surgeryStatus == "수술미시행"){
+    		        			$(function surScheduleUpdate(){
+        		        			$.ajax({
+        		        				url: "/surgery/surScheduleUpdate",
+        		        				type: "POST",
+        		        				dataType: "json",
+        		        				data: JSON.stringify(events),
+        		        				contentType: "application/json"
+        		        			})
+        		        		})
+    		        		}else if(info.event._def.extendedProps.surgeryStatus == "수술완료"){
+    		        			$(function(){
+    		        				alert("완료된 수술입니다. 수정이 불가능 합니다.");
+    		        				location.reload();
     		        			})
-    		        		})
+    		        		}
+    		        		
     		        	}
     		        });
     		        calendar.render();

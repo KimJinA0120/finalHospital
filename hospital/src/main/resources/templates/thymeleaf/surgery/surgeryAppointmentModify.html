@@ -2,6 +2,54 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="keywords" content="Site keywords here">
+<meta name="description" content="">
+<meta name='copyright' content=''>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Favicon -->
+<link rel="icon" href="static/img/favicon.png">
+		
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+<!-- Nice Select CSS -->
+<link rel="stylesheet" href="/static/css/nice-select.css">
+<!-- Font Awesome CSS -->
+<link rel="stylesheet" href="/static/css/font-awesome.min.css">
+<!-- icofont CSS -->
+<link rel="stylesheet" href="/static/css/icofont.css">
+<!-- Slicknav -->
+<link rel="stylesheet" href="/static/css/slicknav.min.css">
+<!-- Owl Carousel CSS -->
+<link rel="stylesheet" href="/static/css/owl-carousel.css">
+<!-- Datepicker CSS -->
+<link rel="stylesheet" href="/static/css/datepicker.css">
+<!-- Animate CSS -->
+<link rel="stylesheet" href="/static/css/animate.min.css">
+<!-- Magnific Popup CSS -->
+<link rel="stylesheet" href="/static/css/magnific-popup.css">
+		
+<!-- Medipro CSS -->
+<link rel="stylesheet" href="/static/css/normalize.css">
+<link rel="stylesheet" href="/static/css/style.css">
+<link rel="stylesheet" href="/static/css/responsive.css">
+
+<style type="text/css">
+	th{
+		background-color: #b2c9ad;
+		color: black;
+	}
+	div{
+		font-size: 25px;
+		margin: 10px;
+		color: black;
+	}
+</style>
+
 <title>수술예약 수정화면</title>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
@@ -12,8 +60,13 @@ $(function(){
 			type: "POST",
 			url: "surgeryAppointmentModify",
 			success: function(result){
-				window.opener.location.reload();
-				window.self.close();
+				if(window.opener){
+					window.opener.location.reload();
+					window.self.close();
+				}else{
+					location.href="surgeryAppointmentDetail?surgeryAppointmentNum=[[${dto.surgeryAppointmentNum}]]";
+				}
+
 			},
 			error: function(){
 				alert("서버오류");
@@ -24,40 +77,46 @@ $(function(){
 </script>
 </head>
 <body>
+<div align="center">
+	수술예약 정보
+</div>
 <form action="surgeryAppointmentModify" method="post" id="frm">
-	<table border="1" width="600">
-		<tr>
+	<table border="1" width="600" style="margin-top: 10px;">
+		<tr align="center">
 			<th>수술예약번호</th>
-			<td colspan="3"><input type="text" name="surgeryAppointmentNum" th:value="${dto.surgeryAppointmentNum}" readonly="readonly"/></td>
+			<td colspan="4"><input type="text" name="surgeryAppointmentNum" th:value="${dto.surgeryAppointmentNum}" readonly="readonly" class="col-12"/></td>
 		</tr>
-		<tr>
+		<tr align="center">
 			<th>수술명</th>
-			<td colspan="3"><input type="text" name="surgeryName" th:value="${dto.surgeryName}"/></td>
+			<td colspan="4"><input type="text" name="surgeryName" th:value="${dto.surgeryName}" class="col-12"/></td>
 		</tr>
-		<tr>
+		<tr align="center">
 			<th>수술시작 시간</th>
-			<td><input type="datetime-local" name="surgeryDate" th:value="${#temporals.format(dto.surgeryDate, 'yyyy-MM-dd HH:mm')}"/></td>
+			<td><input type="datetime-local" name="surgeryDate" th:value="${#temporals.format(dto.surgeryDate, 'yyyy-MM-dd HH:mm')}" class="col-12"/></td>
 			<th>수술끝 시간</th>
-			<td><input type="datetime-local" name="surgeryEndDate" th:value="${#temporals.format(dto.surgeryEndDate, 'yyyy-MM-dd HH:mm')}"/></td>
+			<td><input type="datetime-local" name="surgeryEndDate" th:value="${#temporals.format(dto.surgeryEndDate, 'yyyy-MM-dd HH:mm')}" class="col-12"/></td>
 		</tr>
-		<tr>
+		<tr align="center">
 			<th>집도의</th>
-			<td colspan="3"><input type="text" name="sempNum" th:value="${dto.sempNum}"/></td>
+			<td colspan="3"><input type="text" name="sempNum" th:value="${dto.sempNum}" class="col-12"/></td>
+			<td><button type="button" id="semp" class="btn col-12" style="background-color: #0A122A; color: white">집도의 선택</button></td>
 		</tr>
-		<tr>
+		<tr align="center">
 			<th>마취의</th>
-			<td colspan="3"><input type="text" name="aempNum" th:value="${dto.aempNum}"/></td>
+			<td colspan="3"><input type="text" name="aempNum" th:value="${dto.aempNum}" class="col-12"/></td>
+			<td><button type="button" id="aemp" class="btn col-12" style="background-color: #0A122A; color: white">마취의 선택</button></td>
 		</tr>
-		<tr>
+		<tr align="center">
 			<th>수술실</th>
-			<td colspan="3"><input type="text" name="operatingRoomNum" th:value="${dto.operatingRoomNum}"/></td>
+			<td colspan="3"><input type="text" name="operatingRoomNum" th:value="${dto.operatingRoomNum}" class="col-12"/></td>
+			<td><button type="button" id="surroom" class="btn col-12" style="background-color: #0A122A; color: white">수술실 찾기</button></td>
 		</tr>
-		<tr>
+		<tr align="center">
 			<th>처방번호</th>
-			<td colspan="3"><input type="text" name="wardprescriptNum" th:value="${dto.wardprescriptNum}"/></td>
+			<td colspan="4"><input type="text" name="wardprescriptNum" th:value="${dto.wardprescriptNum}" class="col-12" readonly="readonly"/></td>
 		</tr>
-		<tr>
-			<th colspan="2"><button type="button" id="update">수정완료</button></th>
+		<tr align="center">
+			<td colspan="5"><button type="button" id="update" class="btn col-12" style="background-color: #4b5945; color: white">수정완료</button></td>
 		</tr>
 	</table>
 </form>

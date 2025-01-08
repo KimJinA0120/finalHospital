@@ -1,6 +1,8 @@
 package hospital.service.surgery;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,13 +19,22 @@ public class SurgeryAppointmentListService {
 	SurgeryMapper surgeryMapper;
 	@Autowired
 	StartEndPageService startEndPageService;
-	public void execute(int page, String searchWord, String kind, Model model) {
+	public void execute(String operatingRoomNum, int page, String searchWord, String kind, Model model) {
 		int limit = 10;
-		StartEndPageDTO sepDTO = startEndPageService.execute(page, limit, searchWord, null);
+		StartEndPageDTO sepDTO = startEndPageService.execute(page, limit, searchWord, kind);
 		
-		List<SurgeryAppointmentDTO> list = surgeryMapper.surgeryAppointmentList(sepDTO);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("page", page);
+		map.put("limit", limit);
+		map.put("searchWord", searchWord);
+		map.put("kind", kind);
+		map.put("operatingRoomNum", operatingRoomNum);
+		map.put("startRow", sepDTO.getStartRow());
+		map.put("endRow", sepDTO.getEndRow());
 		
-		int count = surgeryMapper.surgeryAppointmentCount(searchWord);
-		startEndPageService.execute(page, limit, count, searchWord, list, model, null);
+		List<SurgeryAppointmentDTO> list = surgeryMapper.surgeryAppointmentList(map);
+		
+		int count = surgeryMapper.surgeryAppointmentCount(searchWord, kind);
+		startEndPageService.execute(page, limit, count, searchWord, list, model, kind);
 	}
 }
