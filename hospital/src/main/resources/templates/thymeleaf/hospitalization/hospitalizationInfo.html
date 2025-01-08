@@ -5,6 +5,7 @@
 <title>hospitalizationInfo.html</title>
 </head>
 <body>
+입원 상세 정보<br>
 입원번호 : [[${dto.hospitalizationNum}]]<br />
 환자번호 : [[${dto.patientNum}]]<br />
 병상번호 : [[${dto.bedNum}]]<br />
@@ -13,8 +14,9 @@
 입원상태 : [[${dto.hospitalizationStatus}]]<br />
 담당의사 : [[${dto.docNum}]]<br />
 담당간호사 : [[${dto.nurNum}]]<br />
-
+<th:block th:if="${dto.hospitalizationStatus}=='입원'">
 <a th:href="|hospitalizationUpdate?hospitalizationNum=${dto.hospitalizationNum}|">입원수정</a> | 
 <a th:href="|hospitalizationDelete?hospitalizationNum=${dto.hospitalizationNum}|">입원삭제</a> 
+</th:block>
 </body>
 </html>

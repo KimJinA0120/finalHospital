@@ -16,7 +16,7 @@ $(function(){
 		window.open("/employee/doctorSearch", "doctorSearch", "width=800, height=800, top=100, left=100");
 	});
 	$("#nurserch").click(function(){
-		window.open("/employee/nurseSearch", "nurseSearch", "width=350, height=230, top=100, left=100");
+		window.open("/employee/employeeSearch", "employeeSearch", "width=350, height=230, top=100, left=100");
 	});
 });
 </script>
@@ -32,7 +32,7 @@ $(function(){
 입원상태 : <input type="radio" name="hospitalizationStatus" value="입원" checked="checked"/>입원
 				<input type="radio" name="hospitalizationStatus" value="퇴원"/>퇴원<br />
 담당의사 : <input type="text" name="docNum" id="docNum"> <button type="button" id="docserch">의사검색</button><br />
-담당간호사 : <input type="text" name="nurNum" id="nurNum"> <button type="button" id="nurserch">간호사검색</button><br />
+담당간호사 : <input type="text" name="nurNum" id="empNum"> <button type="button" id="nurserch">간호사검색</button><br />
 <input type="submit" value="입원등록">
 </form>
 </body>

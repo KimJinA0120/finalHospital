@@ -64,25 +64,21 @@ public class WardRoomBedController {
 		emerBedsDeleteService.execute(emerBedDels);
 		return "redirect:allBedList";
 	}
-	
 	@PostMapping("bedsDelete")
 	public String bedsDelete(@RequestParam(value="nums") String bedDels[]) {
 		bedsDeleteService.execute(bedDels);
 		return "redirect:allBedList";
 	}
-	
 	@PostMapping("roomsDelete")
 	public String roomsDelete(@RequestParam(value="nums") String roomDels[]) {
 		roomsDeleteService.execute(roomDels);
-		return "redirect:WardList";
+		return "redirect:allroomList";
 	}
-	
 	@PostMapping("wardsDelete")
 	public String wardsDelete(@RequestParam(value="nums") String wardDels[]) {
 		wardsDeleteService.execute(wardDels);
 		return "redirect:WardList";
 	}
-	
 	@PostMapping("emerBedRegist")
 	public String emerBedRegist(EmergencyCommand emergencyCommand) {
 		emerBedWriteService.execute(emergencyCommand);
@@ -92,7 +88,6 @@ public class WardRoomBedController {
 	public String emerBedForm() {
 		return "thymeleaf/wardRoomBed/emerBedForm";
 	}
-	
 	@PostMapping("bedRegist")
 	public String bedRegist(BedCommand bedCommand) {
 		bedWriteService.execute(bedCommand);
@@ -129,6 +124,11 @@ public class WardRoomBedController {
 	public String bedList(Model model) {
 		bedListService.execute(model);
 		return "thymeleaf/wardRoomBed/bedList";
+	}
+	@GetMapping("allroomList")
+	public String allroomList(String wardNum, Model model) {
+		roomListService.execute(model, null);
+		return "thymeleaf/wardRoomBed/roomList";
 	}
 	@GetMapping("roomList")
 	public String roomList(String wardNum, Model model) {
