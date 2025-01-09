@@ -74,13 +74,7 @@ public class WardPsController {
    }
    
    
-   @Autowired
-   PatientPreScript patientPreScript;
-   @GetMapping("patientwardPsList")
-   public String patientwardPsList(String hospNum, Model model) {
-	   patientPreScript.execute(hospNum, model);
-	   return "thymeleaf/hosPatient/hosPatientPSinfo";
-   }
+  
    
    // 상세정보
    @Autowired

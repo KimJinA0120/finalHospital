@@ -38,9 +38,6 @@ $(document).ready(function(){
 	});
 });
 
-function selectPatient(hospNum){
-	location.href = "patientwardPsList?hospNum="+hospNum;
-}
 
 function SelLoc() {
 	var selectedValue = $("#location option:selected").val();
@@ -56,6 +53,11 @@ function Selroom() {
 	}else {
 		location.href = "hosPatList?location=" + selectedValue +"&roomN="+par4;
 	} 
+}
+
+
+function selectPatient(hospNum){
+	location.href = "patientwardPsList?hospNum="+hospNum;
 }
 
 </script>
