@@ -44,6 +44,10 @@
 		margin: 10px;
 		color: black;
 	}
+	th{
+		background-color: #b2c9ad;
+		color: black
+	}
 </style>
 <title>수술 예약</title>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
@@ -63,21 +67,25 @@ $(function(){
 		window.open("/surgery/aempSearch", "aempSearch", "width=600, height=400, top=100, left=100");
 	})
 	$("#write").click(function(){
-		$("#frm").ajaxSubmit({
-			type: "POST",
-			url: "surgeryAppointment",
-			success: function(result){
-				if(window.opener){
-					window.opener.location.reload();
-					window.self.close();
-				}else{
-					location.href="surgeryAppointmentList";	
+		if($("#surgeryDate").val() >= $("#surgeryEndDate").val()){
+			alert("수술끝시간이 수술시작시간 보다 뒤여야 합니다. 다시 확인해주세요.");
+		} else{
+			$("#frm").ajaxSubmit({
+				type: "POST",
+				url: "surgeryAppointment",
+				success: function(result){
+					if(window.opener){
+						window.opener.location.reload();
+						window.self.close();
+					}else{
+						location.href="surgeryAppointmentList";	
+					}
+				},
+				error: function(){
+					alert("서버오류");
 				}
-			},
-			error: function(){
-				alert("서버오류");
-			}
-		})
+			})
+		}
 	})
 })
 </script>
@@ -90,36 +98,36 @@ $(function(){
 <form action="surgeryAppointment" method="post" id="frm">
 	<table width="600" align="center" border="1">
 		<tr align="center">
-			<th style="background-color: #b2c9ad; color: black">수술예약번호</th>
+			<th>수술예약번호</th>
 			<td colspan="8"><input type="text" name="surgeryAppointmentNum" th:value="${autoNum}" readonly="readonly" class="col-12"/></td>
 		</tr>
 		<tr align="center">
-			<th style="background-color: #b2c9ad; color: black">수술명</th>
+			<th>수술명</th>
 			<td colspan="8"><input type="text" name="surgeryName" id="surgeryName" class="col-12"/></td>
 		</tr>
 		<tr align="center">
-			<th style="background-color: #b2c9ad; color: black">시작시간</th>
+			<th>시작시간</th>
 			<td><input type="datetime-local" name="surgeryDate" id="surgeryDate" class="col-12"/></td>
-			<th colspan="2" style="background-color: #b2c9ad; color: black">종료시간</th>
+			<th colspan="2">종료시간</th>
 			<td colspan="3"><input type="datetime-local" name="surgeryEndDate" id="surgeryEndDate"  class="col-12"/></td>
 		</tr>
 		<tr align="center">
-			<th style="background-color: #b2c9ad; color: black">집도의</th>
+			<th>집도의</th>
 			<td colspan="6"><input type="text" name="sempNum" id="docNum" class="col-12"/></td>
 			<td><button type="button" id="semp" class="btn col-12" style="background-color: #0A122A; color: white">집도의 선택</button></td>
 		</tr>
 		<tr align="center">
-			<th style="background-color: #b2c9ad; color: black">마취의</th>
+			<th>마취의</th>
 			<td colspan="6"><input type="text" name="aempNum" id="aempNum" class="col-12"/> </td>
 			<td><button type="button" id="aemp" class="btn col-12" style="background-color: #0A122A; color: white">마취의 선택</button></td>
 		</tr>
 		<tr align="center">
-			<th style="background-color: #b2c9ad; color: black">수술실</th>
+			<th>수술실</th>
 			<td colspan="6"><input type="text" name="operatingRoomNum" id="operatingRoom" class="col-12"/></td>
 			<td><button type="button" id="surroom" class="btn col-12" style="background-color: #0A122A; color: white">수술실 찾기</button></td>
 		</tr>
 		<tr align="center">
-			<th style="background-color: #b2c9ad; color: black" >처방번호</th>
+			<th>처방번호</th>
 			<td colspan="6"><input type="text" name="wardprescriptNum" class="col-12" id="wardPsNum"/></td>
 			<td><button type="button" id="wardNum" class="btn col-12" style="background-color: #0A122A; color: white">처방번호 찾기</button></td>
 		</tr>

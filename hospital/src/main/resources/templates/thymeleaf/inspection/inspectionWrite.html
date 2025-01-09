@@ -13,6 +13,22 @@ $(function(){
 	$("#medNum").click(function(){
 		window.open("/surgery/medicalSearch", "medicalSearch", "width=800, height=400, top=100, left=100");
 	})
+	$("#check").click(function(){
+		if($("#wardPsNum").val() != '' && $("#medicalNum").val() != ''){
+			alert("처방번호와 진료번호중 하나만 입력해주세요.");
+		}else{
+			$("#frm").ajaxSubmit({
+				type: "POST",
+				url: "inspectionWrite",
+				success: function(result){
+						location.href="inspectionList";
+				},
+				error: function(){
+					alert("서버오류");
+				}
+			})
+		}
+	})
 })
 </script>
 </head>
@@ -20,7 +36,7 @@ $(function(){
 <div align="center">
 	<a href="inspectionList">리스트로 돌아가기</a>
 </div>
-<form action="inspectionWrite" method="post">
+<form action="inspectionWrite" method="post" id="frm">
 <table border="1" width="600" align="center">
 	<tr><th>검사예약 번호</th>
 		<td><input type="text" name="inspectionNum" th:value="${autoNum}" readonly="readonly"/></td></tr>
@@ -30,14 +46,14 @@ $(function(){
 	<tr><th>검사명</th>
 		<td><input type="text" name="inspectionName"/></td></tr>
 	<tr><th>검사날짜</th>
-		<td><input type="datetime-local" name="inspectionDate"/></td></tr>
+		<td><input type="datetime-local" name="inspectionDate" id="date"/></td></tr>
 	<tr><th>병동처방</th>
 		<td><input type="text" name="wardprescriptNum" id="wardPsNum"/></td>
 		<td><button type="button" id="wardNum" class="btn" style="background-color: #0A122A; color: white">처방번호 찾기</button></td></tr>
 	<tr><th>진료번호</th>
 		<td><input type="text" name="medicalNum" id="medicalNum"/></td>
 		<td><button type="button" id="medNum" class="btn" style="background-color: #0A122A; color: white">진료번호 찾기</button></td></td></tr>
-	<tr><th colspan="2"><input type="submit" value="검사예약"/></th></tr>
+	<tr><th colspan="2"><input id="check" type="button" value="검사예약"/></th></tr>
 </table>
 </form>
 </body>
