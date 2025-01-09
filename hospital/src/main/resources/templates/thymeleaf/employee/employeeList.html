@@ -9,7 +9,7 @@
 <body>
 <a href="employeeWrite">직원등록</a><br />
 직원수 : [[${count}]]<br />
-<table border=1 width="1000">
+<table border=1 width="800">
 	 <form action="employeeList" method="get">
 	<tr>
 		<td colspan="10">직원 검색:
@@ -18,25 +18,26 @@
 		</td>
 	</tr>
 	</form> 
- <form action="employeesDelete" method="post" id="frm"> 
-	<tr><td><input type="checkbox" id="checkBoxs" /></td>
-		<td>번호</td><td>이름</td><td>아이디</td><td>생년월일</td> <td>주소</td><td>전화번호</td><td>성별</td><td>입사일</td>
-		<td><button type="submit" >선택 삭제</button></td>
+  
+	<tr><th:block th:if="${session.auth.grade=='emp'}"><td><input type="checkbox" id="checkBoxs" /></td></th:block>
+		<td>번호</td><td>이름</td><td>성별</td><td>직무</td><td>소속과</td><td>전화번호</td><td>이메일</td>
+		<th:block th:if="${session.auth.grade=='emp'}"><td>삭제</td></th:block>
 	</tr>
 	<tr th:each=" dto : ${list}">
-		<td><input type="checkbox" name="nums" th:value="${dto.empNum}"/></td>
+		<th:block th:if="${session.auth.grade=='emp'}">
+		<td><input type="checkbox" name="nums" th:value="${dto.empNum}"/></td></th:block>
 		<td><a th:href="|employeeDetail?empNum=${dto.empNum}|">[[${dto.empNum}]]</a></td>
 		<td><a th:href="@{employeeDetail(empNum=${dto.empNum})}">[[${dto.empName}]]</a></td>
-		<td>[[${dto.empId}]]</td>
-	
-		<td>[[${#dates.format(dto.empBirth,'yyyy-MM-dd')}]]</td>
-		<td>[[${dto.empAddr}]]</td>
-		<td>[[${dto.empPhone}]]</td>
 		<td>[[${dto.empGender}]]</td>
-		<td>[[${#dates.format(dto.empHiredate,'yyyy-MM-dd')}]]</td>
-		<td><!--  <button type="button" th:attr="onclick=|javascript:location.href='employeesDelete?nums=${dto.empNum}'|">직원 삭제</button>  --></td>
+		<td>[[${dto.position}]]</td>
+	
+		<td>[[${dto.departmentName}]]</td>
+		<td>[[${dto.empPhone}]]</td>
+		<td>[[${dto.empEmail}]]</td>
+		<th:block th:if="${session.auth.grade=='emp'}">
+		<td><button type="button" th:attr="onclick=|javascript:location.href='employeesDelete?empNum=${dto.empNum}'|">삭제</button></td>
+		</th:block>
 	</tr>
- </form> 
 	 <tr>
 		<th colspan="10">
 		<span th:if="${page <= 1}">[이전]</span>

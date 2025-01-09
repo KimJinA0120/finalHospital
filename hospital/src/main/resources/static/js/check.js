@@ -55,10 +55,12 @@ $(function(){
 	$("#frm").submit(function () {
 		if(!idChecked){
 			alert("사용가능한 아이디를 입력해주세요.");
+			$("#userId").focus();
 			return false;
 		}
 		if(!emailChecked){
 			alert("사용가능한 이메일을 입력해주세요.");
+			$("#userEmail").focus();
 			return false;
 		}
 	});

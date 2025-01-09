@@ -17,20 +17,25 @@ public class EmployeeDeleteService {
 	public void execute(HttpSession session) {
 		AuthInfoDTO auth = (AuthInfoDTO) session.getAttribute("auth");
 		String empId = auth.getUserId();
-		String empNum = employeeMapper.employeeNumSelect(empId);
-		
+		String empNum = employeeMapper.employeeNumSelect(empId); //세션에서 가져온 empNum
 		String section = empNum.substring(0, 3);
+
 		System.out.println(section);
 		if (section.equals("doc")) {
-			doctorDelete(empNum);
+			doctorMapper.doctorDelete(empNum);
 		}
 
 		employeeMapper.employeeDelete(empNum);
 		
 	}
-	
-	public void doctorDelete(String empNum) {
-		doctorMapper.doctorDelete(empNum);
+	public void execute2(String empNum) {
+		String section= empNum.substring(0, 3);
+		System.out.println(section);
+		if (section.equals("doc")) {
+			doctorMapper.doctorDelete(empNum);
+		}
+		employeeMapper.employeeDelete(empNum);
+		
 	}
 
 }

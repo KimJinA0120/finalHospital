@@ -3,34 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript">
-$(function(){
-	$("#frm").submit(function(){
-		if($("#patientPw").val()!=$("#patientPwCon").val()){
-			alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.")
-			$("#patientPw").val("");
-			$("#patientPwCon").val("");
-			$("#patientPw").focus();
-		}
-		if($("#patientPw").val()==null){
-			alert("변경할 비밀번호를 입력하여주세요");
-			$("#patientPw").focus();
-		}
-		if($("#patientPwCon").val()==null){
-			alert("비밀번호확인을 입력하여주세요");
-			$("#patientPwCon").focus();
-		}
-		
-	});
-});
-</script>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript" src="/static/js/pwCheck.js"></script>
 </head>
 <body>
 고객 비밀번호 변경<br/>
 변경할 비밀번호를 입력하여주세요<br/>
-<form action="patPwUpdate"  method="post" id="frm">
-변경할 비밀번호: <input type="password" name="patientPw" id="patientPw"><br/>
-변경할 비밀번호 확인 : <input type="password" name="patientPwCon" id="patientPwCon">
+<form action="patPwUpdate"  method="post" id="frm" th:object="${patientCommand}">
+변경할 비밀번호: <input type="password" name="patientPw" id="newPw" placeholder="대소문자, 숫자, 특수문자 모두 포함하여 8자 이상">
+<span style="color:red"  th:if="${#fields.hasErrors('patientPw')}" th:errors="*{patientPw}"></span><br/>
+변경할 비밀번호 확인 : <input type="password" name="patientPwCon" id="newPwCon" placeholder="비밀번호 확인"><br/>
 <input type="submit" value="입력완료">
 </form>
 </body>

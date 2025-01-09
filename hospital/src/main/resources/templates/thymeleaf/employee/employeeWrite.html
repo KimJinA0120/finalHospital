@@ -9,73 +9,9 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script type="text/javascript" src="/static/js/check.js"></script>
 <script type="text/javascript" src="/static/js/checkInputUser.js"></script>
-<script type="text/javascript">
-$(function() {
-	$("#job_category").on("change", function() {
-		
-		// 선택된 옵션의 값 가져오기
-		var selectedValue = $("#job_category option:selected").val();
-		
-		// 선택된 값이 비어있으면 AJAX 호출하지 않음
-		if (selectedValue == "0") {
-			alert("부서를 선택해주세요.");
-			return false;
-			
-		} else {
-			$.ajax({
-				type : "post",
-				url : "../employee/selectEmpSep",
-				data : {"jobSep" : selectedValue},
-				dataType : "text",
-				success : function(result) {
-					$("#empNum").val(result);
-				},
-				error: function() {
-					alert("오류");
-				}
-			});
-		}
-	});
-	
-	$("#sectionSearch").click(function(){
-		// 선택된 옵션의 값 가져오기
-		var selectedValue = $("#job_category option:selected").val();
-		
-		// 선택된 값이 비어있으면 AJAX 호출하지 않음
-		if (selectedValue == "0") {
-			alert("부서를 선택해주세요.");
-			return false;
-			
-		} else {
-			if(selectedValue=="mdt_"){
-				selectedValue="med";
-			} else if(selectedValue=="emp_"){
-				selectedValue="admin";
-			}
-		window.open("sectionSearch?kind="+selectedValue,"소속과 검색",
-				"width=620,height=400,left=30,top=50")
-		}
-	});
-	
-	$("#frm").submit(function(){
-		if($("#position").val().trim() === ""){
-			alert("직무를 입력해주세요");
-			$("#position").focus();
-			return false;
-		}
-		if($("#sectionNum").val().trim() === ""){
-			alert("소속과를 입력해주세요");
-			$("#sectionNum").focus();
-			return false;
-		}
-		if($("#empHiredate").val().trim() === ""){
-			alert("입사일을 입력해주세요");
-			$("#empHiredate").focus();
-			return false;
-		}
-	});
-});
-</script>
+<script type="text/javascript" src="/static/js/empWriteCheck.js"></script>
+<script type="text/javascript" src="/static/js/checkJumin.js"></script>
+
 </head>
 <body>        
                     
@@ -91,7 +27,8 @@ $(function() {
 		id="empNum" readonly="readonly"/> 번호 자동부여<br />
 이름 : <input type="text" name="empName" id="userName"  th:value="${employeeCommand.empName}" /> <br />
 주민등록번호 : <input type="number" name="empJuminF" id="userJuminF" th:value="${employeeCommand.empJuminF}" placeholder="숫자 6자리" />
-		   <input type="number" name="empJuminB" id="userJuminB" th:value="${employeeCommand.empJuminB}" placeholder="숫자 7자리"/> <br />	
+		   <input type="number" name="empJuminB" id="userJuminB" th:value="${employeeCommand.empJuminB}" placeholder="숫자 7자리"/> 
+		   <button type="button" id="juminCheck">중복확인</button> <span id="patientJumin"></span><br />	
 		   <span style="color:red" th:if="${#fields.hasErrors('empJuminF')}" th:errors="*{empJuminF}"></span>
 		   <span style="color:red" th:if="${#fields.hasErrors('empJuminB')}" th:errors="*{empJuminB}"></span><br/>
 생년월일: <input type="date" name="empBirth" id="userBirth"  th:value="${employeeCommand.empBirth}" /> <br />

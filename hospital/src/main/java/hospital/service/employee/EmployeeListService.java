@@ -6,12 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import hospital.domain.AuthInfoDTO;
 import hospital.domain.DoctorDTO;
 import hospital.domain.EmployeeDTO;
 import hospital.domain.StartEndPageDTO;
 import hospital.mapper.DoctorMapper;
 import hospital.mapper.EmployeeMapper;
 import hospital.service.StartEndPageService;
+import jakarta.servlet.http.HttpSession;
 
 @Service
 public class EmployeeListService {
@@ -30,7 +32,6 @@ public class EmployeeListService {
 		
 		Integer count=employeeMapper.employeeCount(null);
 		startEndPageService.execute(page,limit,count,searchWord,list, model, null);
-		//model.addAttribute("list", list);
 		
 	}
 

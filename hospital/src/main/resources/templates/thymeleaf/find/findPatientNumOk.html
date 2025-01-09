@@ -3,18 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 </head>
 <body>
 환자등록번호 찾기 결과<br/>
-<th:block th:if="${patientNum}!=null">
-[[${patientName}]]님의 환자등록번호는 [[${patientNum}]]입니다.<br/>
+<th:block th:if="${dto.patientNum}!=null">
+[[${dto.patientName}]]님의 환자등록번호는 [[${dto.patientNum}]]입니다.<br/>
 </th:block>
 
 
-<th:block th:if="${patientNum}==null">
+<th:block th:if="${dto.patientNum}==null">
 일치하는 환자등록번호가 없습니다.<br/>
+<button type="button" onclick="javascript:location.href='findPatientNum'">이전 페이지로</button>
 </th:block>
-<button type="button" onclick="javascript:location.href='../patient/patientRegist'">회원가입하기</button>
+<button type="button" th:onclick="javascript:location.href='../patient/patientRegist?patientNum='${dto.patientNum}">회원가입하기</button>
 <button type="button" onclick="javascript:location.href='login/patientLogin'">로그인하기</button>
 </body>
 </html>

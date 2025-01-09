@@ -10,5 +10,7 @@ public interface CheckMapper {
 	public Integer checkEmail(String userEmail);
 
 	public Integer patientJuminCon(String patientJumin);
+	
+	public Integer empJuminCon(String empJumin);
 
 }

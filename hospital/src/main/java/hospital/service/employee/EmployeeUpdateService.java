@@ -89,22 +89,23 @@ public class EmployeeUpdateService {
 		AuthInfoDTO auth=(AuthInfoDTO)session.getAttribute("auth");
 		String empId=auth.getUserId();
 		String empNum=employeeMapper.employeeNumSelect(empId);
+		String newPw=passwordEncoder.encode(employeeCommand.getEmpPw());
 		
 		EmployeeDTO dto=new EmployeeDTO();
 		dto.setEmpNum(empNum);
-		dto.setEmpPw(passwordEncoder.encode(employeeCommand.getEmpPw()));
+		dto.setEmpPw(newPw);
 		dto.setEmpPwCon(employeeCommand.getEmpPwCon()); //비밀번호 일치여부를 확인하고 업데이트하자.
 		
 		employeeMapper.employeePwUpdate(dto);
+		auth.setUserPw(newPw);
 	}
 
-	public int employeePwCon(HttpSession session, EmployeeCommand employeeCommand) {
+	public void employeePwCon(HttpSession session, EmployeeCommand employeeCommand, BindingResult result) {
 		AuthInfoDTO auth=(AuthInfoDTO)session.getAttribute("auth");
 		
-		if(passwordEncoder.matches(employeeCommand.getEmpPwCon(), auth.getUserPw())) {
-			return 1;
-		}else return 0;
-		
+		if(!passwordEncoder.matches(employeeCommand.getEmpPwCon(), auth.getUserPw())) {
+			result.rejectValue("empPwCon", "${employeeCommand.empPwCon}", "입력한 비밀번호와 현재 비밀번호가 일치하지 않습니다.");
+		}
 	}
 
 	

@@ -8,25 +8,28 @@
 	, emp_phone, emp_jumin, emp_gender
 	, emp_addr,emp_addr_detail , emp_post
 	, position, emp_email
-	, section_Num, emp_Hiredate, emp_birth
+	, <!-- section_Num, --> emp_Hiredate, emp_birth
 </sql>
 <sql id="sectionColumn">
 section_num, department_name, section_name, section_phone, section_location
 </sql>
+
+
 <insert id="employeeInsert" parameterType="employeeDTO">
-insert into employee( <include refid="baseColumn"/> )
+insert into employee( <include refid="baseColumn"/>, section_num )
 values( #{empNum}, #{empName}, #{empId}
 		,#{empPw}, #{empPhone},  #{empJumin}, #{empGender}
 		, #{empAddr},#{empAddrDetail}
 		, #{empPost}, #{position},#{empEmail}
-		, #{sectionNum}, #{empHiredate},#{empBirth})
+		, #{empHiredate},#{empBirth}, #{sectionNum})
 </insert>
 
 <select id="employeeSelectAll" parameterType="startEndPage" resultType="employeeDTO">
 select *
  from
-( select rownum rn, <include refid="baseColumn"/>
- from employee 
+( select rownum rn, <include refid="baseColumn"/>, e.section_num, section_name as departmentName
+ from employee e join section s
+ on e.section_num=s.section_num
 <trim prefix="where" prefixOverrides="AND|OR">
  	<if test="kind!=null">
   	emp_Num like #{kind}||'%'
@@ -37,7 +40,7 @@ select *
  	<if test="searchWord!=null">
  	(emp_name like '%'||#{searchWord}||'%'
  	or position like '%'||#{searchWord}||'%'
- 	or section_num like '%'||#{searchWord}||'%'
+ 	or e.section_num like '%'||#{searchWord}||'%'
  	or emp_id like '%'||#{searchWord}||'%')
  	order by emp_Num
  	</if>
@@ -46,7 +49,7 @@ select *
 </select>
 
 <select id="employeeSelectOne" parameterType="employeeDTO" resultType="employeeDTO">
-select 	<include refid="baseColumn"/>
+select 	<include refid="baseColumn"/>, section_num
  from employee
 where emp_NUM = #{empNum}
 </select>
@@ -113,9 +116,9 @@ select * from
 
 </select>
 
-<update id="patientPwUpdate" parameterType="patientDTO">
-update patient set patient_pw=#{patientPw}
-where patient_num=#{patientNum}
+<update id="employeePwUpdate" parameterType="employeeDTO">
+update employee set emp_pw=#{empPw}
+where emp_num=#{empNum}
 </update>
 
 </mapper>

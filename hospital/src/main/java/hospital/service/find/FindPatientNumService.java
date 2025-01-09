@@ -17,9 +17,9 @@ public class FindPatientNumService {
 		dto.setPatientName(patientName);
 		dto.setPatientJumin(patientJumin);
 		String patientNum=findMapper.findPatientNum(dto);
+		dto.setPatientNum(patientNum);
 		
-		model.addAttribute("patientName", patientName);
-		model.addAttribute("patientNum", patientNum);
+		model.addAttribute("dto", dto);
 	}
 
 }

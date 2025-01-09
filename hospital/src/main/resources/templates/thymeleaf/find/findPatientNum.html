@@ -3,20 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script type="text/javascript">
 $(function(){
 	$("#frm").submit(function(){
-		if($("#patientName").val()==null){
+		if($("#patientName").val().trim()===""){
 			alert("이름을 입력해주세요");
 			$("#patientName").focus();
+			return false;
 		}
-		if($("#patientJuminF").val==null){
+		if($("#patientJuminF").val.trim() === ""){
 			alert("주민등록번호 앞자리를 입력해주세요");
 			$("#patientJuminF").focus();
+			return false;
 		}
-		if($("#patientJuminB").val==null){
+		if($("#patientJuminB").val.trim() === ""){
 			alert("주민등록번호 뒷자리를 입력해주세요");
 			$("#patientJuminB").focus();
+			return false;
 		}
 		
 	});
@@ -27,7 +31,9 @@ $(function(){
 환자등록번호 찾기<br/>
 <form action="findPatientNum" method="post" id="frm">
 이름 : <input type="text" name="patientName" id="patientName"/><br/>
-주민등록번호 : <input type="text" name="patientJuminF" id="patientJuminF"/>-<input type="text" name="patientJuminB" id="patientJuminB"/><br/>
+주민등록번호 : <input type="text" name="patientJuminF" id="patientJuminF" placeholder="숫자 6자 입력"/> -
+<input type="text" name="patientJuminB" id="patientJuminB" placeholder="숫자 7자 입력"/><br/>
+
 <input type="submit" value="회원등록번호 찾기">
 </form>
 </body>

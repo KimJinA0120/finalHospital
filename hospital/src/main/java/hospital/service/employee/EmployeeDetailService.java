@@ -22,6 +22,7 @@ public class EmployeeDetailService {
 		AuthInfoDTO auth=(AuthInfoDTO)session.getAttribute("auth");
 		String empId=auth.getUserId();
 		String empNum=employeeMapper.employeeNumSelect(empId);
+	
 		EmployeeDTO dto=employeeMapper.employeeSelectOne(empNum);
 		
 		model.addAttribute("dto", dto);

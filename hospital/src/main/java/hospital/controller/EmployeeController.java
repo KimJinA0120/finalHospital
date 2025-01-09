@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import hospital.command.DoctorCommand;
 import hospital.command.EmployeeCommand;
+import hospital.command.PatientCommand;
+import hospital.domain.AuthInfoDTO;
+import hospital.mapper.EmployeeMapper;
 import hospital.service.AutoNumService;
 import hospital.service.employee.EmployeeDeleteService;
 import hospital.service.employee.EmployeeDetailService;
@@ -103,11 +106,19 @@ public class EmployeeController {
 		employeeDetailService.execute(session, model);
 		return "thymeleaf/employee/employeeMy";
 	}
+	@Autowired
+	EmployeeMapper employeeMapper;
 
-	@GetMapping("employeeDetail")
-	public String employeeDetail(HttpSession session, Model model) {
+	@GetMapping("employeeDetail") //본인과 원무행정과 직원만 접근 가능
+	public String employeeDetail(HttpSession session, String empNum, Model model) {
+		AuthInfoDTO auth=(AuthInfoDTO)session.getAttribute("auth");
+		String empId=auth.getUserId();
+		String empNum2=employeeMapper.employeeNumSelect(empId);
 		employeeDetailService.execute(session, model);
-		return "thymeleaf/employee/employeeDetail";
+		if(empNum.equals(empNum2)||empNum2.substring(0, 3).equals("emp")) {
+			return "thymeleaf/employee/employeeDetail";
+		}else
+		return "redirect:employeeList";
 	}
 
 	@GetMapping("employeeUpdate")
@@ -127,10 +138,10 @@ public class EmployeeController {
 		}
 		
 		if(result.hasErrors()) {
-			//employeeDetailService.execute(session, model);
 			return "thymeleaf/employee/employeeUpdate";
 		}else
-		return "redirect:employeeDetail?employeeNum=" + employeeCommand.getEmpNum();
+			
+		return "redirect:employeeDetail?empNum="+ employeeCommand.getEmpNum();
 	}
 
 	@GetMapping("employeeDelete")
@@ -138,6 +149,11 @@ public class EmployeeController {
 		employeeDeleteService.execute(session);
 		session.invalidate();
 		return "redirect:/";
+	}
+	@GetMapping("employeesDelete") //원무행정과 직원이 접근하는 기능
+	public String employeesDelete(String empNum) {
+		employeeDeleteService.execute2(empNum);
+		return "redirect:employeeList";
 	}
 	@GetMapping("doctorList")
 	public String doctorList(@RequestParam(value="searchWord", required=false) String searchWord
@@ -159,19 +175,19 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("empPwCon")
-	public String empPwCon(){ //비밀번호 수정을 누르면 비밀번호 확인 페이지로 이동한다.
+	public String empPwCon(EmployeeCommand employeeCommand){ //비밀번호 수정을 누르면 비밀번호 확인 페이지로 이동한다.
 		return "thymeleaf/employee/pwCon";
 	}
 	@PostMapping("empPwCon")
-	public String empPwCon(HttpSession session, EmployeeCommand employeeCommand) { //비밀번호를 확인한다.
-		int i=employeeUpdateService.employeePwCon(session, employeeCommand);
-		if(i==1) {
-			return "redirect:empPwUpdate";
-		}else return "redirect:empPwCon";
-		
+	public String empPwCon(HttpSession session, EmployeeCommand employeeCommand, BindingResult result) { //비밀번호를 확인한다.
+		employeeUpdateService.employeePwCon(session, employeeCommand, result);
+		if(result.hasErrors()) {
+			return "thymeleaf/patient/empPwCon";
+		}
+		return "redirect:empPwUpdate";
 	}
 	@GetMapping("empPwUpdate")
-	public String empPwUpdate() { //비밀번호 확인이 정상적으로 되면 비밀번호 업데이트 화면으로 이동한다.
+	public String empPwUpdate(EmployeeCommand employeeCommand) { //비밀번호 확인이 정상적으로 되면 비밀번호 업데이트 화면으로 이동한다.
 		return "thymeleaf/employee/pwUpdate";
 	}
 	@PostMapping("empPwUpdate")
@@ -180,4 +196,15 @@ public class EmployeeController {
 		return "redirect:employeeMyPage";
 	}
 	
+	@GetMapping("patientRegist") //직원이 환자등록하는 링크
+	public String patientRegist() {
+		return "thymeleaf/employee/patientRegist";
+	}
+	@PostMapping("patientRegist") //직원이 환자등록하는 링크
+	public String patientRegist(PatientCommand patientCommand, BindingResult result, Model model) {
+		if(result.hasErrors()) {
+			return "thymeleaf/employee/patientRegist";
+		}
+		return "redirect:/";
+	}
 }

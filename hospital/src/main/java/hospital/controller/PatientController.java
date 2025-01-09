@@ -57,10 +57,15 @@ public class PatientController {
 		patientWriteService.execute(patientCommand);
 		return "redirect:/";
 	}
-	@GetMapping("patientRegist")
+	@GetMapping("patientRegist") //환자번호 찾기 후 회원가입(아이디, 비밀번호 입력)
 	public String patientRegist(String patientNum, PatientCommand patientCommand, Model model) {
-		
-		return "thymeleaf/patient/patientWrite";
+		patientDetailService.execute(patientNum, model);
+		return "thymeleaf/patient/patientRegist";
+	}
+	@PostMapping("patientRegist")
+	public String patientRegist(String patientNum, PatientCommand patientCommand) {
+		patientUpdateService.execute(null, patientNum, patientCommand);
+		return "redirect:/";
 	}
 	@GetMapping("patientList")
 	public String patientList(@RequestParam(value="searchWord", required=false) String searchWord
@@ -78,58 +83,64 @@ public class PatientController {
 	}
 	@GetMapping("patientMyPage")
 	public String patientMypage(HttpSession session, Model model) {
-		patientDetailService.execute(session, null, model);
+		patientDetailService.patientMy(session, model);
 		return "thymeleaf/patient/patientMy";
 	}
 
 	@GetMapping("patientDetail")
-	public String patientDetail(HttpSession session, String patientNum, Model model) {
-		patientDetailService.execute(session, patientNum, model);
+	public String patientDetail (String patientNum, Model model) {
+		patientDetailService.execute(patientNum, model);
 		return "thymeleaf/patient/patientDetail";
 	}
 
 	@GetMapping("patientUpdate")
-	public String patientUpdate(HttpSession session, Model model) {
-		patientDetailService.execute(session, null, model);
+	public String patientUpdate(String patientNum, Model model) {
+		patientDetailService.execute(patientNum, model);
 		return "thymeleaf/patient/patientUpdate";
 	}
 
 	@PostMapping("patientUpdate")
-	public String patientUpdate(HttpSession session
+	public String patientUpdate(HttpSession session, String patientNum
 			, PatientCommand patientCommand
 			, BindingResult result, Model model) {
 		if(patientCommand.getPatientPhone().length()<9 || patientCommand.getPatientPhone().length()>11) {
-			  result.rejectValue("patientPhone", "patientCommand.patientPhone", "'-' 제외 숫자 9~11자");
-		}else {
-			patientUpdateService.execute(session, patientCommand);
+			 result.rejectValue("patientPhone", "patientCommand.patientPhone", "'-' 제외 숫자 9~11자");
 		}
 		
 		if(result.hasErrors()) {
 			return "thymeleaf/patient/patientUpdate";
-		}else
-		return "redirect:patientDetail?patientNum=" + patientCommand.getPatientNum();
+		}
+		else {
+			patientUpdateService.execute(session,patientNum, patientCommand);
+			return "redirect:patientDetail?patientNum=" + patientCommand.getPatientNum();
+		}		
 	}
 	
 	@GetMapping("patPwCon")
-	public String patPwCon(){ //비밀번호 수정을 누르면 비밀번호 확인 페이지로 이동한다.
+	public String patPwCon(PatientCommand patientCommand){ //비밀번호 수정을 누르면 비밀번호 확인 페이지로 이동한다.
 		return "thymeleaf/patient/pwCon";
 	}
 	@PostMapping("patPwCon")
-	public String patPwCon(HttpSession session, PatientCommand patientCommand) { //비밀번호를 확인한다.
-		int i=patientUpdateService.patientPwCon(session, patientCommand);
-		
-		if(i==1) {
-			return "redirect:patPwUpdate";
-		}else return "redirect:patPwCon";
+	public String patPwCon(HttpSession session, @Validated PatientCommand patientCommand, BindingResult result) { //비밀번호를 확인한다.
+		patientUpdateService.patientPwCon(session, patientCommand, result);
+		if(result.hasErrors()) {
+			return "thymeleaf/patient/pwCon";
+		}
+		return "redirect:patPwUpdate";
 		
 	}
 	@GetMapping("patPwUpdate")
-	public String patPwUpadate() { //비밀번호 확인이 정상적으로 되면 비밀번호 업데이트 화면으로 이동한다.
+	public String patPwUpadate(PatientCommand patientCommand) { //비밀번호 확인이 정상적으로 되면 비밀번호 업데이트 화면으로 이동한다.
 		return "thymeleaf/patient/pwUpdate";
 	}
 	@PostMapping("patPwUpdate")
-	public String patPwUpdate(HttpSession session, PatientCommand patientCommand) { //비밀번호를 수정한다.
-		patientUpdateService.patientPwUpdate(session, patientCommand);
+	public String patPwUpdate(HttpSession session,@Validated PatientCommand patientCommand, BindingResult result) { //비밀번호를 수정한다.
+		
+		if(result.hasErrors()) {
+			return "thymeleaf/patient/pwUpdate";
+		}else {
+			patientUpdateService.patientPwUpdate(session, patientCommand);
+		}
 		return "redirect:patientMyPage";
 	}
 
