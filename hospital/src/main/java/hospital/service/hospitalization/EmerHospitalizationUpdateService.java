@@ -20,7 +20,6 @@ public class EmerHospitalizationUpdateService {
 		hospitalizationMapper.emerUpdate(dto);
 		hospitalizationMapper.emerBedStatusUpdate(dto);
 		hospitalizationMapper.emerBedStatusNew(dto);
-		hospitalizationMapper.emerBedStatusDelUpdate(dto.getEmerPatientNum());
 	}
 
 }

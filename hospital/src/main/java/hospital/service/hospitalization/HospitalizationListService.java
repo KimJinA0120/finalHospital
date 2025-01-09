@@ -19,7 +19,7 @@ public class HospitalizationListService {
 	StartEndPageService startEndPageService;
 	
 	public void execute(Integer page, String searchWord, Model model) {
-		int limit = 3;
+		int limit = 10;
 		StartEndPageDTO sepDTO = startEndPageService.execute(page, limit, searchWord, null);
 		List<HospitalizationDTO> list = hospitalizationMapper.hospitalizationSelectList(sepDTO);
 		int count = hospitalizationMapper.hospitalizatonCount(searchWord);

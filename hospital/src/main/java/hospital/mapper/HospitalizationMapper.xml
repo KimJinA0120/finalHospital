@@ -155,37 +155,41 @@
 </update>
 
 <update id="bedStatusNew" parameterType="HospitalizationDTO">
-	MERGE INTO bed b
-	USING (
-	    SELECT b.BED_NUM AS BED_NUM,
-	           CASE
-	               WHEN h.BED_NUM IS NULL THEN '사용가능'
-	               ELSE '사용중'
-	           END AS NEW_BED_STATUS
-	    FROM bed b
-	    LEFT JOIN hospitalization h
-	        ON b.BED_NUM = h.BED_NUM
-	) status_update
-	ON (b.BED_NUM = status_update.BED_NUM)
-	WHEN MATCHED THEN
-	    UPDATE SET b.BED_STATUS = status_update.NEW_BED_STATUS
+	UPDATE bed b
+SET BED_STATUS = CASE
+    WHEN NOT EXISTS (
+        SELECT 1
+        FROM hospitalization h
+        WHERE b.BED_NUM = h.BED_NUM
+        AND (h.HOSPITALIZATION_STATUS != '퇴원' OR h.HOSPITALIZATION_NUM IS NULL)
+    ) THEN '사용가능'
+    WHEN EXISTS (
+        SELECT 1
+        FROM hospitalization h
+        WHERE b.BED_NUM = h.BED_NUM
+        AND (h.HOSPITALIZATION_STATUS != '입원' AND h.HOSPITALIZATION_NUM IS NULL)
+    ) THEN '사용중'
+    ELSE b.BED_STATUS
+END
 </update>
 
 <update id="emerBedStatusNew" parameterType="EmergencyPatientDTO">
-	MERGE INTO emergency b
-	USING (
-	    SELECT b.EMERBED_NUM AS BED_NUM,
-	           CASE
-	               WHEN h.EMERBED_NUM IS NULL THEN '사용가능'
-	               ELSE '사용중'
-	           END AS NEW_BED_STATUS
-	    FROM emergency b
-	    LEFT JOIN emergency_patient h
-	        ON b.EMERBED_NUM = h.EMERBED_NUM
-	) status_update
-	ON (b.EMERBED_NUM = status_update.BED_NUM)
-	WHEN MATCHED THEN
-	    UPDATE SET b.EMERBED_STATUS = status_update.NEW_BED_STATUS
+UPDATE EMERGENCY b
+SET EMERBED_STATUS = CASE
+    WHEN NOT EXISTS (
+        SELECT 1
+        FROM EMERGENCY_PATIENT h
+        WHERE b.EMERBED_NUM = h.EMERBED_NUM
+        AND (h.HOSPITALIZATION_STATUS != '퇴원' OR h.EMERPATIENT_NUM IS NULL)
+    ) THEN '사용가능'
+    WHEN EXISTS (
+        SELECT 1
+        FROM EMERGENCY_PATIENT h
+        WHERE b.EMERBED_NUM = h.EMERBED_NUM
+        AND (h.HOSPITALIZATION_STATUS != '입원' AND h.EMERPATIENT_NUM IS NULL)
+    ) THEN '사용중'
+    ELSE b.EMERBED_STATUS
+END
 </update>
 
 <update id="bedStatusDelUpdate" parameterType="string">
