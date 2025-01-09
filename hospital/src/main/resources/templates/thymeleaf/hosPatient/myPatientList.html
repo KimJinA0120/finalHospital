@@ -3,6 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <title>myPatientList</title>
+<style type="text/css">
+table, td, th {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+table tr:not(:first-child):not(:last-child):hover {
+    background-color: #E2E2E2;
+}
+</style>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+
+<script type="text/javascript">
+
+function selectPatient(hospNum){
+	location.href = "../wardPS/patientwardPsList?hospNum="+hospNum;
+}
+</script>
 </head>
 <body>
 <a href="javascript:history.back()">이전</a> <br>
@@ -18,7 +36,8 @@
 			<th>담당간호사</th>
 		</tr>
 
-		<tr th:each="dto : ${list}">
+		<tr th:each="dto : ${list}" 
+			th:onclick="selectPatient([[${dto.HospitalizationDTO.hospitalizationNum}]])">
 			<td>[[${dto.roomLoc}]]호 </td>
 			<td>[[${dto.HospitalizationDTO.bedNum}]]</td>
 			<td>[[${dto.patientName}]]</td>
@@ -26,6 +45,11 @@
 			<td>[[${dto.HospitalizationDTO.docNum}]]</td>
 			<td>[[${dto.HospitalizationDTO.nurNum}]]</td>
 		</tr>
+		<tr></tr>
 </table>
+<br>
+<hr>
+<br>
+
 </body>
 </html>

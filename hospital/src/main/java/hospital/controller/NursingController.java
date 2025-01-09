@@ -27,6 +27,14 @@ import hospital.service.nursing.NursingWriteService;
 public class NursingController {
 	
 	// 리스트
+	// 간호처방 클릭시 처음으로 진입하는 페이지. 입원 중인 환자 목록 페이지
+	@GetMapping("nursingList")
+	public String nursingList() {
+		
+		return "thymeleaf/nursing/nursingList";
+	}	
+	
+	
 	@Autowired
 	NursingListService nursingListService;
 	
@@ -120,38 +128,8 @@ public class NursingController {
 		return "thymeleaf/hosPatient/searchWardPs";
 	}
 	
-	
-	// 간호처방 클릭시 처음으로 진입하는 페이지. 입원 중인 환자 목록 페이지
-	@GetMapping("nursingList")
-	public String nursingList(
-			@RequestParam(value = "page", required = false, defaultValue = "1") int page
-			   , @RequestParam(value = "searchWord", required = false) String searchWord
-			   , @RequestParam(value = "location", required = false) String location
-			   , @RequestParam(value = "roomN", required = false) String roomN
-			   , Model model) {
-		searchHospService.execute(page, searchWord, location, roomN, model);
-		return "thymeleaf/nursing/nursingList";
-	}
-	
-	
-	// 현재 입원 중인 환자의 처방전과 간호일지 링크를 불러오는 페이지.
-		@Autowired
-		PatientPreScript patientPreScript;
-		@GetMapping("patientNursingList")
-		public String patientNursingList(String hospNum, Model model) {
-			patientPreScript.execute(hospNum, model);
-			return "thymeleaf/hosPatient/hosPatientPSinfo";
-		}
+
 		
-		
-		/// 내 담당환자 목록
-		@Autowired
-		MyPatientListService myPatientListService;
-		@GetMapping("myPatientList")
-		public String myPatientList(String empNum, Model model) {
-			myPatientListService.execute("nur_num", empNum, model);
-			return "thymeleaf/hosPatient/myPatientList";
-		}
 	
 		
 		

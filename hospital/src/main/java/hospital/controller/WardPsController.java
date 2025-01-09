@@ -26,6 +26,13 @@ import hospital.service.wardPS.WardPsWriteService;
 public class WardPsController {
    
    /// 리스트  
+	@GetMapping("wardPsList")
+	public String wardPsList() {
+		
+		return "thymeleaf/wardPS/wardPsList";
+	}
+	
+	
    @Autowired
    WardPsListService wardPsListService;
    @RequestMapping("WholeWardPsList")
@@ -127,26 +134,6 @@ public class WardPsController {
 	   searchHospService.execute(page, searchWord, location, roomN, model);
 	   return "thymeleaf/hosPatient/searchHosp";
    }
-   
-   @GetMapping("wardPsList")
-   public String wardPsList(
-		   @RequestParam(value = "page", required = false, defaultValue = "1") int page
-		   , @RequestParam(value = "searchWord", required = false) String searchWord
-		   , @RequestParam(value = "location", required = false) String location
-		   , @RequestParam(value = "roomN", required = false) String roomN
-		   , Model model) {
-	   searchHospService.execute(page, searchWord, location, roomN, model);
-	   return "thymeleaf/wardPS/wardPsList";
-   }
-   
- /// 내 담당환자 목록
- 		@Autowired
- 		MyPatientListService myPatientListService;
- 		@GetMapping("myPatientList")
- 		public String myPatientList(String empNum, Model model) {
- 			myPatientListService.execute("doc_num", empNum, model);
- 			return "thymeleaf/hosPatient/myPatientList";
- 		}
  
    
 }
