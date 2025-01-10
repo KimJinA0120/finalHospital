@@ -23,6 +23,7 @@ import hospital.service.employee.EmployeeListService;
 import hospital.service.employee.EmployeeUpdateService;
 import hospital.service.employee.EmployeeWriteService;
 import hospital.service.employee.SectionListService;
+import hospital.service.patient.PatientWriteService;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -42,6 +43,13 @@ public class EmployeeController {
 	AutoNumService autoNumService;
 	@Autowired
 	SectionListService sectionListService;
+	
+	// 직업(의사, 간호사, 의료기사, 일반직원)에 따라 직원번호 앞글자(sep)가 변경
+	@PostMapping("selectEmpSep")
+	public @ResponseBody String selectEmpSep(String jobSep) {
+		String autoNum = autoNumService.execute(jobSep, 5, "emp_num","employee");
+		return autoNum;
+	}
 
 	@GetMapping("employeeWrite")
 	public String employeeWrite(EmployeeCommand employeeCommand, Model model) {
@@ -49,11 +57,37 @@ public class EmployeeController {
 		return "thymeleaf/employee/employeeWrite";
 	}
 	
-	// 직업(의사, 간호사, 의료기사, 일반직원)에 따라 직원번호 앞글자(sep)가 변경
-	@PostMapping("selectEmpSep")
-	public @ResponseBody String selectEmpSep(String jobSep) {
-		String autoNum = autoNumService.execute(jobSep, 5, "emp_num","employee");
-		return autoNum;
+	
+	@PostMapping("employeeWrite")
+	public String employeeWrite(@Validated 
+			EmployeeCommand employeeCommand
+			, BindingResult result 
+			) {
+		if(result.hasErrors()) { return "thymeleaf/employee/employeeWrite"; }
+		employeeWriteService.execute(employeeCommand);
+		if(employeeCommand.getJobCategory().equals("doc_")) {
+			employeeWriteService.doctorWrite(employeeCommand);
+		}
+		return "redirect:/";
+	}
+	
+	@Autowired
+	PatientWriteService patientWriteService;
+	
+	@GetMapping("patientRegist") //직원이 환자등록하는 링크
+	public String patientRegsit(PatientCommand patientCommand, Model model) {
+		String autoNum = autoNumService.execute("pat_", 5, "patient_num","patient");
+		patientCommand.setPatientNum(autoNum);
+		model.addAttribute("patientCommand", patientCommand);
+		return "thymeleaf/employee/patientRegist";
+	}
+	@PostMapping("patientRegist") //직원이 환자등록하는 링크
+	public String patientRegist(@Validated PatientCommand patientCommand, BindingResult result, Model model) {
+		if(result.hasErrors()) {
+			return "thymeleaf/employee/patientRegist";
+		}
+		patientWriteService.execute(patientCommand);
+		return "redirect:/";
 	}
 	
 	@GetMapping("sectionSearch")
@@ -81,27 +115,16 @@ public class EmployeeController {
 		employeeListService.doctorSearch(searchWord, page, model, kind);
 		return "thymeleaf/employee/doctorSearch";
 	}
-
-	@PostMapping("employeeWrite")
-	public String employeeWrite(@Validated 
-			EmployeeCommand employeeCommand
-			, BindingResult result 
-			) {
-		if(result.hasErrors()) { return "thymeleaf/employee/employeeWrite"; }
-		employeeWriteService.execute(employeeCommand);
-		if(employeeCommand.getJobCategory().equals("doc_")) {
-			employeeWriteService.doctorWrite(employeeCommand);
-		}
-		return "redirect:/";
-	}
-	@GetMapping("employeeList")
+	
+	
+	@GetMapping("employeeList") //직원목록
 	public String employeeList(@RequestParam(value="searchWord", required=false) String searchWord
 			, @RequestParam(value="page", required=false, defaultValue="1") Integer page
 			, Model model) {
 		employeeListService.execute(searchWord, page, model);
 		return "thymeleaf/employee/employeeList";
 	}
-	@GetMapping("employeeMyPage")
+	@GetMapping("employeeMyPage") //직원마이페이지
 	public String employeeMypage(HttpSession session, Model model) {
 		employeeDetailService.execute(session, model);
 		return "thymeleaf/employee/employeeMy";
@@ -133,14 +156,9 @@ public class EmployeeController {
 			, BindingResult result, Model model) {
 		if(employeeCommand.getEmpPhone().length()<9 || employeeCommand.getEmpPhone().length()>11) {
 			  result.rejectValue("empPhone", "employeeCommand.empPhone", "'-' 제외 숫자 9~11자");
-		}else {
-			employeeUpdateService.execute(session, employeeCommand);
-		}
+		}else employeeUpdateService.execute(session, employeeCommand);
 		
-		if(result.hasErrors()) {
-			return "thymeleaf/employee/employeeUpdate";
-		}else
-			
+		if(result.hasErrors()) { return "thymeleaf/employee/employeeUpdate"; }
 		return "redirect:employeeDetail?empNum="+ employeeCommand.getEmpNum();
 	}
 
@@ -196,15 +214,5 @@ public class EmployeeController {
 		return "redirect:employeeMyPage";
 	}
 	
-	@GetMapping("patientRegist") //직원이 환자등록하는 링크
-	public String patientRegist() {
-		return "thymeleaf/employee/patientRegist";
-	}
-	@PostMapping("patientRegist") //직원이 환자등록하는 링크
-	public String patientRegist(PatientCommand patientCommand, BindingResult result, Model model) {
-		if(result.hasErrors()) {
-			return "thymeleaf/employee/patientRegist";
-		}
-		return "redirect:/";
-	}
+	
 }

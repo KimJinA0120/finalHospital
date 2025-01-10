@@ -35,12 +35,12 @@ public class PatientController {
 	@Autowired
 	AutoNumService autoNumService;
 	
-	@GetMapping("patientWriteCon")
+	@GetMapping("patientWriteCon") //회원가입 확인
 	public String patientWriteCon() {
 		return "thymeleaf/patient/patientWriteCon";
 	}
 
-	@GetMapping("patientWrite")
+	@GetMapping("patientWrite") //최초회원가입
 	public String patientWrite(PatientCommand patientCommand, Model model) {
 		String autoNum = autoNumService.execute("pat_", 5, "patient_num","patient");
 		patientCommand.setPatientNum(autoNum);
@@ -63,11 +63,13 @@ public class PatientController {
 		return "thymeleaf/patient/patientRegist";
 	}
 	@PostMapping("patientRegist")
-	public String patientRegist(String patientNum, PatientCommand patientCommand) {
-		patientUpdateService.execute(null, patientNum, patientCommand);
+	public String patientRegist(String patientNum, @Validated PatientCommand patientCommand
+			, BindingResult result) {
+		if(result.hasErrors()) { return "thymeleaf/patient/patientRegist"; }
+		patientWriteService.execute2(patientNum, patientCommand);
 		return "redirect:/";
 	}
-	@GetMapping("patientList")
+	@GetMapping("patientList") //환자리스트
 	public String patientList(@RequestParam(value="searchWord", required=false) String searchWord
 			, @RequestParam(value="page", required=false, defaultValue="1") Integer page
 			, Model model) {

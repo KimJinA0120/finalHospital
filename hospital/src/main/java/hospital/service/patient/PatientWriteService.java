@@ -21,7 +21,7 @@ public class PatientWriteService {
 	public void execute(PatientCommand patientCommand) {
 		PatientDTO dto = new PatientDTO();
 		//주민번호가 겹치는 사람이 있는지 먼저 확인하기
-		String patientJumin=patientCommand.getPatientJuminF()+patientCommand.getPatientJuminB();
+		//String patientJumin=patientCommand.getPatientJuminF()+patientCommand.getPatientJuminB();
 		//String result1=patientMapper.patientJuminCon(patientJumin);
 		/*if(result1=="있음") { //겹치는 사람이 있음
 			//회원가입을 하지 않고, "이미 등록된 회원입니다. 환자번호찾기를 먼저 이용해주세요" 를 띄우기
@@ -33,9 +33,13 @@ public class PatientWriteService {
 			dto.setPatientJumin(patientCommand.getPatientJuminF()+patientCommand.getPatientJuminB());
 			dto.setPatientBirth(patientCommand.getPatientBirth());
 			dto.setPatientGender(patientCommand.getPatientGender());
-			dto.setPatientId(patientCommand.getPatientId());
+				dto.setPatientId(patientCommand.getPatientId());
 			
+			if(patientCommand.getPatientPw()!=null) {
 			dto.setPatientPw( passwordEncoder.encode( patientCommand.getPatientPw()));
+			}else if(patientCommand.getPatientPw()==null) {
+				dto.setPatientPw(null);
+			}
 			
 			dto.setPatientPwCon(patientCommand.getPatientPwCon());
 			dto.setPatientAddr(patientCommand.getPatientAddr());
@@ -44,7 +48,35 @@ public class PatientWriteService {
 			dto.setPatientEmail(patientCommand.getPatientEmail());
 			dto.setPatientPhone(patientCommand.getPatientPhone());
 			
-			patientMapper.patientInsert(dto);
+			if(patientCommand.getPatientId()==null||patientCommand.getPatientPw()==null) {
+				patientMapper.patientInsert2(dto);
+			}else {
+				patientMapper.patientInsert(dto);
+			}
 			/* } */
+	}
+
+
+	public void execute2(String patientNum, PatientCommand patientCommand) {
+		PatientDTO dto=new PatientDTO();
+		
+		dto.setPatientNum(patientNum);
+		dto.setPatientId(patientCommand.getPatientId());
+		dto.setPatientPw( passwordEncoder.encode( patientCommand.getPatientPw()));
+		
+		dto.setPatientName(patientCommand.getPatientName());
+		//dto.setPatientJumin(patientCommand.getPatientJuminF()+patientCommand.getPatientJuminB());
+		dto.setPatientBirth(patientCommand.getPatientBirth());
+		dto.setPatientGender(patientCommand.getPatientGender());
+		
+		
+		dto.setPatientAddr(patientCommand.getPatientAddr());
+		dto.setPatientAddrDetail(patientCommand.getPatientAddrDetail());
+		dto.setPatientPost(patientCommand.getPatientPost());
+		dto.setPatientEmail(patientCommand.getPatientEmail());
+		dto.setPatientPhone(patientCommand.getPatientPhone());
+		
+		patientMapper.patientUpdate2(dto);
+		
 	}
 }

@@ -20,7 +20,7 @@ select 1 from employee where emp_email=#{userEmail}
 select 1 from patient where patient_jumin=#{patientJumin}
 </select>
 
-<select id="empJuminCon" parameterType="String" resultType="integer">
+<select id="employeeJuminCon" parameterType="String" resultType="integer">
 select 1 from employee where emp_jumin=#{empJumin}
 </select>
 </mapper>

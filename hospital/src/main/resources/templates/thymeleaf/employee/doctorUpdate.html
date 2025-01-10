@@ -12,18 +12,12 @@
 
 <form action="doctorUpdate" method="post" th:object="${dto}" ><!--  dto -->
 
-
-
 의사번호: [[${dto.empNum}]]<br />
-
-
-이름 : [[${dto.empName}]]
-<br />
-진료과목 : [[${dto.medicalSubject}]]
-<br />
+이름 : [[${dto.empName}]]<br />
+진료과목 : [[${dto.medicalSubject}]]<br />
 진료실 위치 : <input type="text" name="medicalRoomLocation" th:field="*{medicalRoomLocation}"><br/>
 
-<input type="submit" value="의사정보 수정 완료" />  | 
+<input type="submit" value="의사정보 수정 완료" />
                        
 </form>
 </body>

@@ -12,12 +12,12 @@ $(function(){
 			$("#patientName").focus();
 			return false;
 		}
-		if($("#patientJuminF").val.trim() === ""){
+		if($("#patientJuminF").val().trim() === ""){
 			alert("주민등록번호 앞자리를 입력해주세요");
 			$("#patientJuminF").focus();
 			return false;
 		}
-		if($("#patientJuminB").val.trim() === ""){
+		if($("#patientJuminB").val().trim() === ""){
 			alert("주민등록번호 뒷자리를 입력해주세요");
 			$("#patientJuminB").focus();
 			return false;

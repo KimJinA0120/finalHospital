@@ -113,7 +113,7 @@
 							<div class="col-lg-3 col-md-3 col-12">
 								<!-- Start Logo -->
 								<div class="logo">
-									<a href="index.html"><img src="static/img/logo.png" alt="#"></a>
+									<a href="/"><img src="static/img/logo.png" alt="#"></a>
 								</div>
 								<!-- End Logo -->
 								<!-- Mobile Nav -->
@@ -163,18 +163,14 @@
 												<ul class="dropdown">
 													<th:block  th:if="${session.auth==null}">
 														<li><a href="patient/patientWrite">환자 회원가입</a></li>
+														<li><a href="find/findPatientNum">환자번호 찾기</a></li>
 														<li><a href="login/patientLogin">환자 로그인</a></li>
 														<li><a href="login/employeeLogin">직원 로그인</a></li>
 													</th:block>
 													<th:block th:if="${session.auth!=null}"> 
 														<li><a href="login/logout">로그아웃</a></li>
-														<li><a href="patient/patientList">환자목록</a></li>
-														<li><a href="patient/patientMyPage">환자 마이페이지</a></li>
-														<li><a href="find/findPatientNum">환자번호 찾기, 환자번호 연동하기??</a></li>
+														<li><a href="patient/patientMyPage">환자 마이페이지</a></li>	
 													</th:block>
-														<li><a href="employee/employeeWrite">직원등록</a></li>
-														<li><a href="employee/employeeList">직원목록</a></li>
-														<li><a href="employee/employeeMyPage">직원 마이페이지</a></li>
 												</ul>
 											</li>
 										

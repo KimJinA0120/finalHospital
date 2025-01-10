@@ -11,6 +11,6 @@ public interface CheckMapper {
 
 	public Integer patientJuminCon(String patientJumin);
 	
-	public Integer empJuminCon(String empJumin);
+	public Integer employeeJuminCon(String empJumin);
 
 }

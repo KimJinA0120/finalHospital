@@ -7,14 +7,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import hospital.command.LoginCommand;
-import hospital.service.CheckService;
+import hospital.mapper.CheckMapper;
 import hospital.service.LoginService;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -40,7 +38,6 @@ public class LoginController {
 			 return "thymeleaf/patientLogin"; 
 		}else {
 			return "redirect:/";
-			
 		}
 	}
 	@GetMapping("employeeLogin")
@@ -70,22 +67,28 @@ public class LoginController {
 	
 	
 	
-	 @Autowired 
-	  CheckService checkService; // spring 방식
+	@Autowired 
+	CheckMapper checkMapper;
 	  
-	  @PostMapping("userIdCheck") 
-	  public @ResponseBody Integer userIdCheck(String userId) { // html, jsp파일경로(x) return
-		  return checkService.idCheck(userId);
-	  }
+	@PostMapping("userIdCheck") 
+	public @ResponseBody Integer userIdCheck(String userId) { // html, jsp파일경로(x) return
+		return checkMapper.checkId(userId);
+	}
 	  
-	  @PostMapping("userEmailCheck") 
-	  public @ResponseBody Integer userEmailCheck(String userEmail) { 
-		  return checkService.emailCheck(userEmail); 
-	  }
-	  @PostMapping("patientJuminCheck")
-	  public @ResponseBody Integer patientJuminCheck(String patientJuminF, String patientJuminB) {
-		  return checkService.patientJuminCheck(patientJuminF, patientJuminB);
-	  }
+	@PostMapping("userEmailCheck") 
+	public @ResponseBody Integer userEmailCheck(String userEmail) { 
+		return checkMapper.checkEmail(userEmail); 
+	}
+	@PostMapping("patientJuminCheck")
+	public @ResponseBody Integer patientJuminCheck(String patientJuminF, String patientJuminB) {
+		String patientJumin=patientJuminF+patientJuminB;
+		return checkMapper.patientJuminCon(patientJumin);
+	}
+	@PostMapping("employeeJuminCheck")
+	public @ResponseBody Integer employeeJuminCheck(String empJuminF, String empJuminB) {
+		String empJumin=empJuminF+empJuminB;
+		return checkMapper.employeeJuminCon(empJumin);
+	}
 	  
 	  
 /*	  @GetMapping("item.login")

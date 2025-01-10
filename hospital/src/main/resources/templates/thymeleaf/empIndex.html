@@ -10,7 +10,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		
 		<!-- Title -->
-        <title>Mediplus - Free Medical and Doctor Directory HTML Template.</title>
+        <title>Mediplus - 직원전용페이지</title>
 		
 		<!-- Favicon -->
         <link rel="icon" href="static/img/favicon.png">
@@ -155,9 +155,11 @@
 												<ul class="dropdown">
 														<li><a href="employee/patientRegist">환자등록</a></li>
 														<li><a href="patient/patientList">환자목록</a></li>
-														<li><a href="find/findPatientNum">환자번호 찾기, 환자번호 연동하기??</a></li>
+														<th:block th:if="${session.auth.grade=='emp'}">
 														<li><a href="employee/employeeWrite">직원등록</a></li>
 														<li><a href="employee/employeeList">직원목록</a></li>
+														</th:block>
+														<li><a href="employee/doctorList">의사목록</a></li>
 												</ul>
 											</li>
 										</ul>
@@ -167,12 +169,6 @@
 							</div>
 							<!--<div class="col-lg-2 col-12">
 								<div class="get-quote">
-									<th:block th:if="${session.auth!=null}">
-										<a href="login/logout" class="btn col-12">로그아웃</a>
-									</th:block>
-									<th:block  th:if="${session.auth==null}">
-										<a href="login/employeeLogin" class="btn">로그인</a> 현재 로그아웃상태입니다.<br/>
-									</th:block>
 								</div>
 							</div>-->
 						</div>

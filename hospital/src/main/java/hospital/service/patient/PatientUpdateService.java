@@ -20,7 +20,7 @@ public class PatientUpdateService { //환자가 직접 본인정보를 수정할
 	
 	public void execute(HttpSession session, String patientNum, PatientCommand patientCommand) {
 		AuthInfoDTO auth=(AuthInfoDTO)session.getAttribute("auth");
-		if(session!=null && auth.getGrade()=="pat") { //환자가 직접 본인정보를 수정할떄
+		if(auth.getGrade()=="pat") { //환자가 직접 본인정보를 수정할떄
 			String patientId=auth.getUserId();
 			patientNum=patientMapper.patientNumSelect(patientId);
 		}
@@ -32,10 +32,11 @@ public class PatientUpdateService { //환자가 직접 본인정보를 수정할
 		dto.setPatientBirth(patientCommand.getPatientBirth());
 		dto.setPatientGender(patientCommand.getPatientGender());
 		dto.setPatientId(patientCommand.getPatientId());
-		if(session==null) { //환자번호 찾기 후 가입할때
-			dto.setPatientPw(patientCommand.getPatientPw());
-			dto.setPatientPwCon(patientCommand.getPatientPwCon());
-		}
+		/*
+		 * if(session==null) { //환자번호 찾기 후 가입할때
+		 * dto.setPatientPw(patientCommand.getPatientPw());
+		 * dto.setPatientPwCon(patientCommand.getPatientPwCon()); }
+		 */
 		dto.setPatientAddr(patientCommand.getPatientAddr());
 		dto.setPatientAddrDetail(patientCommand.getPatientAddrDetail());
 		dto.setPatientPost(patientCommand.getPatientPost());
