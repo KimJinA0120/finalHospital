@@ -48,9 +48,16 @@ public class HospitalApplication {
 		return "thymeleaf/appointment";
 	}
 	
+	// 직원 헤더
 	@GetMapping("getHeader")
 	public String getHeader() {
 		return "thymeleaf/getCss/getHeader";
+	}
+	
+	// 환자용 헤더
+	@GetMapping("getPatHeader")
+	public String getPatHeader() {
+		return "thymeleaf/getCss/getPatHeader";
 	}
 	
 	@GetMapping("getFooter")

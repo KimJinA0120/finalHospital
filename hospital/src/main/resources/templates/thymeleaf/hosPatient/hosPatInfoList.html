@@ -15,37 +15,7 @@ table tr:not(:first-child):not(:last-child):hover {
 }
 </style>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
-
 <script type="text/javascript">
-
-$(function(){
-	$.ajax({
-		type : "get",
-		url: "../getHeader",
-		dataType:"html",
-		success:function(result){
-			$("#getHeader").html(result);
-		},
-		error:function(){
-			alert("서버오류");
-		}
-	});
-});
-
-$(function(){
-	$.ajax({
-		type : "get",
-		url: "../getFooter",
-		dataType:"html",
-		success:function(result){
-			$("#getFooter").html(result);
-		},
-		error:function(){
-			alert("서버오류");
-		}
-	});
-});
-
 function SelLoc() {
 	var selectedValue = $("#location option:selected").val();
 	
