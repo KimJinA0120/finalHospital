@@ -54,16 +54,19 @@ $(document).ready(function(){
 </head>
 <body>
 <div id="getHeader"></div>
+<div class="col-12" align="center">
+			<div class="button">
+				<a href="javascript:moveWrite()" class="btn" style="background-color: #66785f; color: white">간호처방 작성</a>
+				<a href="wholeNursingList" class="btn" style="background-color: #66785f; color: white">현/과거 간호일지 기록 목록</a>
+			</div>
+		</div>
 <a href="/">홈</a> | <a th:href="|myPatientList?empNum=${userNum}|">담당 환자 목록</a><br>
 <h1>간호처방</h1>
-	<h4 align="right">
-		<a href="javascript:moveWrite()">간호처방 작성</a>
-	</h4>
 	
-	<br>
-	<a href="wholeNursingList">현/과거 간호일지 기록 목록</a>
 	
 	<br>
 	<div id="listTable"></div>
+	
+	<div id="getFooter"></div>
 </body>
 </html>

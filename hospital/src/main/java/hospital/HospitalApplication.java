@@ -53,4 +53,9 @@ public class HospitalApplication {
 		return "thymeleaf/getCss/getHeader";
 	}
 	
+	@GetMapping("getFooter")
+	public String getFooter() {
+		return "thymeleaf/getCss/getFooter";
+	}
+	
 }

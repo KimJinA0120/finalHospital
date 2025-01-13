@@ -32,6 +32,20 @@ $(function(){
 	});
 });
 
+$(function(){
+	$.ajax({
+		type : "get",
+		url: "../getFooter",
+		dataType:"html",
+		success:function(result){
+			$("#getFooter").html(result);
+		},
+		error:function(){
+			alert("서버오류");
+		}
+	});
+});
+
 function SelLoc() {
 	var selectedValue = $("#location option:selected").val();
 	
@@ -73,7 +87,7 @@ function Selroom() {
 }
 
 $(function(){
-    $('#sub').on("click",function () {
+    $('#btn').on("click",function () {
 
     	var par2 = $("#searchWord").val();
     	var selectedValue = $("#location option:selected").val();
@@ -125,16 +139,12 @@ function selectPatient(hospNum){
 
 </head>
 <body>
-	<table width=800px align="center">
-		<form id="frm">
-			<tr>
-				<td colspan="6" align="center"><input type="search"
-					name="searchWord" size=60 th:value="${searchWord}" id="searchWord" />
-					<input type="button" id="sub" value="검색"></td>
-			</tr>
-
-			<tr align="right">
-				<td colspan="6"><select name="location" id="location"
+	<div align="center" >
+		<form id="frm" >
+			<input type="search" name="searchWord" size=60 th:value="${searchWord}" id="searchWord" />
+			<input type="button" id="btn" class="btn" value="검색" style="background-color: #4b5945; color: white">
+			<div align="right" style="width: 800px; height: 40px; margin-top: 20px;">
+				<select name="location" id="location"
 					th:value="${location}" onchange="SelLoc()"
 					style="width: 20%; text-align: center">
 						<option value="all" selected="selected">전체</option>
@@ -142,23 +152,19 @@ function selectPatient(hospNum){
 							일반병동</option>
 						<option value="critical" th:selected="${location} == 'critical'">5층
 							중환자실</option>
-				</select> <select name="roomN" id="roomN" th:value="${roomN}"
+				</select> 
+				<select name="roomN" id="roomN" th:value="${roomN}"
 					onchange="Selroom()" style="width: 20%; text-align: center">
 						<option value="all" selected="selected">전체</option>
 						<option th:each="room : ${room}" th:value="${room.roomNum}"
 							th:selected="${room.roomNum} == ${roomN}">[[${room.roomLocation}]]</option>
-
-				</select></td>
-
-			</tr>
-
+				</select>
+			</div>
 		</form>
+	</div>
 
-
-	</table>
-
-	<table border="1" width=800px align="center">
-		<tr>
+	<table border="1" align="center" class="container col-8">
+		<tr style="background-color: #b2c9ad; color: black" align="center">
 			<th>입원실</th>
 			<th>병상</th>
 			<th>환자이름</th>
