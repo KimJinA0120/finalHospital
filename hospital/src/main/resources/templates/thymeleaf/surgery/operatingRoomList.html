@@ -2,6 +2,42 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="keywords" content="Site keywords here">
+<meta name="description" content="">
+<meta name='copyright' content=''>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Favicon -->
+<link rel="icon" href="static/img/favicon.png">
+		
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="/static/css/bootstrap-green.min.css">
+<!-- Nice Select CSS -->
+<link rel="stylesheet" href="/static/css/nice-select.css">
+<!-- Font Awesome CSS -->
+<link rel="stylesheet" href="/static/css/font-awesome.min.css">
+<!-- icofont CSS -->
+<link rel="stylesheet" href="/static/css/icofont.css">
+<!-- Slicknav -->
+<link rel="stylesheet" href="/static/css/slicknav.min.css">
+<!-- Owl Carousel CSS -->
+<link rel="stylesheet" href="/static/css/owl-carousel.css">
+<!-- Datepicker CSS -->
+<link rel="stylesheet" href="/static/css/datepicker.css">
+<!-- Animate CSS -->
+<link rel="stylesheet" href="/static/css/animate.min.css">
+<!-- Magnific Popup CSS -->
+<link rel="stylesheet" href="/static/css/magnific-popup.css">
+		
+<!-- Medipro CSS -->
+<link rel="stylesheet" href="/static/css/normalize-green.css">
+<link rel="stylesheet" href="/static/css/style-green.css">
+<link rel="stylesheet" href="/static/css/responsive-green.css">
+
 <title>수술실 리스트</title>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script type="text/javascript">
@@ -12,13 +48,13 @@ function operatingSelect(operatingRoomNum){
 </script>
 </head>
 <body>
-	<table border="1">
-		<tr><th>수술실 번호</th><th>수술실 위치</th></tr>
-		<tr th:each="dto : ${list}">
+	<table border="1" style="margin-top: 15px">
+		<tr style="background-color: #b2c9ad; color: black" align="center"><th>수술실 번호</th><th>수술실 위치</th></tr>
+		<tr th:each="dto : ${list}" align="center">
 			<td>[[${dto.operatingRoomNum}]]</td>
 			<td>[[${dto.operatingRoomLocation}]]</td>
 			<td><button type="button" 
-					th:attr="onclick=|javascript:operatingSelect('${dto.operatingRoomNum}')|">선택</button>
+					th:attr="onclick=|javascript:operatingSelect('${dto.operatingRoomNum}')|" class="btn">선택</button>
 			</td>
 		</tr>
 	</table>

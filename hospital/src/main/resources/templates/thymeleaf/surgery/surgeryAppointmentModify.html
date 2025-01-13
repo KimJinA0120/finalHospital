@@ -59,7 +59,7 @@ $(function(){
 		window.open("/surgery/wardSearch", "wardSearch", "width=900, height=400, top=100, left=100");
 	})
 	$("#surroom").click(function(){
-		window.open("/surgery/operatingRoomList", "operatingRoomList", "width=315, height=200, top=100, left=100");
+		window.open("/surgery/operatingRoomList", "operatingRoomList", "width=315, height=500, top=100, left=100");
 	})
 	$("#semp").click(function(){
 		window.open("/employee/doctorSearch", "doctorSearch", "width=800, height=400, top=100, left=100");
@@ -93,11 +93,11 @@ $(function(){
 </script>
 </head>
 <body>
-<div align="center">
-	수술예약 정보
+<div align="center" style="color: black; margin-top: 10%">
+	수술예약 수정
 </div>
 <form action="surgeryAppointmentModify" method="post" id="frm">
-	<table border="1" class="container col-8" style="margin-top: 10px;">
+	<table border="1" class="container col-6" style="margin-top: 10px;">
 		<tr align="center">
 			<th>수술예약번호</th>
 			<td colspan="4"><input type="text" name="surgeryAppointmentNum" th:value="${dto.surgeryAppointmentNum}" readonly="readonly" class="col-12"/></td>
@@ -124,7 +124,7 @@ $(function(){
 		</tr>
 		<tr align="center">
 			<th>수술실</th>
-			<td colspan="3"><input type="text" name="operatingRoomNum" th:value="${dto.operatingRoomNum}" class="col-12"/></td>
+			<td colspan="3"><input type="text" name="operatingRoomNum" id="operatingRoom" th:value="${dto.operatingRoomNum}" class="col-12"/></td>
 			<td><button type="button" id="surroom" class="btn col-12" style="background-color: #0A122A; color: white">수술실 찾기</button></td>
 		</tr>
 		<tr align="center">

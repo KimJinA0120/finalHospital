@@ -2,6 +2,42 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="keywords" content="Site keywords here">
+<meta name="description" content="">
+<meta name='copyright' content=''>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Favicon -->
+<link rel="icon" href="static/img/favicon.png">
+		
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="/static/css/bootstrap-green.min.css">
+<!-- Nice Select CSS -->
+<link rel="stylesheet" href="/static/css/nice-select.css">
+<!-- Font Awesome CSS -->
+<link rel="stylesheet" href="/static/css/font-awesome.min.css">
+<!-- icofont CSS -->
+<link rel="stylesheet" href="/static/css/icofont.css">
+<!-- Slicknav -->
+<link rel="stylesheet" href="/static/css/slicknav.min.css">
+<!-- Owl Carousel CSS -->
+<link rel="stylesheet" href="/static/css/owl-carousel.css">
+<!-- Datepicker CSS -->
+<link rel="stylesheet" href="/static/css/datepicker.css">
+<!-- Animate CSS -->
+<link rel="stylesheet" href="/static/css/animate.min.css">
+<!-- Magnific Popup CSS -->
+<link rel="stylesheet" href="/static/css/magnific-popup.css">
+		
+<!-- Medipro CSS -->
+<link rel="stylesheet" href="/static/css/normalize-green.css">
+<link rel="stylesheet" href="/static/css/style-green.css">
+<link rel="stylesheet" href="/static/css/responsive-green.css">
+
 <title>수술예약 리스트 확인</title>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script type="text/javascript">
@@ -13,9 +49,9 @@ function surApSelect(surgeryAppointmentNum, sempNum){
 </script>
 </head>
 <body>
-	<table border="1" width="700">
-		<tr><th>수술예약번호</th><th>수술명</th><th>수술날짜</th><th>집도의</th><th>마취의</th><th>수술실</th><th>수술상황</th></tr>
-		<tr th:each="dto : ${list}">
+	<table border="1" class="container col-12">
+		<tr style="background-color: #b2c9ad; color: black" align="center"><th>수술예약번호</th><th>수술명</th><th>수술날짜</th><th>집도의</th><th>마취의</th><th>수술실</th><th>수술상황</th><th>선택</th></tr>
+		<tr th:each="dto : ${list}" align="center">
 			<td>[[${dto.surgeryAppointmentNum}]]</td>
 			<td>[[${dto.surgeryName}]]</td>
 			<td>[[${#temporals.format(dto.surgeryDate,'yyyy-MM-dd HH:mm')}]] ~ [[${#temporals.format(dto.surgeryEndDate,'HH:mm')}]]</td>
@@ -23,8 +59,8 @@ function surApSelect(surgeryAppointmentNum, sempNum){
 			<td>[[${dto.aempNum}]]</td>
 			<td>[[${dto.operatingRoomNum}]]</td>
 			<td>[[${dto.surgeryStatus}]]</td>
-			<td><button type="button" 
-					th:attr="onclick=|javascript:surApSelect('${dto.surgeryAppointmentNum}','${dto.sempNum}')|">선택</button>
+			<td th:if="${dto.surgeryStatus} == '수술미시행'"><button type="button" 
+					th:attr="onclick=|javascript:surApSelect('${dto.surgeryAppointmentNum}','${dto.sempNum}')|" class="btn">선택</button>
 			</td>
 		</tr>
 	</table>

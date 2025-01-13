@@ -15,7 +15,7 @@
 <link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
 
 <!-- Bootstrap CSS -->
-<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+<link rel="stylesheet" href="/static/css/bootstrap-green.min.css">
 <!-- Nice Select CSS -->
 <link rel="stylesheet" href="/static/css/nice-select.css">
 <!-- Font Awesome CSS -->
@@ -34,9 +34,9 @@
 <link rel="stylesheet" href="/static/css/magnific-popup.css">
 		
 <!-- Medipro CSS -->
-<link rel="stylesheet" href="/static/css/normalize.css">
-<link rel="stylesheet" href="/static/css/style.css">
-<link rel="stylesheet" href="/static/css/responsive.css">
+<link rel="stylesheet" href="/static/css/normalize-green.css">
+<link rel="stylesheet" href="/static/css/style-green.css">
+<link rel="stylesheet" href="/static/css/responsive-green.css">
 
 <style type="text/css">
 	th{
@@ -74,11 +74,11 @@ $(function(){
 </script>
 </head>
 <body>
-<div align="center">
+<div align="center" style="color: black; margin-top: 10%">
 	수술기록 작성
 </div>
 <form action="surgeryWrite" method="post" id="frm">
-	<table border="1">
+	<table border="1" class="container col-6" style="margin-top: 10px;">
 		<tr align="center"><th>수술번호</th>
 			<td colspan="2"><input type="text" name="surgeryNum" th:value="${autoNum}" readonly="readonly" class="col-12"/></td></tr>
 		<tr align="center"><th>수술예약번호</th>
