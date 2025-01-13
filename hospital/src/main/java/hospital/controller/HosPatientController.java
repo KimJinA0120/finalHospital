@@ -15,11 +15,24 @@ import jakarta.servlet.http.HttpServletRequest;
 @Controller
 public class HosPatientController {
 
+	@GetMapping("{baseId}/hosPatList")
+	public String hosPatInfoList(HttpServletRequest request, String empNum, Model model) {
+		String cont = request.getRequestURI().split("/")[1];
+		if (cont.equals("nursing")) {
+			return "thymeleaf/nursing/nursingList";
+		} else if (cont.equals("wardPS")) {
+			return "thymeleaf/wardPS/wardPsList";
+		}else {
+			return "redirect:/";
+		}
+	}
+	
+	
 	@Autowired
 	SearchHospService searchHospService;
 
-	@GetMapping("{baseId}/hosPatList")
-	public String hosPatInfoList(@PathVariable("baseId") String baseId,
+	@GetMapping("{baseId}/hosPatList1")
+	public String hosPatList1(@PathVariable("baseId") String baseId,
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page,
 			@RequestParam(value = "searchWord", required = false) String searchWord,
 			@RequestParam(value = "location", required = false) String location,

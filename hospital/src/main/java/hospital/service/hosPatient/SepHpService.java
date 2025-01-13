@@ -19,9 +19,21 @@ public class SepHpService {
 			searchWord = searchWord.trim();
 		}
 		
-		if( location != null && location.equals("all")) { location = null; roomN = null;}
-		if( roomN != null && roomN.equals("all")) {roomN = null;}
-		if (hpState != null && hpState.equals("all")) {hpState = null;}
+		if( location != null ) { 
+			if (location == "" || location.equals("all")) {
+				location = null; roomN = null;
+			}
+		}
+		if( roomN != null) {
+			if (roomN == "" || roomN.equals("all")) {
+				roomN = null;
+			}
+		}
+		if (hpState != null) {
+			if (hpState == "" || hpState.equals("all")) {
+				hpState = null;
+			}
+		}
 		
 		
 		int startRow = ((page-1) * limit) + 1;

@@ -24,13 +24,6 @@ import hospital.service.wardPS.WardPsWriteService;
 @Controller
 @RequestMapping("wardPS") /// 슬랙시 '/'는 루트이다. 그러므로 링크 앞에 /가 붙으면 홈페이지 바로 아래??가 된다.
 public class WardPsController {
-   
-   /// 리스트  
-	@GetMapping("wardPsList")
-	public String wardPsList() {
-		
-		return "thymeleaf/wardPS/wardPsList";
-	}
 	
 	
    @Autowired
