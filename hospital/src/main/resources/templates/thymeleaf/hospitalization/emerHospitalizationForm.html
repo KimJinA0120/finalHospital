@@ -69,11 +69,12 @@ $(function(){
 </script>
 </head>
 <body>
-<div align="center">
+<div align="center" style="margin-top: 10%">
 응급입원수속 
 </div>
+<br>
 <form action="emerHospitalizationRegist" method="post" th:object="${emergencyPatientCommand}" id="frm">
-<table border="1">
+<table border="1"  class="container col-6">
 <tr align="center"><th>입원번호</th>
 <td colspan="2"><input type="text" name="emerPatientNum" th:value="${emergencyPatientCommand.emerPatientNum}" readonly="readonly" class="col-12"></td></tr>
 <tr align="center"><th>병상번호</th>

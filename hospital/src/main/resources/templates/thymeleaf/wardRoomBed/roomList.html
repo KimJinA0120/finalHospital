@@ -19,16 +19,30 @@ $(function(){
 		}
 	});
 });
+$(function(){
+	$.ajax({
+			type : "get",
+			url: "../getFooter",
+			dataType:"html",
+			success:function(result){
+				$("#getFooter").html(result);
+			},
+			error:function(){
+				alert("서버오류");
+			}
+		});
+});
 </script>
 </head>
 <body>
 </head>
 <body>
+<div id="getHeader"></div> 
 <div align="center" style="font-size: 25px; margin: 10px; color: black;">
 			병실리스트
 </div>
 <br>
-	<table border="1" class="container col-8"  align="center">
+	<table border="1" class="container col-6"  align="center">
 	<form action="roomsDelete" method="post" id="frm">
 		<tr style="background-color: #b2c9ad; color: black" align="center">
 		<th align="center">병동 번호</th>
@@ -42,7 +56,8 @@ $(function(){
 			<td align="center">[[${dto.roomLocation}]]</td>
 			<td align="center"><input type="checkbox" name="nums" th:value="${dto.roomNum}" /></td>
 		</tr>
-	</table>
 	</form>
+	</table>
+	<div id="getFooter"></div>
 </body>
 </html>
