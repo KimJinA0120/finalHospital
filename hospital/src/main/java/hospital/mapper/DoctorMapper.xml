@@ -26,9 +26,9 @@ select * from
 from doctor d join employee e on d.emp_num=e.emp_num
 <if test="searchWord!=null">
 where 
-emp_num '%'||#{searchWord}||'%'
-or emp_name '%'||#{searchWord}||'%'
-or medical_subject '%'||#{medicalSubject}||'%'
+e.emp_num like '%'||#{searchWord}||'%'
+or emp_name like '%'||#{searchWord}||'%'
+or medical_subject like '%'||#{searchWord}||'%'
 order by emp_num
 </if>
 ) where rn between #{startRow} and #{endRow}
