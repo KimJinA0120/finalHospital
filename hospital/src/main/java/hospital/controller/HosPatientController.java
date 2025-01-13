@@ -19,9 +19,9 @@ public class HosPatientController {
 	public String hosPatInfoList(HttpServletRequest request, String empNum, Model model) {
 		String cont = request.getRequestURI().split("/")[1];
 		if (cont.equals("nursing")) {
-			return "thymeleaf/nursing/nursingList";
+			return "redirect:nursingList";
 		} else if (cont.equals("wardPS")) {
-			return "thymeleaf/wardPS/wardPsList";
+			return "redirect:wardPsList";
 		}else {
 			return "redirect:/";
 		}
