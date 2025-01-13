@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import hospital.command.WardPsCommand;
 import hospital.service.AutoNumService;
-import hospital.service.hosPatient.MyPatientListService;
-import hospital.service.hosPatient.PatientPreScript;
 import hospital.service.hosPatient.SearchHospService;
 import hospital.service.wardPS.WardPsDeleteService;
 import hospital.service.wardPS.WardPsInfoService;

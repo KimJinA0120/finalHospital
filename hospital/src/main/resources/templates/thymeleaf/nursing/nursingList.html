@@ -28,6 +28,7 @@ $(document).ready(function(){
 		}
 	});
 });
+
 </script>
 <script th:inline="javascript">
 	
@@ -52,6 +53,7 @@ $(document).ready(function(){
 
 </head>
 <body>
+<div id="getHeader"></div>
 <a href="/">홈</a> | <a th:href="|myPatientList?empNum=${userNum}|">담당 환자 목록</a><br>
 <h1>간호처방</h1>
 	<h4 align="right">

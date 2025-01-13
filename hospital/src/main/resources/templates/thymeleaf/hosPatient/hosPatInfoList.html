@@ -18,6 +18,20 @@ table tr:not(:first-child):not(:last-child):hover {
 
 <script type="text/javascript">
 
+$(function(){
+	$.ajax({
+		type : "get",
+		url: "../getHeader",
+		dataType:"html",
+		success:function(result){
+			$("#getHeader").html(result);
+		},
+		error:function(){
+			alert("서버오류");
+		}
+	});
+});
+
 function SelLoc() {
 	var selectedValue = $("#location option:selected").val();
 	

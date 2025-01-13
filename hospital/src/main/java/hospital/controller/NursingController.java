@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import hospital.command.NursCommand;
 import hospital.service.AutoNumService;
-import hospital.service.hosPatient.MyPatientListService;
-import hospital.service.hosPatient.PatientPreScript;
 import hospital.service.hosPatient.SearchHospService;
 import hospital.service.nursing.NursingDeleteService;
 import hospital.service.nursing.NursingInfoService;
