@@ -30,35 +30,6 @@ $(document).ready(function(){
 	});
 });
 
-$(function(){
-	$.ajax({
-		type : "get",
-		url: "../getHeader",
-		dataType:"html",
-		success:function(result){
-			$("#getHeader").html(result);
-		},
-		error:function(){
-			alert("서버오류");
-		}
-	});
-	
-});
-
-$(function(){
-	$.ajax({
-			type : "get",
-			url: "../getFooter",
-			dataType:"html",
-			success:function(result){
-				$("#getFooter").html(result);
-			},
-			error:function(){
-				alert("서버오류");
-			}
-		});
-});
-
 </script>
 <script th:inline="javascript">
 	
