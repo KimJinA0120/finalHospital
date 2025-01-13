@@ -5,22 +5,42 @@
 <title>roomList.html</title>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script type="text/javascript" src="/static/js/checkbox.js"></script>
+<script type="text/javascript">
+$(function(){
+	$.ajax({
+		type : "get",
+		url: "../getHeader",
+		dataType:"html",
+		success:function(result){
+			$("#getHeader").html(result);
+		},
+		error:function(){
+			alert("서버오류");
+		}
+	});
+});
+</script>
 </head>
 <body>
+</head>
+<body>
+<div align="center" style="font-size: 25px; margin: 10px; color: black;">
+			병실리스트
+</div>
 <br>
-	<table border="1">
+	<table border="1" class="container col-8"  align="center">
 	<form action="roomsDelete" method="post" id="frm">
-		<tr>
-		<th>병동 번호</th>
-		<th>병실 번호</th>
-		<th>병실 위치</th>
-		<th><input type="checkbox" id="checkBoxs"/><input type="submit" value="선택삭제"/></th>
+		<tr style="background-color: #b2c9ad; color: black" align="center">
+		<th align="center">병동 번호</th>
+		<th align="center">병실 번호</th>
+		<th align="center">병실 위치</th>
+		<th align="center"><input type="checkbox" id="checkBoxs"/><input type="submit" value="선택삭제"/></th>
 		</tr>
 		<tr th:each="dto : ${list}">
-			<td>[[${dto.wardNum}]]</td>
-			<td>[[${dto.roomNum}]]</td>
-			<td>[[${dto.roomLocation}]]</td>
-			<td><input type="checkbox" name="nums" th:value="${dto.roomNum}" /></td>
+			<td align="center">[[${dto.wardNum}]]</td>
+			<td align="center">[[${dto.roomNum}]]</td>
+			<td align="center">[[${dto.roomLocation}]]</td>
+			<td align="center"><input type="checkbox" name="nums" th:value="${dto.roomNum}" /></td>
 		</tr>
 	</table>
 	</form>
