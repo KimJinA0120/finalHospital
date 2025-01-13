@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import hospital.command.LoginCommand;
 import hospital.mapper.CheckMapper;
 import hospital.service.LoginService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -20,20 +22,20 @@ import jakarta.servlet.http.HttpSession;
 public class LoginController {
 	@Autowired
 	LoginService loginService;
-
+	
 	
 	@GetMapping("patientLogin")
-	public String patientlogin( 
-			LoginCommand loginCommand, 
-			Model model
-			) {
-		model.addAttribute("loginCommand", loginCommand);
+	public String patientlogin( LoginCommand loginCommand, Model model
+			, HttpServletRequest request) {
+		loginService.cookieService(request, model, loginCommand);
+		//model.addAttribute("loginCommand", loginCommand);
 		return "thymeleaf/patientLogin";
 	}
 	@PostMapping("patientLogin")
-	public String patientLogin(@Validated LoginCommand loginCommand,
-			BindingResult result, HttpSession session) {
-		loginService.patientLogin(loginCommand, session, result);
+	public String patientLogin(@Validated LoginCommand loginCommand
+			, BindingResult result, HttpSession session
+			, HttpServletResponse response) {
+		loginService.patientLogin(loginCommand, session, result, response);
 		if(result.hasErrors()) { 
 			 return "thymeleaf/patientLogin"; 
 		}else {
@@ -41,18 +43,17 @@ public class LoginController {
 		}
 	}
 	@GetMapping("employeeLogin")
-	public String employeeLogin( 
-			LoginCommand loginCommand, 
-			Model model
-			) {
-		model.addAttribute("loginCommand", loginCommand);
+	public String employeeLogin( LoginCommand loginCommand, Model model
+			, HttpServletRequest request) {
+		loginService.cookieService(request,model, loginCommand);
+		//model.addAttribute("loginCommand", loginCommand);
 		return "thymeleaf/employeeLogin";
 	}
 	@PostMapping("employeeLogin")
 	public String employeeLogin(@Validated LoginCommand loginCommand
-			,BindingResult result, HttpSession session
-			) { 
-		loginService.employeeLogin(loginCommand, session, result);
+			, BindingResult result, HttpSession session
+			, HttpServletResponse response) { 
+		loginService.employeeLogin(loginCommand, session, result, response);
 		if(result.hasErrors()) { 
 			 return "thymeleaf/employeeLogin";
 		}else {

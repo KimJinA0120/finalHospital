@@ -31,12 +31,13 @@ public class FindController {
 		findIdService.findPatientId(userName,userPhone,userEmail,model);
 		return "thymeleaf/find/findIdOk";
 	}
+	
 	@GetMapping("findPw") //환자 비밀번호 찾기
 	public String findPatientPw() {
 		return "thymeleaf/find/findPw";
 	}
 	@PostMapping("findPw")
-	public String findPatientPW(String userName, String userId, String userPhone, Model model) {
+	public String findPatientPw(String userName, String userId, String userPhone, Model model) {
 		findPwService.findPatientPw(userName, userId, userPhone, model);
 		return "thymeleaf/find/findPwOk";
 	}

@@ -1,0 +1,193 @@
+@charset "UTF-8";
+/* Base Font 기본 폰트*/
+body {
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  line-height: 1.6em;
+  font-weight: 400;
+}
+
+/* Colors 색상*/
+:root {
+  --black: #000000;
+  --dark-gray: rgba(0, 0, 0, 0.8);
+  --gray: rgba(0, 0, 0, 0.6);
+  --light-gray: rgba(0, 0, 0, 0.4);
+  --lighter-gray: rgba(0, 0, 0, 0.2);
+  --white: #FFFFFF;
+  --accent: #8EB486;
+}
+
+/* Form Settings 제출양식 설정*/
+.form {
+  position: relative;
+  background: var(--white);
+  width: 600px;
+  margin: 100px auto 10px;
+  border-radius: 4px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.form-toggle {
+  position: absolute;
+  top: 60px;
+  right: 60px;
+  background: var(--white);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  transform: translate(0, -25%) scale(0);
+  opacity: 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.form-toggle:before,
+.form-toggle:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 4px;
+  background: var(--accent);
+  transform: translate(-50%, -50%);
+}
+
+.form-toggle:before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.form-toggle:after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.form-toggle.visible {
+  transform: translate(0, -25%) scale(1);
+  opacity: 1;
+}
+
+/* Form Groups */
+.form-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--gray);
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+.form-group input {
+  display: block;
+  width: 100%;
+  padding: 12px 20px;
+  background: rgba(0, 0, 0, 0.1);
+  border: none;
+  border-radius: 4px;
+  font-size: inherit;
+  font-weight: 500;
+  line-height: inherit;
+  color: var(--gray);
+  box-sizing: border-box;
+  outline: none;
+  transition: 0.3s ease;
+}
+
+.form-group input:focus {
+  color: var(--dark-gray);
+}
+
+.form-group button {
+  display: block;
+  width: 100%;
+  padding: 12px 20px;
+  background: var(--accent);
+  border: none;
+  border-radius: 4px;
+  color: var(--white);
+  font-size: inherit;
+  font-weight: 500;
+  line-height: inherit;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+/* Header */
+.form-header {
+  margin-bottom: 40px;
+}
+
+.form-header h1 {
+  color: var(--accent);
+  font-size: 24px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* Panels */
+.form-panel {
+  padding: 60px 120px 60px 60px;
+}
+
+.form-panel.one:before {
+  content: '';
+  display: block;
+  background: rgba(0, 0, 0, 0.8);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s ease;
+}
+
+.form-panel.one.hidden:before {
+  opacity: 1;
+  visibility: visible;
+}
+
+.form-panel.two {
+  position: absolute;
+  top: 0;
+  left: 95%;
+  background: var(--accent);
+  width: 100%;
+  height: 100%;
+  padding: 60px 120px 60px 60px;
+  transition: 0.3s ease;
+}
+
+.form-panel.two:hover {
+  left: 93%;
+}
+
+.form-panel.two.active {
+  left: 10%;
+  cursor: default;
+}
+.form-group input[type="checkbox"] {
+  display: inline-block;
+  margin-right: 5px; /* 체크박스와 텍스트 사이 간격 */
+}
+
+.form-group span {
+  display: inline-block;
+}
+

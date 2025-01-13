@@ -48,7 +48,6 @@
 <script type="text/javascript" src="/static/js/checkbox.js"></script>
 </head>
 <body>
-        <!-- End Preloader -->
 	
 		<!-- Header Area -->
 		<header class="header" >
@@ -70,11 +69,11 @@
 							<!-- Top Contact -->
 							<ul class="top-contact">
 								<th:block th:if="${session.auth!=null}">
-									<li><i class="fa fa-doctor"></i><a href="login/logout">로그아웃</a></li>
-									<li><a href="employee/employeeMyPage">마이페이지</a></li>
+									<li><i class="fa fa-doctor"></i><a href="../login/logout">로그아웃</a></li>
+									<li><a href="../employee/employeeMyPage">마이페이지</a></li>
 								</th:block>
 								<th:block  th:if="${session.auth==null}">
-									<li><a href="login/employeeLogin">로그인</a></li>
+									<li><a href="../login/employeeLogin">로그인</a></li>
 								</th:block>
 							</ul>
 							<!-- End Top Contact -->
@@ -91,7 +90,7 @@
 							<div class="col-lg-3 col-md-3 col-12">
 								<!-- Start Logo -->
 								<div class="logo">
-									<a href="index.html"><img src="static/img/logo.png" alt="#"></a>
+									<a href="index.html"><img src="../static/img/logo.png" alt="#"></a>
 								</div>
 								<!-- End Logo -->
 								<!-- Mobile Nav -->
@@ -142,13 +141,13 @@
 											</li>
 											<li><a href="#">사용자<i class="icofont-rounded-down"></i></a>
 												<ul class="dropdown">
-														<li><a href="patientRegist">환자등록</a></li>
+														<li><a href="../employee/patientRegist">환자등록</a></li>
 														<li><a href="../patient/patientList">환자목록</a></li>
 														<th:block >
-														<li><a href="employeeWrite">직원등록</a></li>
-														<li><a href="employeeList">직원목록</a></li>
+														<li><a href="../employee/employeeWrite">직원등록</a></li>
+														<li><a href="../employee/employeeList">직원목록</a></li>
 														</th:block>
-														<li><a href="doctorList">의사목록</a></li>
+														<li><a href="../employee/doctorList">의사목록</a></li>
 												</ul>
 											</li>
 										</ul>

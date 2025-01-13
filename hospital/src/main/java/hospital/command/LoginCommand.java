@@ -9,4 +9,7 @@ public class LoginCommand {
 	String userId;
 	//@NotEmpty(message="비밀번호를 입력하여주세요")
 	String userPw;
+	
+	boolean idStore;
+	boolean autoLogin;
 }
