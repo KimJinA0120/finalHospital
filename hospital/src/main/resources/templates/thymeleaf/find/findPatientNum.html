@@ -32,9 +32,6 @@ $(function(){
 	});
 });
 </script>
-
-<link rel="stylesheet" href="/static/css/login.css">
-
 <!-- Favicon -->
         <link rel="icon" href="static/img/favicon.png">
 		
@@ -72,34 +69,26 @@ $(function(){
 		<div class="container">
 			<div class="inner">
 				<div class="row">
-					<div class="col-lg-6">
+					<div class="col-12">
 						<div class="contact-us-form">
 							<h2>환자등록번호 찾기</h2>
 							<form action="findPatientNum" method="post" id="frm">
 								<div class="row">
-									<div class="col-lg-6">
+									<div class="col-12">
 										<div class="">
-											<a>이름 : </a> <input type="text" name="patientName" id="patientName">
+											<a style="color:black">이름 : </a> <input type="text" name="patientName" id="patientName">
 										</div>
 									</div>
-									<div class="col-lg-6">
+									<div class="col-12">
 										<div class="form-group">
-											<!-- <span>담당의사번호</span> <input type="text" name="empNum"
-												id="docNum" readonly="readonly" required="required">
-											<button type="button" id="btn1">의사검색</button> -->
+											<span><a></a> </span>
 										</div>
 									</div>
-									<div class="">
+									<div class="col-12">
 										<div class="">
-											<a>주민등록번호 : </a> 
-											<span><input type="text" name="patientJuminF" id="patientJuminF" placeholder="숫자 6자 입력"/> 
-											- <input type="text" name="patientJuminB" id="patientJuminB" placeholder="숫자 7자 입력"/></span>
-										</div>
-									</div>
-									<div class="col-lg-6">
-										<div class="form-group">
-											 <span><a> <br/></a> </span>
-											 
+											<a style="color:black">주민등록번호 : </a> 
+											<a><input type="text" name="patientJuminF" id="patientJuminF" placeholder="숫자 6자 입력"/> - 
+											<input type="text" name="patientJuminB" id="patientJuminB" placeholder="숫자 7자 입력"/></a>
 										</div>
 									</div>
 									<div class="col-lg-6">
@@ -112,8 +101,6 @@ $(function(){
 									</div>
 									<div class="col-lg-6">
 										<div class="form-group">
-											<!-- <span>예약일시</span> <input type="datetime-local"
-												name="reservationDate" required="required"> -->
 										</div>
 									</div>
 									<div class="col-12">

@@ -30,7 +30,7 @@ public class FindPwService {
 				dto.setUserPw(passwordEncoder.encode(newPw));
 				findMapper.patientTemPoraryPw(dto); //비밀번호 변경
 				System.out.println("임시비밀번호 생성 완료");
-				message="고객님의 새 비밀번호는" +newPw+ "입니다. ";
+				message="고객님의 새 비밀번호는 " +newPw+ "입니다. ";
 				message2= "로그인 후 비밀번호를 변경해주세요.";
 		}else {
 			System.out.println("일치하는 회원이 없음");
@@ -54,7 +54,7 @@ public class FindPwService {
 			dto.setUserPw(passwordEncoder.encode(newPw));
 			findMapper.empTemPoraryPw(dto); //비밀번호 변경
 			System.out.println("임시비밀번호 생성 완료");
-			message="고객님의 새 비밀번호는" +newPw+ "입니다. ";
+			message="고객님의 새 비밀번호는 " +newPw+ "입니다. ";
 					message2= "로그인 후 비밀번호를 변경해주세요. ";
 			
 		}else {

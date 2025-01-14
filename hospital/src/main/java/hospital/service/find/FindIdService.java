@@ -23,8 +23,9 @@ public class FindIdService {
 		if(userId !=null) {
 			message="고객님의 아이디는 "+userId+"입니다.";
 			message2="";
-		}else message="일치하는 정보가 없습니다. ";
+		}else { message="일치하는 정보가 없습니다. ";
 			message2="확인 후 다시 시도하여주십시오.";
+		}
 		model.addAttribute("message", message);
 		model.addAttribute("message2", message2);
 	}
@@ -40,8 +41,9 @@ public class FindIdService {
 		if(userId !=null) {
 			message="아이디는 "+userId+"입니다.";
 			message2="";
-		}else message="일치하는 정보가 없습니다. ";
+		}else {message="일치하는 정보가 없습니다. ";
 			message2= "확인 후 다시 시도하여주십시오.";
+		}
 		model.addAttribute("message", message);
 		model.addAttribute("message2", message2);
 		

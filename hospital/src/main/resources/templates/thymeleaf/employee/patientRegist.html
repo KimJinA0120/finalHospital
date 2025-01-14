@@ -1,7 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<!-- Meta Tags -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="keywords" content="Site keywords here">
+<meta name="description" content="">
+<meta name='copyright' content=''>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>환자등록(직원)</title>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -9,31 +16,87 @@
 <script type="text/javascript" src="/static/js/checkInputUser.js"></script>
 <script type="text/javascript" src="/static/js/checkJumin.js"></script>
 
+
+<!-- Favicon -->
+<link rel="icon" href="../static/img/favicon.png">
+
+<!-- Google Fonts -->
+<link
+	href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+	rel="stylesheet">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="../static/css/bootstrap-green.min.css">
+<!-- Nice Select CSS -->
+<link rel="stylesheet" href="../static/css/nice-select.css">
+<!-- Font Awesome CSS -->
+<link rel="stylesheet" href="../static/css/font-awesome.min.css">
+<!-- icofont CSS -->
+<link rel="stylesheet" href="../static/css/icofont.css">
+<!-- Slicknav -->
+<link rel="stylesheet" href="../static/css/slicknav.min.css">
+<!-- Owl Carousel CSS -->
+<link rel="stylesheet" href="../static/css/owl-carousel.css">
+<!-- Datepicker CSS -->
+<link rel="stylesheet" href="../static/css/datepicker.css">
+<!-- Animate CSS -->
+<link rel="stylesheet" href="../static/css/animate.min.css">
+<!-- Magnific Popup CSS -->
+<link rel="stylesheet" href="../static/css/magnific-popup.css">
+
+<!-- Medipro CSS -->
+<link rel="stylesheet" href="../static/css/normalize-green.css">
+<link rel="stylesheet" href="../static/css/style-green.css">
+<link rel="stylesheet" href="../static/css/responsive-green.css">
+
 </head>
-<body>        
+<body>
+<!-- Start Contact Us -->
+	<section class="contact-us section">
+		<div class="container">
+			<div class="inner">
+				<div class="row">
+					<div class="col-lg-6-center">
+						<div class="contact-us-form" >
+							<h2>환자등록(직원)</h2><br>
+							<form action="patientRegist" method="post"  id="frm" th:object="${patientCommand}"> <!-- th:object="${patientCommand}" -->
+								<div class="row">
+									<div class="col-12">
+										<div class="form-group">        
                     
-<form action="patientRegist" method="post"  id="frm" th:object="${patientCommand}"> <!-- th:object="${patientCommand}" -->
-환자번호: 	<input type="text" name="patientNum" th:value="${patientCommand.patientNum}" readonly="readonly" hidden="hidden" /><!-- 번호 자동부여 --><br />
+
+환자번호: 	<input type="text" name="patientNum" th:value="${patientCommand.patientNum}" readonly="readonly" /> 번호 자동부여<br />
 	
 이름 : <input type="text" name="patientName" id="userName"  th:value="${patientCommand.patientName}" /> <br />
 주민등록번호 : <input type="number" name="patientJuminF" id="userJuminF" th:value="${patientCommand.patientJuminF}" placeholder="숫자 6자리" /> -
 		   <input type="number" name="patientJuminB" id="userJuminB" th:value="${patientCommand.patientJuminB}" placeholder="숫자 7자리"/> 
-		   <button type="button" id="juminCheck">중복확인</button> <span id="patientJumin"></span><br />
+		   <button type="button" id="juminCheck" class="btn" style="height:30px; text-align:center; padding: .200rem .75rem;">중복확인</button> <span id="patientJumin"></span><br />
 		   <span style="color:red" th:if="${#fields.hasErrors('patientJuminF')}" th:errors="*{patientJuminF}"></span>
 		   <span style="color:red" th:if="${#fields.hasErrors('patientJuminB')}" th:errors="*{patientJuminB}"></span><br/>	
-생년월일: <input type="date" name="patientBirth" id="userBirth"  th:value="${#dates.format(patientCommand.patientBirth,'yyyy-MM-dd')}" /> <br /> 
+생년월일: <input type="date" name="patientBirth" id="userBirth"  th:value="${#dates.format(patientCommand.patientBirth,'yyyy-MM-dd')}" /> <br />  <hr/>
 주소 : <input type="text" name="patientAddr" id="sample4_roadAddress"  th:value="${patientCommand.patientAddr}" readonly="readonly" />
-				<button type="button" onclick="execDaumPostcode();">우편번호검색</button><br />
+				<button type="button" onclick="execDaumPostcode();" class="btn" style="height:30px; text-align:center; padding: .200rem .75rem;">우편번호검색</button><br />
 상세주소 : <input type="text" name="patientAddrDetail" th:value="${patientCommand.patientAddrDetail}"/><br />
-우편번호 : <input type="text" name="patientPost" id="sample4_postcode" th:value="${patientCommand.patientPost}" readonly="readonly"/><br />
+우편번호 : <input type="text" name="patientPost" id="sample4_postcode" th:value="${patientCommand.patientPost}" readonly="readonly"/><br /><hr/>
 전화번호 : <input type="tel" name="patientPhone" id="userPhone" th:value="${patientCommand.patientPhone}" placeholder="'-'제외 숫자 9~11자"/>
 <span style="color:red"  th:if="${#fields.hasErrors('patientPhone')}" th:errors="*{patientPhone}"></span> <br />
 
 성별: <input type="radio" name="patientGender" value="M" checked="checked"> 남
-	<input type="radio" name="patientGender" value="F"> 여
-			
-<input type="submit" value="환자등록" />
-</form>
+	<input type="radio" name="patientGender" value="F"> 여 
+<div class="form-group login-btn">
+<br/>
+											<button class="btn" type="submit" style="width:100%; background-color: #66785F ">환자등록</button>
+										</div>
+									</div>
+								</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 
 </body>
 </html>

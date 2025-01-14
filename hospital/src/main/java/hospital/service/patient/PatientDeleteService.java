@@ -19,5 +19,9 @@ public class PatientDeleteService {
 		patientMapper.patientDelete(patientNum);
 		
 	}
+	public void execute2(String patientNum) {
+		patientMapper.patientDelete(patientNum);
+		
+	}
 
 }

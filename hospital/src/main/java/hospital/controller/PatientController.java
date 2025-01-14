@@ -152,4 +152,9 @@ public class PatientController {
 		session.invalidate();
 		return "redirect:/";
 	}
+	@GetMapping("patientsDelete")
+	public String patientsDelete(@RequestParam(value="nums") String patientNum) {
+		patientDeleteService.execute2(patientNum);
+		return "redirect:/";
+	}
 }

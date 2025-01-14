@@ -50,8 +50,9 @@ function patientSelect(patientNum){
 </script>
 </head>
 <body>
-<a href="patientWrite">환자등록</a><br />
+
 <div align="center" style="font-size: 15px; margin: 15px">
+<a href="patientWrite">환자등록</a><br />
 환자목록 페이지 <br/>
 등록환자 수 : [[${count}]]
 </div>
@@ -64,10 +65,10 @@ function patientSelect(patientNum){
 		
 	</tr>
 	</form> 
- <form action="patientsDelete" method="post" id="frm"> 
+  
 	<tr style="background-color: #b2c9ad; color: black" align="center">
-		<td>번호</td><td>이름</td><td>아이디</td><td>생년월일</td> <td>주소</td><td>전화번호</td><td>성별</td>
-	
+		<td>번호</td><td>이름</td><td>아이디</td><td>생년월일</td> <td width="200px">주소</td><td>전화번호</td><td>성별</td>
+	<td>선택</td>
 	</tr>
 	<tr th:each=" dto : ${list}"  align="center">
 		
@@ -85,7 +86,7 @@ function patientSelect(patientNum){
 		</td>
 		
 	</tr>
- </form> 
+ 
 	 <tr align="center">
 		<th colspan="10">
 		<span th:if="${page <= 1}">[이전]</span>

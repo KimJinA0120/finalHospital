@@ -182,14 +182,14 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("doctorUpdate")
-	public String doctorUpdate(String empNum, Model model) {
+	public String doctorUpdate(@RequestParam(value="empNum") String empNum, Model model) {
 		employeeDetailService.doctorDetail(empNum, model);
 		return "thymeleaf/employee/doctorUpdate";
 	}
 	@PostMapping("doctorUpdate")
 	public String doctorUpdate(DoctorCommand doctorCommand) {
 		employeeUpdateService.doctorUpdate(doctorCommand);
-		return "redirect:employeeList";
+		return "redirect:doctorList";
 	}
 	
 	@GetMapping("empPwCon")
