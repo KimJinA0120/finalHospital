@@ -1,5 +1,9 @@
 package hospital.domain;
 
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.util.Date;
+
 import org.apache.ibatis.type.Alias;
 
 import lombok.Data;
@@ -12,4 +16,6 @@ public class StockDTO {
 	double price;
 	int volume;
 	long cumulativeVolume;
+	Timestamp createdDate;
+
 }

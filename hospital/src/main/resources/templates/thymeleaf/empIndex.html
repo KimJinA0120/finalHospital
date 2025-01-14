@@ -111,7 +111,7 @@ table tr:not(:first-child):not(:last-child):hover {
 				<div class="container">
 					<div class="inner">
 						<div class="row">
-							<div class="col-lg-3 col-md-3 col-12">
+							<div class="col-lg-3 col-md-10 col-12">
 								<!-- Start Logo -->
 								<div class="logo">
 									<a href="index.html"><img src="static/img/logo.png" alt="#"></a>
@@ -121,56 +121,92 @@ table tr:not(:first-child):not(:last-child):hover {
 								<div class="mobile-nav"></div>
 								<!-- End Mobile Nav -->
 							</div>
-							<div class="col-lg-7 col-md-9 col-12">
+							<div class="col-lg-8 col-md-9 col-12">
 								<!-- Main Menu -->
 								<div class="main-menu">
 									<nav class="navigation">
 										<ul class="nav menu">
+											<li><a href="#">접수/예약<i class="icofont-rounded-down"></i></a>
+												<ul class="dropdown">
+													<li><a href="receipt/receiptList">접수/예약관리</a></li>
+												</ul>
+											</li>
+											<li><a href="#">EMR<i class="icofont-rounded-down"></i></a>
+												<ul class="dropdown">
+													<th:block th:if="${session.auth != null}">
+														<th:block th:if="${session.auth.grade=='doc'}">
+															<li><a href="wardPS/hosPatList">병동처방</a></li>
+															<li><a href="medical/medicalList">외래진료</a></li>
+														</th:block>
+														<th:block th:if="${session.auth.grade=='nur'}">
+															<li><a href="wardPS/hosPatList">병동처방</a></li>
+															<li><a href="nursing/hosPatList">간호처방</a></li>
+															<li><a href="medical/medicalList">외래진료</a></li>
+														</th:block>
+														<th:block th:if="${session.auth.grade=='emp'}">
+															<li><a href="medical/medicalList">외래진료</a></li>
+														</th:block>
+														<!-- <th:block th:if="${session.auth.grade=='mdt'}">
+															<li><a href="wardPS/hosPatList">병동처방</a></li>
+															<li><a href="nursing/hosPatList">간호처방</a></li>
+															<li><a href="medical/medicalList">외래진료</a></li>
+														</th:block>
+														 -->
+													</th:block>
+												</ul>
+											</li>
 											<li><a href="#">수술<i class="icofont-rounded-down"></i></a>
 												<ul class="dropdown">
+													<th:block th:if="${session.auth != null}">
+														<th:block th:if="${session.auth.grade=='doc'}">
 													<li><a href="surgery/surgeryScheduler">수술스케쥴러</a></li>
-													<li><a href="surgery/surgeryAppointmentList">환자수술결과기록</a></li>
+													<li><a href="surgery/surgeryAppointmentList">수술예약</a></li>
 													<li><a href="surgery/surgeryList">환자수술결과기록</a></li>
 													<li><a href="surgery/operatingRoom">수술실</a></li>
+													</th:block>
+													</th:block>
 												</ul>
 											</li>
 											<li><a href="#">검사<i class="icofont-rounded-down"></i></a>
 												<ul class="dropdown">
-													<li><a href="surgery/operatingRoom">수술실</a></li>
+												<th:block th:if="${session.auth != null}">
+														<th:block th:if="${session.auth.grade=='mdt'}">
 													<li><a href="inspection/inspectionList">검사예약</a></li>
 													<li><a href="radiation/radiationList">방사선</a></li>
 													<li><a href="clinical/clinicalList">임상병리</a></li>
+													</th:block>
+													<th:block th:if="${session.auth.grade=='emp'}">
+													<li><a href="inspection/inspectionList">검사예약</a></li>
+													</th:block>
+													<th:block th:if="${session.auth.grade=='doc'}">
+													<li><a href="inspection/inspectionList">검사예약</a></li>
+													<li><a href="radiation/radiationList">방사선</a></li>
+													<li><a href="clinical/clinicalList">임상병리</a></li>
+													</th:block>
+												</th:block>
 												</ul>
 											</li>
-											<li><a href="#">처방/간호<i class="icofont-rounded-down"></i></a>
+											<li><a href="#">입원/병동/응급실<i class="icofont-rounded-down"></i></a>
 												<ul class="dropdown">
-													<li><a href="wardPS/hosPatList">병동처방</a></li>
-													<li><a href="nursing/hosPatList">간호처방 </a></li>
-												</ul>
-											</li>
-											<li><a href="#">입원/병동/병실/응급실<i class="icofont-rounded-down"></i></a>
-												<ul class="dropdown">
-													<li><a href="WardRoomBed/WardList">병동리스트</a></li>
+													<li><a href="WardRoomBed/WardList">병동관리</a></li>
 													<li><a href="Hospitalization/hospitalizationList">입원관리 </a></li>
 													<li><a href="Hospitalization/emerHospitalizationList">응급입원관리 </a></li>
 												</ul>
 											</li>
-											<li><a href="#">접수/외래진료/문의/차트<i class="icofont-rounded-down"></i></a>
+											<li><a href="#">문의<i class="icofont-rounded-down"></i></a>
 												<ul class="dropdown">
-													<li><a href="receipt/receiptList">(직원용)접수/예약목록</a></li>
-													<li><a href="qna/eqnaList">(직원용)문의/건의</a></li>
-													<li><a href="data/test">주식차트</a></li>
-													<li><a href="data/test1">주식표</a></li>
+												<th:block th:if="${session.auth != null}">
+													<th:block th:if="${session.auth.grade=='emp'}">
+													<li><a href="qna/eqnaList">문의/건의</a></li>
+													</th:block>
+												</th:block>
 												</ul>
 											</li>
 											<li><a href="#">사용자<i class="icofont-rounded-down"></i></a>
 												<ul class="dropdown">
 														<li><a href="employee/patientRegist">환자등록</a></li>
 														<li><a href="patient/patientList">환자목록</a></li>
-														<th:block th:if="${session.auth.grade=='emp'}">
-														<li><a href="employee/employeeWrite">직원등록</a></li>
 														<li><a href="employee/employeeList">직원목록</a></li>
-														</th:block>
 														<li><a href="employee/doctorList">의사목록</a></li>
 												</ul>
 											</li>

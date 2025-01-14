@@ -40,13 +40,6 @@
                 <td id="volumeCell">0</td>
                 <td id="tradingValueCell">0</td>
             </tr>
-            <tr>
-                <td>2025-01-10</td>
-                <td>55300</td>
-                <td>-1.45%</td>
-                <td>16059223</td>
-                <td>888075031900</td>
-            </tr>
         </tbody>
     </table>
 
@@ -71,10 +64,25 @@
         document.getElementById('volumeCell').textContent = totalVolume; 
         document.getElementById('tradingValueCell').textContent = totalTradingValue.toFixed(2); 
 
+        // 기존 데이터 로드
+        const existingData = JSON.parse(localStorage.getItem('stockData')) || [];
+        existingData.forEach(data => {
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>${data.date}</td>
+                <td>${data.price}</td>
+                <td>${data.changeRate}</td>
+                <td>${data.volume}</td>
+                <td>${data.tradingValue}</td>
+            `;
+            document.getElementById('stockBody').appendChild(newRow);
+        });
+
         socket.onmessage = function(event) {
             const message = JSON.parse(event.data);
             const currentDate = new Date().toISOString().slice(0, 10); // 오늘 날짜
-
+            const price = parseFloat(message.price);
+            
             // 하루가 바뀌었는지 확인
             if (currentDate !== localStorage.getItem('lastDate')) {
                 // 하루가 바뀌었으면 초기화
@@ -82,10 +90,11 @@
 
                 // 새로운 행 추가
                 const newRow = document.createElement('tr');
+                const changeRate = ((price - lastPrice) / lastPrice * 100).toFixed(2);
                 newRow.innerHTML = `
                     <td>${previousDate}</td>
                     <td>${lastPrice}</td>
-                    <td>${((price - lastPrice) / lastPrice * 100).toFixed(2)}%</td>
+                    <td>${changeRate}%</td>
                     <td>${totalVolume}</td>
                     <td>${totalTradingValue.toFixed(2)}</td>
                 `;
@@ -95,13 +104,25 @@
                 localStorage.setItem('lastDate', currentDate);
                 localStorage.setItem('lastPrice', price); // 현재 가격을 전날 가격으로 저장
 
+                // 기존 데이터를 localStorage에 저장
+                existingData.push({
+                    date: previousDate,
+                    price: lastPrice,
+                    changeRate: changeRate,
+                    volume: totalVolume,
+                    tradingValue: totalTradingValue.toFixed(2)
+                });
+                localStorage.setItem('stockData', JSON.stringify(existingData));
+
                 // 초기화
                 totalVolume = 0; 
                 totalTradingValue = 0; 
+                
+                // lastPrice 업데이트
+                lastPrice = price; // 현재 가격을 전날의 마지막 가격으로 업데이트
             }
 
             // 데이터 업데이트
-            const price = parseFloat(message.price);
             document.getElementById('dateCell').textContent = currentDate; 
             document.getElementById('priceCell').textContent = price; 
 
@@ -121,7 +142,9 @@
             // localStorage에 누적 값 저장
             localStorage.setItem('totalVolume', totalVolume);
             localStorage.setItem('totalTradingValue', totalTradingValue);
-            // lastPrice는 전날의 마지막 가격으로 유지
+            
+       
+
         };
     </script>
 </body>

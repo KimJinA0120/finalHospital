@@ -1,5 +1,6 @@
 package hospital.data;
 import java.net.InetSocketAddress;
+import java.sql.Timestamp;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.Properties;
@@ -127,9 +128,14 @@ public class KafkaWebSocketServer extends WebSocketServer {
                                         break;
                                     default:
                                         System.out.println("Unknown key: " + key);
+                                       
                                 }
                             }
                         }
+                        
+                       
+                        stockDTO.setCreatedDate(new Timestamp(System.currentTimeMillis()));
+                        
                         //System.out.println("stockData = " + stockData.toString());
                         // Kafka 메시지를 WebSocket 클라이언트들에게 브로드캐스트
                         // db insert
