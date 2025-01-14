@@ -55,8 +55,9 @@ public class HospitalizationController {
 	public String emerhospitalizationList(
 			@RequestParam(value = "page", required = false, defaultValue = "1") Integer page
 			, @RequestParam(value = "searchWord", required = false) String searchWord
+			, @RequestParam(value = "kind", required = false) String kind
 			,Model model) {
-		emerHospitalizationListService.execute(page, searchWord, model);
+		emerHospitalizationListService.execute(page, searchWord, kind, model);
 		return "thymeleaf/hospitalization/emerHospitalizationList";
 	}
 	@RequestMapping("emerHospitalizationForm") // 응급입원 등록 화면
@@ -98,8 +99,9 @@ public class HospitalizationController {
 	public String hospitalizationList(
 			@RequestParam(value = "page", required = false, defaultValue = "1") Integer page
 			, @RequestParam(value = "searchWord", required = false) String searchWord
-			,Model model) {
-		hospitalizationListService.execute(page, searchWord, model);
+			, @RequestParam(value = "kind", required = false) String kind
+			, Model model) {
+		hospitalizationListService.execute(page, searchWord, kind, model);
 		return "thymeleaf/hospitalization/hospitalizationList";
 	}
 	@GetMapping("hospitalizationForm") // 입원 등록 화면

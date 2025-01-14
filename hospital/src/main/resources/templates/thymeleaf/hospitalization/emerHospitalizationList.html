@@ -60,6 +60,11 @@ $(function(){
 <br>
 <form action="emerHospitalizationList" method="get" align="center">
 		<tr>
+		<select name="kind">
+			<option>모두</option>
+			<option>입원</option>
+			<option>퇴원</option>
+		</select>
 			<td colspan=5>
 				<input type="search" name="searchWord" size=60 th:value="${searchWord}"/>
 				<input type="submit" value="검색" class="btn" style="background-color: #4b5945; color: white" />
@@ -76,7 +81,8 @@ $(function(){
 	<td>[[${dto.emerPatientNum}]]</a></td>
 	<td>[[${dto.patientNum}]]</td>
 	<td>[[${dto.emerBedNum}]]</td>
-	<td>[[${dto.hospitalizationStatus}]]</td>
+	<td th:if="${dto.hospitalizationStatus}=='입원'" style="color: green">[[${dto.hospitalizationStatus}]]</td>
+	<td th:if="${dto.hospitalizationStatus}=='퇴원'" style="color: red">[[${dto.hospitalizationStatus}]]</td>
 </tr>
 <tr>
 		<th colspan="5" style="text-align: center;">

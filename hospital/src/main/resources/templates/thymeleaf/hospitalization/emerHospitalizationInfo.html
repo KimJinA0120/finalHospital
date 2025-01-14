@@ -68,7 +68,8 @@
 <tr align="center"><th>퇴원날짜
 <td>[[${#dates.format(dto.outDate, 'yyyy-MM-dd')}]]</td></tr>
 <tr align="center"><th>입원상태
-<td>[[${dto.hospitalizationStatus}]]</td></tr>
+<td th:if="${dto.hospitalizationStatus}=='입원'" style="color: green">[[${dto.hospitalizationStatus}]]</td>
+	<td th:if="${dto.hospitalizationStatus}=='퇴원'" style="color: red">[[${dto.hospitalizationStatus}]]</td></tr>
 <tr align="center"><th>담당의사
 <td>[[${dto.docNum}]]</td></tr>
 <tr align="center"><th>담당간호사

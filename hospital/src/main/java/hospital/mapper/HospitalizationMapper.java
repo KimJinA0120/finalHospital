@@ -3,6 +3,7 @@ package hospital.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import hospital.domain.EmergencyPatientDTO;
 import hospital.domain.HospitalizationDTO;
@@ -22,8 +23,10 @@ public interface HospitalizationMapper {
 	public void emerUpdate(EmergencyPatientDTO dto);
 	public void emerDelete(String emerPatientNum);
 	
-	public int hospitalizatonCount(String searchWord);
-	public int emerHospitalizatonCount(String searchWord);
+	public int hospitalizatonCount(@Param("searchWord") String searchWord
+								, @Param("kind") String kind);
+	public int emerHospitalizatonCount(@Param("searchWord") String searchWord
+								, @Param("kind") String kind);
 	
 	public void bedStatusUpdate(HospitalizationDTO dto);
 	public void emerBedStatusUpdate(EmergencyPatientDTO dto);

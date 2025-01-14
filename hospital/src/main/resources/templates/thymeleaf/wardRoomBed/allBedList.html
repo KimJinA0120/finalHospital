@@ -55,12 +55,13 @@ $(function(){
 		<th>병상 번호</th>
 		<th>병실 번호</th>
 		<th>병상 상태</th>
-		<th><input type="checkbox" id="checkBoxs"/><input type="submit" value="선택삭제" class="btn" style="height:30px; text-align:center; padding: .200rem .75rem; background-color: #4b5945; color: white;"/></th>
+		<th><input type="checkbox" id="checkBoxs"/><input type="submit" value="선택삭제" class="btn" style="height:30px; text-align:center; padding: .200rem .75rem; background-color: #66785f; color: white;"/></th>
 		</tr>
 		<tr th:each="dto : ${list}" align="center">
 			<td>[[${dto.bedNum}]]</td>
 			<td>[[${dto.roomNum}]]</td>
-			<td>[[${dto.bedStatus}]]</td>
+			<td th:if="${dto.bedStatus}=='사용중'" style="color: red">[[${dto.bedStatus}]]</td>
+			<td th:if="${dto.bedStatus}=='사용가능'" style="color: green">[[${dto.bedStatus}]]</td>
 			<td><input type="checkbox" name="nums" th:value="${dto.bedNum}" /></td>
 		</tr>
 	</table>
@@ -74,12 +75,13 @@ $(function(){
 		<th>응급병상 번호</th>
 		<th>병동 번호</th>
 		<th>응급병상 상태</th>
-		<th><input type="checkbox" id="checkBoxs"/><input type="submit" value="선택삭제" class="btn" style="height:30px; text-align:center; padding: .200rem .75rem; background-color: #4b5945; color: white;"/></th>
+		<th><input type="checkbox" id="checkBoxs"/><input type="submit" value="선택삭제" class="btn" style="height:30px; text-align:center; padding: .200rem .75rem; background-color: #66785f; color: white;"/></th>
 		</tr>
 		<tr th:each="dto : ${emerlist}" align="center">
 			<td>[[${dto.emerBedNum}]]</td>
 			<td>[[${dto.wardNum}]]</td>
-			<td>[[${dto.emerBedStatus}]]</td>
+			<td th:if="${dto.emerBedStatus}=='사용중'" style="color: red">[[${dto.emerBedStatus}]]</td>
+			<td th:if="${dto.emerBedStatus}=='사용가능'" style="color: green">[[${dto.emerBedStatus}]]</td>
 			<td><input type="checkbox" name="nums" th:value="${dto.emerBedNum}" /></td>
 		</tr>
 	</table>

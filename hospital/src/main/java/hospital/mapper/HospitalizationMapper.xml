@@ -23,7 +23,15 @@
 	<trim prefix="where" prefixOverrides="AND | OR">
 		<if test="searchWord != null">
 		(HOSPITALIZATION_NUM like '%' || #{searchWord} ||'%'
-		or PATIENT_NUM like '%' || #{searchWord} || '%')
+		or PATIENT_NUM like '%' || #{searchWord} || '%'
+		or BED_NUM like '%' || #{searchWord} || '%'
+		or HOSPITALIZATION_STATUS like '%' || #{searchWord} || '%')
+		</if>
+		<if test="kind == '입원'">
+			and HOSPITALIZATION_STATUS = '입원'
+		</if>
+		<if test="kind == '퇴원'">
+			and HOSPITALIZATION_STATUS = '퇴원'
 		</if>
 	</trim>
 	)
@@ -36,6 +44,12 @@
 		<if test="searchWord != null">
 		(HOSPITALIZATION_NUM like '%' || #{searchWord} ||'%'
 		or PATIENT_NUM like '%' || #{searchWord} || '%')
+		</if>
+		<if test="kind == '입원'">
+			and HOSPITALIZATION_STATUS = '입원'
+		</if>
+		<if test="kind == '퇴원'">
+			and HOSPITALIZATION_STATUS = '퇴원'
 		</if>
 	</trim>
 </select>
@@ -78,7 +92,15 @@
 	<trim prefix="where" prefixOverrides="AND | OR">
 	<if test="searchWord != null">
 		(EMERPATIENT_NUM like '%' || #{searchWord} ||'%'
-		or PATIENT_NUM like '%' || #{searchWord} || '%')
+		or PATIENT_NUM like '%' || #{searchWord} || '%'
+		or EMERBED_NUM like '%' || #{searchWord} || '%'
+		or HOSPITALIZATION_STATUS like '%' || #{searchWord} || '%')
+	</if>
+	<if test="kind == '입원'">
+			and HOSPITALIZATION_STATUS = '입원'
+	</if>
+	<if test="kind == '퇴원'">
+			and HOSPITALIZATION_STATUS = '퇴원'
 	</if>
 	</trim>
 	)
@@ -91,6 +113,12 @@
 	<if test="searchWord != null">
 		(EMERPATIENT_NUM like '%' || #{searchWord} ||'%'
 		or PATIENT_NUM like '%' || #{searchWord} || '%')
+	</if>
+	<if test="kind == '입원'">
+			and HOSPITALIZATION_STATUS = '입원'
+	</if>
+	<if test="kind == '퇴원'">
+			and HOSPITALIZATION_STATUS = '퇴원'
 	</if>
 	</trim>
 </select>

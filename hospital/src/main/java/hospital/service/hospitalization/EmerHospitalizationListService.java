@@ -18,12 +18,12 @@ public class EmerHospitalizationListService {
 	@Autowired
 	StartEndPageService startEndPageService;
 	
-	public void execute(Integer page, String searchWord, Model model) {
+	public void execute(Integer page, String searchWord, String kind, Model model) {
 		int limit = 10;
-		StartEndPageDTO sepDTO = startEndPageService.execute(page, limit, searchWord, null);
+		StartEndPageDTO sepDTO = startEndPageService.execute(page, limit, searchWord, kind);
 		List<HospitalizationDTO> list = hospitalizationMapper.emerHospitalizationSelectList(sepDTO);
-		int count = hospitalizationMapper.emerHospitalizatonCount(searchWord);
-		startEndPageService.execute(page, limit, count, searchWord, list, model, null);
+		int count = hospitalizationMapper.emerHospitalizatonCount(searchWord, kind);
+		startEndPageService.execute(page, limit, count, searchWord, list, model, kind);
 	}
 
 }
