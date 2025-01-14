@@ -45,7 +45,8 @@ $(function(){
 		<tr align="center" style="background-color: #b2c9ad; color: black">
 		<th>병동 번호</th>
 		<th>병동위치</th>
-		<th><input type="checkbox" id="checkBoxs"/><input type="submit" value="선택삭제"/></th>
+		<th><input type="checkbox" id="checkBoxs"/>
+		<input type="submit" value="선택삭제" class="btn" style="height:30px; text-align:center; padding: .200rem .75rem; background-color: #4b5945; color: white;"/></th>
 		</tr>
 		<tr th:each="dto : ${list}" align="center">
 			<td><a th:href="|roomList?wardNum=${dto.wardNum}|">[[${dto.wardNum}]]</a></td>
@@ -65,8 +66,8 @@ $(function(){
 <td><a href="../WardRoomBed/emerBedForm" class="btn col-11" style="background-color: #4b5945; color: white">응급병상추가</a></td></tr>
 <tr><td colspan="2"> <br> </td></tr>
 <tr align="center">
-<td><a href="../WardRoomBed/allroomList" class="btn col-11" style="background-color: #4b5945; color: white">모든병실보기</a></td>
-<td><a href="../WardRoomBed/allBedList" class="btn col-11" style="background-color: #4b5945; color: white">모든병상보기</a></td></tr>
+<td><a href="../WardRoomBed/allroomList" class="btn col-11" style="background-color: #0A122A; color: white">모든병실보기</a></td>
+<td><a href="../WardRoomBed/allBedList" class="btn col-11" style="background-color: #0A122A; color: white">모든병상보기</a></td></tr>
 </table>
 <div id="getFooter"></div>
 </body>

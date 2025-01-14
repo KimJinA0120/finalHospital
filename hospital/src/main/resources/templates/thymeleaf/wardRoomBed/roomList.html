@@ -48,7 +48,8 @@ $(function(){
 		<th align="center">병동 번호</th>
 		<th align="center">병실 번호</th>
 		<th align="center">병실 위치</th>
-		<th align="center"><input type="checkbox" id="checkBoxs"/><input type="submit" value="선택삭제"/></th>
+		<th align="center"><input type="checkbox" id="checkBoxs"/>
+		<input type="submit" value="선택삭제" class="btn" style="height:30px; text-align:center; padding: .200rem .75rem; background-color: #4b5945; color: white;"/></th>
 		</tr>
 		<tr th:each="dto : ${list}">
 			<td align="center">[[${dto.wardNum}]]</td>

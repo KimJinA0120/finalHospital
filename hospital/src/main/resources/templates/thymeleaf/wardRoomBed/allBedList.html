@@ -47,16 +47,15 @@ $(function(){
 </head>
 <body>
 <div id="getHeader"></div> 
-<div1 align="center">
-일반병상리스트
-</div1>
+<h3 align="center">일반병상리스트</h3>
+<br>
 	<table border="1" class="container col-6"  align="center">
 	<form action="bedsDelete" method="post" id="frm">
 		<tr align="center" style="background-color: #b2c9ad; color: black">
 		<th>병상 번호</th>
 		<th>병실 번호</th>
 		<th>병상 상태</th>
-		<th><input type="checkbox" id="checkBoxs"/><input type="submit" value="선택삭제"/></th>
+		<th><input type="checkbox" id="checkBoxs"/><input type="submit" value="선택삭제" class="btn" style="height:30px; text-align:center; padding: .200rem .75rem; background-color: #4b5945; color: white;"/></th>
 		</tr>
 		<tr th:each="dto : ${list}" align="center">
 			<td>[[${dto.bedNum}]]</td>
@@ -67,16 +66,15 @@ $(function(){
 	</table>
 	</form>
 	<br>
-<div1 align="center">
-응급병상리스트
-</div1>
+<h3 align="center">응급병상리스트</h3>
+<br>
 	<table border="1" class="container col-6"  align="center">
 	<form action="emerbedsDelete" method="post" id="frm">
 		<tr  align="center" style="background-color: #b2c9ad; color: black">
 		<th>응급병상 번호</th>
 		<th>병동 번호</th>
 		<th>응급병상 상태</th>
-		<th><input type="checkbox" id="checkBoxs"/><input type="submit" value="선택삭제"/></th>
+		<th><input type="checkbox" id="checkBoxs"/><input type="submit" value="선택삭제" class="btn" style="height:30px; text-align:center; padding: .200rem .75rem; background-color: #4b5945; color: white;"/></th>
 		</tr>
 		<tr th:each="dto : ${emerlist}" align="center">
 			<td>[[${dto.emerBedNum}]]</td>

@@ -2,7 +2,43 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>직원 검색</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="keywords" content="Site keywords here">
+<meta name="description" content="">
+<meta name='copyright' content=''>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Favicon -->
+<link rel="icon" href="static/img/favicon.png">
+		
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="/static/css/bootstrap-green.min.css">
+<!-- Nice Select CSS -->
+<link rel="stylesheet" href="/static/css/nice-select.css">
+<!-- Font Awesome CSS -->
+<link rel="stylesheet" href="/static/css/font-awesome.min.css">
+<!-- icofont CSS -->
+<link rel="stylesheet" href="/static/css/icofont.css">
+<!-- Slicknav -->
+<link rel="stylesheet" href="/static/css/slicknav.min.css">
+<!-- Owl Carousel CSS -->
+<link rel="stylesheet" href="/static/css/owl-carousel.css">
+<!-- Datepicker CSS -->
+<link rel="stylesheet" href="/static/css/datepicker.css">
+<!-- Animate CSS -->
+<link rel="stylesheet" href="/static/css/animate.min.css">
+<!-- Magnific Popup CSS -->
+<link rel="stylesheet" href="/static/css/magnific-popup.css">
+		
+<!-- Medipro CSS -->
+<link rel="stylesheet" href="/static/css/normalize-green.css">
+<link rel="stylesheet" href="/static/css/style-green.css">
+<link rel="stylesheet" href="/static/css/responsive-green.css">
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script type="text/javascript" src="/static/js/checkbox.js"></script>
 <script type="text/javascript">
@@ -15,22 +51,22 @@ function employeeSelect(empNum,empName){
 </head>
 <body>
 <!-- 직원수 : [[${count}]]<br /> -->
-<table border=1 width="600">
+<table border=1 class="container col-8">
 	 <form action="employeeSearch" method="get">
-	<tr>
-		<td colspan="10">직원 검색:
-			<input type="search" name="searchWord" size=60 th:value="${searchWord}">
-			<input type="search" name="kind" th:value="${kind}" hidden="hidden">
-			<input type="submit" value="검색">
+	<tr  align="center">
+		<td style="background-color: #4b5945; color: white">직원 검색:</td>
+			<td colspan="6"><input type="search" name="searchWord" size=60 th:value="${searchWord}">
+			<input type="search" name="kind" th:value="${kind}" hidden="hidden"></td>
+			<td><input type="submit" value="검색" class="btn" style="background-color: #4b5945; color: white"></td>
 		</td>
 	</tr>
 	</form> 
 
-	<tr>
+	<tr style="background-color: #b2c9ad; color: black" align="center">
 		<td>번호</td><td>이름</td><td>직무</td><td>소속과</td><td>전화번호</td><td>성별</td><td>입사일</td>
 		
 	</tr>
-	<tr th:each=" dto : ${list}">
+	<tr th:each=" dto : ${list}" align="center">
 	
 		<td><a name="empNum" id="empNum" href="#"
 		th:onclick="employeeSelect([[${dto.empNum}]],[[${dto.empName}]])">[[${dto.empNum}]]</a></td>
@@ -41,10 +77,12 @@ function employeeSelect(empNum,empName){
 		<td>[[${dto.empPhone}]]</td>
 		<td>[[${dto.empGender}]]</td>
 		<td>[[${#dates.format(dto.empHiredate,'yyyy-MM-dd')}]]</td>
-		
+		<td><button type="button" 
+					th:attr="onclick=|javascript:employeeSelect([['${dto.empNum}']],[['${dto.empName}']])|" class="btn">선택</button>
+		</td>
 	</tr>
 
-	 <tr>
+	 <tr align="center">
 		<th colspan="10">
 		<span th:if="${page <= 1}">[이전]</span>
 		<span th:if="${page > 1}">
