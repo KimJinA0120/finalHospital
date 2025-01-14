@@ -2,14 +2,70 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="keywords" content="Site keywords here">
+<meta name="description" content="">
+<meta name='copyright' content=''>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Favicon -->
+<link rel="icon" href="static/img/favicon.png">
+		
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="/static/css/bootstrap-green.min.css">
+<!-- Nice Select CSS -->
+<link rel="stylesheet" href="/static/css/nice-select.css">
+<!-- Font Awesome CSS -->
+<link rel="stylesheet" href="/static/css/font-awesome.min.css">
+<!-- icofont CSS -->
+<link rel="stylesheet" href="/static/css/icofont.css">
+<!-- Slicknav -->
+<link rel="stylesheet" href="/static/css/slicknav.min.css">
+<!-- Owl Carousel CSS -->
+<link rel="stylesheet" href="/static/css/owl-carousel.css">
+<!-- Datepicker CSS -->
+<link rel="stylesheet" href="/static/css/datepicker.css">
+<!-- Animate CSS -->
+<link rel="stylesheet" href="/static/css/animate.min.css">
+<!-- Magnific Popup CSS -->
+<link rel="stylesheet" href="/static/css/magnific-popup.css">
+		
+<!-- Medipro CSS -->
+<link rel="stylesheet" href="/static/css/normalize-green.css">
+<link rel="stylesheet" href="/static/css/style-green.css">
+<link rel="stylesheet" href="/static/css/responsive-green.css">
+
 <title>방사선 검사결과 상세보기</title>
+
+<style type="text/css">
+	th{
+		background-color: #b2c9ad;
+		color: black;
+	}
+	table{
+		font-size: 15px;
+	}
+	div{
+		font-size: 25px;
+		margin: 10px;
+		color: black;
+	}
+</style>
+
 </head>
 <body>
-<table border="1" width="600" align="center">
-	<tr><th>방사선 번호</th><td>[[${dto.radiationNum}]]</td></tr>
-	<tr><th>소견서 내용</th><td>[[${dto.decodeContent}]]</td></tr>
-	<tr><th>의료기사</th><td>[[${dto.empNum}]]</td></tr>
-	<tr><th>검사예약번호</th><td><a th:href="|../inspection/inspectionDetail?inspectionNum=${dto.inspectionNum}|">[[${dto.inspectionNum}]]</a></td></tr>
+<div align="center" style="margin-top: 10%">
+방사선검사 결과내용 상세보기<br><br>
+<a href="radiationList" class="btn">리스트로 돌아가기</a>
+</div>
+<table border="1" class="container col-4">
+	<tr align="center"><th>방사선 번호</th><td>[[${dto.radiationNum}]]</td></tr>
+	<tr align="center"><th>소견서 내용</th><td>[[${dto.decodeContent}]]</td></tr>
+	<tr align="center"><th>의료기사</th><td>[[${dto.empNum}]]</td></tr>
+	<tr align="center"><th>검사예약번호</th><td><a th:href="|../inspection/inspectionDetail?inspectionNum=${dto.inspectionNum}|">[[${dto.inspectionNum}]]</a></td></tr>
 </table>
 </body>
 </html>

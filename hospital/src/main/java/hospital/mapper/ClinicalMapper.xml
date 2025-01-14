@@ -30,6 +30,13 @@
 </select>
 <select id="clinicalOneSelect" parameterType="string" resultType="clinical">
 	select <include refid="clinicalColumns"/> from clinical
-	where clinical_num = #{clinicalNum}
+	<trim prefix="where" prefixOverrides="AND | OR">
+		<if test="clinicalNum != null">
+			clinical_num = #{clinicalNum}
+		</if>
+		<if test="inspectionNum != null">
+			inspection_num = #{inspectionNum}
+		</if>
+	</trim>
 </select>
 </mapper>

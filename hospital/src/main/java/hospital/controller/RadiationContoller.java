@@ -45,8 +45,8 @@ public class RadiationContoller {
 		return "redirect:radiationList";
 	}
 	@GetMapping("radiationDetail")
-	public String radiationDetail(String radiationNum, Model model) {
-		radiationDetailService.execute(radiationNum, model);
+	public String radiationDetail(String radiationNum, String inspectionNum, Model model) {
+		radiationDetailService.execute(radiationNum, inspectionNum, model);
 		return "thymeleaf/radiation/radiationDetail";
 	}
 }

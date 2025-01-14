@@ -3,19 +3,64 @@
 <head>
 <meta charset="UTF-8">
 <title>방사선 검사 리스트</title>
+
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$.ajax({
+		type : "get",
+		url: "../getHeader",
+		dataType:"html",
+		success:function(result){
+			$("#getHeader").html(result);
+		},
+		error:function(){
+			alert("서버오류");
+		}
+	});
+	
+});
+$(function(){
+	$.ajax({
+			type : "get",
+			url: "../getFooter",
+			dataType:"html",
+			success:function(result){
+				$("#getFooter").html(result);
+			},
+			error:function(){
+				alert("서버오류");
+			}
+		});
+});
+function selectNum(radiationNum){
+	location.href="radiationDetail?radiationNum="+radiationNum;
+}
+</script>
+
+<style type="text/css">
+table, td, th {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+table tr:not(:first-child):hover {
+    background-color: #E2E2E2;
+}
+</style>
+
 </head>
 <body>
-<table border="1" width="600" align="center">
-	<tr><th>방사선 번호</th><th>검사명</th><th>의료기사</th><th>검사날짜</th></tr>
-	<tr th:each="dto : ${list}">
-		<td><a th:href="|radiationDetail?radiationNum=${dto.radiationDTO.radiationNum}|">[[${dto.radiationDTO.radiationNum}]]</a></td>
+<div id="getHeader"></div>
+<div align="center" style="font-size: 25px;margin: 10px;color: black;margin-top: 5%">방사선 검사결과 기록</div>
+<table border="1" class="container col-6">
+	<tr align="center"><th>방사선 번호</th><th>검사명</th><th>의료기사</th><th>검사날짜</th></tr>
+	<tr th:each="dto : ${list}" align="center" th:onclick="selectNum([[${dto.radiationDTO.radiationNum}]])">
+		<td>[[${dto.radiationDTO.radiationNum}]]</td>
 		<td>[[${dto.inspectionDTO.inspectionName}]]</td>
 		<td>[[${dto.radiationDTO.empNum}]]</td>
 		<td>[[${#temporals.format(dto.inspectionDTO.inspectionDate,'yyyy-MM-dd HH:mm')}]]</td>
 	</tr>
 </table>
-<div align="center">
-<a href="../inspection/inspectionList">검사 예약 리스트로 돌아가기</a>
-</div>
+<div id="getFooter"></div>
 </body>
 </html>

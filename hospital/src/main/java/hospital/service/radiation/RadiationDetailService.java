@@ -11,8 +11,8 @@ import hospital.mapper.RadiationMapper;
 public class RadiationDetailService {
 	@Autowired
 	RadiationMapper radiationMapper;
-	public void execute(String radiationNum, Model model) {
-		RadiationDTO dto = radiationMapper.radiationOneSelect(radiationNum);
+	public void execute(String radiationNum, String inspectionNum, Model model) {
+		RadiationDTO dto = radiationMapper.radiationOneSelect(radiationNum, inspectionNum);
 		model.addAttribute("dto", dto);
 	}
 }

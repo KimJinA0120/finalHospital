@@ -2,13 +2,60 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
+<style type="text/css">
+table, td, th {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+table tr:not(:first-child):not(:last-child):hover {
+    background-color: #E2E2E2;
+}
+</style>
+
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$.ajax({
+		type : "get",
+		url: "../getHeader",
+		dataType:"html",
+		success:function(result){
+			$("#getHeader").html(result);
+		},
+		error:function(){
+			alert("서버오류");
+		}
+	});
+	
+});
+$(function(){
+	$.ajax({
+			type : "get",
+			url: "../getFooter",
+			dataType:"html",
+			success:function(result){
+				$("#getFooter").html(result);
+			},
+			error:function(){
+				alert("서버오류");
+			}
+		});
+});
+function selectNum(inspectionNum){
+	location.href="inspectionDetail?inspectionNum="+inspectionNum;
+}
+</script>
+
+
 <title>검사예약 리스트</title>
 </head>
 <body>
+<div id="getHeader"></div>
 <div align="center">
-	<a href="inspectionWrite">검사예약</a> <br>
-	<a href="/">홈으로</a>
+	<a href="inspectionWrite" class="btn" style="background-color: #4b5945; color: white">검사예약 하러가기</a> <br>
 </div>
+
 <br>
 	<form action="inspectionList" method="get" align="center">
 			<tr>
@@ -22,21 +69,21 @@
 				<td colspan="4">
 					검색 : 
 					<input type="search" name="searchWord" size="50" th:value="${searchWord}"/>
-					<input type="submit" value="검색"/>
+					<input type="submit" value="검색" style="background-color: #4b5945; color: white" class="btn"/>
 				</td>
 			</tr>
 	</form>
 	<br>
-	<table border="1" width="600" align="center">
-		<tr><th>검사종류</th><th>검사예약번호</th><th>검사명</th><th>검사날짜</th><th>검사시행상황</th></tr>
-		<tr th:each="dto : ${list}">
+	<table border="1" class="container col-8">
+		<tr  align="center"><th>검사종류</th><th>검사예약번호</th><th>검사명</th><th>검사날짜</th><th>검사시행상황</th></tr>
+		<tr th:each="dto : ${list}"  align="center" th:onclick="selectNum([[${dto.inspectionNum}]])">
 			<th th:if="${dto.inspectionKind=='cinical'}">
 				임상병리
 			</th>
 			<th th:if="${dto.inspectionKind=='radiation'}">
 				방사선
 			</th>
-			<th><a th:href="|inspectionDetail?inspectionNum=${dto.inspectionNum}|">[[${dto.inspectionNum}]]</a></th>
+			<th>[[${dto.inspectionNum}]]</th>
 			<th>[[${dto.inspectionName}]]</th>
 			<th>[[${#temporals.format(dto.inspectionDate,'yyyy-MM-dd HH:mm')}]]</th>
 			<th>[[${dto.inspectionStatus}]]</th>
@@ -61,5 +108,6 @@
 			</th:block>
 		</tr>
 	</table>
+<div id="getFooter"></div>
 </body>
 </html>

@@ -62,8 +62,12 @@ $(function(){
 			type: "POST",
 			url: "surgeryWrite",
 			success: function(result){
-				window.opener.location.reload();
-				window.self.close();
+				if(window.opener){
+					window.opener.location.reload();
+					window.self.close();
+				}else{
+					location.href="surgeryList";	
+				}
 			},
 			error: function(){
 				alert("서버오류");

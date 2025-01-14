@@ -18,7 +18,7 @@ public class InsepctionListService {
 	@Autowired
 	StartEndPageService startEndPageService;
 	public void execute(int page, String searchWord, String kind, Model model) {
-		int limit = 3;
+		int limit = 10;
 		StartEndPageDTO sepDTO = startEndPageService.execute(page, limit, searchWord, kind);
 		
 		List<InspectionDTO> list = inspectionMapper.inspectionAllSelect(sepDTO);

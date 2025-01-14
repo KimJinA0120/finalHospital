@@ -2,29 +2,85 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="keywords" content="Site keywords here">
+<meta name="description" content="">
+<meta name='copyright' content=''>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Favicon -->
+<link rel="icon" href="static/img/favicon.png">
+		
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="/static/css/bootstrap-green.min.css">
+<!-- Nice Select CSS -->
+<link rel="stylesheet" href="/static/css/nice-select.css">
+<!-- Font Awesome CSS -->
+<link rel="stylesheet" href="/static/css/font-awesome.min.css">
+<!-- icofont CSS -->
+<link rel="stylesheet" href="/static/css/icofont.css">
+<!-- Slicknav -->
+<link rel="stylesheet" href="/static/css/slicknav.min.css">
+<!-- Owl Carousel CSS -->
+<link rel="stylesheet" href="/static/css/owl-carousel.css">
+<!-- Datepicker CSS -->
+<link rel="stylesheet" href="/static/css/datepicker.css">
+<!-- Animate CSS -->
+<link rel="stylesheet" href="/static/css/animate.min.css">
+<!-- Magnific Popup CSS -->
+<link rel="stylesheet" href="/static/css/magnific-popup.css">
+		
+<!-- Medipro CSS -->
+<link rel="stylesheet" href="/static/css/normalize-green.css">
+<link rel="stylesheet" href="/static/css/style-green.css">
+<link rel="stylesheet" href="/static/css/responsive-green.css">
+
 <title>검사예약 수정</title>
+
+<style type="text/css">
+	th{
+		background-color: #b2c9ad;
+		color: black;
+	}
+	table{
+		font-size: 15px;
+	}
+	div{
+		font-size: 25px;
+		margin: 10px;
+		color: black;
+	}
+</style>
+
 </head>
 <body>
-<div align="center">
-	<a th:href="|inspectionDetail?inspectionNum=${dto.inspectionNum}|">상세페이지로 돌아가기</a>
+<div align="center" style="color: black; margin-top: 10%">
+	검사예약 수정 <br><br>
+	<a th:href="|inspectionDetail?inspectionNum=${dto.inspectionNum}|" class="btn">상세페이지로 돌아가기</a>
 </div>
+
+	
+
 <form action="inspectionUpdate" method="post">
-<table border="1" width="600" align="center">
-	<tr><th>검사예약번호</th>
-		<td><input type="text" name="inspectionNum" th:value="${dto.inspectionNum}" readonly="readonly"/></td></tr>
-	<tr><th>검사명</th>
-		<td><input type="text" name="inspectionName" th:value="${dto.inspectionName}"/></td></tr>
-	<tr><th>검사날짜</th>
-		<td><input type="datetime-local" name="inspectionDate" th:value="${#temporals.format(dto.inspectionDate,'yyyy-MM-dd HH:mm')}"/></td></tr>
+<table border="1" class="container col-6" style="margin-top: 10px;">
+	<tr align="center"><th>검사예약번호</th>
+		<td><input type="text" name="inspectionNum" th:value="${dto.inspectionNum}" readonly="readonly" class="col-12"/></td></tr>
+	<tr align="center"><th>검사명</th>
+		<td><input type="text" name="inspectionName" th:value="${dto.inspectionName}" class="col-12"/></td></tr>
+	<tr align="center"><th>검사날짜</th>
+		<td><input type="datetime-local" name="inspectionDate" th:value="${#temporals.format(dto.inspectionDate,'yyyy-MM-dd HH:mm')}" class="col-12"/></td></tr>
 	<th:block th:if="${dto.wardprescriptNum!=null}">
-	<tr><th>병동처방번호</th>
-		<td><input type="text" name="wardprescriptNum" th:value="${dto.wardprescriptNum}" readonly="readonly"/></td></tr>
+	<tr align="center"><th>병동처방번호</th>
+		<td><input type="text" name="wardprescriptNum" th:value="${dto.wardprescriptNum}" readonly="readonly" class="col-12"/></td></tr>
 	</th:block>
 	<th:block th:if="${dto.medicalNum!=null}">
-	<tr><th>진료번호</th>
-		<td><input type="text" name="medicalNum" th:value="${dto.medicalNum}" readonly="readonly"/></td></tr>
+	<tr align="center"><th>진료번호</th>
+		<td><input type="text" name="medicalNum" th:value="${dto.medicalNum}" readonly="readonly" class="col-12"/></td></tr>
 	</th:block>
-	<tr><th colspan="2"><input type="submit" value="수정완료"/></th></tr>
+	<tr><th colspan="2"><input type="submit" value="수정완료" class="btn col-12" style="background-color: #4b5945; color: white"/></th></tr>
 </table>
 </form>
 <br>

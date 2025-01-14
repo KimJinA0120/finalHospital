@@ -30,6 +30,13 @@
 </select>
 <select id="radiationOneSelect" resultType="radiation" parameterType="string">
 	select <include refid="radiationColumns"/> from radiation
-	where radiation_num = #{radiationNum}
+	<trim prefix="where" prefixOverrides="AND | OR">
+		<if test="radiationNum != null">
+			radiation_num = #{radiationNum}
+		</if>
+		<if test="inspectionNum != null">
+			inspection_num = #{inspectionNum}
+		</if>
+	</trim>
 </select>
 </mapper>

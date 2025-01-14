@@ -11,8 +11,8 @@ import hospital.mapper.ClinicalMapper;
 public class ClinicalDetailService {
 	@Autowired
 	ClinicalMapper clinicalMapper;
-	public void execute(String clinicalNum, Model model) {
-		ClinicalDTO dto = clinicalMapper.clinicalOneSelect(clinicalNum);
+	public void execute(String clinicalNum, String inspectionNum, Model model) {
+		ClinicalDTO dto = clinicalMapper.clinicalOneSelect(clinicalNum, inspectionNum);
 		model.addAttribute("dto", dto);
 	}
 }

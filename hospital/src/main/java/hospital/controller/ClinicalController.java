@@ -49,8 +49,8 @@ public class ClinicalController {
 	}
 	// 임상병리 세부사항
 	@GetMapping("clinicalDetail")
-	public String clinicalDetail(String clinicalNum, Model model) {
-		clinicalDetailService.execute(clinicalNum, model);
+	public String clinicalDetail(String clinicalNum, String inspectionNum, Model model) {
+		clinicalDetailService.execute(clinicalNum, inspectionNum, model);
 		return "thymeleaf/clinical/clinicalDetail";
 	}
 }
