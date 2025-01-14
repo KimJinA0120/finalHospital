@@ -32,8 +32,21 @@
                 <th>거래대금</th>
             </tr>
         </thead>
-        <tbody>
-            <!-- 데이터가 여기에 추가됩니다 -->
+        <tbody id="stockBody">
+            <tr id="stockRow">
+                <td id="dateCell"></td>
+                <td id="priceCell"></td>
+                <td id="changeRateCell"></td>
+                <td id="volumeCell">0</td>
+                <td id="tradingValueCell">0</td>
+            </tr>
+            <tr>
+                <td>2025-01-10</td>
+                <td>55300</td>
+                <td>-1.45%</td>
+                <td>16059223</td>
+                <td>888075031900</td>
+            </tr>
         </tbody>
     </table>
 
@@ -41,35 +54,74 @@
         // WebSocket 연결
         const socket = new WebSocket('ws://localhost:2000');
 
+        // 초기 누적 값 로드
+        let totalVolume = parseInt(localStorage.getItem('totalVolume')) || 0;
+        let totalTradingValue = parseFloat(localStorage.getItem('totalTradingValue')) || 0;
+        let lastPrice = parseFloat(localStorage.getItem('lastPrice')) || 55300; // 초기 종가
+        const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD 형식
+
+        // 오늘 날짜 초기화
+        if (!localStorage.getItem('lastDate')) {
+            localStorage.setItem('lastDate', today);
+        }
+
+        // 페이지 로드 시 기존 값 설정
+        document.getElementById('dateCell').textContent = today; 
+        document.getElementById('priceCell').textContent = lastPrice; 
+        document.getElementById('volumeCell').textContent = totalVolume; 
+        document.getElementById('tradingValueCell').textContent = totalTradingValue.toFixed(2); 
+
         socket.onmessage = function(event) {
             const message = JSON.parse(event.data);
+            const currentDate = new Date().toISOString().slice(0, 10); // 오늘 날짜
 
-            // 새로운 데이터 행 생성
-            const newRow = document.createElement('tr');
+            // 하루가 바뀌었는지 확인
+            if (currentDate !== localStorage.getItem('lastDate')) {
+                // 하루가 바뀌었으면 초기화
+                const previousDate = localStorage.getItem('lastDate');
 
-            // 각 데이터 셀 추가
-            const dateCell = document.createElement('td');
-            dateCell.textContent = message.timestamp; // 날짜
-            newRow.appendChild(dateCell);
+                // 새로운 행 추가
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td>${previousDate}</td>
+                    <td>${lastPrice}</td>
+                    <td>${((price - lastPrice) / lastPrice * 100).toFixed(2)}%</td>
+                    <td>${totalVolume}</td>
+                    <td>${totalTradingValue.toFixed(2)}</td>
+                `;
+                document.getElementById('stockBody').appendChild(newRow);
 
-            const priceCell = document.createElement('td');
-            priceCell.textContent = message.price; // 종가
-            newRow.appendChild(priceCell);
+                // 날짜 업데이트
+                localStorage.setItem('lastDate', currentDate);
+                localStorage.setItem('lastPrice', price); // 현재 가격을 전날 가격으로 저장
 
-            const changeRateCell = document.createElement('td');
-            changeRateCell.textContent = message.changeRate; // 등락률
-            newRow.appendChild(changeRateCell);
+                // 초기화
+                totalVolume = 0; 
+                totalTradingValue = 0; 
+            }
 
-            const volumeCell = document.createElement('td');
-            volumeCell.textContent = message.volume; // 거래량
-            newRow.appendChild(volumeCell);
+            // 데이터 업데이트
+            const price = parseFloat(message.price);
+            document.getElementById('dateCell').textContent = currentDate; 
+            document.getElementById('priceCell').textContent = price; 
 
-            const tradingValueCell = document.createElement('td');
-            tradingValueCell.textContent = message.price; // 거래대금
-            newRow.appendChild(tradingValueCell);
+            // changeRate 계산
+            const changeRate = ((price - lastPrice) / lastPrice) * 100; // 등락률 계산
+            document.getElementById('changeRateCell').textContent = changeRate.toFixed(2) + '%'; 
 
-            // 표에 새 행 추가
-            document.querySelector('#stockTable tbody').appendChild(newRow);
+            // 거래량 및 거래대금 누적
+            const volume = message.volume;
+            totalVolume += volume; // 누적 거래량
+            totalTradingValue += (price * volume); // 누적 거래대금
+
+            // UI 업데이트
+            document.getElementById('volumeCell').textContent = totalVolume; // 총 거래량 업데이트
+            document.getElementById('tradingValueCell').textContent = totalTradingValue; // 총 거래대금 업데이트
+
+            // localStorage에 누적 값 저장
+            localStorage.setItem('totalVolume', totalVolume);
+            localStorage.setItem('totalTradingValue', totalTradingValue);
+            // lastPrice는 전날의 마지막 가격으로 유지
         };
     </script>
 </body>

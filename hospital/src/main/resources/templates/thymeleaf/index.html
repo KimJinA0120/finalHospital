@@ -86,18 +86,24 @@
 						<div class="col-lg-6 col-md-5 col-12">
 							<!-- Contact -->
 							<ul class="top-link">
-								<li><a href="#">About</a></li>
-								<li><a href="#">Doctors</a></li>
-								<li><a href="#">Contact</a></li>
-								<li><a href="#">FAQ</a></li>
+								<th:block  th:if="${session.auth==null}">
+										<li><a href="login/employeeLogin">직원 로그인</a></li>
+								</th:block>
+												
 							</ul>
 							<!-- End Contact -->
 						</div>
 						<div class="col-lg-6 col-md-7 col-12">
 							<!-- Top Contact -->
 							<ul class="top-contact">
-								<li><i class="fa fa-phone"></i>+880 1234 56789</li>
-								<li><i class="fa fa-envelope"></i><a href="mailto:support@yourmail.com">support@yourmail.com</a></li>
+							<th:block th:if="${session.auth == null}"> 
+								<li><a href="login/patientLogin">로그인</a></li>
+								<li><a href="patient/patientWrite">회원가입</a></li>
+							</th:block>
+							<th:block th:if="${session.auth!=null}"> 
+								<li><a href="login/logout">로그아웃</a></li>
+								<li><a href="patient/patientMyPage">환자 마이페이지</a></li>	
+							</th:block>
 							</ul>
 							<!-- End Top Contact -->
 						</div>
@@ -110,7 +116,7 @@
 				<div class="container">
 					<div class="inner">
 						<div class="row">
-							<div class="col-lg-3 col-md-3 col-12">
+							<div class="col-lg-3 col-md-6 col-12">
 								<!-- Start Logo -->
 								<div class="logo">
 									<a href="/"><img src="static/img/logo.png" alt="#"></a>
@@ -120,12 +126,12 @@
 								<div class="mobile-nav"></div>
 								<!-- End Mobile Nav -->
 							</div>
-							<div class="col-lg-7 col-md-9 col-12">
+							<div class="col-lg-8 col-md-9 col-12">
 								<!-- Main Menu -->
 								<div class="main-menu">
 									<nav class="navigation">
 										<ul class="nav menu">
-											<li><a href="#">수술/검사<i class="icofont-rounded-down"></i></a>
+											<!--<li><a href="#">수술/검사<i class="icofont-rounded-down"></i></a>
 												<ul class="dropdown">
 													<li><a href="surgery/surgeryScheduler">수술스케쥴러</a></li>
 													<li><a href="surgery/surgeryList">환자수술결과기록</a></li>
@@ -134,32 +140,67 @@
 													<li><a href="radiation/radiationList">방사선</a></li>
 													<li><a href="clinical/clinicalList">임상병리</a></li>
 												</ul>
-											</li>
-											<li><a href="#">처방/간호<i class="icofont-rounded-down"></i></a>
+											</li>  -->
+											<!--<li><a href="#">처방/간호<i class="icofont-rounded-down"></i></a>
 												<ul class="dropdown">
 													<li><a href="wardPS/hosPatList">병동처방</a></li>
 													<li><a href="nursing/hosPatList">간호처방 </a></li>
 												</ul>
-											</li>
-											<li><a href="#">입원/병동/병실/응급실<i class="icofont-rounded-down"></i></a>
+											</li> -->
+											<!--<li><a href="#">입원/병동/병실/응급실<i class="icofont-rounded-down"></i></a>
 												<ul class="dropdown">
 													<li><a href="WardRoomBed/WardList">병동리스트</a></li>
 													<li><a href="Hospitalization/hospitalizationList">입원관리 </a></li>
 													<li><a href="Hospitalization/emerHospitalizationList">응급입원관리 </a></li>
 												</ul>
-											</li>
-											<li><a href="#">접수/외래진료/문의/차트<i class="icofont-rounded-down"></i></a>
+											</li> -->
+											<!--<li><a href="#">진료예약<i class="icofont-rounded-down"></i></a>
 												<ul class="dropdown">
-													<li><a href="receipt/reservationForm">(환자용)예약</a></li>
-													<li><a href="receipt/patientReservation">(환자용)예약 확인하기</a></li>
+													<li><a href="receipt/reservationForm">진료예약</a></li>
+													<li><a href="receipt/patientReservation">진료예약 확인</a></li>
 													<li><a href="receipt/receiptList">(직원용)접수/예약목록</a></li>
 													<li><a href="qna/qnaList">(환자용)문의/건의</a></li>
 													<li><a href="qna/eqnaList">(직원용)문의/건의</a></li>
 													<li><a href="data/test">주식차트</a></li>
 													<li><a href="data/test1">주식표</a></li>
 												</ul>
+											</li>-->
+											<li><a href="#">진료예약<i class="icofont-rounded-down"></i></a>
+												<ul class="dropdown">
+													<li><a href="receipt/reservationForm">진료예약</a></li>
+													<li><a href="receipt/patientReservation">진료예약 확인</a></li>
+												</ul>
 											</li>
-											<li><a href="#">사용자<i class="icofont-rounded-down"></i></a>
+											<li><a href="#">문의/건의<i class="icofont-rounded-down"></i></a>
+											<ul class="dropdown">
+											<li><a href="qna/qnaList">문의/건의</a></li>
+											</ul>
+											</li>
+											<li><a href="#">주식<i class="icofont-rounded-down"></i></a>
+												<ul class="dropdown">
+													<li><a href="data/test">주식차트</a></li>
+													<li><a href="data/test1">주식표</a></li>
+												</ul>
+											</li>
+											<li><a href="#">건강정보<i class="icofont-rounded-down"></i></a>
+											<ul class="dropdown">
+											<li><a href="#">건강정보</a></li>
+											</ul>
+											</li>
+											<li><a href="#">병원안내<i class="icofont-rounded-down"></i></a>
+											<ul class="dropdown">
+											<li><a href="#">병원소개</a></li>
+											<li><a href="#">병원위치</a></li>
+											<li><a href="#">병원소식</a></li>
+											</ul>
+											</li>
+											<li><a href="#">진료과/의료진<i class="icofont-rounded-down"></i></a>
+											<ul class="dropdown">
+											<li><a href="#">의료진</a></li>
+											<li><a href="#">진료과</a></li>
+											</ul>
+											</li>
+											<!-- <li><a href="#">사용자<i class="icofont-rounded-down"></i></a>
 												<ul class="dropdown">
 													<th:block  th:if="${session.auth==null}">
 														<li><a href="patient/patientWrite">환자 회원가입</a></li>
@@ -172,10 +213,10 @@
 														<li><a href="patient/patientMyPage">환자 마이페이지</a></li>	
 													</th:block>
 												</ul>
-											</li>
+											</li> -->
 										
 											
-											<li><a href="#">Pages <i class="icofont-rounded-down"></i></a>
+											<!--<li><a href="#">Pages <i class="icofont-rounded-down"></i></a>
 												<ul class="dropdown">
 													<li><a href="404">404 Error</a></li>
 												</ul>
@@ -185,15 +226,15 @@
 													<li><a href="blog-single">Blog Details</a></li>
 												</ul>
 											</li>
-											<li><a href="contact">Contact Us</a></li>
+											<li><a href="contact">Contact Us</a></li> -->
 										</ul>
 									</nav>
 								</div>
 								<!--/ End Main Menu -->
 							</div>
-							<div class="col-lg-2 col-12">
+							<div class="col-lg-1 col-12">
 								<div class="get-quote">
-									<a href="appointment" class="btn">Book Appointment</a>
+									<a href="receipt/reservationForm" class="btn">빠른 진료예약</a>
 								</div>
 							</div>
 						</div>
@@ -213,12 +254,8 @@
 						<div class="row">
 							<div class="col-lg-7">
 								<div class="text">
-									<h1>We Provide <span>Medical</span> Services That You Can <span>Trust!</span></h1>
+								<h1>저희는 <span>최고의 </span>병원 서비스를 제공하고 있습니다! <span>믿어주세요!</span></h1>
 									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed nisl pellentesque, faucibus libero eu, gravida quam. </p>
-									<div class="button">
-										<a href="#" class="btn">Get Appointment</a>
-										<a href="#" class="btn primary">Learn More</a>
-									</div>
 								</div>
 							</div>
 						</div>
@@ -231,12 +268,8 @@
 						<div class="row">
 							<div class="col-lg-7">
 								<div class="text">
-									<h1>We Provide <span>Medical</span> Services That You Can <span>Trust!</span></h1>
+								<h1>저희는 <span>최고의 </span>병원 서비스를 제공하고 있습니다! <span>믿어주세요!</span></h1>
 									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed nisl pellentesque, faucibus libero eu, gravida quam. </p>
-									<div class="button">
-										<a href="#" class="btn">Get Appointment</a>
-										<a href="#" class="btn primary">About Us</a>
-									</div>
 								</div>
 							</div>
 						</div>
@@ -249,12 +282,8 @@
 						<div class="row">
 							<div class="col-lg-7">
 								<div class="text">
-									<h1>We Provide <span>Medical</span> Services That You Can <span>Trust!</span></h1>
+									<h1>저희는 <span>최고의 </span>병원 서비스를 제공하고 있습니다! <span>믿어주세요!</span></h1>
 									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed nisl pellentesque, faucibus libero eu, gravida quam. </p>
-									<div class="button">
-										<a href="#" class="btn">Get Appointment</a>
-										<a href="#" class="btn primary">Conatct Now</a>
-									</div>
 								</div>
 							</div>
 						</div>
@@ -278,10 +307,9 @@
 										<i class="fa fa-ambulance"></i>
 									</div>
 									<div class="single-content">
-										<span>Lorem Amet</span>
-										<h4>Emergency Cases</h4>
-										<p>Lorem ipsum sit amet consectetur adipiscing elit. Vivamus et erat in lacus convallis sodales.</p>
-										<a href="#">LEARN MORE<i class="fa fa-long-arrow-right"></i></a>
+										<h4>진료예약</h4>
+										<p>원하는 시간에 진료를 예약하세요!</p>
+										<a href="receipt/reservationForm">진료예약하기<i class="fa fa-long-arrow-right"></i></a>
 									</div>
 								</div>
 							</div>
@@ -294,10 +322,9 @@
 										<i class="icofont-prescription"></i>
 									</div>
 									<div class="single-content">
-										<span>Fusce Porttitor</span>
-										<h4>Doctors Timetable</h4>
-										<p>Lorem ipsum sit amet consectetur adipiscing elit. Vivamus et erat in lacus convallis sodales.</p>
-										<a href="#">LEARN MORE<i class="fa fa-long-arrow-right"></i></a>
+										<h4>진료시간표</h4>
+										<p>의료진의 진료 시간을 확인해보세요</p>
+										<a href="#">확인하기<i class="fa fa-long-arrow-right"></i></a>
 									</div>
 								</div>
 							</div>
@@ -310,14 +337,12 @@
 										<i class="icofont-ui-clock"></i>
 									</div>
 									<div class="single-content">
-										<span>Donec luctus</span>
-										<h4>Opening Hours</h4>
+										<h4>운영시간</h4>
 										<ul class="time-sidual">
-											<li class="day">Monday - Fridayp <span>8.00-20.00</span></li>
-											<li class="day">Saturday <span>9.00-18.30</span></li>
-											<li class="day">Monday - Thusday <span>9.00-15.00</span></li>
+											<li class="day">월요일-금요일 8:00 - 20:00</span></li>
+											<li class="day">토요일 9:00 - 18:30</span></li>
+											<br />
 										</ul>
-										<a href="#">LEARN MORE<i class="fa fa-long-arrow-right"></i></a>
 									</div>
 								</div>
 							</div>
@@ -329,7 +354,7 @@
 		<!--/End Start schedule Area -->
 
 		<!-- Start Feautes -->
-		<section class="Feautes section">
+		<!-- <section class="Feautes section">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-12">
@@ -341,19 +366,19 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-lg-4 col-12">
-						<!-- Start Single features -->
-						<div class="single-features">
+					<div class="col-lg-4 col-12"> 
+						
+						 <div class="single-features">
 							<div class="signle-icon">
 								<i class="icofont icofont-ambulance-cross"></i>
 							</div>
 							<h3>Emergency Help</h3>
 							<p>Lorem ipsum sit, consectetur adipiscing elit. Maecenas mi quam vulputate.</p>
 						</div>
-						<!-- End Single features -->
-					</div>
+						
+					 </div>
 					<div class="col-lg-4 col-12">
-						<!-- Start Single features -->
+						
 						<div class="single-features">
 							<div class="signle-icon">
 								<i class="icofont icofont-medical-sign-alt"></i>
@@ -361,10 +386,10 @@
 							<h3>Enriched Pharmecy</h3>
 							<p>Lorem ipsum sit, consectetur adipiscing elit. Maecenas mi quam vulputate.</p>
 						</div>
-						<!-- End Single features -->
+						
 					</div>
 					<div class="col-lg-4 col-12">
-						<!-- Start Single features -->
+						
 						<div class="single-features last">
 							<div class="signle-icon">
 								<i class="icofont icofont-stethoscope"></i>
@@ -372,19 +397,19 @@
 							<h3>Medical Treatment</h3>
 							<p>Lorem ipsum sit, consectetur adipiscing elit. Maecenas mi quam vulputate.</p>
 						</div>
-						<!-- End Single features -->
+						
 					</div>
 				</div>
 			</div>
-		</section>
+		</section> -->
 		<!--/ End Feautes -->
 		
 		<!-- Start Fun-facts -->
-		<div id="fun-facts" class="fun-facts section overlay">
+		<!-- <div id="fun-facts" class="fun-facts section overlay">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-3 col-md-6 col-12">
-						<!-- Start Single Fun -->
+						
 						<div class="single-fun">
 							<i class="icofont icofont-home"></i>
 							<div class="content">
@@ -392,10 +417,10 @@
 								<p>Hospital Rooms</p>
 							</div>
 						</div>
-						<!-- End Single Fun -->
+						
 					</div>
 					<div class="col-lg-3 col-md-6 col-12">
-						<!-- Start Single Fun -->
+						
 						<div class="single-fun">
 							<i class="icofont icofont-user-alt-3"></i>
 							<div class="content">
@@ -403,10 +428,10 @@
 								<p>Specialist Doctors</p>
 							</div>
 						</div>
-						<!-- End Single Fun -->
+						
 					</div>
 					<div class="col-lg-3 col-md-6 col-12">
-						<!-- Start Single Fun -->
+						
 						<div class="single-fun">
 							<i class="icofont-simple-smile"></i>
 							<div class="content">
@@ -414,10 +439,10 @@
 								<p>Happy Patients</p>
 							</div>
 						</div>
-						<!-- End Single Fun -->
+						
 					</div>
 					<div class="col-lg-3 col-md-6 col-12">
-						<!-- Start Single Fun -->
+						
 						<div class="single-fun">
 							<i class="icofont icofont-table"></i>
 							<div class="content">
@@ -425,11 +450,11 @@
 								<p>Years of Experience</p>
 							</div>
 						</div>
-						<!-- End Single Fun -->
+						
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 		<!--/ End Fun-facts -->
 		
 		<!-- Start Why choose -->
@@ -494,7 +519,7 @@
 		<!--/ End Why choose -->
 		
 		<!-- Start Call to action -->
-		<section class="call-action overlay" data-stellar-background-ratio="0.5">
+		<!--<section class="call-action overlay" data-stellar-background-ratio="0.5">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-12 col-md-12 col-12">
@@ -509,7 +534,7 @@
 					</div>
 				</div>
 			</div>
-		</section>
+		</section>  -->
 		<!--/ End Call to action -->
 		
 		<!-- Start portfolio -->
@@ -641,7 +666,7 @@
 		<!--/ End service -->
 		
 		<!-- Pricing Table -->
-		<section class="pricing-table section">
+		<!--<section class="pricing-table section">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-12">
@@ -653,10 +678,10 @@
 					</div>
 				</div>
 				<div class="row">
-					<!-- Single Table -->
+					
 					<div class="col-lg-4 col-md-12 col-12">
 						<div class="single-table">
-							<!-- Table Head -->
+							
 							<div class="table-head">
 								<div class="icon">
 									<i class="icofont icofont-ui-cut"></i>
@@ -666,7 +691,7 @@
 									<p class="amount">$199<span>/ Per Visit</span></p>
 								</div>	
 							</div>
-							<!-- Table List -->
+							
 							<ul class="table-list">
 								<li><i class="icofont icofont-ui-check"></i>Lorem ipsum dolor sit</li>
 								<li><i class="icofont icofont-ui-check"></i>Cubitur sollicitudin fentum</li>
@@ -677,14 +702,14 @@
 							<div class="table-bottom">
 								<a class="btn" href="#">Book Now</a>
 							</div>
-							<!-- Table Bottom -->
+							
 						</div>
 					</div>
-					<!-- End Single Table-->
-					<!-- Single Table -->
+					
+					
 					<div class="col-lg-4 col-md-12 col-12">
 						<div class="single-table">
-							<!-- Table Head -->
+							
 							<div class="table-head">
 								<div class="icon">
 									<i class="icofont icofont-tooth"></i>
@@ -694,7 +719,7 @@
 									<p class="amount">$299<span>/ Per Visit</span></p>
 								</div>	
 							</div>
-							<!-- Table List -->
+							
 							<ul class="table-list">
 								<li><i class="icofont icofont-ui-check"></i>Lorem ipsum dolor sit</li>
 								<li><i class="icofont icofont-ui-check"></i>Cubitur sollicitudin fentum</li>
@@ -705,14 +730,14 @@
 							<div class="table-bottom">
 								<a class="btn" href="#">Book Now</a>
 							</div>
-							<!-- Table Bottom -->
+							
 						</div>
 					</div>
-					<!-- End Single Table-->
-					<!-- Single Table -->
+					
+					
 					<div class="col-lg-4 col-md-12 col-12">
 						<div class="single-table">
-							<!-- Table Head -->
+							
 							<div class="table-head">
 								<div class="icon">
 									<i class="icofont-heart-beat"></i>
@@ -722,7 +747,7 @@
 									<p class="amount">$399<span>/ Per Visit</span></p>
 								</div>	
 							</div>
-							<!-- Table List -->
+							
 							<ul class="table-list">
 								<li><i class="icofont icofont-ui-check"></i>Lorem ipsum dolor sit</li>
 								<li><i class="icofont icofont-ui-check"></i>Cubitur sollicitudin fentum</li>
@@ -733,13 +758,13 @@
 							<div class="table-bottom">
 								<a class="btn" href="#">Book Now</a>
 							</div>
-							<!-- Table Bottom -->
+							
 						</div>
 					</div>
-					<!-- End Single Table-->
+					
 				</div>	
 			</div>	
-		</section>	
+		</section>	  -->
 		<!--/ End Pricing Table -->
 		
 		
@@ -811,7 +836,7 @@
 		<!-- End Blog Area -->
 		
 		<!-- Start clients -->
-		<div class="clients overlay">
+		<!--<div class="clients overlay">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-12 col-md-12 col-12">
@@ -847,11 +872,11 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div>  -->
 		<!--/Ens clients -->
 		
 		<!-- Start Appointment -->
-		<section class="appointment">
+		<!--<section class="appointment">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-12">
@@ -938,23 +963,23 @@
 					</div>
 				</div>
 			</div>
-		</section>
+		</section>  -->
 		<!-- End Appointment -->
 		
 		<!-- Start Newsletter Area -->
-		<section class="newsletter section">
+		<!--<section class="newsletter section">
 			<div class="container">
 				<div class="row ">
 					<div class="col-lg-6  col-12">
-						<!-- Start Newsletter Form -->
+						
 						<div class="subscribe-text ">
 							<h6>Sign up for newsletter</h6>
 							<p class="">Cu qui soleat partiendo urbanitas. Eum aperiri indoctum eu,<br> homero alterum.</p>
 						</div>
-						<!-- End Newsletter Form -->
+						
 					</div>
 					<div class="col-lg-6  col-12">
-						<!-- Start Newsletter Form -->
+						
 						<div class="subscribe-form ">
 							<form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
 								<input name="EMAIL" placeholder="Your email address" class="common-input" onfocus="this.placeholder = ''"
@@ -962,11 +987,11 @@
 								<button class="btn">Subscribe</button>
 							</form>
 						</div>
-						<!-- End Newsletter Form -->
+						
 					</div>
 				</div>
 			</div>
-		</section>
+		</section>  -->
 		<!-- /End Newsletter Area -->
 		
 		<!-- Footer Area -->

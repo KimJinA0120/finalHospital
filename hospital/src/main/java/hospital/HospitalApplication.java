@@ -2,10 +2,12 @@ package hospital;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import hospital.data.KafkaWebSocketServer;
 import hospital.domain.AuthInfoDTO;
 import jakarta.servlet.http.HttpSession;
 
@@ -14,8 +16,12 @@ import jakarta.servlet.http.HttpSession;
 public class HospitalApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HospitalApplication.class, args);
+		ApplicationContext context = SpringApplication.run(HospitalApplication.class, args);
+		KafkaWebSocketServer server = context.getBean(KafkaWebSocketServer.class); // Spring에서 관리되는 빈으로 가져오기
+        server.start(); // 서버 시작
+        server.startKafkaConsumer(); 
 	}
+
 	@RequestMapping("/")
 	public String index(HttpSession session) {
 		AuthInfoDTO auth=(AuthInfoDTO)session.getAttribute("auth");

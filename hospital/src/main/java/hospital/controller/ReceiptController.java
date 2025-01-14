@@ -20,7 +20,6 @@ import hospital.service.receipt.ReceiptInsertService;
 import hospital.service.receipt.ReceiptListService;
 import jakarta.servlet.http.HttpSession;
 
-
 @Controller
 @RequestMapping("receipt")
 public class ReceiptController {
@@ -40,77 +39,88 @@ public class ReceiptController {
 	PatientMapper patientMapper;
 	@Autowired
 	PatientReservationService patientReservationService;
-	
+
 	@GetMapping("receiptList")
-	public String receiptList(@RequestParam(value = "page", required = false, defaultValue = "1") Integer page
-			, @RequestParam(value = "searchWord", required = false) String searchWord
-			,Model model) {
+	public String receiptList(@RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+			@RequestParam(value = "searchWord", required = false) String searchWord, Model model, HttpSession session) {
 		receiptListService.execute(page, searchWord, model);
 		return "thymeleaf/receipt/receiptList";
 	}
-	
+
 	@GetMapping("receiptForm")
 	public String receiptForm(Model model) {
 		String autoNum = autoNumService.execute("r_", 3, "receipt_num", "receipt");
 		model.addAttribute("autoNum", autoNum);
 		return "thymeleaf/receipt/receiptForm";
 	}
-	
+
 	@PostMapping("receiptInsert")
 	public String receiptInsert(ReceiptCommand receiptCommand) {
 		receiptInsertService.execute(receiptCommand);
 		return "redirect:receiptList";
 	}
-	
+
 	@GetMapping("patientSearch")
-	public String patientSearch(@RequestParam(value="searchWord", required=false) String searchWord
-			, @RequestParam(value="page", required=false, defaultValue="1") Integer page
-			, Model model) {
+	public String patientSearch(@RequestParam(value = "searchWord", required = false) String searchWord,
+			@RequestParam(value = "page", required = false, defaultValue = "1") Integer page, Model model) {
 		patientListService.patientSearch(page, searchWord, model);
 		return "thymeleaf/patient/patientSearch";
 	}
-	
+
 	@GetMapping("doctorSearch")
-	public String doctorSearch(@RequestParam(value="searchWord", required=false) String searchWord
-			, @RequestParam(value="page", required=false, defaultValue="1") Integer page
-			, Model model) {
+	public String doctorSearch(@RequestParam(value = "searchWord", required = false) String searchWord,
+			@RequestParam(value = "page", required = false, defaultValue = "1") Integer page, Model model) {
 		employeeListService.doctorSearch(searchWord, page, model, null);
 		return "thymeleaf/employee/doctorSearch";
 	}
-	
+
 	@GetMapping("emp_reservationForm")
 	public String emp_reservationForm(Model model) {
 		String autoNum = autoNumService.execute("r_", 3, "receipt_num", "receipt");
 		model.addAttribute("autoNum", autoNum);
 		return "thymeleaf/receipt/emp_reservationForm";
 	}
-	
+
 	@PostMapping("emp_reservationInsert")
 	public String emp_reservationInsert(ReceiptCommand receiptCommand) {
 		receiptInsertService.execute1(receiptCommand);
 		return "redirect:receiptList";
 	}
-	
+
 	@GetMapping("reservationForm")
 	public String reservationForm(Model model, HttpSession session) {
 		String autoNum = autoNumService.execute("r_", 3, "receipt_num", "receipt");
 		AuthInfoDTO auth = (AuthInfoDTO) session.getAttribute("auth");
+
+		if (auth == null) {
+
+			return "redirect:/";
+		}
+
 		String patientNum = patientMapper.patientNumSelect(auth.getUserId());
 		model.addAttribute("autoNum", autoNum);
 		model.addAttribute("patientNum", patientNum);
+
 		return "thymeleaf/receipt/reservationForm";
 	}
-	
+
 	@PostMapping("reservationInsert")
 	public String reservationInsert(ReceiptCommand receiptCommand) {
 		receiptInsertService.execute1(receiptCommand);
 		return "redirect:/";
 	}
-	
+
 	@GetMapping("patientReservation")
-	public String patientReservation(HttpSession session, Model model) { 
+	public String patientReservation(HttpSession session, Model model) {
+		AuthInfoDTO auth = (AuthInfoDTO) session.getAttribute("auth");
+
+		if (auth == null) {
+
+			return "redirect:/";
+		}
+
 		patientReservationService.execute(session, model);
 		return "thymeleaf/receipt/patientReservation";
 	}
-	
+
 }

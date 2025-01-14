@@ -1,5 +1,8 @@
 package hospital.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -92,14 +95,14 @@ public class LoginController {
 	}
 	  
 	  
-/*	  @GetMapping("item.login")
+	  @GetMapping("item.login")
 		public String item() {
 			return "thymeleaf/login";
 		}
 		@PostMapping("item.login")
 		public void item(LoginCommand loginCommand, BindingResult result	
 				, HttpSession session, HttpServletResponse response) {
-			loginService.patientLogin(loginCommand, session, result);
+			loginService.patientLogin(loginCommand, session, result, response);
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = null;
 			try {
@@ -114,6 +117,6 @@ public class LoginController {
 			   out.print(str);
 			   out.close();
 			
-		}*/
+		}
 
 }

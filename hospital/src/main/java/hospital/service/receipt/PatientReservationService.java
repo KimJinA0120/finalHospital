@@ -22,7 +22,6 @@ public class PatientReservationService {
 	public void execute(HttpSession session, Model model) {
 		AuthInfoDTO auth = (AuthInfoDTO) session.getAttribute("auth");
 		String patientNum = patientMapper.patientNumSelect(auth.getUserId());
-		
 		List<ReceiptDTO> list = receiptMapper.reservationSelectList(patientNum);
 		model.addAttribute("list", list);
 	}

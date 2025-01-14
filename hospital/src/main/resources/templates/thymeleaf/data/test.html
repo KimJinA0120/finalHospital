@@ -13,23 +13,23 @@
         const ctx = document.getElementById('myChart').getContext('2d');
         
         let stockData = {
-            labels: [], // 거래시간
+            labels: [], 
             datasets: [
                 {
                     label: '거래량',
-                    data: [], // 거래량
+                    data: [],
                     borderColor: 'rgba(75, 192, 192, 1)',
                     borderWidth: 1,
                     fill: false,
-                    yAxisID: 'y1' // 첫 번째 y축 사용
+                    yAxisID: 'y1'
                 },
                 {
                     label: '체결가격',
-                    data: [], // 체결가격
+                    data: [],
                     borderColor: 'rgba(255, 99, 132, 1)',
                     borderWidth: 1,
                     fill: false,
-                    yAxisID: 'y2' // 두 번째 y축 사용
+                    yAxisID: 'y2' 
                 }
             ]
         };
@@ -38,6 +38,7 @@
             type: 'line',
             data: stockData,
             options: {
+            	responsive: false,
                 scales: {
                 	x: {
                         display: false 
@@ -51,7 +52,7 @@
                             text: '거래량'
                         },
                         afterDataLimits: (scale) => { 
-							 scale.max = scale.max * 1.2;
+							 scale.max = scale.max * 1.1;
 				     	 }
                     },
                     y2: {
@@ -63,17 +64,16 @@
                             text: '체결가격'
                         },
                         grid: {
-                            drawOnChartArea: false // 두 번째 y축의 그리드 라인을 숨김
+                            drawOnChartArea: false 
                         },
                         ticks: {
-                            stepSize: 55000 
+                            stepSize: 50000
                         }
                     }
                 }
             }
         });
 
-        // WebSocket 연결
         const socket = new WebSocket('ws://localhost:2000');
 
         socket.onmessage = function(event) {
@@ -87,11 +87,11 @@
 
             	const message = JSON.parse(event.data);
                 stockData.labels.push(message.timestamp);
-                stockData.datasets[0].data.push(message.volume); // 거래량
-                stockData.datasets[1].data.push(message.price); // 체결가격
+                stockData.datasets[0].data.push(message.volume); 
+                stockData.datasets[1].data.push(message.price); 
             }
 
-            myChart.update(); // 차트 업데이트
+            myChart.update(); 
         };
     </script>
 </body>

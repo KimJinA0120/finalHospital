@@ -1,23 +1,38 @@
 package hospital.data;
-import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.common.serialization.StringDeserializer;
-import org.java_websocket.WebSocket;
-import org.java_websocket.handshake.ClientHandshake;
-import org.java_websocket.server.WebSocketServer;
-import org.json.JSONObject;
 import java.net.InetSocketAddress;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.common.serialization.StringDeserializer;
+import org.java_websocket.WebSocket;
+import org.java_websocket.handshake.ClientHandshake;
+import org.java_websocket.server.WebSocketServer;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
+
+import hospital.HospitalApplication;
+import hospital.domain.StockDTO;
+
+@Component
 public class KafkaWebSocketServer extends WebSocketServer {
+	
+	@Autowired
+	StockRepository stockRepository;
+	
     private Set<WebSocket> connections = ConcurrentHashMap.newKeySet();
-    public KafkaWebSocketServer(InetSocketAddress address) {
+    public KafkaWebSocketServer(StockRepository stockRepository, InetSocketAddress address) {
         super(address);
+        this.stockRepository = stockRepository;
     }
     @Override
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
@@ -43,18 +58,22 @@ public class KafkaWebSocketServer extends WebSocketServer {
     public void onStart() {
         System.out.println("WebSocket server started successfully");
     }
+    
+    public void start() {
+        super.start();
+        System.out.println("WebSocket server started on port: " + this.getPort());
+    }
+    
     public void broadcastMessage(String message) {
         for (WebSocket conn : connections) {
             conn.send(message);
         }
     }
     public static void main(String[] args) {
-        InetSocketAddress address = new InetSocketAddress("localhost", 2000);
-        KafkaWebSocketServer server = new KafkaWebSocketServer(address);
-        server.start();
-        System.out.println("WebSocket server started on port: " + server.getPort());
-        // Kafka Consumer 실행
-        server.startKafkaConsumer();
+    	 ApplicationContext context = SpringApplication.run(HospitalApplication.class, args);
+         KafkaWebSocketServer server = context.getBean(KafkaWebSocketServer.class);
+         server.start(); // 서버 시작
+         server.startKafkaConsumer(); // Kafka 소비자 시작
     }
     public void startKafkaConsumer() {
         Properties props = new Properties();
@@ -78,6 +97,7 @@ public class KafkaWebSocketServer extends WebSocketServer {
                         // 데이터 파싱
                         String[] pairs = record.value().split(":");
                         JSONObject stockData = new JSONObject(); // JSON으로 데이터 전송
+                        StockDTO stockDTO = new StockDTO ();
                         for (String pair : pairs) {
                             String[] keyValue = pair.split("=");
                             if (keyValue.length == 2) {
@@ -87,27 +107,33 @@ public class KafkaWebSocketServer extends WebSocketServer {
                                 switch (key) {
                                     case "거래시간":
                                         stockData.put("timestamp", value);
+                                        stockDTO.setTimestamp(value);
                                         break;
                                     case "종목코드":
                                         stockData.put("symbol", value);
+                                        stockDTO.setSymbol(value);
                                         break;
                                     case "체결가격":
                                         stockData.put("price", Double.parseDouble(value));
+                                        stockDTO.setPrice(Double.parseDouble(value));
                                         break;
                                     case "거래량":
                                         stockData.put("volume", Integer.parseInt(value));
+                                        stockDTO.setVolume(Integer.parseInt(value));
                                         break;
                                     case "누적거래량":
                                         stockData.put("cumulativeVolume", Long.parseLong(value));
+                                        stockDTO.setCumulativeVolume(Long.parseLong(value));
                                         break;
                                     default:
                                         System.out.println("Unknown key: " + key);
                                 }
                             }
                         }
-                        System.out.println("stockData = " + stockData.toString());
+                        //System.out.println("stockData = " + stockData.toString());
                         // Kafka 메시지를 WebSocket 클라이언트들에게 브로드캐스트
                         // db insert
+                        stockRepository.stockInsert(stockDTO);
                         broadcastMessage(stockData.toString()); // brodcast로 데이터 보냄
                     }
                 }

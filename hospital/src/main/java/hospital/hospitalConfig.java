@@ -1,5 +1,7 @@
 package hospital;
 
+import java.net.InetSocketAddress;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -38,4 +40,9 @@ public class hospitalConfig {
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }
+	
+	 @Bean
+	    public InetSocketAddress inetSocketAddress() {
+	        return new InetSocketAddress("localhost", 2000); // 주소와 포트를 설정
+	    }
 }

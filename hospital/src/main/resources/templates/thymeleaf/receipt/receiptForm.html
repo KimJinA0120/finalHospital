@@ -58,7 +58,7 @@ window.onload = function() {
 	rel="stylesheet">
 
 <!-- Bootstrap CSS -->
-<link rel="stylesheet" href="../static/css/bootstrap.min.css">
+<link rel="stylesheet" href="../static/css/bootstrap-green.min.css">
 <!-- Nice Select CSS -->
 <link rel="stylesheet" href="../static/css/nice-select.css">
 <!-- Font Awesome CSS -->
@@ -77,9 +77,9 @@ window.onload = function() {
 <link rel="stylesheet" href="../static/css/magnific-popup.css">
 
 <!-- Medipro CSS -->
-<link rel="stylesheet" href="../static/css/normalize.css">
-<link rel="stylesheet" href="../static/css/style.css">
-<link rel="stylesheet" href="../static/css/responsive.css">
+<link rel="stylesheet" href="../static/css/normalize-green.css">
+<link rel="stylesheet" href="../static/css/style-green.css">
+<link rel="stylesheet" href="../static/css/responsive-green.css">
 
 </head>
 <body>
@@ -205,7 +205,7 @@ window.onload = function() {
 	<!-- End Header Area -->
 
 	<!-- Breadcrumbs -->
-	<div class="breadcrumbs overlay">
+	<!--<div class="breadcrumbs overlay">
 		<div class="container">
 			<div class="bread-inner" >
 				<div class="row">
@@ -220,15 +220,15 @@ window.onload = function() {
 				</div>
 			</div>
 		</div>
-	</div>
+	</div>  -->
 	<!-- End Breadcrumbs -->
 
 	<!-- Start Contact Us -->
 	<section class="contact-us section">
-		<div class="container">
+		<div class="container col-lg-6">
 			<div class="inner">
 				<div class="row">
-					<div class="col-lg-6">
+					<div class="col-lg-6-center">
 						<div class="contact-us-form">
 							<h2>진료접수</h2>
 							<form action="receiptInsert" method="post">
@@ -243,14 +243,7 @@ window.onload = function() {
 										<div class="form-group">
 											<span>환자번호</span> <input type="text" name="patientNum"
 												id="patientNum" th:value="${patientNum}" readonly="readonly" required="required">
-												<button type="button" id="btn">환자검색</button>
-										</div>
-									</div>
-									<div class="col-lg-6">
-										<div class="form-group">
-											<span>담당의사번호</span> <input type="text" name="empNum"
-												id="docNum" readonly="readonly" required="required">
-											<button type="button" id="btn1">의사검색</button>
+												<button type="button" class="btn" id="btn">환자검색</button>
 										</div>
 									</div>
 									<div class="col-lg-6">
@@ -259,9 +252,16 @@ window.onload = function() {
 												name="receiptDate" id="receiptDate" required="required" readonly="readonly">
 										</div>
 									</div>
+									<div class="col-lg-6">
+										<div class="form-group">
+											<span>의사번호</span> <input type="text" name="empNum"
+												id="docNum" readonly="readonly" required="required">
+											<button type="button" class="btn" id="btn1">의사검색</button>
+										</div>
+									</div>
 									<div class="col-12">
 										 <div class="form-group login-btn">
-											<button class="btn" type="submit" style="width: 100%; background-color: #91AC8F ">접수등록</button>
+											<button class="btn" type="submit" style="width: 100%; background-color: #66785F ">접수등록</button>
 										</div>
 									</div>
 								</div>
