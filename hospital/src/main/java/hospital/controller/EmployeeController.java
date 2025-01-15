@@ -200,7 +200,7 @@ public class EmployeeController {
 	public String empPwCon(HttpSession session, EmployeeCommand employeeCommand, BindingResult result) { //비밀번호를 확인한다.
 		employeeUpdateService.employeePwCon(session, employeeCommand, result);
 		if(result.hasErrors()) {
-			return "thymeleaf/patient/empPwCon";
+			return "thymeleaf/employee/pwCon";
 		}
 		return "redirect:empPwUpdate";
 	}
@@ -209,8 +209,13 @@ public class EmployeeController {
 		return "thymeleaf/employee/pwUpdate";
 	}
 	@PostMapping("empPwUpdate")
-	public String empPwUpdate(HttpSession session, EmployeeCommand employeeCommand) { //비밀번호를 수정한다.
-		employeeUpdateService.employeePwUpdate(session, employeeCommand);
+	public String empPwUpdate(HttpSession session, @Validated EmployeeCommand employeeCommand
+			, BindingResult result) { //비밀번호를 수정한다.
+		if(result.hasErrors()) {
+			return "thymeleaf/employee/pwUpdate";
+		}else {
+			employeeUpdateService.employeePwUpdate(session, employeeCommand);
+		}
 		return "redirect:employeeMyPage";
 	}
 	

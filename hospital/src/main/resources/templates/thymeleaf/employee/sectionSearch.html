@@ -2,6 +2,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="keywords" content="Site keywords here">
+<meta name="description" content="">
+<meta name='copyright' content=''>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>소속과 검색</title>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script type="text/javascript" src="/static/js/checkbox.js"></script>
@@ -12,11 +17,44 @@ function sectionSelect(sectionNum,departmentName){
 	window.self.close();
 }
 </script>
+
+<!-- Favicon -->
+<link rel="icon" href="static/img/favicon.png">
+		
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="/static/css/bootstrap-green.min.css">
+<!-- Nice Select CSS -->
+<link rel="stylesheet" href="/static/css/nice-select.css">
+<!-- Font Awesome CSS -->
+<link rel="stylesheet" href="/static/css/font-awesome.min.css">
+<!-- icofont CSS -->
+<link rel="stylesheet" href="/static/css/icofont.css">
+<!-- Slicknav -->
+<link rel="stylesheet" href="/static/css/slicknav.min.css">
+<!-- Owl Carousel CSS -->
+<link rel="stylesheet" href="/static/css/owl-carousel.css">
+<!-- Datepicker CSS -->
+<link rel="stylesheet" href="/static/css/datepicker.css">
+<!-- Animate CSS -->
+<link rel="stylesheet" href="/static/css/animate.min.css">
+<!-- Magnific Popup CSS -->
+<link rel="stylesheet" href="/static/css/magnific-popup.css">
+		
+<!-- Medipro CSS -->
+<link rel="stylesheet" href="/static/css/normalize-green.css">
+<link rel="stylesheet" href="/static/css/style-green.css">
+<link rel="stylesheet" href="/static/css/responsive-green.css">
+
 </head>
 <body>
+<div align="center" style="font-size: 15px; margin: 15px">
+</div>
 <table border=1 width="600">
 	 <form action="sectionSearch" method="get">
-	<tr>
+	<tr align="center">
 		<td colspan="10">소속과 검색:
 			<input type="search" name="searchWord" size=60 th:value="${searchWord}">
 			<input type="text" name="kind" th:value="${kind}" hidden="hidden">
@@ -25,11 +63,12 @@ function sectionSelect(sectionNum,departmentName){
 	</tr>
 	</form> 
 
-	<tr>
+	<tr  style="background-color: #b2c9ad; color: black" align="center">
 		<td>소속과 번호</td><td>부서이름</td><td>소속과 이름</td><td>전화번호</td> <td>위치</td>
 		
 	</tr>
-	<tr th:each=" dto : ${list}">
+	<tr
+	th:each=" dto : ${list}">
 		
 		<td><a name="sectionNum" id="sectionNum" href="#" 
 		th:onclick="sectionSelect([[${dto.sectionNum}]],[[${dto.departmentName}]])">[[${dto.sectionNum}]]</a></td>

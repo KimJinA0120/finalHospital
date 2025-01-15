@@ -9,12 +9,8 @@
 <meta name='copyright' content=''>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Insert title here</title>
-    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script type="text/javascript" src ="/static/js/daumAddressScript.js"></script>
+<title>의사정보 수정</title>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
-<script type="text/javascript" src="/static/js/check.js"></script>
-
 <!-- Favicon -->
 <link rel="icon" href="../static/img/favicon.png">
 
@@ -48,6 +44,146 @@
 <link rel="stylesheet" href="../static/css/responsive-green.css">
 </head>
 <body>
+
+
+		<header class="header" >
+			<!-- Topbar -->
+			<div class="topbar">
+				<div class="container">
+					<div class="row">
+					<div class="col-lg-6 col-md-5 col-12">
+							
+						</div>
+						<div class="col-lg-6 col-md-7 col-12">
+							<!-- Top Contact -->
+							<ul class="top-contact">
+								<th:block th:if="${session.auth!=null}">
+									<li><i class="fa fa-doctor"></i><a href="../login/logout">로그아웃</a></li>
+									<li><a href="../employee/employeeMyPage">마이페이지</a></li>
+								</th:block>
+								<th:block  th:if="${session.auth==null}">
+									<li><a href="../login/employeeLogin">로그인</a></li>
+								</th:block>
+							</ul>
+							<!-- End Top Contact -->
+						</div>
+					</div>
+				</div>
+			</div>
+
+		<div class="header-inner">
+				<div class="container">
+					<div class="inner">
+						<div class="row">
+							<div class="col-lg-3 col-md-10 col-12">
+								<!-- Start Logo -->
+								<div class="logo">
+									<a href="/"><img src="/static/img/logo.png" alt="#"></a>
+								</div>
+								<!-- End Logo -->
+								<!-- Mobile Nav -->
+								<div class="mobile-nav"></div>
+								<!-- End Mobile Nav -->
+							</div>
+							<div class="col-lg-8 col-md-9 col-12">
+								<!-- Main Menu -->
+								<div class="main-menu">
+									<nav class="navigation">
+										<ul class="nav menu">
+											<li><a href="#">접수/예약<i class="icofont-rounded-down"></i></a>
+												<ul class="dropdown">
+													<li><a href="../receipt/receiptList">접수/예약관리</a></li>
+												</ul>
+											</li>
+											<li><a href="#">EMR<i class="icofont-rounded-down"></i></a>
+												<ul class="dropdown">
+													<th:block th:if="${session.auth != null}">
+														<th:block th:if="${session.auth.grade=='doc'}">
+															<li><a href="../wardPS/hosPatList">병동처방</a></li>
+															<li><a href="../medical/medicalList">외래진료</a></li>
+														</th:block>
+														<th:block th:if="${session.auth.grade=='nur'}">
+															<li><a href="../wardPS/hosPatList">병동처방</a></li>
+															<li><a href="../nursing/hosPatList">간호처방</a></li>
+															<li><a href="../medical/medicalList">외래진료</a></li>
+														</th:block>
+														<th:block th:if="${session.auth.grade=='emp'}">
+															<li><a href="../medical/medicalList">외래진료</a></li>
+														</th:block>
+													</th:block>
+												</ul>
+											</li>
+											<li><a href="#">수술<i class="icofont-rounded-down"></i></a>
+												<ul class="dropdown">
+													<th:block th:if="${session.auth != null}">
+														<th:block th:if="${session.auth.grade=='doc'}">
+													<li><a href="../surgery/surgeryScheduler">수술스케쥴러</a></li>
+													<li><a href="../surgery/surgeryAppointmentList">수술예약</a></li>
+													<li><a href="../surgery/surgeryList">환자수술결과기록</a></li>
+													<li><a href="../surgery/operatingRoom">수술실</a></li>
+													</th:block>
+													</th:block>
+												</ul>
+											</li>
+											<li><a href="#">검사<i class="icofont-rounded-down"></i></a>
+												<ul class="dropdown">
+												<th:block th:if="${session.auth != null}">
+														<th:block th:if="${session.auth.grade=='mdt'}">
+													<li><a href="../inspection/inspectionList">검사예약</a></li>
+													<li><a href="../radiation/radiationList">방사선</a></li>
+													<li><a href="../clinical/clinicalList">임상병리</a></li>
+													</th:block>
+													<th:block th:if="${session.auth.grade=='emp'}">
+													<li><a href="../inspection/inspectionList">검사예약</a></li>
+													</th:block>
+													<th:block th:if="${session.auth.grade=='doc'}">
+													<li><a href="../inspection/inspectionList">검사예약</a></li>
+													<li><a href="../radiation/radiationList">방사선</a></li>
+													<li><a href="../clinical/clinicalList">임상병리</a></li>
+													</th:block>
+												</th:block>
+												</ul>
+											</li>
+											<li><a href="#">입원/병동/응급실<i class="icofont-rounded-down"></i></a>
+												<ul class="dropdown">
+													<li><a href="../WardRoomBed/WardList">병동관리</a></li>
+													<li><a href="../Hospitalization/hospitalizationList">입원관리 </a></li>
+													<li><a href="../Hospitalization/emerHospitalizationList">응급입원관리 </a></li>
+												</ul>
+											</li>
+											<li><a href="#">문의<i class="icofont-rounded-down"></i></a>
+												<ul class="dropdown">
+												<th:block th:if="${session.auth != null}">
+													<th:block th:if="${session.auth.grade=='emp'}">
+													<li><a href="../qna/eqnaList">문의/건의</a></li>
+													</th:block>
+												</th:block>
+												</ul>
+											</li>
+											<li><a href="#">사용자<i class="icofont-rounded-down"></i></a>
+												<ul class="dropdown">
+														<li><a href="../employee/patientRegist">환자등록</a></li>
+														<li><a href="../patient/patientList">환자목록</a></li>
+														<li><a href="../employee/employeeList">직원목록</a></li>
+														<li><a href="../employee/doctorList">의사목록</a></li>
+												</ul>
+											</li>
+										</ul>
+									</nav>
+								</div>
+								<!--/ End Main Menu -->
+							</div>
+							<div class="col-lg-2 col-12">
+								<div class="get-quote">
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+
 <!-- Start Contact Us -->
 	<section class="contact-us section">
 		<div class="container">
@@ -64,11 +200,12 @@
 이름 : [[${doctorCommand.empName}]]<br />
 진료과목 : [[${doctorCommand.medicalSubject}]]<br />
 진료실 위치 : <input type="text" name="medicalRoomLocation" th:field="*{medicalRoomLocation}"><br/>
+</div>
 <div class="form-group login-btn">
 <br/>
 <button class="btn" type="submit" style="width:100%; background-color: #66785F ">의사정보 수정</button>
 										</div>
-									</div>
+									
 								</div>
 								</div>
 							</form>
@@ -78,5 +215,95 @@
 			</div>
 		</div>
 	</section>
+	
+	<!-- blank area 빈공간 만드는 코드-->
+		<section class="appointment">
+			<div class="container">
+				<div class="row ">
+					<div class="col-lg-6  col-12">
+						<div class="subscribe-text ">
+							<h6></h6><p class=""></p>
+						</div></div>
+					<div class="col-lg-6  col-12">
+						<div class="subscribe-form ">
+							<form action="#" method="get" target="_blank" class="newsletter-inner"></form>
+						</div></div></div></div>
+		</section>
+		<!-- end blank area -->
+
+<!-- Footer Area -->
+		<footer id="footer" class="footer ">
+			<!-- Footer Top -->
+			<div class="footer-top">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-4 col-md-6 col-12">
+							<div class="single-footer">
+								<h2>소셜네트워크</h2>
+								<!-- Social -->
+								<ul class="social">
+									<li><a href="#"><i class="icofont-facebook"></i></a></li>
+									<li><a href="#"><i class="icofont-google-plus"></i></a></li>
+									<li><a href="#"><i class="icofont-twitter"></i></a></li>
+									<li><a href="#"><i class="icofont-vimeo"></i></a></li>
+									<li><a href="#"><i class="icofont-pinterest"></i></a></li>
+								</ul>
+								<!-- End Social -->
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-6 col-12">
+						
+							<div class="single-footer f-link">
+							<h2>가이드라인</h2>
+								<div class="row">
+									<div class="col-lg-6 col-md-6 col-12">
+										<ul>
+											<li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>병원윤리강령</a></li>
+											<li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>환자의 권리와 의무</a></li>
+											<li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>안전보건경영방침</a></li>
+										</ul>
+									</div>
+									<div class="col-lg-6 col-md-6 col-12">
+										<ul>
+											<li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>개인정보처리방침</a></li>
+											<li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>비급여진료비 안내</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-6 col-12">
+							<div class="single-footer">
+								<h2>영업시간</h2>
+								<ul class="time-sidual">
+									<li class="day">월요일 - 금요일 <span>8.00-20.00</span></li>
+									<li class="day">토요일 <span>9.00-18.30</span></li>
+									<li class="day">응급센터 <span>상시운영</span></li>
+								</ul>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+			<!--/ End Footer Top -->
+			<!-- Copyright -->
+			<div class="copyright">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-12 col-md-12 col-12">
+							<div class="copyright-content">
+								<p>주소 : 14097 경기도 안양시 만안구 <br>
+								임시병원 대표전화 : 1588-#### 사업자등록번호 : 207-82-##### 양진서(팀장)<br>
+								© 2025 IMSI Medical Center.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--/ End Copyright -->
+		</footer>
+		<!--/ End Footer Area -->
 </body>
 </html>
