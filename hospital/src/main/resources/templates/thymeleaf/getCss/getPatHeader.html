@@ -41,6 +41,8 @@ table tr:first-child{
         <link rel="stylesheet" href="/static/css/animate.min.css">
 		<!-- Magnific Popup CSS -->
         <link rel="stylesheet" href="/static/css/magnific-popup.css">
+        <!-- Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		
 		<!-- Medipro CSS -->
         <link rel="stylesheet" href="/static/css/normalize.css">
@@ -98,6 +100,7 @@ table tr:first-child{
 							<!-- Contact -->
 							<ul class="top-link">
 								<th:block  th:if="${session.auth==null}">
+								<i class="fa fa-user-md" style="color: #1a76d1"></i>
 										<li><a href="login/employeeLogin">직원 로그인</a></li>
 								</th:block>
 							</ul>
@@ -106,6 +109,7 @@ table tr:first-child{
 						<div class="col-lg-6 col-md-7 col-12">
 							<!-- Top Contact -->
 							<ul class="top-contact">
+							<i class="fa fa-user" style="color: #1a76d1"></i>
 							<th:block th:if="${session.auth == null}"> 
 								<li><a href="login/patientLogin">로그인</a></li>
 								<li><a href="patient/patientWriteCon">회원가입</a></li>

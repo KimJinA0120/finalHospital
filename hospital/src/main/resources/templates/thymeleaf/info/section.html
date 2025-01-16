@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- Meta Tags -->
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="keywords" content="Site keywords here">
+		<meta name="description" content="">
+		<meta name='copyright' content=''>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>진료과</title>
+
+<link rel="stylesheet" href="/static/css/sections.css">
+
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-bar">
+            <div class="nav-container">
+                <a href="#" class="nav-link">진료과 · 의료진</a>
+                <a href="#" class="nav-dropdown">진료과 ▼</a>
+            </div>
+        </nav>
+    </header>
+    
+<section style="align-items: center;">
+    <main class="main-content" style="width:auto;" >
+        <h1 class="main-title">진료과</h1>
+        
+        <div class="search-box">
+            <div class="search-container">
+            <a>검색 </a>
+                <input type="text" class="search-input" placeholder="진료과명을 입력하세요">
+                <button class="search-btn">검색하기</button>
+            </div>
+        </div>
+
+        <div class="alphabet-filter">
+            <button class="filter-btn active">전체</button>
+            <button class="filter-btn">ㄱ</button>
+            <button class="filter-btn">ㄴ</button>
+            <button class="filter-btn">ㄷ</button>
+            <button class="filter-btn">ㄹ</button>
+            <button class="filter-btn">ㅁ</button>
+            <button class="filter-btn">ㅂ</button>
+            <button class="filter-btn">ㅅ</button>
+            <button class="filter-btn">ㅇ</button>
+            <button class="filter-btn">ㅈ</button>
+            <button class="filter-btn">ㅊ</button>
+            <button class="filter-btn">ㅋ</button>
+            <button class="filter-btn">ㅌ</button>
+            <button class="filter-btn">ㅍ</button>
+            <button class="filter-btn">ㅎ</button>
+        </div>
+        <hr/><br/>
+
+        <div class="department-grid">
+            <button class="department-btn" th:onclick="javascript:location.href='sections?num=1'">응급의학과</button>
+            <button class="department-btn" th:onclick="javascript:location.href='sections?num=2'">마취통증의학과</button>
+            <button class="department-btn" th:onclick="javascript:location.href='sections?num=3'">감염내과</button>
+            <button class="department-btn" th:onclick="javascript:location.href='sections?num=4'">재활의학과</button>
+            <button class="department-btn" th:onclick="javascript:location.href='sections?num=5'">이비인후과</button>
+            <button class="department-btn" th:onclick="javascript:location.href='sections?num=6'">입원환자진료과</button>
+            <button class="department-btn" th:onclick="javascript:location.href='sections?num=7'">피부과</button>
+            <button class="department-btn" th:onclick="javascript:location.href='sections?num=8'">외상외과</button>
+            <button class="department-btn" th:onclick="javascript:location.href='sections?num=9'">순환기내과</button>
+            <button class="department-btn" th:onclick="javascript:location.href='sections?num=10'">방사선종양학과</button>
+        </div>
+    </main>
+</section>
+</body>
+</html>
