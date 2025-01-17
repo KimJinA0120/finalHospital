@@ -52,7 +52,7 @@ function doctorSelect(empNum){
 </head>
 <body>
 <div align="center" style="font-size: 15px; margin: 15px">
-의사목록 페이지 <br/>
+의사 검색 <br/>
 의사수 : [[${count}]]
 </div>
 <table border=1 class="container col-8">
@@ -69,7 +69,7 @@ function doctorSelect(empNum){
 	</form> 
 
 	<tr style="background-color: #b2c9ad; color: black" align="center">
-		<td>의사번호</td><td>이름</td><td>진료과목</td><td>진료실위치</td>
+		<td>의사번호</td><td>이름</td><td>진료과목</td><td>진료실위치</td><td></td>
 		
 	</tr>
 	<tr th:each=" dto : ${list}"  align="center">

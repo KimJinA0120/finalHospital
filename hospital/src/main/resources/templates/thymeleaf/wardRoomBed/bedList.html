@@ -55,7 +55,8 @@ function bedSelect(bedNum){
 		<tr th:each="dto : ${list}" align="center">
 			<td>[[${dto.bedNum}]]</td>
 			<td>[[${dto.roomNum}]]</td>
-			<td>[[${dto.bedStatus}]]</td>
+			<td th:if="${dto.bedStatus}=='사용중'" style="color: red">[[${dto.bedStatus}]]</td>
+			<td th:if="${dto.bedStatus}=='사용가능'" style="color: green">[[${dto.bedStatus}]]</td>
 			<th:block th:if="${dto.bedStatus}=='사용가능'">
 			<td><button type="button" class="btn" style="height:30px; text-align:center; padding: .200rem .75rem; background-color: #4b5945; color: white;"
 					th:attr="onclick=|javascript:bedSelect('${dto.bedNum}')|">선택</button>

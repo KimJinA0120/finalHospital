@@ -50,6 +50,9 @@ function employeeSelect(empNum,empName){
 </script>
 </head>
 <body>
+<div align="center" style="font-size: 15px; margin: 15px">
+직원 검색<br>
+</div>
 <!-- 직원수 : [[${count}]]<br /> -->
 <table border=1 class="container col-8">
 	 <form action="employeeSearch" method="get">
@@ -63,7 +66,7 @@ function employeeSelect(empNum,empName){
 	</form> 
 
 	<tr style="background-color: #b2c9ad; color: black" align="center">
-		<td>번호</td><td>이름</td><td>직무</td><td>소속과</td><td>전화번호</td><td>성별</td><td>입사일</td>
+		<td>번호</td><td>이름</td><td>직무</td><td>소속과</td><td>전화번호</td><td>성별</td><td>입사일</td><td></td>
 		
 	</tr>
 	<tr th:each=" dto : ${list}" align="center">
