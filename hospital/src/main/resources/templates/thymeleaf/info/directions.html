@@ -50,13 +50,31 @@
                 <i class="fa fa-map-o" style="font-size:50px; color:#1a76d1">  |  </i> <a></a>
             </div>
             <div class="info-details">
-                <p><strong> sku병원 주소:</strong> [16499] 경기도 수원시 영통구 월드컵로 164 (원천동 산5)</p>
-                <p><strong> 교통안내:</strong> 031-219-5500</p>
+                <p><strong> sku병원 주소:</strong> [14093] 경기도 안양시 만안구 성결대학로 53</p>
+                <p><strong> 교통안내:</strong> 031-467-8114</p>
             </div>
         </div>
         <div class="map-container">
-            <!-- 지도 API를 통해 삽입할 공간 -->
-            <div id="map"></div>
+            <div id="map">
+            	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fa54a53578a384ce2fccce23d14e55a8"></script>
+           		 <script>
+					var container = document.getElementById('map');
+					var options = {
+					center: new kakao.maps.LatLng(37.37984505654097, 126.92875445781955),
+					level: 3
+					};
+
+					var map = new kakao.maps.Map(container, options);
+					
+					var markerPosition  = new kakao.maps.LatLng(37.37984505654097, 126.92875445781955); 
+
+					var marker = new kakao.maps.Marker({
+					    position: markerPosition
+					});
+
+					marker.setMap(map);
+				</script>
+            </div>
         </div>
     </section>
     
