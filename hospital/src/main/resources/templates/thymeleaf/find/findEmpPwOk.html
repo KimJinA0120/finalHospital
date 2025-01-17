@@ -44,6 +44,114 @@
 <link rel="stylesheet" href="../static/css/responsive-green.css">
 </head>
 <body>
+
+<!-- Header Area -->
+      <header class="header" >
+         <!-- Topbar -->
+         <div class="topbar">
+            <div class="container">
+               <div class="row">
+                  <div class="col-lg-6 col-md-5 col-12">
+                     <!-- Contact -->
+                     <ul class="top-link">
+                        <th:block  th:if="${session.auth==null}">
+                        <i class="fa fa-user-md" style="color: #1a76d1"></i>
+                              <li><a href="/login/employeeLogin">직원 로그인</a></li>
+                        </th:block>
+                     </ul>
+                     <!-- End Contact -->
+                  </div>
+                  <div class="col-lg-6 col-md-7 col-12">
+                     <!-- Top Contact -->
+                     <ul class="top-contact">
+                     <i class="fa fa-user" style="color: #1a76d1"></i>
+                     <th:block th:if="${session.auth == null}"> 
+                        <li><a href="/login/patientLogin">로그인</a></li>
+                        <li><a href="patient/patientWriteCon">회원가입</a></li>
+                     </th:block>
+                     <th:block th:if="${session.auth!=null}"> 
+                        <li><a href="/login/logout">로그아웃</a></li>
+                        <li><a href="/patient/patientMyPage">환자 마이페이지</a></li>   
+                     </th:block>
+                     </ul>
+                     <!-- End Top Contact -->
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- End Topbar -->
+         <!-- Header Inner -->
+         <div class="header-inner">
+            <div class="container">
+               <div class="inner">
+                  <div class="row">
+                     <div class="col-lg-3 col-md-6 col-12">
+                        <!-- Start Logo -->
+                        <div class="logo">
+                           <a href="/"><img src="/static/img/logo.png" alt="#"></a>
+                        </div>
+                        <!-- End Logo -->
+                        <!-- Mobile Nav -->
+                        <div class="mobile-nav"></div>
+                        <!-- End Mobile Nav -->
+                     </div>
+                     <div class="col-lg-8 col-md-9 col-12">
+                        <!-- Main Menu -->
+                        <div class="main-menu">
+                           <nav class="navigation">
+                              <ul class="nav menu">
+                                 <li><a href="#">진료예약<i class="icofont-rounded-down"></i></a>
+                                    <ul class="dropdown">
+                                       <li><a href="/receipt/reservationForm">진료예약</a></li>
+                                       <li><a href="/receipt/patientReservation">진료예약 확인</a></li>
+                                    </ul>
+                                 </li>
+                                 <li><a href="#">문의/건의<i class="icofont-rounded-down"></i></a>
+                                 <ul class="dropdown">
+                                 <li><a href="/qna/qnaList">문의/건의</a></li>
+                                 </ul>
+                                 </li>
+                                 <li><a href="#">주식<i class="icofont-rounded-down"></i></a>
+                                    <ul class="dropdown">
+                                       <li><a href="/data/test">주식차트</a></li>
+                                       <li><a href="/data/test1">주식표</a></li>
+                                    </ul>
+                                 </li>
+                                 <li><a href="#">건강정보<i class="icofont-rounded-down"></i></a>
+                                 <ul class="dropdown">
+                                 <li><a href="/info/healthyList">건강정보</a></li>
+                                 </ul>
+                                 </li>
+                                 <li><a href="#">병원안내<i class="icofont-rounded-down"></i></a>
+                                 <ul class="dropdown">
+                                 <li><a href="/info/introduce">병원소개</a></li>
+                                 <li><a href="/info/directions">병원위치</a></li>
+                                 <li><a href="/info/hospitalNews">병원소식</a></li>
+                                 </ul>
+                                 </li>
+                                 <li><a href="#">진료과/의료진<i class="icofont-rounded-down"></i></a>
+                                 <ul class="dropdown">
+                                 <li><a href="/info/doctor">의료진</a></li>
+                                 <li><a href="/info/section">진료과</a></li>
+                                 </ul>
+                                 </li>
+                              </ul>
+                           </nav>
+                        </div>
+                        <!--/ End Main Menu -->
+                     </div>
+                     <div class="col-lg-1 col-12">
+                        <div class="get-quote">
+                           <a href="/receipt/reservationForm" class="btn">빠른 진료예약</a>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!--/ End Header Inner -->
+      </header>
+      <!-- End Header Area -->
   
     	<!-- Start Contact Us -->
 	<section class="contact-us section">
