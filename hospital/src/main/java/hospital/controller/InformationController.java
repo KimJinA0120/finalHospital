@@ -30,7 +30,7 @@ public class InformationController {
 		return "thymeleaf/info/sections";
 	}
 	
-	@GetMapping("doctor") //진료과 화면
+	@GetMapping("doctor") //의료진 화면
 	public String doctor() {
 		return "thymeleaf/info/doctor";
 	}
@@ -40,5 +40,21 @@ public class InformationController {
 		sectionService.execute(num, model);
 		return "thymeleaf/info/doctors";
 	}
+	
+	@GetMapping("healthyList") //건강정보
+	public String healthyList() {
+		return "thymeleaf/info/healthyList";
+	}
+	
+	@GetMapping("hospitalNews") //건강정보
+	public String hospitalNews() {
+		return "thymeleaf/info/hospitalNews";
+	}
+	
+	@GetMapping("introduce") //병원소개
+	public String introduce() {
+		return "thymeleaf/info/introduce";
+	}
+	
 
 }

@@ -258,3 +258,54 @@ body {
     /* max-height: 300px; */ /* 이미지 최대 높이 제한 */
     object-fit: contain; /* 비율 유지 */
 }
+
+/* 콘텐츠 그리드 */
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.content-item {
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.content-item img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.content-item .date {
+    color: gray;
+    font-size: 0.9em;
+    margin-top: 10px;
+}
+
+.content-item .title {
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+/* 페이지네이션 */
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.pagination button {
+    padding: 8px 12px;
+    margin: 0 3px;
+    border: none;
+    background-color: #ddd;
+    cursor: pointer;
+}
+
+.pagination button.active {
+    background-color: #003366;
+    color: white;
+}
