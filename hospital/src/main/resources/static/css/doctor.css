@@ -1,0 +1,113 @@
+@charset "UTF-8";
+/* 전체 레이아웃 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8;
+}
+
+/* 상단 섹션 (아이콘과 제목) */
+.intro-section {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.intro-icon {
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
+}
+
+.intro-title {
+    display: inline-block;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #003a80;
+    margin-left: 10px;
+}
+
+/* 카드 컨테이너 */
+.doctor-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* 카드 스타일 */
+.doctor-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #f0f4fa;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    position: relative;
+}
+
+/* 의사 정보 */
+.doctor-info {
+    padding: 20px;
+    flex: 1;
+}
+
+.doctor-info h3 {
+    font-size: 1rem;
+    color: #007bff;
+    margin: 0;
+}
+
+.doctor-info h2 {
+    font-size: 1.5rem;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+.doctor-info p {
+    font-size: 0.9rem;
+    color: #333;
+    line-height: 1.4;
+}
+
+/* 버튼 섹션 */
+.doctor-buttons {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #003a80;
+    color: white;
+}
+
+.doctor-buttons button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 5px 10px;
+}
+
+.doctor-buttons button:hover {
+    text-decoration: underline;
+}
+
+/* 이미지 스타일 */
+.doctor-image {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    width: 50%;
+}
+
+.doctor-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}

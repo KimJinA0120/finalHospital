@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <!-- Meta Tags -->
 		<meta charset="utf-8">
@@ -8,10 +8,11 @@
 		<meta name="description" content="">
 		<meta name='copyright' content=''>
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>진료과 페이지</title>
-    <link rel="stylesheet" href="/static/css/sections.css">
-    
-    <!-- Favicon -->
+<title>진료과/의료진</title>
+
+<link rel="stylesheet" href="/static/css/sections.css">
+
+<!-- Favicon -->
         <link rel="icon" href="static/img/favicon.png">
 		
 		<!-- Google Fonts -->
@@ -42,8 +43,10 @@
         <link rel="stylesheet" href="/static/css/normalize.css">
         <link rel="stylesheet" href="/static/css/style.css">
         <link rel="stylesheet" href="/static/css/responsive.css">
+
 </head>
 <body>
+
 <!-- Header Area -->
 		<header class="header" >
 			<!-- Topbar -->
@@ -151,36 +154,53 @@
 			<!--/ End Header Inner -->
 		</header>
 		<!-- End Header Area -->
-
-       
-
-    <main class="main-content">
-        <section class="tabs" style="color:black">
-            <div class="tab active">소개</div>
-            <div class="tab">의료진</div>
-            <div class="tab">진료시간표</div>
-            <div class="tab">위치</div>
-        </section>
-        <section class="content">
+    
+<section style="align-items: center;">
+    <main class="main-content" style="width:auto;" >
+        <h1 class="main-title"><b>진료과/의료진</b></h1>
         
-    <div class="content-left" >
-    <h2><b>[[${sectionName}]]</b></h2><br/>
-        <p style="color:black"><b>[[${sectionName}]]</b><br />
-        [[${contents}]]<br/>
-        전화번호 : [[${phone}]]<br/>
-        진료실 위치 : [[${location}]]</p>
-        <button class="btn-orange">
-            <span class="btn-icon">🖥️</span> 홈페이지 바로가기
-        </button>
-    </div>
-    <div class="content-right">
-    <br/><br/><br/>
-        <img src="/static/img/section.png" alt="진료과 이미지" class="content-image">
-    </div>
-</section>
-<hr/>
+        <div class="search-box">
+            <div class="search-container">
+            <a>검색 </a>
+                <input type="text" class="search-input" placeholder="진료과명을 입력하세요">
+                <button class="search-btn">검색하기</button>
+            </div>
+        </div>
+
+        <div class="alphabet-filter">
+            <button class="filter-btn active">전체</button>
+            <button class="filter-btn">ㄱ</button>
+            <button class="filter-btn">ㄴ</button>
+            <button class="filter-btn">ㄷ</button>
+            <button class="filter-btn">ㄹ</button>
+            <button class="filter-btn">ㅁ</button>
+            <button class="filter-btn">ㅂ</button>
+            <button class="filter-btn">ㅅ</button>
+            <button class="filter-btn">ㅇ</button>
+            <button class="filter-btn">ㅈ</button>
+            <button class="filter-btn">ㅊ</button>
+            <button class="filter-btn">ㅋ</button>
+            <button class="filter-btn">ㅌ</button>
+            <button class="filter-btn">ㅍ</button>
+            <button class="filter-btn">ㅎ</button>
+        </div>
+        <hr/><br/>
+
+        <div class="department-grid">
+            <button class="department-btn" th:onclick="javascript:location.href='doctors?num=1'">응급의학과</button>
+            <button class="department-btn" th:onclick="javascript:location.href='doctors?num=2'">마취통증의학과</button>
+            <button class="department-btn" th:onclick="javascript:location.href='doctors?num=3'">감염내과</button>
+            <button class="department-btn" th:onclick="javascript:location.href='doctors?num=4'">재활의학과</button>
+            <button class="department-btn" th:onclick="javascript:location.href='doctors?num=5'">이비인후과</button>
+            <button class="department-btn" th:onclick="javascript:location.href='doctors?num=6'">입원환자진료과</button>
+            <button class="department-btn" th:onclick="javascript:location.href='doctors?num=7'">피부과</button>
+            <button class="department-btn" th:onclick="javascript:location.href='doctors?num=8'">외상외과</button>
+            <button class="department-btn" th:onclick="javascript:location.href='doctors?num=9'">순환기내과</button>
+            <button class="department-btn" th:onclick="javascript:location.href='doctors?num=10'">방사선종양학과</button>
+        </div>
     </main>
- 
+</section>
+
 <!-- blank area 빈공간 만드는 코드-->
 		<section class="appointment">
 			<div class="container">
@@ -269,7 +289,7 @@
 			</div>
 			<!--/ End Copyright -->
 		</footer>
-		<!--/ End Footer Area -->   
-    
+		<!--/ End Footer Area -->
+		
 </body>
 </html>

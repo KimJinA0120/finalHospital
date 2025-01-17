@@ -8,8 +8,8 @@
 		<meta name="description" content="">
 		<meta name='copyright' content=''>
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>진료과 페이지</title>
-    <link rel="stylesheet" href="/static/css/sections.css">
+    <title>의료진</title>
+    <link rel="stylesheet" href="/static/css/doctor.css">
     
     <!-- Favicon -->
         <link rel="icon" href="static/img/favicon.png">
@@ -154,31 +154,96 @@
 
        
 
-    <main class="main-content">
-        <section class="tabs" style="color:black">
-            <div class="tab active">소개</div>
-            <div class="tab">의료진</div>
-            <div class="tab">진료시간표</div>
-            <div class="tab">위치</div>
-        </section>
-        <section class="content">
-        
-    <div class="content-left" >
-    <h2><b>[[${sectionName}]]</b></h2><br/>
-        <p style="color:black"><b>[[${sectionName}]]</b><br />
-        [[${contents}]]<br/>
-        전화번호 : [[${phone}]]<br/>
-        진료실 위치 : [[${location}]]</p>
-        <button class="btn-orange">
-            <span class="btn-icon">🖥️</span> 홈페이지 바로가기
-        </button>
-    </div>
-    <div class="content-right">
-    <br/><br/><br/>
-        <img src="/static/img/section.png" alt="진료과 이미지" class="content-image">
-    </div>
-</section>
-<hr/>
+  	<section align="center">
+        <br/>
+        <h1 class="intro-title"><i class="fa fa-hospital-o"></i> [[${sectionName}]] 의료진</h1>
+    </section>
+    <br/>
+    <main class="doctor-container">
+        <div class="doctor-card">
+            <div class="doctor-info">
+                <h3>[[${sectionName}]]</h3>
+                <h2>김광민</h2>
+                <p><strong>전문분야:</strong> 만성피로, 노화관리, 남성갱년기</p>
+            </div>
+            <div class="doctor-buttons">
+                <button>자세히 보기 →</button>
+                <button>진료예약 →</button>
+            </div>
+            <div class="doctor-image">
+                
+            </div>
+        </div>
+        <div class="doctor-card">
+            <div class="doctor-info">
+                <h3>[[${sectionName}]]</h3>
+                <h2>박샛별</h2>
+                <p><strong>전문분야:</strong> 여성갱년기, 스트레스, 가족상담</p>
+            </div>
+            <div class="doctor-buttons">
+                <button>자세히 보기 →</button>
+                <button>진료예약 →</button>
+            </div>
+            <div class="doctor-image">
+               
+            </div>
+        </div>
+        <div class="doctor-card">
+            <div class="doctor-info">
+                <h3>[[${sectionName}]]</h3>
+                <h2>김범택</h2>
+                <p><strong>전문분야:</strong> 비만, 골다공증, 임상영양</p>
+            </div>
+            <div class="doctor-buttons">
+                <button>자세히 보기 →</button>
+                <button>진료예약 →</button>
+            </div>
+            <div class="doctor-image">
+               
+            </div>
+        </div>
+        <div class="doctor-card">
+            <div class="doctor-info">
+                <h3>[[${sectionName}]]</h3>
+                <h2>주남석</h2>
+                <p><strong>전문분야:</strong> 금연, 만성피로, 노화관리</p>
+            </div>
+            <div class="doctor-buttons">
+                <button>자세히 보기 →</button>
+                <button>진료예약 →</button>
+            </div>
+            <div class="doctor-image">
+               
+            </div>
+        </div>
+        <div class="doctor-card">
+            <div class="doctor-info">
+                <h3>[[${sectionName}]]</h3>
+                <h2>김규남</h2>
+                <p><strong>전문분야:</strong> 임상영양, 기능의학, 만성질환</p>
+            </div>
+            <div class="doctor-buttons">
+                <button>자세히 보기 →</button>
+                <button>진료예약 →</button>
+            </div>
+            <div class="doctor-image">
+              
+            </div>
+        </div>
+        <div class="doctor-card">
+            <div class="doctor-info">
+                <h3>[[${sectionName}]]</h3>
+                <h2>이석훈</h2>
+                <p><strong>전문분야:</strong> 건강증진, 스트레스 관리, 비만</p>
+            </div>
+            <div class="doctor-buttons">
+                <button>자세히 보기 →</button>
+                <button>진료예약 →</button>
+            </div>
+            <div class="doctor-image">
+               
+            </div>
+        </div>
     </main>
  
 <!-- blank area 빈공간 만드는 코드-->

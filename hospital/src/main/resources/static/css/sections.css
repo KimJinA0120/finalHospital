@@ -9,7 +9,7 @@ body {
     box-sizing: border-box;
 }
 
-.header {
+.header2 {
     background-color: #003399; /* 네이비 배경 */
     color: white;
     display: flex;
@@ -174,8 +174,50 @@ body {
 
 /* 콘텐츠 섹션 */
 .content {
-    text-align: center;
-    margin: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+/* 왼쪽 콘텐츠 스타일 */
+.content-left {
+    flex: 1;
+    padding-right: 20px; /* 이미지와의 간격 조정 */
+}
+
+.content-left p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.btn-orange {
+    background-color: #ff6600;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.btn-orange:hover {
+    background-color: #e65c00;
+}
+
+.btn-icon {
+    margin-right: 10px;
+}
+
+/* 오른쪽 이미지 스타일 */
+.content-right {
+    flex: 0.8; /* 이미지 영역 크기 비율 */
+    text-align: right;
 }
 
 .content h2 {
@@ -211,7 +253,8 @@ body {
 
 /* 이미지 스타일 */
 .content-image {
-    max-width: 100%;
+    max-width: 100%; /* 화면 크기에 맞게 */
     height: auto;
-    margin-top: 20px;
+    /* max-height: 300px; */ /* 이미지 최대 높이 제한 */
+    object-fit: contain; /* 비율 유지 */
 }
