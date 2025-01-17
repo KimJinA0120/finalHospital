@@ -64,10 +64,10 @@
 							<i class="fa fa-user" style="color: #8EB486"></i>
 								<th:block th:if="${session.auth!=null}">
 									<li><i class="fa fa-doctor"></i><a href="../login/logout">로그아웃</a></li>
-									<li><a href="../employee/employeeMyPage">마이페이지</a></li>
+									<li><a href="/employee/employeeMyPage">마이페이지</a></li>
 								</th:block>
 								<th:block  th:if="${session.auth==null}">
-									<li><a href="../login/employeeLogin">로그인</a></li>
+									<li><a href="/login/employeeLogin">로그인</a></li>
 								</th:block>
 							</ul>
 							<!-- End Top Contact -->
