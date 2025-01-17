@@ -1,0 +1,67 @@
+@charset "UTF-8";
+/* 기본 설정 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+}
+
+section.directions {
+    padding: 20px;
+    text-align: center;
+    margin:150px;
+}
+
+.directions-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* 정보 섹션 */
+.directions-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+}
+
+.info-icon img {
+    width: 50px;
+    height: 50px;
+    margin-right: 20px;
+}
+
+.info-details {
+    text-align: left;
+    font-size: 1rem;
+    color: #333;
+}
+
+.info-details p {
+    margin: 5px 0;
+}
+
+.info-details strong {
+    color: #0056b3;
+}
+
+/* 지도 섹션 */
+.map-container {
+    margin-top: 20px;
+    height: 400px;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
