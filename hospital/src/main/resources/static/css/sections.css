@@ -185,7 +185,41 @@ body {
     flex: 1;
     padding-right: 20px; /* 이미지와의 간격 조정 */
 }
+/* 왼쪽 콘텐츠 스타일 */
+.content-left1 {
+    flex: 0.5;
+    padding-right: 20px; /* 이미지와의 간격 조정 */
+}
+/* 오른쪽 이미지 스타일 */
+.content-right2 {
+    flex: 1; /* 이미지 영역 크기 비율 */
+    text-align: right;
+}
 
+.content-left2 {
+      flex: 1;                /* 4분의 1 영역 (1 비율) */
+      max-width: 25%;         /* 최대 너비 제한 */
+      background-color: #f9f9f9; /* 배경색 (가독성을 위해) */
+      padding: 16px;          /* 내부 여백 */
+    }
+    .content-right1 {
+      flex: 3;                /* 4분의 3 영역 (3 비율) */
+      max-width: 75%;         /* 최대 너비 제한 */
+      background-color: #f9f9f9; /* 배경색 */
+      padding: 16px;          /* 내부 여백 */
+    }
+    .image-container img {
+      width: 100%;            /* 이미지가 컨테이너 너비를 채우도록 설정 */
+      height: auto;           /* 이미지 비율 유지 */
+      display: block;         /* 하단 여백 제거 */
+    }
+
+/* .content-right1 p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    text-align: left;
+} */
 .content-left p {
     font-size: 1rem;
     line-height: 1.6;
@@ -308,4 +342,28 @@ body {
 .pagination button.active {
     background-color: #003366;
     color: white;
+}
+
+/* 뉴스 리스트 */
+.news-list {
+    width: 100%;
+    margin: 0 0;
+}
+
+.news-item {
+    display: flex;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.news-item img {
+    width: 180px;
+    height: 120px;
+    object-fit: cover;
+    margin-right: 20px;
+}
+
+.news-content .meta {
+    font-size: 12px;
+    color: #555;
 }

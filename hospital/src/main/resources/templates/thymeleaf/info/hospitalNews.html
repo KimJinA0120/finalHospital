@@ -8,7 +8,7 @@
 		<meta name="description" content="">
 		<meta name='copyright' content=''>
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>건강정보</title>
+    <title>병원소식</title>
     <link rel="stylesheet" href="/static/css/sections.css">
     
     <!-- Favicon -->
@@ -46,6 +46,7 @@
 <body>
 
     <main class="main-content">
+    <h1 class="main-title"><b>병원소식</b></h1>
         <section class="tabs" style="color:black">
             <div class="tab active">전체</div>
             <div class="tab">행사</div>
@@ -66,36 +67,36 @@
 		    <!-- 콘텐츠 영역 -->
     <div class="content">
         <div class="news-list">
+        
             <!-- 뉴스 항목 1 -->
             <div class="news-item">
-                <img src="/static/img/news1.png" >
+                <img src="/static/img/news1.png" th:onclick="javascript:location.href='https://hosp.ajoumc.or.kr/board/commBoardNewsView.do?no=69326'">
                 <div class="news-content">
                     <div class="meta">
                         <span class="category">행사</span>
                         <span class="date">2025-01-08 | 교육문화팀</span>
                     </div>
-                    <h3>아주대의료원, ‘고객만족Up!day’ 행사 개최</h3>
-                    <p>아주대학교의료원은 환자경험 향상을 위해 고객만족Up!day 행사를 개최하였습니다.</p>
+                    <h3>sku의료원, ‘고객만족Up!day’ 행사 개최</h3>
+                    <p>sku학교의료원은 환자경험 향상을 위해 고객만족Up!day 행사를 개최하였습니다.</p>
                 </div>
-            </div><hr/>
-            
+            </div>
 
             <!-- 뉴스 항목 2 -->
             <div class="news-item">
-                <img src="/static/img/news1.png" >
+				<img src="/static/img/news2.png" th:onclick="javascript:location.href='https://hosp.ajoumc.or.kr/board/commBoardNewsView.do?no=69319'">
                 <div class="news-content">
                     <div class="meta">
                         <span class="category">연수/강좌</span>
                         <span class="date">2025-01-08 | 교육문화팀</span>
                     </div>
                     <h3>의료질향상 ‘만족도우수병원’ 인증</h3>
-                    <p>아주대병원은 의료질향상 부문에서 만족도 우수병원 인증을 받았습니다.</p>
+                    <p>sku병원은 의료질향상 부문에서 만족도 우수병원 인증을 받았습니다.</p>
                 </div>
-            </div><hr/>
+            </div>
 
             <!-- 뉴스 항목 3 -->
             <div class="news-item">
-                <img src="/static/img/news1.png" >
+                <img src="/static/img/news1.png" th:onclick="javascript:location.href='https://hosp.ajoumc.or.kr/board/commBoardNewsView.do?no=69313'">
                 <div class="news-content">
                     <div class="meta">
                         <span class="category">의료</span>
@@ -105,8 +106,47 @@
                     <p>각 진료과별 의료질 향상을 위한 간담회가 열렸습니다.</p>
                 </div>
             </div>
-        </div><hr/>
-      </div>
+
+            <!-- 뉴스 항목 4 -->
+            <div class="news-item">
+                <img src="/static/img/news4.png" th:onclick="javascript:location.href='https://hosp.ajoumc.or.kr/board/commBoardNewsView.do?no=69311'">
+                <div class="news-content">
+                    <div class="meta">
+                        <span class="category">행사</span>
+                        <span class="date">2025-01-08 | 교육문화팀</span>
+                    </div>
+                    <h3>소화기내과팀 ‘우수사례대상’ 3건 수상</h3>
+                    <p>소화기내과팀이 우수사례대상에서 3건의 수상 기록을 세웠습니다.</p>
+                </div>
+            </div>
+
+            <!-- 뉴스 항목 5 -->
+            <div class="news-item">
+                <img src="/static/img/news5.png" th:onclick="javascript:location.href='https://hosp.ajoumc.or.kr/board/commBoardNewsView.do?no=69294'">
+                <div class="news-content">
+                    <div class="meta">
+                        <span class="category">행사</span>
+                        <span class="date">2025-01-08 | 교육문화팀</span>
+                    </div>
+                    <h3>sku의료원 ‘2024년 환경기준 평가’ A등급 획득</h3>
+                    <p>sku의료원이 2024년 환경기준 평가에서 A등급을 획득했습니다.</p>
+                </div>
+            </div>
+
+            <!-- 뉴스 항목 6 -->
+            <div class="news-item">
+                <img src="/static/img/news6.png" th:onclick="javascript:location.href='https://hosp.ajoumc.or.kr/board/commBoardNewsView.do?no=69283'">
+                <div class="news-content">
+                    <div class="meta">
+                        <span class="category">의료</span>
+                        <span class="date">2025-01-08 | 교육문화팀</span>
+                    </div>
+                    <h3>sku병원 고혈압 고위험군 우수 기관 경기 도지사 표창 수상</h3>
+                    <p>sku병원이 고혈압 고위험군 관리 우수 기관으로 선정되었습니다.</p>
+                </div>
+            </div>
+        </div>
+        </div>
 
      <!-- 페이지네이션 -->
     <div class="pagination" style="text-align:center">
