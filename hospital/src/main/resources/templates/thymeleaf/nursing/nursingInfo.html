@@ -3,28 +3,148 @@
 <head>
 <meta charset="UTF-8">
 <title>nursingInfo</title>
+<style type="text/css">
+	
+	table{
+		text-align: center;
+		color: black;
+		font-size: 17px; 
+	}
+	
+	th{
+		background-color: #b2c9ad;
+	}
+	
+	td{
+		background-color: white;
+	}
+	
+	#tab1 {
+		width: 80%; 
+		font-size: 20px; 
+		height: 35px;
+	}
+	
+	#tab2 td{
+		padding-bottom: 20px;
+		
+	}
+	
+	#title{
+		font-size: 25px;
+		color: black;
+	}
+</style>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$.ajax({
+		type : "get",
+		url: "../getHeader",
+		dataType:"html",
+		success:function(result){
+			$("#getHeader").html(result);
+		},
+		error:function(){
+			alert("서버오류");
+		}
+	});
+	
+	$.ajax({
+		type : "get",
+		url: "../getFooter",
+		dataType:"html",
+		success:function(result){
+			$("#getFooter").html(result);
+		},
+		error:function(){
+			alert("서버오류");
+		}
+	});
+	
+});
+
+</script>
+
+<script th:inline="javascript">
+function callDelete() {
+	var userN = [[${userNum}]];
+	var mainDoc = [[${nursCommand.empNum}]];
+	var Wdoc = [[${nursCommand.handleNurs}]];
+	var num = [[${nursCommand.nursingNum}]];
+	
+	if (userN != null && userN != "") {
+		
+		if (userN.startsWith('nur')) {
+			
+			if (userN == mainDoc || userN == Wdoc) {
+				window.open("../nursing/wardInPSdelete?num="+ num, "삭제 요청"
+						,"width=620, height=500, left=30, top=50");
+			} else {
+				
+				alert('접근권한이 없습니다.');
+				location.href = "/";
+			}
+			
+		}else{
+			
+			alert('접근권한이 없습니다.');
+			location.href = "/";
+		}
+		
+	} else {
+		alert('로그인이 필요한 서비스입니다.');
+		location.href = "/";
+	}
+	
+}
+</script>
 </head>
 <body>
-<h2>병동간호</h2>
-<a href="nursingList">간호일지 목록</a> | <a href="javascript:history.back();">이전</a> <br>
-<h1 align="center">간호번호 : [[${nursCommand.nursingNum}]]</h1>
-<h2 align="center">처방번호 : <a th:href="|../wardPS/wardPsInfo?num=${nursCommand.wardPsNum}|">[[${nursCommand.wardPsNum}]]</a></h2>
-<h3 align="center">처치일시 : [[${#dates.format(nursCommand.presDate, 'yyyy-MM-dd HH:mm')}]]
- | 등록일시 : [[${#dates.format(nursCommand.inputDate, 'yyyy-MM-dd HH:mm:ss')}]]</h3>
-<p align="center"> 처치간호사 : <a href="#">[[${nursCommand.handleNurs}]]</a>
- | 담당간호사 : <a href="#">[[${nursCommand.empNum}]]</a> </p>
-<p align="center"> 수정자 : [[${nursCommand.updateNurs}]]
- | 수정일시 : [[${#dates.format(nursCommand.updateDate, 'yyyy-MM-dd HH:mm:ss')}]]</p>
-<hr>
+<div id="getHeader"></div>
+
 <div align="center">
-<h5>간호내용</h5>
-[[${nursCommand.nursingCon}]]
-<h5>처치처방</h5>
-[[${nursCommand.hanPres}]]
+<div id="title" style="margin-top: 5%; margin-bottom:2%; width: 80%; text-align: center;">
+	병동 간호 일지
 </div>
-<p align="center">
-<a th:href="|nursingUpdate?num=${nursCommand.nursingNum}|">수정</a>
- | <a th:href="|nursingDelete?num=${nursCommand.nursingNum}|">삭제</a>
-</p>
+<table border="1" id="tab1">
+	<tr>
+		<th>간호번호</th> <td>[[${nursCommand.nursingNum}]]</td>
+		<th>처방번호</th> <td><a th:href="|../wardPS/wardPsInfo?num=${nursCommand.wardPsNum}|">[[${nursCommand.wardPsNum}]]</a></td>
+	</tr>
+	
+	<tr>
+		<th>처치간호사</th> <td>[[${nursCommand.handleNurs}]]</td>
+		<th>담당간호사</th> <td>[[${nursCommand.empNum}]]</td>
+	</tr>
+	<tr>
+		<th>처방일시</th> <td>[[${#dates.format(nursCommand.presDate, 'yyyy-MM-dd HH:mm')}]]</td>
+		<th>등록일시</th> <td>[[${#dates.format(nursCommand.inputDate, 'yyyy-MM-dd HH:mm:ss')}]]</td>
+	</tr>
+</table>
+<table style="width: 80%;" border="1" id="tab2">
+	<tr>
+		<th>간호내용</th> 
+	</tr>
+	<tr>
+		 <td>[[${nursCommand.nursingCon}]]</td>
+	</tr>
+	<tr>
+		<th >처치처방</th> 
+	</tr>
+	<tr>
+		<td>[[${nursCommand.hanPres}]]</td>
+	</tr>
+
+</table>
+	
+	
+</div> <br>
+<div align="center" style="color: white;">
+<a th:href="|nursingDelete?num=${nursCommand.nursingNum}|" class="btn">삭제</a> 
+</div>
+
+<div id="getFooter"></div>
+
 </body>
 </html>

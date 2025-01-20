@@ -5,8 +5,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import hospital.command.CallPsDeleteCommand;
+import hospital.service.AutoNumService;
+import hospital.service.hosPatient.CallDeleteService;
 import hospital.service.hosPatient.MyPatientListService;
 import hospital.service.hosPatient.PatientPreScript;
 import hospital.service.hosPatient.SearchHospService;
@@ -64,6 +68,27 @@ public class HosPatientController {
 	public String patientwardPsList(String hospNum, Model model) {
 		patientPreScript.execute(hospNum, model);
 		return "thymeleaf/hosPatient/hosPatientPSinfo";
+	}
+	
+	
+	@Autowired
+	AutoNumService autoNumService;
+	@GetMapping("{baseId}/wardInPSdelete")
+	public String delete(String num, Model model) {
+		String autoNum 
+		= autoNumService.execute("callDel_", 9, "del_call_num", "call_ps_delete");
+		
+		model.addAttribute("autoNum", autoNum);
+		model.addAttribute("num", num);
+		return "thymeleaf/hosPatient/wardInPSdelete";
+	}
+	
+	@Autowired
+	CallDeleteService callDeleteService;
+	@PostMapping("{baseId}/wardInPSdelete")
+	public String delete(CallPsDeleteCommand callPsDeleteCommand) {
+		callDeleteService.execute(callPsDeleteCommand);
+		return "redirect:hosPatList";
 	}
 
 }

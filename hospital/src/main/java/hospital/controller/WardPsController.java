@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import hospital.command.WardPsCommand;
 import hospital.service.AutoNumService;
 import hospital.service.hosPatient.SearchHospService;
-import hospital.service.wardPS.WardPsDeleteService;
 import hospital.service.wardPS.WardPsInfoService;
 import hospital.service.wardPS.WardPsListService;
 import hospital.service.wardPS.WardPsUpdateService;
@@ -25,7 +24,7 @@ public class WardPsController {
 	
 
 	@GetMapping("wardPsList")
-	public String nursingList() {
+	public String wardPsList() {
 		
 		return "thymeleaf/wardPS/wardPsList";
 	}	
@@ -92,24 +91,10 @@ public class WardPsController {
    @Autowired
    WardPsUpdateService wardPsUpdateService;
    @PostMapping("wardPsUpdate")
-   public String wardPsUpdate(@Validated WardPsCommand wardPsCommand
-		   						, BindingResult result) {
-	   if (result.hasErrors()) {
-		   return "thymeleaf/wardPS/wardPsUpdate";
-	}
+   public String wardPsUpdate(WardPsCommand wardPsCommand) {
 	   wardPsUpdateService.execute(wardPsCommand);
 	   return "redirect:wardPsInfo?num="+wardPsCommand.getWardPsNum();
    }
-   
-   // 삭제
-   @Autowired
-   WardPsDeleteService wardPsDeleteService;
-   @RequestMapping("wardPsDelete")
-   public String wardPsDelete(String num) {
-	   wardPsDeleteService.execute(num);
-	   return "redirect:wardPsList";
-   }
-   
    
    ////////////// 입원번호 찾기
    @Autowired

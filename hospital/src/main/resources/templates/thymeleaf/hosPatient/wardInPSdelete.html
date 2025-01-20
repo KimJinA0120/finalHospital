@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>wardPsUpdate</title>
+<title>wardInPSdelete</title>
 <style type="text/css">
 	#title {
 		font-size: 25px;
@@ -54,30 +54,28 @@ $(function(){
 	$("#sub").click(function(){
 		$("#frm").ajaxSubmit({  //CSR
 			type: "POST",
-			url: "../wardPS/wardPsUpdate",
+			url: "../wardPS/wardInPSdelete",
 			beforeSubmit : function(){
 				
-				if($("#wardPsNum").val() == ""){
+				if($("#delPsNum").val() == ""){
 					alert("처방전을 선택하신 후 중지를 요청하십시오.");
 					location.href= "/";
 				}
 				
-				if($("#stopDoc").val() == ""){
+				if($("#delCaller").val() == ""){
 					alert("다시 로그인 해주십시오.");
 					location.href= "/";
 				}
 				
-				if($("#stopCause").val() == ""){
+				if($("#delCause").val() == ""){
 					alert("처방 중지 사유를 입력하십시오.");
-					$("#stopCause").focus();
+					$("#delCause").focus();
 					return false;
 				}
 				
 			},
 			success: function (result) {
-				alert("성공");
-				location.href="wardPsList";
-				window.self.close();
+				
 			},
 			
 			error : function(){
@@ -92,33 +90,41 @@ $(function(){
 </script>
 </head>
 <body>
-
 <div id="title" align="center" style="margin-top: 5%; margin-bottom: 2%; text-align: center;">
-병동 처방 중지 요청
+삭제 요청
 </div>
 
 <div align="center" style="margin-left: 20px; margin-right: 20px;">
 <form action="wardPsUpdate" method="post" id="frm">
-   
     <table border="1">
+    
     	<tr>
-    		<th>병동처방번호</th>
+    		<th>삭제 요청번호</th>
             <td>
-                <input type="text" name="wardPsNum" id="wardPsNum" 
-                		th:value="${wardPsCommand.wardPsNum}" readonly="readonly">
+                <input type="text" name="delCallNum" id="delCallNum" 
+                		th:value="${autoNum}" readonly="readonly">
             </td>
     	</tr>
+    	
+    	<tr>
+    		<th>처방/일지 번호</th>
+            <td>
+                <input type="text" name="delPsNum" id="delPsNum" 
+                		th:value="${num}" readonly="readonly">
+            </td>
+    	</tr>
+    	
 		<tr>
             <th>중지 요청자</th>
             <td>
-                <input type="text" name="stopDoc" id="stopDoc"
+                <input type="text" name="delCaller" id="delCaller"
                 		th:value="${userNum}" readonly="readonly">
             </td>
         </tr>
         <tr>
-            <th>처방 중지 사유</th>
+            <th>삭제 사유</th>
             <td>
-                <textarea name="stopCause" id="stopCause" rows="5" 
+                <textarea name="delCause" id="delCause" rows="5" 
                 			style="width: 95%; align-content: center;"></textarea>
             </td>
         </tr>
@@ -128,6 +134,5 @@ $(function(){
     		style="background-color: #4b5945; color: white">수정</button>
 </form>
 </div>
-
 </body>
 </html>

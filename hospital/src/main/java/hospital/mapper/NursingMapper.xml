@@ -13,8 +13,6 @@
 			javaType="string" property="empNum" />
 			<result column="HANDLE_NURS" jdbcType="VARCHAR"
 			javaType="string" property="handleNurs" />
-			<result column="UPDATE_NURS" jdbcType="VARCHAR"
-			javaType="string" property="updateNurs" />
 			<result column="NURSING_CONTENT" jdbcType="VARCHAR"
 			javaType="string" property="nursingCon" />
 			<result column="HANDLE_PRESCRIPT" jdbcType="VARCHAR"
@@ -23,32 +21,27 @@
 				jdbcType="DATE" property="presDate" />
 			<result column="INPUT_DATE" javaType="java.util.Date" 
 				jdbcType="DATE" property="inputDate"/>
-			<result column="UPDATE_DATE" javaType="java.util.Date" 
-				jdbcType="DATE" property="updateDate"/>
 	</resultMap>
 	
 	
 	<sql id="baseCol">
 		NURSING_NUM, WARDPRESCRIPT_NUM, EMP_NUM, handle_nurs
-		,UPDATE_NURS , NURSING_CONTENT
-		, HANDLE_PRESCRIPT, PRESCRIPT_DATE,
-		INPUT_DATE, UPDATE_DATE
+		, NURSING_CONTENT, HANDLE_PRESCRIPT, PRESCRIPT_DATE, INPUT_DATE
 	</sql>
 
 	<sql id="SelbaseCol">
 		NURSING_NUM as nursingNum, WARDPRESCRIPT_NUM as wardPsNum
 		, EMP_NUM as empNum, handle_nurs as handleNurs
-		, UPDATE_NURS as updateNurs, NURSING_CONTENT as nursingCon
-		, HANDLE_PRESCRIPT as hanPres, PRESCRIPT_DATE as presDate,
-		INPUT_DATE as inputDate, UPDATE_DATE as updateDate
+		, NURSING_CONTENT as nursingCon, HANDLE_PRESCRIPT as hanPres
+		, PRESCRIPT_DATE as presDate, INPUT_DATE as inputDate
 	</sql>
 
 	<insert id="write" parameterType="nursing">
 		insert into nursing(
 		<include refid="baseCol" />
 		)
-		values(#{nursingNum}, #{wardPsNum}, #{empNum}, #{handleNurs}, null
-		, #{nursingCon}, #{hanPres}, #{presDate}, sysdate, null)
+		values(#{nursingNum}, #{wardPsNum}, #{empNum}, #{handleNurs}
+		, #{nursingCon}, #{hanPres}, #{presDate}, sysdate)
 	</insert>
 	
 	
@@ -57,25 +50,6 @@
 		where NURSING_NUM = #{nursingNum}
 	</select>
 
-	<update id="update" parameterType="nursing">
-		update nursing
-		set
-		WARDPRESCRIPT_NUM = #{wardPsNum},
-		EMP_NUM = #{empNum},
-		UPDATE_NURS = #{updateNurs},
-		NURSING_CONTENT = #{nursingCon},
-		HANDLE_PRESCRIPT = #{hanPres},
-		PRESCRIPT_DATE = #{presDate},
-		UPDATE_DATE = sysdate
-		where NURSING_NUM = #{nursingNum}
-	</update>
-
-	<delete id="delete" parameterType="string">
-		delete from nursing where
-		NURSING_NUM = #{num}
-	</delete>
-	
-	
 	<!-- 리스트 -->
 	<!-- 카운트 -->
 	<select id="count" resultType="integer">
@@ -84,9 +58,7 @@
 	
 	<sql id="nursCol">
 		n.NURSING_NUM, n.WARDPRESCRIPT_NUM, n.EMP_NUM, n.handle_nurs
-		, n.UPDATE_NURS , n.NURSING_CONTENT
-		, n.HANDLE_PRESCRIPT, n.PRESCRIPT_DATE
-		,n.INPUT_DATE, n.UPDATE_DATE
+		, n.NURSING_CONTENT, n.HANDLE_PRESCRIPT, n.PRESCRIPT_DATE, n.INPUT_DATE
 	</sql>
 	
 
@@ -113,10 +85,8 @@
 				or n.EMP_NUM like '%'||#{searchWord}||'%'
 				or n.wardprescript_num like '%'||#{searchWord}||'%'
 				or n.handle_nurs like '%'||#{searchWord}||'%'
-				or n.UPDATE_NURS like '%'||#{searchWord}||'%'
 				or w.DIAGNOSTIC_NAME like '%'||#{searchWord}||'%'
-				or w.WRITE_DOC like '%'||#{searchWord}||'%'
-				or w.UPDATE_DOC like '%'||#{searchWord}||'%' )
+				or w.WRITE_DOC like '%'||#{searchWord}||'%')
 			</if>
 			
 		</trim>	

@@ -14,10 +14,11 @@ public class WardPsUpdateService {
 	@Autowired
 	WardPsMapper wardPsMapper;
 	public void execute(WardPsCommand wardPsCommand) {
-		WardPsDTO dto = new WardPsDTO();
-		BeanUtils.copyProperties(wardPsCommand, dto);
+		String cause = "처방 중지 요청자 : "+ wardPsCommand.getStopDoc() 
+						+"/n"+ wardPsCommand.getStopCause();
+		String wardPsNum = wardPsCommand.getWardPsNum();
 		
-		wardPsMapper.wardPsUpdate(wardPsCommand);
+		wardPsMapper.wardPsUpdate(cause, wardPsNum);
 	}
 
 }

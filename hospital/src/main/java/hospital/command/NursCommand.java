@@ -17,7 +17,6 @@ public class NursCommand {
 	String empNum;
 	@NotBlank(message = "다시 로그인 하십시오.")
 	String handleNurs; // 처치 실시한 간호사이자 작성자
-	String updateNurs; // 수정한 간호사
 	
 	@NotBlank(message = "간호내용을 입력하십시오.")
 	String nursingCon;
@@ -28,6 +27,4 @@ public class NursCommand {
 	LocalDateTime presDate;
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	Date inputDate;
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	Date updateDate;
 }

@@ -3,10 +3,78 @@
 <head>
 <meta charset="UTF-8">
 <title>nursingWrite</title>
+<style type="text/css">
+	#title {
+		font-size: 25px;
+		margin: 10px;
+		color: black;
+	}
+	
+	table{
+		color: black;
+		text-align: center;		
+	}
+	
+	th{
+		background-color: #b2c9ad;
+		font-size: 20px; 
+		width: 20%;
+		
+	}
+	
+	td{
+		background-color: white;
+		width: 30%;
+		margin-right: 2%;
+	}
+	
+	input {
+		width: 100%;
+	}
+	
+	#a1{
+		width: 25%;
+	}
+	
+	#a2{
+		width: 5%;
+	}
+	
+	#btn{
+		font-size : 10px;
+		width: 100%;
+	}
+
+</style>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.js"></script>
 <script type="text/javascript">
-
+$(function(){
+	$.ajax({
+		type : "get",
+		url: "../getHeader",
+		dataType:"html",
+		success:function(result){
+			$("#getHeader").html(result);
+		},
+		error:function(){
+			alert("서버오류");
+		}
+	});
+	
+	$.ajax({
+		type : "get",
+		url: "../getFooter",
+		dataType:"html",
+		success:function(result){
+			$("#getFooter").html(result);
+		},
+		error:function(){
+			alert("서버오류");
+		}
+	});
+	
+});
 
 $(function() {
 	$("#btn").click(function() {
@@ -19,37 +87,98 @@ $(function() {
 
 </head>
 <body>
- <a href="javascript:history.back();">이전</a> <br>
+<div id="getHeader"></div>
+<div id="title" align="center" style="margin-top: 5%; 
+	margin-bottom:2%; text-align: center;">간호일지 작성</div>
+	
+<div align="center" style="margin-left: 20px; margin-right: 20px;">
 <form action="nursingWrite" method="post" th:object="${nursCommand}">
-간호번호 : <input type="text" name="nursingNum" readonly="readonly" th:value="${nursCommand.nursingNum}"><br>
-
-병동처방번호 : <input type="text" name="wardPsNum" id="wardPsNum" 
+<table border="1" >
+	<tr>
+		<th>
+			간호번호
+		</th>
+		<td>
+			<input type="text" name="nursingNum" readonly="readonly" th:value="${nursCommand.nursingNum}">
+		</td>
+		
+		<th>
+			병동처방번호
+		</th>
+		<td id="a1">
+			<input type="text" name="wardPsNum" id="wardPsNum" 
 			readonly="readonly" th:value="${nursCommand.wardPsNum}">
-			
-			<button type="button" id="btn">병동번호찾기</button> 
-			
-			<span style="color:red" th:if="${#fields.hasErrors('wardPsNum')}" 
-							th:errors="*{wardPsNum}"></span><br>
-
-담당간호사 : 	<input type="text" name="empNum" id="nursNum" readonly="readonly"
-				th:value="${nursCommand.empNum}"><br>
-
-처치간호사 : 	<input type="text" name="handleNurs"
-				th:value="${userNum}" readonly="readonly">
+			<span style="color:red" th:if="${#fields.hasErrors('wardPsNum')}" th:errors="*{wardPsNum}"></span>
+		</td>
+		
+		<td id="a2">
+			<button type="button" id="btn" class="btn col-12" style="background-color: #0A122A; color: white">병동번호찾기</button>
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			담당간호사
+		</th>
+		<td>
+			<input type="text" name="empNum" id="nursNum" readonly="readonly"
+				th:value="${nursCommand.empNum}">
+		</td>
+		
+		<th>
+			처치간호사
+		</th>
+		<td>
+			<input type="text" name="handleNurs"
+				th:value="${userNum}" readonly="readonly"> <br>
 			<span style="color:red" th:if="${#fields.hasErrors('handleNurs')}" 
-							th:errors="*{handleNurs}"></span><br>
-<br>
-간호내용 : <span style="color:red" th:if="${#fields.hasErrors('nursingCon')}" 
-							th:errors="*{nursingCon}"></span><br>
-<textarea rows="10" cols="40" name="nursingCon" th:value="${nursCommand.nursingCon}"></textarea><br>
-처치처방 : <br>
-<textarea rows="10" cols="40" name="hanPres" th:value="${nursCommand.hanPres}"></textarea><br>
-
-처치날짜 : <input type="datetime-local" name="presDate" 
-			th:value="${nursCommand.presDate}"> 
+							th:errors="*{handleNurs}"></span>
+		</td>
+	</tr>
+	
+	<tr>
+		<th rowspan="2">
+			간호내용
+		</th>
+	</tr>
+	
+	<tr>
+		<td colspan="4">
+			<textarea rows="10" cols="40" name="nursingCon" th:value="${nursCommand.nursingCon}"></textarea>
+			<br><span style="color:red" th:if="${#fields.hasErrors('nursingCon')}" 
+							th:errors="*{nursingCon}"></span>
+		</td>
+	</tr>
+	
+	<tr>
+		<th rowspan="2">
+			처치처방
+		</th>
+	</tr>
+		
+	<tr>
+		<td colspan="4">
+			<textarea rows="10" cols="40" name="hanPres" th:value="${nursCommand.hanPres}"></textarea>
+		</td>
+	</tr>
+	
+	<tr>
+		<th colspan="1">
+			처치날짜
+		</th>
+		<td colspan="4" align="left">
+			<input type="datetime-local" name="presDate" style="width: 50%;"
+			th:value="${nursCommand.presDate}">  <br>
 			<span style="color:red" th:if="${#fields.hasErrors('presDate')}" 
-							th:errors="*{presDate}"></span><br>
-<input type="submit" value="등록">
+							th:errors="*{presDate}"></span>
+		</td>
+	</tr>
+</table>
+
+<button type="submit" class="btn col-12" style=" background-color: #4b5945; color: white">등록</button>
 </form>
+</div>
+<div id="getFooter"></div>
+
 </body>
 </html>

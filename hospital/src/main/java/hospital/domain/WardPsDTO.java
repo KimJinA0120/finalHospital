@@ -14,7 +14,6 @@ public class WardPsDTO {
    String hospNum;
    String empNum;
    String writeDoc;
-   String updateDoc; // 수정한 의사 
    
    String diagName;
    String diagCont;
@@ -22,8 +21,11 @@ public class WardPsDTO {
    String examPres;
    String hanPres;
    
+   String callStop;
+   String stopCause; 
+   
    @DateTimeFormat(pattern = "yyyy-MM-dd")
    Date inputDate;
    @DateTimeFormat(pattern = "yyyy-MM-dd")
-   Date updateDate;
+   Date stopDate;
 }

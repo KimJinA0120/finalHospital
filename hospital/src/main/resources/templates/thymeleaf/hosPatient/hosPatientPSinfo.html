@@ -4,27 +4,80 @@
 <meta charset="UTF-8">
 <title>hosPatientPSinfo 입원환자 처방기록</title>
 
+<style type="text/css">
+	#tab{
+		text-align: center;
+		width: 800px;
+		color: blue;
+	}
+	
+	#tab th{
+		background-color: #b2c9ad;
+		color: black;
+	}
+	
+	#title{
+		font-size: 25px;
+		margin: 10px;
+		color: black;
+	}
+</style>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$.ajax({
+		type : "get",
+		url: "../getHeader",
+		dataType:"html",
+		success:function(result){
+			$("#getHeader").html(result);
+		},
+		error:function(){
+			alert("서버오류");
+		}
+	});
+	
+	$.ajax({
+		type : "get",
+		url: "../getFooter",
+		dataType:"html",
+		success:function(result){
+			$("#getFooter").html(result);
+		},
+		error:function(){
+			alert("서버오류");
+		}
+	});
+	
+});
+
+</script>
+
 </head>
 <body>
-<a href="javascript:history.back()">이전 페이지</a> <br>
+<div id="getHeader"></div>
+<a href="javascript:history.back()" style="color: blue; margin-left: 2%;">이전 페이지</a> <br>
+<div id="title" align="center" style="margin-bottom: 5%; margin-top: 5%;">
+[[${dto1.roomLoc}]]호 - [[${dto1.HospitalizationDTO.bedNum}]] : [[${dto1.patientName}]] 환자 <br>
+입원번호 : [[${dto1.HospitalizationDTO.hospitalizationNum}]] |  환자번호 : [[${dto1.HospitalizationDTO.patientNum}]]
+</div>
 
-
-<h3 align="center">[[${dto1.roomLoc}]]호 - [[${dto1.HospitalizationDTO.bedNum}]] : [[${dto1.patientName}]] 환자</h3>
-<h3 align="center">입원번호 : [[${dto1.HospitalizationDTO.hospitalizationNum}]] |  환자번호 : [[${dto1.HospitalizationDTO.patientNum}]]</h3>
-
- <table border="1" width="800px" align="center">
-        <thead>
+<div align="center">
+ <table border="1" align="center" id="tab">
+        
             <tr>
-                <th>병동처방</th>
-                <th>간호일지 번호</th>
+                <th width="400px">병동처방</th>
+                <th width="400px">간호일지 번호</th>
             </tr>
-        </thead>
-        <tbody>
+     
+        
             <tr th:each="dto : ${list}">
             	<td><a th:href="|../wardPS/wardPsInfo?num=${dto.wardPsNum}|">[[${dto.wardPsNum}]] [[${dto.diagName}]]</a></td>
             	<td><a th:href="|../nursing/nursingInfo?num=${dto.nursingNum}|">[[${dto.nursingNum}]]</a></td>
             </tr>
-        </tbody>
+        
     </table>
+</div>
+ <div id="getFooter"></div>
 </body>
 </html>

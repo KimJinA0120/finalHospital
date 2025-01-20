@@ -51,14 +51,28 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-<a href="/">홈</a> | <a th:href="|myPatientList?empNum=${userNum}|">내 담당 환자</a><br>
 <div id="getHeader"></div>
-<h1>병동처방</h1>
-	<h4 align="right">
-		<a href="javascript:moveWrite()">병동처방 작성</a>
-	</h4>
-	<a href="WholeWardPsList">현/과거 병동처방 기록 목록</a>
+
+<br>
+<div>
+	<span style="font-size: 25px; margin-left: 50px; color: black;">병동처방</span>
+	<span style="font-size: 18px; float: right; margin-right: 40px;">
+		<a href="/" style="color: black;" >홈</a>
+		<span style="margin: 10px;">|</span>
+		<a th:href="|myPatientList?empNum=${userNum}|" style="color: black;">내 담당 환자</a>
+	</span>
+</div>
+<br>
+<div class="col-12" align="center">
+		<div class="button">
+			<a href="javascript:moveWrite()" class="btn" style="background-color: #66785f; color: white">병동처방 작성</a>
+			<a href="WholeWardPsList" class="btn" style="background-color: #66785f; color: white">현/과거 병동처방 기록 목록</a>	
+		</div>			
+</div>	
+		
 	<br>
 	<div id="listTable"></div>
+	<br>
+	<div id="getFooter"></div>
 </body>
 </html>

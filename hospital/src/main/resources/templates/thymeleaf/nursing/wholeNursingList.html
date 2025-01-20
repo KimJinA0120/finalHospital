@@ -2,89 +2,42 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<!-- Meta Tags -->
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="keywords" content="Site keywords here">
-<meta name="description" content="">
-<meta name='copyright' content=''>
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>wholeNursingList</title>
-<!-- Favicon -->
-<link rel="icon" href="../static/img/favicon.png">
-
-<!-- Google Fonts -->
-<link
-	href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
-	rel="stylesheet">
-
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="../static/css/bootstrap-green.min.css">
-<!-- Nice Select CSS -->
-<link rel="stylesheet" href="../static/css/nice-select.css">
-<!-- Font Awesome CSS -->
-<link rel="stylesheet" href="../static/css/font-awesome.min.css">
-<!-- icofont CSS -->
-<link rel="stylesheet" href="../static/css/icofont.css">
-<!-- Slicknav -->
-<link rel="stylesheet" href="../static/css/slicknav.min.css">
-<!-- Owl Carousel CSS -->
-<link rel="stylesheet" href="../static/css/owl-carousel.css">
-<!-- Datepicker CSS -->
-<link rel="stylesheet" href="../static/css/datepicker.css">
-<!-- Animate CSS -->
-<link rel="stylesheet" href="../static/css/animate.min.css">
-<!-- Magnific Popup CSS -->
-<link rel="stylesheet" href="../static/css/magnific-popup.css">
-
-<!-- Medipro CSS -->
-<link rel="stylesheet" href="../static/css/normalize-green.css">
-<link rel="stylesheet" href="../static/css/style-green.css">
-<link rel="stylesheet" href="../static/css/responsive-green.css">
-
-<!-- jquery Min JS -->
-        <script src="static/js/jquery.min.js"></script>
-		<!-- jquery Migrate JS -->
-		<script src="static/js/jquery-migrate-3.0.0.js"></script>
-		<!-- jquery Ui JS -->
-		<script src="static/js/jquery-ui.min.js"></script>
-		<!-- Easing JS -->
-        <script src="static/js/easing.js"></script>
-		<!-- Color JS -->
-		<script src="static/js/colors.js"></script>
-		<!-- Popper JS -->
-		<script src="static/js/popper.min.js"></script>
-		<!-- Bootstrap Datepicker JS -->
-		<script src="static/js/bootstrap-datepicker.js"></script>
-		<!-- Jquery Nav JS -->
-        <script src="static/js/jquery.nav.js"></script>
-		<!-- Slicknav JS -->
-		<script src="static/js/slicknav.min.js"></script>
-		<!-- ScrollUp JS -->
-        <script src="static/js/jquery.scrollUp.min.js"></script>
-		<!-- Niceselect JS -->
-		<script src="static/js/niceselect.js"></script>
-		<!-- Tilt Jquery JS -->
-		<script src="static/js/tilt.jquery.min.js"></script>
-		<!-- Owl Carousel JS -->
-        <script src="static/js/owl-carousel.js"></script>
-		<!-- counterup JS -->
-		<script src="static/js/jquery.counterup.min.js"></script>
-		<!-- Steller JS -->
-		<script src="static/js/steller.js"></script>
-		<!-- Wow JS -->
-		<script src="static/js/wow.min.js"></script>
-		<!-- Magnific Popup JS -->
-		<script src="static/js/jquery.magnific-popup.min.js"></script>
-		<!-- Counter Up CDN JS -->
-		<script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
-		<!-- Bootstrap JS -->
-		<script src="static/js/bootstrap.min.js"></script>
-		<!-- Main JS -->
-		<script src="static/js/main.js"></script>
-
 
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript">
+/// 직원용 헤더
+$(function(){
+	$.ajax({
+		type : "get",
+		url: "../getHeader",
+		dataType:"html",
+		success:function(result){
+			$("#getHeader").html(result);
+		},
+		error:function(){
+			alert("서버오류");
+		}
+	});
+	
+});
+
+////헤더가 직원용이면 직원색으로, 환자용이면 환자색으로 바뀜
+$(function(){
+	$.ajax({
+			type : "get",
+			url: "../getFooter",
+			dataType:"html",
+			success:function(result){
+				$("#getFooter").html(result);
+			},
+			error:function(){
+				alert("서버오류");
+			}
+		});
+});
+
+</script>
 <script type="text/javascript">
 function hpState() {
 	var selectedValue = $("#kind option:selected").val();
@@ -95,122 +48,37 @@ function hpState() {
 </script>
 </head>
 <body>
-<header class="header" >
-		<div class="header-inner">
-				<div class="container">
-					<div class="inner">
-						<div class="row">
-							<div class="col-lg-3 col-md-3 col-12">
-								<!-- Start Logo -->
-								<div class="logo">
-									<a href="/"><img src="/static/img/logo.png" alt="#"></a>
-								</div>
-								<!-- End Logo -->
-								<!-- Mobile Nav -->
-								<div class="mobile-nav"></div>
-								<!-- End Mobile Nav -->
-							</div>
-							<div class="col-lg-7 col-md-9 col-12">
-								<!-- Main Menu -->
-								<div class="main-menu">
-									<nav class="navigation">
-										<ul class="nav menu">
-											<li><a href="#">수술/검사<i class="icofont-rounded-down"></i></a>
-												<ul class="dropdown">
-													<li><a href="../surgery/surgeryScheduler">수술스케쥴러</a></li>
-													<li><a href="../surgery/surgeryList">환자수술결과기록</a></li>
-													<li><a href="../surgery/operatingRoom">수술실</a></li>
-													<li><a href="../inspection/inspectionList">검사예약</a></li>
-													<li><a href="../radiation/radiationList">방사선</a></li>
-													<li><a href="../clinical/clinicalList">임상병리</a></li>
-												</ul>
-											</li>
-											<li><a href="#">처방/간호<i class="icofont-rounded-down"></i></a>
-												<ul class="dropdown">
-													<li><a href="../wardPS/wardPsList">병동처방</a></li>
-													<li><a href="../nursing/nursingList">간호처방 </a></li>
-												</ul>
-											</li>
-											<li><a href="#">입원/병동/병실/응급실<i class="icofont-rounded-down"></i></a>
-												<ul class="dropdown">
-													<li><a href="../WardRoomBed/WardList">병동리스트</a></li>
-													<li><a href="../Hospitalization/hospitalizationList">입원관리 </a></li>
-													<li><a href="../Hospitalization/emerHospitalizationList">응급입원관리 </a></li>
-												</ul>
-											</li>
-											<li><a href="#">접수/외래진료/문의<i class="icofont-rounded-down"></i></a>
-												<ul class="dropdown">
-													<li><a href="../receipt/reservationForm">(환자용)예약</a></li>
-													<li><a href="../receipt/patientReservation">(환자용)예약 확인하기</a></li>
-													<li><a href="../receipt/receiptList">(직원용)접수/예약목록</a></li>
-													<li><a href="../qna/qnaList">(환자용)문의/건의</a></li>
-													<li><a href="../qna/eqnaList">(직원용)문의/건의</a></li>
-												</ul>
-											</li>
-											<li><a href="#">사용자<i class="icofont-rounded-down"></i></a>
-												<ul class="dropdown">
-													<th:block  th:if="${session.auth==null}">
-														<li><a href="../patient/patientWrite">환자 회원가입</a></li>
-														<li><a href="../login/patientLogin">환자 로그인</a></li>
-														<li><a href="../login/employeeLogin">직원 로그인</a></li>
-													</th:block>
-													<th:block th:if="${session.auth!=null}"> 
-														<li><a href="../login/logout">로그아웃</a></li>
-														<li><a href="../patient/patientList">환자목록</a></li>
-														<li><a href="../patient/patientMyPage">환자 마이페이지</a></li>
-														<li><a href="../find/findPatientNum">환자번호 찾기, 환자번호 연동하기??</a></li>
-													</th:block>
-														<li><a href="../employee/employeeWrite">직원등록</a></li>
-														<li><a href="../employee/employeeList">직원목록</a></li>
-														<li><a href="../employee/employeeMyPage">직원 마이페이지</a></li>
-												</ul>
-											</li>
-										</ul>
-									</nav>
-								</div>
-								<!--/ End Main Menu -->
-							</div>
-							<div class="col-lg-2 col-12">
-								<div class="get-quote">
-									
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</header>
+<div id="getHeader"></div> 
+<br>
+<div>
+	<span style="font-size: 25px; margin-left: 50px; color: black;">간호일지 전체 목록</span>
+	<span style="font-size: 18px; float: right; margin-right: 40px;">
+		<a href="/" style="color: black;" >홈</a>
+		<span style="margin: 10px;">|</span>
+		<a href="nursingList" style="color: black;">이전</a>
+		<span style="margin: 10px;">|</span>
+		<a th:href="|myPatientList?empNum=${userNum}|" style="color: black;">담당 환자 목록</a>
+	</span>
+</div>
+<br>
 
-<a href="/">홈</a> | <a href="nursingList">이전</a> <br>
-<h1>전체 간호일지</h1>
-
-<h4 align="right"><a href="nursingWrite">간호일지 작성</a></h4><br>
-<form action="wholeNursingList" method="get">
-	<table width=800px align="center">
-		<caption style="font-size:20px">간호일지 전체 목록</caption>
-		<tr>
-			<td colspan="4" align="right">
-				<input type="search" name="searchWord" size=60 th:value="${searchWord}"/>
-				<input type="submit" value="검색" />
-			</td>
-			
-			<td colspan="1" align="right">
-				<select name="kind" id="kind"
+<br>
+<form action="wholeNursingList" method="get" id="frm" align="center">
+				<select name="kind" id="kind" width="50px"
 					th:value="${kind}" onchange="hpState()"
 					 style="width: 100px; text-align: center">
 						<option value="all" selected="selected">전체</option>
 						<option value="입원" th:selected="${kind} == '입원'">입원</option>
 						<option value="퇴원" th:selected="${kind} == '퇴원'">퇴원</option>
 				</select>
-			</td> 
-			
-		</tr>
-		
-	</table>
+				
+				<input type="search" name="searchWord" size=60 th:value="${searchWord}"/>
+				<input type="submit" id="sub" class="btn" value="검색" 
+					style="background-color: #4b5945; color: white"/>
 </form>
 
-	<table border="1" width=800px align="center">
-		<tr>
+	<table border="1" class="container col-8" align="center">
+		<tr align="center">
 			<th>간호번호</th>
 			<th>병동처방번호</th>
 			<th>처치간호사</th>
@@ -218,7 +86,7 @@ function hpState() {
 			<th>입력일시</th>
 		</tr>
 		
-		<tr th:each="dto : ${list}">
+		<tr align="center" th:each="dto : ${list}">
 			<td><a th:href="|nursingInfo?num=${dto.nursingNum}|">[[${dto.nursingNum}]]</a></td>
 			<td>[[${dto.wardPsNum}]]</td>
 			<td>[[${dto.handleNurs}]]</td>
@@ -226,7 +94,7 @@ function hpState() {
 			<td>[[${#dates.format(dto.inputDate, 'yyyy-MM-dd')}]]</td>
 		</tr>
 		
-		<tr>
+		<tr align="center">
 			<th colspan="5" style="text-align: center;">
 				<span th:if="${page <= 1}">[이전]</span>
 				<span th:if="${page > 1}">
@@ -244,5 +112,7 @@ function hpState() {
 			</th>
 		</tr>
 	</table>
+<br>
+<div id="getFooter"></div>
 </body>
 </html>

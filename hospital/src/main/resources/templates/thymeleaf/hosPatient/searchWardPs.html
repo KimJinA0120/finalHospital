@@ -12,8 +12,14 @@ table, td, th {
 table tr:not(:first-child):not(:last-child):hover {
     background-color: #E2E2E2;
 }
+
+table tr:first-child {
+	background-color: #b2c9ad;
+	color: black;
+}
 </style>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+
 <script type="text/javascript">
 
 function selectWardPs(wardPsNum, nurNum){
@@ -41,44 +47,32 @@ function Selroom() {
 </script>
 </head>
 <body>
-입원번호 검색 <br>
-
-	<table width=600px align="center">
+병동처방 검색 <br>
 	<form action="searchWardPs" method="get" id="frm">
-		<tr>
-			<td colspan="6" align="center">
-				<input type="search" name="searchWord" size=60 th:value="${searchWord}" id="searchWord"/>
-				<input type="submit" id="sub" value="검색">
-			</td>
-		</tr>
+		<div align="center" width=600px>
+			<input type="search" name="searchWord" size=60
+			th:value="${searchWord}" id="searchWord" /> 
+			<input type="submit" id="sub" value="검색">
+		</div>
 		
-		<tr align="right">
-			<td colspan="6">
-				<select name="location" id="location" th:value="${location}" onchange="SelLoc()"
-				 style="width:20%; text-align: center">
-					<option value="none" disabled="disabled" selected="selected">전체</option>
-					<option value="normal" 
-					th:selected="${location} == 'normal'">4층 일반병동</option>
-					<option value="critical" 
-						th:selected="${location} == 'critical'">5층 중환자실</option>
-				</select>
-				
-				<select name="roomN" id="roomN" th:value="${roomN}" onchange="Selroom()"
-					style="width:20%; text-align: center">
-					<option value="none" disabled="disabled" selected="selected">-------</option>
-					<option th:each="room : ${room}" th:value="${room.roomNum}" 
-					th:selected="${room.roomNum} == ${roomN}">[[${room.roomLocation}]]</option>
-				
-				</select>
-				
-			</td>
-			
-		</tr>
+		<div align="right" width=600px>
+			<select name="location" id="location" th:value="${location}" onchange="SelLoc()"
+			style="width: 20%; text-align: center">
+			<option value="all" selected="selected">전체</option>
+			<option value="normal" th:selected="${location} == 'normal'">4층
+				일반병동</option>
+			<option value="critical" th:selected="${location} == 'critical'">5층
+				중환자실</option>
+		</select> <select name="roomN" id="roomN" th:value="${roomN}"
+			onchange="Selroom()" style="width: 20%; text-align: center">
+			<option value="all" selected="selected">-------</option>
+			<option th:each="room : ${room}" th:value="${room.roomNum}"
+				th:selected="${room.roomNum} == ${roomN}">[[${room.roomLocation}]]</option>
+
+		</select>
+		</div>
 		
 	</form>
-	
-		
-	</table>
 
 	<table border="1" width=600px align="center">
 		<tr>

@@ -13,7 +13,6 @@ public class WardPsCommand {
 	String hospNum;
 	String empNum; // 담당의
 	String writeDoc; // 작성자
-	String updateDoc; // 수정한 의사 
 	   
 	@NotBlank(message = "진단명을 입력하세요.")
 	String diagName;
@@ -22,7 +21,11 @@ public class WardPsCommand {
 	String medicPres;
 	String examPres;
 	String hanPres;
+	
+	String callStop;
+	String stopCause;
+	String stopDoc;
 	   
 	Date inputDate;
-	Date updateDate;
+	Date stopDate;
 }

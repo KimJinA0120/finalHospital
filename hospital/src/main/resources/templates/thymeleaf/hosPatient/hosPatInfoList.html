@@ -84,7 +84,7 @@ function Selroom() {
 }
 
 $(function(){
-    $('#btn').on("click",function () {
+    $('#sub').on("click",function () {
 
     	var par2 = $("#searchWord").val();
     	var selectedValue = $("#location option:selected").val();
@@ -139,7 +139,7 @@ function selectPatient(hospNum){
 	<div align="center" >
 		<form id="frm" >
 			<input type="search" name="searchWord" size=60 th:value="${searchWord}" id="searchWord" />
-			<input type="button" id="btn" class="btn" value="검색" style="background-color: #4b5945; color: white">
+			<input type="button" id="sub" class="btn" value="검색" style="background-color: #4b5945; color: white">
 			<div align="right" style="width: 800px; height: 40px; margin-top: 20px;">
 				<select name="location" id="location"
 					th:value="${location}" onchange="SelLoc()"
@@ -170,7 +170,7 @@ function selectPatient(hospNum){
 			<th>담당간호사</th>
 		</tr>
 
-		<tr th:each="dto : ${list}"
+		<tr align="center" th:each="dto : ${list}"
 			th:onclick="selectPatient([[${dto.HospitalizationDTO.hospitalizationNum}]])">
 			<td>[[${dto.roomLoc}]]호 </td>
 			<td>[[${dto.HospitalizationDTO.bedNum}]]</td>
@@ -180,7 +180,7 @@ function selectPatient(hospNum){
 			<td>[[${dto.HospitalizationDTO.nurNum}]]</td>
 		</tr>
 		
-		<tr>
+		<tr align="center">
 			<th colspan="6" style="text-align: center;"><span
 				th:if="${page <= 1}">[이전]</span> <span th:if="${page > 1}"> 
 				<a href="#"

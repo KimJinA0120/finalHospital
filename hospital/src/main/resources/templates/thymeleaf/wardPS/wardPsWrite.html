@@ -3,9 +3,79 @@
 <head>
 <meta charset="UTF-8">
 <title>wardPsWrite</title>
+<style type="text/css">
+	#title {
+		font-size: 25px;
+		margin: 10px;
+		color: black;
+	}
+	
+	table{
+		color: black;
+		text-align: center;		
+	}
+	
+	th{
+		background-color: #b2c9ad;
+		font-size: 20px; 
+		width: 20%;
+		
+	}
+	
+	td{
+		background-color: white;
+		width: 30%;
+		margin-right: 2%;
+	}
+	
+	input {
+		width: 100%;
+	}
+	
+	#a1{
+		width: 25%;
+	}
+	
+	#a2{
+		width: 5%;
+	}
+	
+	#btn{
+		font-size : 10px;
+		width: 100%;
+	}
+
+</style>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.js"></script>
 <script type="text/javascript">
+$(function(){
+	$.ajax({
+		type : "get",
+		url: "../getHeader",
+		dataType:"html",
+		success:function(result){
+			$("#getHeader").html(result);
+		},
+		error:function(){
+			alert("서버오류");
+		}
+	});
+	
+	$.ajax({
+		type : "get",
+		url: "../getFooter",
+		dataType:"html",
+		success:function(result){
+			$("#getFooter").html(result);
+		},
+		error:function(){
+			alert("서버오류");
+		}
+	});
+	
+});
+
 $(function() {
 	$("#btn").click(function() {
 		window.open("../wardPS/searchHosp", "입원검색"
@@ -16,43 +86,76 @@ $(function() {
 </script>
 </head>
 <body>
-병동처방 작성 <br>
-<a th:href="|wardPsInfo?num=${wardPsCommand.wardPsNum}|">이전</a> <br>
+<div id="getHeader"></div>
+<div id="title" align="center" style="margin-top: 5%; margin-bottom: 2%; text-align: center;">
+ 병동 처방 작성
+</div>
+<div align="center" style="margin-left: 20px; margin-right: 20px;">
 <form action="wardPsWrite" method="post" th:object="${wardPsCommand}">
+    <table border="1">
+        <tr>
+            <th>병동처방번호</th>
+            <td>
+                <input type="text" name="wardPsNum" th:value="${wardPsCommand.wardPsNum}" readonly="readonly">
+            </td>
+            <th>입원번호</th>
+            <td id="a1">
+                <input type="text" name="hospNum" id="hospNum" th:value="${wardPsCommand.hospNum}">
+                <span style="color:red" th:if="${#fields.hasErrors('hospNum')}" th:errors="*{hospNum}"></span>
+            </td>
+            <td id="a2"> <button type="button" id="btn" class="btn col-12" style="background-color: #0A122A; color: white">입원번호 찾기</button>
+            </td>
+        </tr>
+        <tr>
+            <th>담당의사번호</th>
+            <td>
+                <input type="text" name="empNum" id="empNum" th:value="${wardPsCommand.empNum}" readonly="readonly">
+            </td>
+            <th>처방의사번호</th>
+            <td>
+                <input type="text" name="writeDoc" th:value="${userNum}" readonly="readonly">
+            </td>
+        </tr>
+        <tr>
+            <th>진단명</th>
+            <td colspan="4">
+                <input type="text" name="diagName" th:value="${wardPsCommand.diagName}">
+                <span style="color:red" th:if="${#fields.hasErrors('diagName')}" th:errors="*{diagName}"></span>
+            </td>
+        </tr>
+        <tr>
+            <th>진단내용</th>
+            <td colspan="4">
+                <textarea rows="10" cols="40" name="diagCont">[[${wardPsCommand.diagCont}]]</textarea>
+                <span style="color:red" th:if="${#fields.hasErrors('diagCont')}" th:errors="*{diagCont}"></span>
+            </td>
+        </tr>
+        <tr>
+            <th>약처방</th>
+            <td colspan="4">
+                <textarea rows="10" cols="40" name="medicPres">[[${wardPsCommand.medicPres}]]</textarea>
+            </td>
+        </tr>
+        <tr>
+            <th>검사 처방</th>
+            <td colspan="4">
+                <textarea rows="10" cols="40" name="examPres">[[${wardPsCommand.examPres}]]</textarea>
+            </td>
+        </tr>
+        <tr>
+            <th>처치처방</th>
+            <td colspan="4">
+                <textarea rows="10" cols="40" name="hanPres">[[${wardPsCommand.hanPres}]]</textarea>
+            </td>
+        </tr>
+    </table>
 
-병동처방번호 : <input type="text" name="wardPsNum" 
-          th:value="${wardPsCommand.wardPsNum}" readonly="readonly"> <!--번호 자동부여--><br>
-
-입원번호 : <input type="text" name="hospNum" id="hospNum"
-			th:value="${wardPsCommand.hospNum}"> 
-         <button type="button" id="btn">입원번호 찾기</button>
-         <span style="color:red" th:if="${#fields.hasErrors('hospNum')}" 
-							th:errors="*{hospNum}"></span> <br>
-         
-담당의사번호 : <input type="text" name="empNum" id="empNum" th:value="${wardPsCommand.empNum}"
-				readonly="readonly"><br>
-처방의사번호 : <input type="text" name="writeDoc"
-				th:value="${userNum}" readonly="readonly"> <br>
-
-진단명 : <input type="text" name="diagName" th:value="${wardPsCommand.diagName}">
-		<span style="color:red" th:if="${#fields.hasErrors('diagName')}" 
-							th:errors="*{diagName}"></span><br>
-
-진단내용 : <span style="color:red" th:if="${#fields.hasErrors('diagCont')}" 
-							th:errors="*{diagCont}"></span><br>
-<textarea rows="10" cols="40" name="diagCont">[[${wardPsCommand.diagCont}]]</textarea><br>
-
-약처방 : <br>
-<textarea rows="10" cols="40" name="medicPres">[[${wardPsCommand.medicPres}]]</textarea><br>
-
-검사 처방 : <br>
-<textarea rows="10" cols="40" name="examPres">[[${wardPsCommand.examPres}]]</textarea><br>
-
-처치처방 : <br>
-<textarea rows="10" cols="40" name="hanPres" >[[${wardPsCommand.hanPres}]]</textarea><br>
-
-<input type="submit" value="등록">
+    <button type="submit" class="btn col-12" style="background-color: #4b5945; color: white">등록</button>
 
 </form>
+
+</div>
+
+<div id="getFooter"></div>
 </body>
 </html>

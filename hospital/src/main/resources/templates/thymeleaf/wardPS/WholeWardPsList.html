@@ -18,6 +18,38 @@ table tr:not(:first-child):not(:last-child):hover {
 
 <script type="text/javascript">
 
+/// 직원용 헤더
+$(function(){
+	$.ajax({
+		type : "get",
+		url: "../getHeader",
+		dataType:"html",
+		success:function(result){
+			$("#getHeader").html(result);
+		},
+		error:function(){
+			alert("서버오류");
+		}
+	});
+	
+});
+
+////헤더가 직원용이면 직원색으로, 환자용이면 환자색으로 바뀜
+$(function(){
+	$.ajax({
+			type : "get",
+			url: "../getFooter",
+			dataType:"html",
+			success:function(result){
+				$("#getFooter").html(result);
+			},
+			error:function(){
+				alert("서버오류");
+			}
+		});
+});
+
+
 function SelLoc() {
 	var selectedValue = $("#location option:selected").val();
 	var par5 = $("#hpState option:selected").val();
@@ -52,29 +84,35 @@ function selectPatient(wardPsNum){
 
 </head>
 <body>
-<h1>병동처방 전체 목록</h1>
-<a href="/">홈</a> | <a href="wardPsList">이전</a> <br>
-<a th:href="|myPatientList?empNum=${userNum}|">담당 환자 목록</a><br>
-	<table width=800px align="center">
-	<form action="WholeWardPsList" method="get" id="frm">
-		<tr>
-			<td colspan="5" align="center">
+<div id="getHeader"></div> 
+<br>
+<div>
+	<span style="font-size: 25px; margin-left: 50px; color: black;">병동처방 전체 목록</span>
+	<span style="font-size: 18px; float: right; margin-right: 40px;">
+		<a href="/" style="color: black;" >홈</a>
+		<span style="margin: 10px;">|</span>
+		<a href="wardPsList" style="color: black;">이전</a>
+		<span style="margin: 10px;">|</span>
+		<a th:href="|myPatientList?empNum=${userNum}|" style="color: black;">담당 환자 목록</a>
+	</span>
+</div>
+<br>	
+
+<br>
+	<div align="center" >
+	<form action="WholeWardPsList" method="get" id="frm" align="center">
 				<input type="search" name="searchWord" size=60 th:value="${searchWord}" id="searchWord"/>
-				<input type="submit" id="sub" value="검색">
-			</td>
-		</tr>
+				<input type="submit" id="sub" class="btn" value="검색" style="background-color: #4b5945; color: white">
+			
 		
-		<tr>
-		
-			<td colspan="2" align="left">
+			<div align="right" style="width: 800px; height: 40px; margin-top: 20px;">
 				<select name="hpState" id="hpState" th:value="${hpState}" onchange="Selroom()"
 					 style="width: 100px; text-align: center">
 						<option value="all" selected="selected">전체</option>
 						<option value="입원" th:selected="${hpState} == '입원'">입원</option>
 						<option value="퇴원" th:selected="${hpState} == '퇴원'">퇴원</option>
 				</select>
-			</td>
-			<td colspan="3" align="right">
+			
 				<select name="location" id="location" th:value="${location}" onchange="SelLoc()"
 				 style="width:20%; text-align: center">
 					<option value="all" selected="selected">전체</option>
@@ -91,17 +129,11 @@ function selectPatient(wardPsNum){
 					th:selected="${room.roomNum} == ${roomN}">[[${room.roomLocation}]]</option>
 				
 				</select>
-			</td>
-			
-		</tr>
-		
+			</div>
 	</form>
-	
-		
-	</table>
-
-	<table border="1" width=800px align="center">
-		<tr>
+	</div>
+	<table border="1" class="container col-8" align="center">
+		<tr align="center">
 			<th>병동처방번호</th>
 			<th>진단명</th>
 			<th>담당의</th>
@@ -109,7 +141,7 @@ function selectPatient(wardPsNum){
 			<th>입력일시</th>
 		</tr>
 		
-		<tr th:each="dto : ${list}" 
+		<tr align="center" th:each="dto : ${list}" 
 			th:onclick="selectPatient([[${dto.wardPsNum}]])">
 			<td>[[${dto.wardPsNum}]]</td> 
 			<td>[[${dto.diagName}]]</td>
@@ -118,7 +150,7 @@ function selectPatient(wardPsNum){
 			<td>[[${#dates.format(dto.inputDate, 'yyyy-MM-dd HH:mm:ss')}]]</td>
 		</tr>
 		
-		<tr>
+		<tr align="center">
 		<th colspan="5" style="text-align: center;">
 			<span th:if="${page <= 1}">[이전]</span>
 			<span th:if="${page > 1}">
@@ -136,5 +168,7 @@ function selectPatient(wardPsNum){
 		</th>
 	</tr>
 	</table>
+<br>
+<div id="getFooter"></div>
 </body>
 </html>

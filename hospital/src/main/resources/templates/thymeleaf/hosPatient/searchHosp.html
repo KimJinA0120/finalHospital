@@ -5,87 +5,83 @@
 <title>searchHosp</title>
 <style type="text/css">
 table, td, th {
-  border: 1px solid black;
-  border-collapse: collapse;
+	border: 1px solid black;
+	border-collapse: collapse;
 }
 
 table tr:not(:first-child):not(:last-child):hover {
-    background-color: #E2E2E2;
+	background-color: #E2E2E2;
 }
+
+table tr:first-child {
+	background-color: #b2c9ad;
+	color: black;
+}
+
 </style>
-<script  src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
-
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
 <script type="text/javascript">
-
-function selecthosp(hospitalizationNum, docNum){
-	$(opener.document).find("#hospNum").val(hospitalizationNum);
-	$(opener.document).find("#empNum").val(docNum);
-	window.self.close();
-}
-
-function SelLoc() {
-	var selectedValue = $("#location option:selected").val();
-	location.href = "searchHosp?location="+selectedValue;
-}
-
-function Selroom() {
-	var par2 = $("#searchWord").val();
-	var selectedValue = $("#location option:selected").val();
-	var par4 = $("#roomN option:selected").val();
-	if(par2 != null && par2 != ""){
-		location.href = "searchHosp?searchWord="+par2 +"&location=" + selectedValue +"&roomN="+par4;
-	}else {
-		location.href = "searchHosp?location=" + selectedValue +"&roomN="+par4;
+	function selecthosp(hospitalizationNum, docNum) {
+		$(opener.document).find("#hospNum").val(hospitalizationNum);
+		$(opener.document).find("#empNum").val(docNum);
+		window.self.close();
 	}
-	
-	
-}
-		
-		
+
+	function SelLoc() {
+		var selectedValue = $("#location option:selected").val();
+		location.href = "searchHosp?location=" + selectedValue;
+	}
+
+	function Selroom() {
+		var par2 = $("#searchWord").val();
+		var selectedValue = $("#location option:selected").val();
+		var par4 = $("#roomN option:selected").val();
+		if (par2 != null && par2 != "") {
+			location.href = "searchHosp?searchWord=" + par2 + "&location="
+					+ selectedValue + "&roomN=" + par4;
+		} else {
+			location.href = "searchHosp?location=" + selectedValue + "&roomN="
+					+ par4;
+		}
+
+	}
 </script>
 
 
 </head>
 <body>
-입원번호 검색 <br>
+	입원번호 검색
+	<br>
 
-	<table width=600px align="center">
 	<form action="searchHosp" method="get" id="frm">
-		<tr>
-			<td colspan="5" align="center">
-				<input type="search" name="searchWord" size=60 th:value="${searchWord}" id="searchWord"/>
-				<input type="submit" id="sub" value="검색">
-			</td>
-		</tr>
+		<div align="center" width=600px>
+			<input type="search" name="searchWord" size=60
+			th:value="${searchWord}" id="searchWord" /> 
+			<input type="submit" id="sub" value="검색">
+		</div>
 		
-		<tr align="right">
-			<td colspan="5">
-				<select name="location" id="location" th:value="${location}" onchange="SelLoc()"
-				 style="width:20%; text-align: center">
-					<option value="all" selected="selected">전체</option>
-					<option value="normal" 
-					th:selected="${location} == 'normal'">4층 일반병동</option>
-					<option value="critical" 
-						th:selected="${location} == 'critical'">5층 중환자실</option>
-				</select>
-				
-				<select name="roomN" id="roomN" th:value="${roomN}" onchange="Selroom()"
-					style="width:20%; text-align: center">
-					<option value="all" selected="selected">-------</option>
-					<option th:each="room : ${room}" th:value="${room.roomNum}" 
-					th:selected="${room.roomNum} == ${roomN}">[[${room.roomLocation}]]</option>
-				
-				</select>
-				
-			</td>
+		<div align="right" width=600px>
+			<select name="location" id="location" th:value="${location}" onchange="SelLoc()"
+			style="width: 20%; text-align: center">
+			<option value="all" selected="selected">전체</option>
+			<option value="normal" th:selected="${location} == 'normal'">4층
+				일반병동</option>
+			<option value="critical" th:selected="${location} == 'critical'">5층
+				중환자실</option>
+		</select> <select name="roomN" id="roomN" th:value="${roomN}"
+			onchange="Selroom()" style="width: 20%; text-align: center">
+			<option value="all" selected="selected">-------</option>
+			<option th:each="room : ${room}" th:value="${room.roomNum}"
+				th:selected="${room.roomNum} == ${roomN}">[[${room.roomLocation}]]</option>
+
+		</select>
+		</div>
 			
-		</tr>
-		
+
+
 	</form>
-	
-		
-	</table>
 
 	<table border="1" width=600px align="center">
 		<tr>
@@ -94,31 +90,28 @@ function Selroom() {
 			<th>담당의</th>
 			<th colspan="2">입원실</th>
 		</tr>
-		
-		<tr th:each="dto : ${list}" th:onclick="selecthosp([[${dto.HospitalizationDTO.hospitalizationNum }]], [[${dto.HospitalizationDTO.docNum }]])">
-			<td>[[${dto.HospitalizationDTO.hospitalizationNum}]]</td> 
+
+		<tr th:each="dto : ${list}"
+			th:onclick="selecthosp([[${dto.HospitalizationDTO.hospitalizationNum }]], [[${dto.HospitalizationDTO.docNum }]])">
+			<td>[[${dto.HospitalizationDTO.hospitalizationNum}]]</td>
 			<td>[[${dto.patientName}]]</td>
 			<td>[[${dto.HospitalizationDTO.docNum}]]</td>
-			<td colspan="2">[[${dto.roomLoc}]]호 [[${dto.HospitalizationDTO.bedNum}]]</td>
+			<td colspan="2">[[${dto.roomLoc}]]호
+				[[${dto.HospitalizationDTO.bedNum}]]</td>
 		</tr>
-		
+
 		<tr>
-		<th colspan="5" style="text-align: center;">
-			<span th:if="${page <= 1}">[이전]</span>
-			<span th:if="${page > 1}">
-			<a th:href="|searchHosp?page=${page - 1}&searchWord=${searchWord}&location=${location}&roomN=${roomN}|">[이전]</a>
-			</span>
-			<th:block th:each="i : ${#numbers.sequence(startPageNum, endPageNum)}">
-				[<a th:href="|searchHosp?page=${i}&searchWord=${searchWord}&location=${location}&roomN=${roomN}|">[[${i}]]</a>]
-			</th:block>
-			<span th:if="${page < maxPage}">
-			<a th:href="@{searchHosp?(page=${page + 1},searchWord=${searchWord},location=${location},roomN=${roomN})}">[다음]</a>
-			</span>
-			<span th:if="${page >= maxPage}">
-			[다음]
-			</span>			
-		</th>
-	</tr>
+			<th colspan="5" style="text-align: center;"><span
+				th:if="${page <= 1}">[이전]</span> <span th:if="${page > 1}"> <a
+					th:href="|searchHosp?page=${page - 1}&searchWord=${searchWord}&location=${location}&roomN=${roomN}|">[이전]</a>
+			</span> <th:block
+					th:each="i : ${#numbers.sequence(startPageNum, endPageNum)}">
+				[<a
+						th:href="|searchHosp?page=${i}&searchWord=${searchWord}&location=${location}&roomN=${roomN}|">[[${i}]]</a>]
+			</th:block> <span th:if="${page < maxPage}"> <a
+					th:href="@{searchHosp?(page=${page + 1},searchWord=${searchWord},location=${location},roomN=${roomN})}">[다음]</a>
+			</span> <span th:if="${page >= maxPage}"> [다음] </span></th>
+		</tr>
 	</table>
 </body>
 </html>

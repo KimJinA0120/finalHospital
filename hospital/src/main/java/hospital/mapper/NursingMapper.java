@@ -15,11 +15,7 @@ public interface NursingMapper {
 	public void write(NursingDTO dto);
 
 	public NursingDTO selectOne(String num);
-
-	public void update(NursingDTO dto);
-
-	public void delete(String num);
-
+	
 	public Integer count();
 
 	public List<NursingDTO> selectList(StartEndPageDTO sepDTO);

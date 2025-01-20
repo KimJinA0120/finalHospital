@@ -14,8 +14,6 @@
 		jdbcType="VARCHAR" property="empNum" />
 		<result column="WRITE_DOC" javaType="string" 
 		jdbcType="VARCHAR" property="writeDoc" />
-		<result column="UPDATE_DOC" javaType="string" 
-		jdbcType="VARCHAR" property="updateDoc" />
 		<result column="DIAGNOSTIC_NAME" javaType="string" 
 		jdbcType="VARCHAR" property="diagName" />
 		<result column="DIAGNOSTIC_CONTENT" javaType="string" 
@@ -26,34 +24,38 @@
 		jdbcType="VARCHAR" property="examPres"/>
 		<result column="HANDLE_PRESCRIPT" javaType="string" 
 		jdbcType="VARCHAR" property="hanPres"/>
+		<result column="call_stop" javaType="string" 
+		jdbcType="VARCHAR" property="callStop"/>
+		<result column="stop_cause" javaType="string" 
+		jdbcType="VARCHAR" property="stopCause"/>
 		<result column="INPUT_DATE" javaType="java.util.Date" 
 		jdbcType="DATE" property="inputDate"/>
-		<result column="UPDATE_DATE" javaType="java.util.Date" 
-		jdbcType="DATE" property="updateDate"/>
+		<result column="stop_date" javaType="java.util.Date" 
+		jdbcType="DATE" property="stopDate"/>
 	</resultMap>
    
    
    <sql id="baseCol">
-      WARDPRESCRIPT_NUM, HOSPITALIZATION_NUM
-      , EMP_NUM, WRITE_DOC, UPDATE_DOC,
-      DIAGNOSTIC_NAME, DIAGNOSTIC_CONTENT, MEDICINE_PRESCRIPT
-      , EXAMINATION_PRESCRIPT, HANDLE_PRESCRIPT, INPUT_DATE, UPDATE_DATE
+      WARDPRESCRIPT_NUM, HOSPITALIZATION_NUM, EMP_NUM, WRITE_DOC
+      , DIAGNOSTIC_NAME, DIAGNOSTIC_CONTENT, MEDICINE_PRESCRIPT
+      , EXAMINATION_PRESCRIPT, HANDLE_PRESCRIPT, call_stop, stop_cause
+      , INPUT_DATE, stop_date
    </sql>
    
    <sql id="SelbaseCol">
       WARDPRESCRIPT_NUM as wardPsNum, HOSPITALIZATION_NUM as hospNum
-      , EMP_NUM as empNum, WRITE_DOC as writeDoc, UPDATE_DOC as updateDoc
-      , DIAGNOSTIC_NAME as diagName, DIAGNOSTIC_CONTENT as diagCont
-      , MEDICINE_PRESCRIPT as medicPres, EXAMINATION_PRESCRIPT as examPres
-      , HANDLE_PRESCRIPT as hanPres, INPUT_DATE as inputDate
-      , UPDATE_DATE as updateDate
+      , EMP_NUM as empNum, WRITE_DOC as writeDoc, DIAGNOSTIC_NAME as diagName
+      , DIAGNOSTIC_CONTENT as diagCont, MEDICINE_PRESCRIPT as medicPres
+      , EXAMINATION_PRESCRIPT as examPres, HANDLE_PRESCRIPT as hanPres
+      , CALL_STOP as callStop, STOP_CAUSE as stopCause
+      , INPUT_DATE as inputDate, stop_date as stopDate
    </sql>
    
    <insert id="wardPsWrite" parameterType="wardPS">
       insert into WARDPRESCRIPT( <include refid="baseCol"/> )
-      values(#{wardPsNum}, #{hospNum}, #{empNum}, #{writeDoc}, null
-      		, #{diagName}, #{diagCont}, #{medicPres}, #{examPres}
-      		, #{hanPres}, sysdate, null )
+      values(#{wardPsNum}, #{hospNum}, #{empNum}, #{writeDoc}, #{diagName}
+      		, #{diagCont}, #{medicPres}, #{examPres}, #{hanPres}
+      		, '진행', null, sysdate, null )
    </insert>
    
    
@@ -63,10 +65,10 @@
    </select>
    
    <sql id="wardPsCol">
-		w.WARDPRESCRIPT_NUM, w.HOSPITALIZATION_NUM
-		, w.EMP_NUM, w.WRITE_DOC, w.UPDATE_DOC
-		,w.DIAGNOSTIC_NAME, w.DIAGNOSTIC_CONTENT, w.MEDICINE_PRESCRIPT
-      , w.EXAMINATION_PRESCRIPT, w.HANDLE_PRESCRIPT, w.INPUT_DATE, w.UPDATE_DATE
+		w.WARDPRESCRIPT_NUM, w.HOSPITALIZATION_NUM, w.EMP_NUM, w.WRITE_DOC
+		, w.DIAGNOSTIC_NAME, w.DIAGNOSTIC_CONTENT, w.MEDICINE_PRESCRIPT
+      	, w.EXAMINATION_PRESCRIPT, w.HANDLE_PRESCRIPT, w.CALL_STOP, w.STOP_CAUSE
+      	, w.INPUT_DATE, w.stop_date
 	</sql>
 	
    <select id="selectList" resultMap="wardPsResultMap" parameterType="hpSEP">
@@ -108,25 +110,12 @@
    </select>
    
    
-   <update id="wardPsUpdate" parameterType="wardPS">
+   <update id="wardPsUpdate" parameterType="String">
    		update WARDPRESCRIPT
-   		set  HOSPITALIZATION_NUM = #{hospNum}
-   			, EMP_NUM = #{empNum}
-   			, UPDATE_DOC = #{updateDoc}
-   			, DIAGNOSTIC_NAME= #{diagName}
-   			, DIAGNOSTIC_CONTENT = #{diagCont}
-   			, MEDICINE_PRESCRIPT = #{medicPres}
-      		, EXAMINATION_PRESCRIPT = #{examPres}
-      		, HANDLE_PRESCRIPT = #{hanPres}
-      		, UPDATE_DATE = sysdate
+   		set CALL_STOP = '중지',
+   			STOP_CAUSE = #{cause},
+   			STOP_DATE = sysdate
    		where WARDPRESCRIPT_NUM = #{wardPsNum}
    </update>
-   
-   <delete id="delete" parameterType="string">
-   		delete from WARDPRESCRIPT
-   		where WARDPRESCRIPT_NUM = #{num}
-   </delete>
-   
-   
    
 </mapper>

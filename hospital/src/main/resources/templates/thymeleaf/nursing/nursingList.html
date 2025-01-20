@@ -55,19 +55,29 @@ $(document).ready(function(){
 </head>
 <body>
 <div id="getHeader"></div>
+<br>
+
+<div>
+	<span style="font-size: 25px; margin-left: 50px; color: black;">간호처방</span>
+	<span style="font-size: 18px; float: right; margin-right: 40px;">
+		<a href="/" style="color: black;" >홈</a>
+		<span style="margin: 10px;">|</span>
+		<a th:href="|myPatientList?empNum=${userNum}|" style="color: black;">내 담당 환자</a>
+	</span>
+</div>
+
+<br>
+
 <div class="col-12" align="center">
-			<div class="button">
-				<a href="javascript:moveWrite()" class="btn" style="background-color: #66785f; color: white">간호처방 작성</a>
-				<a href="wholeNursingList" class="btn" style="background-color: #66785f; color: white">현/과거 간호일지 기록 목록</a>
-			</div>
-		</div>
-<a href="/">홈</a> | <a th:href="|myPatientList?empNum=${userNum}|">담당 환자 목록</a><br>
-<h1>간호처방</h1>
-	
-	
-	<br>
+		<div class="button">
+			<a href="javascript:moveWrite()" class="btn" style="background-color: #66785f; color: white">간호처방 작성</a>
+			<a href="wholeNursingList" class="btn" style="background-color: #66785f; color: white">현/과거 간호일지 기록 목록</a>	
+		</div>			
+</div>	
+
+<br>
 	<div id="listTable"></div>
-	
+	<br>
 	<div id="getFooter"></div>
 </body>
 </html>

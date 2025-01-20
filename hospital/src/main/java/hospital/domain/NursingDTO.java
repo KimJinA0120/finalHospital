@@ -17,12 +17,10 @@ public class NursingDTO {
 	String wardPsNum;
 	String empNum;
 	String handleNurs;
-	String updateNurs; // 수정한 간호사
 	
 	String nursingCon;
 	String hanPres;
 	
 	Date presDate;
 	Date inputDate;
-	Date updateDate;
 }

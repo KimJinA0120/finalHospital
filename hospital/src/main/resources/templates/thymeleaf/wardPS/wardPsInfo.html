@@ -3,32 +3,194 @@
 <head>
 <meta charset="UTF-8">
 <title>wardPsInfo</title>
+<style type="text/css">
+	
+	table{
+		text-align: center;
+		color: black;
+		font-size: 17px; 
+	}
+	
+	th{
+		background-color: #b2c9ad;
+	}
+	
+	td{
+		background-color: white;
+	}
+	
+	#tab1 {
+		width: 80%; 
+		font-size: 20px; 
+		height: 35px;
+	}
+	
+	#tab2 td{
+		padding-bottom: 20px;
+		
+	}
+	
+	#title{
+		font-size: 25px;
+		color: black;
+	}
+</style>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$.ajax({
+		type : "get",
+		url: "../getHeader",
+		dataType:"html",
+		success:function(result){
+			$("#getHeader").html(result);
+		},
+		error:function(){
+			alert("서버오류");
+		}
+	});
+	
+	$.ajax({
+		type : "get",
+		url: "../getFooter",
+		dataType:"html",
+		success:function(result){
+			$("#getFooter").html(result);
+		},
+		error:function(){
+			alert("서버오류");
+		}
+	});
+	
+});
+
+</script>
+
+<script th:inline="javascript">
+$(function() {
+	
+
+function CallPsStop(wardPsNum) {
+	var userN = [[${userNum}]];
+	var mainDoc = [[${wardPsCommand.empNum}]];
+	var Wdoc = [[${wardPsCommand.writeDoc}]];
+	if (userN != null && userN != "") {
+		
+		if (userN.startsWith('doc')) {
+			
+			if (userN == mainDoc || userN == Wdoc) {
+				window.open("../wardPS/wardPsUpdate?num="+ wardPsNum, "처방중지"
+						,"width=620, height=500, left=30, top=50");
+			} else {
+				
+				alert('접근권한이 없습니다.');
+				location.href = "/";
+			}
+			
+		}else{
+			
+			alert('접근권한이 없습니다.');
+			location.href = "/";
+		}
+		
+	} else {
+		alert('로그인이 필요한 서비스입니다.');
+		location.href = "/";
+	}
+	
+}
+
+function callDelete(num) {
+	var userN = [[${userNum}]];
+	var mainDoc = [[${wardPsCommand.empNum}]];
+	var Wdoc = [[${wardPsCommand.writeDoc}]];
+	
+	if (userN != null && userN != "") {
+		
+		if (userN.startsWith('doc')) {
+			
+			if (userN == mainDoc || userN == Wdoc) {
+				window.open("../wardPS/wardInPSdelete?num="+ num, "삭제 요청"
+						,"width=620, height=500, left=30, top=50");
+			} else {
+				
+				alert('접근권한이 없습니다.');
+				location.href = "/";
+			}
+			
+		}else{
+			
+			alert('접근권한이 없습니다.');
+			location.href = "/";
+		}
+		
+	} else {
+		alert('로그인이 필요한 서비스입니다.');
+		location.href = "/";
+	}
+	
+}
+});
+</script>
 </head>
 <body>
-<a href="wardPsList">병동처방목록</a> | <a href="javascript:history.back();">이전</a> <br>
-<h1 align="center">처방번호 : [[${wardPsCommand.wardPsNum}]]</h1>
-<h2 align="center">진단명 : [[${wardPsCommand.diagName}]]</h2>
-<h4 align="center"><a href="#">입원번호 : [[${wardPsCommand.hospNum}]]</a></h4>
-<p align="center"> 담당의 : <a href="#">[[${wardPsCommand.empNum}]]</a> 
- | 처방의사 : [[${wardPsCommand.writeDoc}]]
-</p>
- 
-<p align="center"> 등록일시 : [[${#dates.format(wardPsCommand.inputDate, 'yyyy-MM-dd HH:mm:ss')}]]
- | 수정일시 : [[${#dates.format(wardPsCommand.updateDate, 'yyyy-MM-dd HH:mm:ss')}]]</p>
-<hr>
+<div id="getHeader"></div>
+
 <div align="center">
-<h5>진단내용</h5>
-[[${wardPsCommand.diagCont}]]
-<h5>약처방</h5>
-[[${wardPsCommand.medicPres}]]
-<h5>검사처방</h5>
-[[${wardPsCommand.examPres}]]
-<h5>처치처방</h5>
-[[${wardPsCommand.hanPres}]]
+<div id="title" style="margin-top: 5%; margin-bottom:2%; width: 80%; text-align: center;">
+	병동 처방 정보
 </div>
-<p align="center">
-<a th:href="|wardPsUpdate?num=${wardPsCommand.wardPsNum}|">수정</a>
- | <a th:href="|wardPsDelete?num=${wardPsCommand.wardPsNum}|">삭제</a>
-</p>
+<table border="1" id="tab1">
+	<tr>
+		<th>처방번호</th> <td>[[${wardPsCommand.wardPsNum}]]</td>
+		<th>진단명</th> <td>[[${wardPsCommand.diagName}]]</td>
+	</tr>
+	<tr >
+		<th>입원번호</th> <td>[[${wardPsCommand.hospNum}]]</td>
+		<th>담당의</th> <td>[[${wardPsCommand.empNum}]]</td>
+	</tr>
+	
+	
+	<tr>
+		<th>처방의사</th> <td>[[${wardPsCommand.writeDoc}]]</td>
+		<th>등록일시</th> <td>[[${#dates.format(wardPsCommand.inputDate, 'yyyy-MM-dd HH:mm:ss')}]]</td>
+	</tr>
+</table>
+<table style="width: 80%;" border="1" id="tab2">
+	<tr>
+		<th>진단내용</th> 
+	</tr>
+	<tr>
+		 <td>[[${wardPsCommand.diagCont}]]</td>
+	</tr>
+	<tr>
+		<th>약처방</th>
+	</tr>
+	<tr>
+		<td>[[${wardPsCommand.medicPres}]]</td>
+	</tr>
+	<tr>
+		<th>검사처방</th>
+	</tr>
+	<tr>
+		<td>[[${wardPsCommand.examPres}]]</td>
+	</tr>
+	<tr>
+		<th >처치처방</th> 
+	</tr>
+	<tr>
+		<td>[[${wardPsCommand.hanPres}]]</td>
+	</tr>
+
+</table>
+	
+	
+</div> <br>
+<div align="center" style="color: white;">
+<button th:onclick="CallPsStop([[${wardPsCommand.wardPsNum}]])" class="btn">처방 중지</button>
+<button th:onclick="callDelect([[${wardPsCommand.wardPsNum}]])" class="btn">삭제 요청</button>
+</div>
+
+ <div id="getFooter"></div>
 </body>
 </html>

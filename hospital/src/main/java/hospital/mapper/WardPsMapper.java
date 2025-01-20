@@ -3,6 +3,7 @@ package hospital.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import hospital.command.WardPsCommand;
 import hospital.domain.SEPhosPatientDTO;
@@ -16,11 +17,12 @@ public interface WardPsMapper {
 	public void wardPsWrite(WardPsDTO dto);
 
 	public WardPsDTO selectOne(String num);
-
-	public void wardPsUpdate(WardPsCommand wardPsCommand);
-
-	public void delete(String num);
+	
+	public void wardPsUpdate(@Param("cause") String cause
+							, @Param("wardPsNum") String wardPsNum);
 
 	public Integer count();
+
+	
 
 }

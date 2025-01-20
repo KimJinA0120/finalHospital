@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import hospital.command.NursCommand;
 import hospital.service.AutoNumService;
 import hospital.service.hosPatient.SearchHospService;
-import hospital.service.nursing.NursingDeleteService;
+
 import hospital.service.nursing.NursingInfoService;
 import hospital.service.nursing.NursingListService;
-import hospital.service.nursing.NursingUpdateService;
+
 import hospital.service.nursing.NursingWriteService;
 
 @Controller
@@ -77,35 +77,6 @@ public class NursingController {
 	public String nursingInfo(String num, Model model) {
 		nursingInfoService.execute(num, model);
 		return "thymeleaf/nursing/nursingInfo";
-	}
-	
-	
-	// 수정
-	@GetMapping("nursingUpdate")
-	public String nursingUpdate(String num, Model model) {
-		nursingInfoService.execute(num, model);
-		return "thymeleaf/nursing/nursingUpdate";
-	}
-	@Autowired
-	NursingUpdateService nursingUpdateService;
-	@PostMapping("nursingUpdate")
-	public String nursingUpdate(@Validated NursCommand nursCommand
-								,BindingResult result) {
-		if (result.hasErrors()) {
-			   return "thymeleaf/wardPS/wardPsUpdate";
-		}
-		nursingUpdateService.execute(nursCommand);
-		return "redirect:nursingInfo?num="+nursCommand.getNursingNum();
-	}
-	
-	
-	// 삭제
-	@Autowired
-	NursingDeleteService nursingDeleteService;
-	@RequestMapping("nursingDelete")
-	public String nursingDelete(String num) {
-		nursingDeleteService.execute(num);
-		return "redirect:nursingList";
 	}
 	
 	
