@@ -2,10 +2,91 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>외래진료EMR</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="keywords" content="Site keywords here">
+		<meta name="description" content="">
+		<meta name='copyright' content=''>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		
+		<!-- Title -->
+		<title>외래진료EMR</title>
+		
+		<!-- Favicon -->
+<link rel="icon" href="../static/img/favicon.png">
+
+<!-- Google Fonts -->
+<link
+	href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+	rel="stylesheet">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="../static/css/bootstrap-green.min.css">
+<!-- Nice Select CSS -->
+<link rel="stylesheet" href="../static/css/nice-select.css">
+<!-- Font Awesome CSS -->
+<link rel="stylesheet" href="../static/css/font-awesome.min.css">
+<!-- icofont CSS -->
+<link rel="stylesheet" href="../static/css/icofont.css">
+<!-- Slicknav -->
+<link rel="stylesheet" href="../static/css/slicknav.min.css">
+<!-- Owl Carousel CSS -->
+<link rel="stylesheet" href="../static/css/owl-carousel.css">
+<!-- Datepicker CSS -->
+<link rel="stylesheet" href="../static/css/datepicker.css">
+<!-- Animate CSS -->
+<link rel="stylesheet" href="../static/css/animate.min.css">
+<!-- Magnific Popup CSS -->
+<link rel="stylesheet" href="../static/css/magnific-popup.css">
+
+<!-- Medipro CSS -->
+<link rel="stylesheet" href="../static/css/normalize-green.css">
+<link rel="stylesheet" href="../static/css/style-green.css">
+<link rel="stylesheet" href="../static/css/responsive-green.css">
+        
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript" src="/static/js/checkbox.js"></script>
+<script type="text/javascript">
+$(function(){
+	$.ajax({
+		type : "get",
+		url: "../getHeader",
+		dataType:"html",
+		success:function(result){
+			$("#getHeader").html(result);
+		},
+		error:function(){
+			alert("서버오류");
+		}
+	});
+	
+});
+$(function(){
+	$.ajax({
+			type : "get",
+			url: "../getFooter",
+			dataType:"html",
+			success:function(result){
+				$("#getFooter").html(result);
+			},
+			error:function(){
+				alert("서버오류");
+			}
+		});
+});
+</script>
+
 </head>
 <body>
-<table border="1">
+<div id="getHeader"></div>
+
+<div class="col-12" align="center">
+			<div class="button">
+				<a th:href="@{medicalUpdate(medicalNum=${medicalCommand.medicalNum})}" class="btn" style="background-color: #66785f; color: white">수정</a>
+				<a href="../medical/medicalList" class="btn" style="background-color: #66785f; color: white">진료EMR 리스트</a>
+			</div>
+		</div>
+<br >
+<table border="1" class="container col-6">
  	<tr><td>진료번호</td><td>[[${medicalCommand.medicalNum}]]</td></tr>
  	<tr><td>접수번호</td><td>[[${medicalCommand.receiptNum}]]</td></tr>
  	<tr><td>환자번호</td><td>[[${medicalCommand.patientNum}]]</td></tr>
@@ -17,7 +98,7 @@
  	<tr><td>입력일시</td><td>[[${#dates.format(medicalCommand.inputDate, 'yyyy-MM-dd')}]]</td></tr>
  	<tr><td>담당의사번호</td><td>[[${medicalCommand.empNum}]]</td></tr>
 </table>
-<a th:href="@{medicalUpdate(medicalNum=${medicalCommand.medicalNum})}">수정</a> |
-<a href="../medical/medicalList">진료EMR 리스트</a>
+
+	<div id="getFooter"></div>
 </body>
 </html>

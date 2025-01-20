@@ -24,25 +24,175 @@ $(function(){
 					,"width=620, height=500, left=30, top=50");
 	});
 });
+$(function(){
+	$.ajax({
+		type : "get",
+		url: "../getHeader",
+		dataType:"html",
+		success:function(result){
+			$("#getHeader").html(result);
+		},
+		error:function(){
+			alert("서버오류");
+		}
+	});
+	
+});
+$(function(){
+	$.ajax({
+			type : "get",
+			url: "../getFooter",
+			dataType:"html",
+			success:function(result){
+				$("#getFooter").html(result);
+			},
+			error:function(){
+				alert("서버오류");
+			}
+		});
+});
 </script>
+<!-- Meta Tags -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="keywords" content="Site keywords here">
+<meta name="description" content="">
+<meta name='copyright' content=''>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Favicon -->
+<link rel="icon" href="../static/img/favicon.png">
+
+<!-- Google Fonts -->
+<link
+	href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+	rel="stylesheet">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="../static/css/bootstrap-green.min.css">
+<!-- Nice Select CSS -->
+<link rel="stylesheet" href="../static/css/nice-select.css">
+<!-- Font Awesome CSS -->
+<link rel="stylesheet" href="../static/css/font-awesome.min.css">
+<!-- icofont CSS -->
+<link rel="stylesheet" href="../static/css/icofont.css">
+<!-- Slicknav -->
+<link rel="stylesheet" href="../static/css/slicknav.min.css">
+<!-- Owl Carousel CSS -->
+<link rel="stylesheet" href="../static/css/owl-carousel.css">
+<!-- Datepicker CSS -->
+<link rel="stylesheet" href="../static/css/datepicker.css">
+<!-- Animate CSS -->
+<link rel="stylesheet" href="../static/css/animate.min.css">
+<!-- Magnific Popup CSS -->
+<link rel="stylesheet" href="../static/css/magnific-popup.css">
+
+<!-- Medipro CSS -->
+<link rel="stylesheet" href="../static/css/normalize-green.css">
+<link rel="stylesheet" href="../static/css/style-green.css">
+<link rel="stylesheet" href="../static/css/responsive-green.css">
+
 </head>
+
 <body>
-외래진료EMR 작성
-<form action="medicalInsert" method="post" th:object="${medicalCommand}" >
-    <table border="1">
-      <tr><td>진료번호</td><td><input type="text" name="medicalNum" id="medicalNum" th:value="${autoNum}" readonly="readonly"></td></tr>
-      <tr><td>접수번호</td><td><input type="text" name="receiptNum" id="receiptNum" readonly="readonly">
-      				<button type="button" id="btn">접수번호검색</button></td></tr>
-      <tr><td>환자번호</td><td><input type="text" name="patientNum" id="patientNum" readonly="readonly"></td></tr>
-      <tr><td>진단명</td><td><input type="text" name="diagnosticName" id="diagnosticName"></td></tr>
-      <tr><td>진단내용</td><td><textarea cols="50" rows="10" name="diagnosticContent"></textarea></td></tr>
-      <tr><td>약처방</td><td><textarea cols="50" rows="10" name="medicinePrescript"></textarea></td></tr>
-      <tr><td>각종 검사처방</td><td><textarea cols="50" rows="10" name="examinationPrescript"></textarea></td></tr>
-      <tr><td>처치처방</td><td><textarea cols="50" rows="10" name="handlePrescript"></textarea></td></tr>
-      <tr><td>입력일시</td><td><input type="date" name="inputDate" id="inputDate" readonly="readonly"></td></tr>
-      <tr><td>담당의사번호</td><td><input type="text" name="empNum" id="empNum" readonly="readonly"></td></tr>
-     </table>
-        <button type="submit">입력완료</button>
+
+<div id="getHeader"></div> 
+
+<!-- Start Contact Us -->
+	<section class="contact-us section">
+		<div class="container col-lg-6">
+			<div class="inner">
+				<div class="row">
+					<div class="col-lg-6-center">
+						<div class="contact-us-form">
+							<h2>외래진료EMR</h2>
+							<form action="medicalInsert" method="post" th:object="${medicalCommand}" >
+								<div class="row">
+									<div class="col-lg-2">
+											<div class="form-group">
+												<span>진료번호</span> 
+											</div>
+									</div>
+									<div class="col-lg-4">
+										<div class="form-group">
+											<input type="text" name="medicalNum" id="medicalNum" th:value="${autoNum}" readonly="readonly">
+										</div>
+									</div>
+									<div class="col-lg-2">
+										<div class="form-group">
+											<span>접수번호</span> 
+										</div>
+									</div>
+									<div class="col-lg-4">
+										<div class="form-group">
+												<input type="text" name="receiptNum" id="receiptNum" readonly="readonly">
+												<button type="button"class="btn" style="height:30px; text-align:center; padding: .200rem .75rem;" id="btn">접수번호검색</button>
+										</div>
+									</div>
+									<div class="col-lg-2">
+										<div class="form-group">
+											<span>환자번호</span> 
+										</div>
+									</div>
+									<div class="col-lg-4">
+										<div class="form-group">
+											<input type="text" name="patientNum" id="patientNum" readonly="readonly">
+										</div>
+									</div>
+									<div class="col-lg-2">
+										<div class="form-group">
+											<span>의사번호</span>
+										</div>
+									</div>
+									<div class="col-lg-4">
+										<div class="form-group">
+											<input type="text" name="empNum" id="empNum" readonly="readonly">
+										</div>
+									</div>
+									<div class="col-lg-6">
+										<div class="form-group">
+												<span> 진 단 명 </span> <input type="text" name="diagnosticName"
+													id="diagnosticName" style="width: 200%">
+										</div>
+									</div>
+									<div class="col-lg-6"></div>
+									<div class="col-lg-6">
+										<div class="form-group">
+												<span>진단내용</span> <textarea cols="50" rows="10" name="diagnosticContent"></textarea>
+										</div>
+									</div>
+									<div class="col-lg-6">
+										<div class="form-group">
+												<span>약처방</span> <textarea cols="50" rows="10" name="medicinePrescript"></textarea>
+										</div>
+									</div>
+									<div class="col-lg-6">
+										<div class="form-group">
+												<span>각종 검사처방</span> <textarea cols="50" rows="10" name="examinationPrescript"></textarea>
+										</div>
+									</div>
+									<div class="col-lg-6">
+										<div class="form-group">
+												<span>처치처방</span> <textarea cols="50" rows="10" name="handlePrescript"></textarea>
+										</div>
+									</div>
+									<div class="col-lg-6">
+										<div class="form-group">
+												<span>입력일시</span> <input type="date" name="inputDate" id="inputDate" readonly="readonly">
+										</div>
+									</div>
+        							<div class="col-12">
+										 <div class="form-group login-btn">
+											<button class="btn" type="submit" style="width: 100%; background-color: #66785F ">입력완료</button>
+										</div>
+									</div>
 </form>
+</div>
+</div>
+</div>
+</div>
+</div></section>
+<div id="getFooter"></div>
 </body>
 </html>

@@ -2,26 +2,101 @@
 <html>
 <head>
 <meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="keywords" content="Site keywords here">
+		<meta name="description" content="">
+		<meta name='copyright' content=''>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		
 <title>문의/건의</title>
+
+<!-- Favicon -->
+        <link rel="icon" href="static/img/favicon.png">
+		
+		<!-- Google Fonts -->
+		<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="/static/css/bootstrap-green.min.css">
+		<!-- Nice Select CSS -->
+		<link rel="stylesheet" href="/static/css/nice-select.css">
+		<!-- Font Awesome CSS -->
+        <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+		<!-- icofont CSS -->
+        <link rel="stylesheet" href="/static/css/icofont.css">
+		<!-- Slicknav -->
+		<link rel="stylesheet" href="/static/css/slicknav.min.css">
+		<!-- Owl Carousel CSS -->
+        <link rel="stylesheet" href="/static/css/owl-carousel.css">
+		<!-- Datepicker CSS -->
+		<link rel="stylesheet" href="/static/css/datepicker.css">
+		<!-- Animate CSS -->
+        <link rel="stylesheet" href="/static/css/animate.min.css">
+		<!-- Magnific Popup CSS -->
+        <link rel="stylesheet" href="/static/css/magnific-popup.css">
+		
+		<!-- Medipro CSS -->
+        <link rel="stylesheet" href="/static/css/normalize-green.css">
+        <link rel="stylesheet" href="/static/css/style-green.css">
+        <link rel="stylesheet" href="/static/css/responsive-green.css">
+        
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript" src="/static/js/checkbox.js"></script>
+<script type="text/javascript">
+$(function(){
+	$.ajax({
+		type : "get",
+		url: "../getHeader",
+		dataType:"html",
+		success:function(result){
+			$("#getHeader").html(result);
+		},
+		error:function(){
+			alert("서버오류");
+		}
+	});
+	
+});
+$(function(){
+	$.ajax({
+			type : "get",
+			url: "../getFooter",
+			dataType:"html",
+			success:function(result){
+				$("#getFooter").html(result);
+			},
+			error:function(){
+				alert("서버오류");
+			}
+		});
+});
+</script>
+
 </head>
 <body>
+
+<div id="getHeader"></div>
+
 <form action="qnaAnswer" method="post">
-<table width="600" border="1">
-	<tr><th>게시글번호</th>
-		<td><input type="text" th:value="${list[0].qnaNum}" name="qnaNum" readonly="readonly"></td></tr>
-	<tr><th>작성자</th><td>[[${list[0].patientNum}]]</td></tr>
-	<tr><th>제목</th><td>[[${list[0].qnaTitle}]]</td></tr>
-	<tr><th>작성일</th><td>[[${#dates.format(list[0].qnaQDate, 'yyyy-MM-dd')}]]</td></tr>
-	<tr><th>내용</th>
+<table border="1" class="container col-8">
+	<tr><td style="background-color: white" align="center">게시글번호</td>
+		<td style="background-color: white"><input type="text" th:value="${list[0].qnaNum}" name="qnaNum" readonly="readonly" style="width: 100%"></td></tr>
+	<tr><td align="center">작성자</td><td>[[${list[0].patientNum}]]</td></tr>
+	<tr><td align="center">제목</td><td>[[${list[0].qnaTitle}]]</td></tr>
+	<tr><td align="center">작성일</td><td>[[${#dates.format(list[0].qnaQDate, 'yyyy-MM-dd')}]]</td></tr>
+	<tr><td align="center">내용</td>
 	<td><span th:utext="${#strings.replace(list[0].qnaQContent, newLineChar, '<br />')}"></span></td>
 	</tr>
-	<tr><th>답변자</th><td>[[${list[0].empNum}]]</td></tr>
-	<tr><th>답변일</th><td>[[${#dates.format(list[0].qnaADate, 'yyyy-MM-dd')}]]</td></tr>
-	<tr><th>답변</th>
+	<tr><td align="center">답변자</td><td>[[${list[0].empNum}]]</td></tr>
+	<tr><td align="center">답변일</td><td>[[${#dates.format(list[0].qnaADate, 'yyyy-MM-dd')}]]</td></tr>
+	<tr><td align="center">답변</td>
 		<td><textarea cols="50" rows="10" name="qnaAContent">[[${list[0].qnaAContent}]]</textarea></td>
 	</tr>
-	<tr><th colspan="2"><input type="submit" value="저장" /></th></tr>
+	<tr><th colspan="2"><button class="btn" type="submit" style="width: 100%; background-color: #66785F ">답변등록</button></th></tr>
 </table>
 </form>
+
+ 	<div id="getFooter"></div>
+
 </body>
 </html>

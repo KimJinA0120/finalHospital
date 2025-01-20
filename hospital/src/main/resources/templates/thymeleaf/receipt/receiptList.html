@@ -88,9 +88,9 @@ table, td, th {
 			<div class="button">
 				<a href="receiptForm" class="btn" style="background-color: #66785f; color: white">진료접수</a>
 				<a href="emp_reservationForm" class="btn" style="background-color: #66785f; color: white">진료예약</a>
-				<a href="../medical/medicalList" class="btn" style="background-color: #66785f; color: white">외래진료EMR</a>
 			</div>
 		</div>
+<br>
 
  	<form action="receiptList" method="get" align="center">
 		<tr><td colspan="6">검색 : 
@@ -104,11 +104,11 @@ table, td, th {
       	<th>접수/예약번호</th><th>환자번호</th><th>담당의사</th><th>접수일시</th><th>예약일시</th>
       </tr>
  		<tr th:each="dto : ${list}">
- 			<td>[[${dto.receiptNum}]]</td>
- 			<td>[[${dto.patientNum}]]</td>
- 			<td>[[${dto.empNum}]]</td>
- 			<td>[[${#temporals.format(dto.receiptDate, 'yyyy-MM-dd HH:mm')}]]</td>
- 			<td>[[${#temporals.format(dto.reservationDate, 'yyyy-MM-dd HH:mm')}]]</td>
+ 			<td align="center">[[${dto.receiptNum}]]</td>
+ 			<td align="center">[[${dto.patientNum}]]</td>
+ 			<td align="center">[[${dto.empNum}]]</td>
+ 			<td align="center">[[${#temporals.format(dto.receiptDate, 'yyyy-MM-dd HH:mm')}]]</td>
+ 			<td align="center">[[${#temporals.format(dto.reservationDate, 'yyyy-MM-dd HH:mm')}]]</td>
  		</tr>
  		<tr>
 		<th colspan="5" style="text-align: center;">

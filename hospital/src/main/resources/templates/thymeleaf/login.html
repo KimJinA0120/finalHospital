@@ -2,14 +2,44 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<title>login</title>
+<script type="text/javascript">
+	$(function() {
+		$.ajax({
+			type : "get",
+			url : "../getPatHeader",
+			dataType : "html",
+			success : function(result) {
+				$("#getPatHeader").html(result);
+			},
+			error : function() {
+				alert("서버오류");
+			}
+		});
+
+	});
+	$(function() {
+		$.ajax({
+			type : "get",
+			url : "../getFooter",
+			dataType : "html",
+			success : function(result) {
+				$("#getFooter").html(result);
+			},
+			error : function() {
+				alert("서버오류");
+			}
+		});
+	});
+</script>
+<!-- Meta Tags -->
+<meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="keywords" content="Site keywords here">
 <meta name="description" content="">
 <meta name='copyright' content=''>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-<title>문의/건의</title>
 
 <!-- Favicon -->
 <link rel="icon" href="../static/img/favicon.png">
@@ -43,39 +73,25 @@
 <link rel="stylesheet" href="../static/css/style.css">
 <link rel="stylesheet" href="../static/css/responsive.css">
 
-<style type="text/css">
-	div{
-		font-size: 25px;
-		background-color : #1A76D1;
-		color: white;
-	}
-	th{
-		color: white;
-		background-color : #1A76D1;
-	}
-</style>
-
 </head>
-
 <body>
-<form action="/qna/qnaUpdate" method="post">
-<table width="600" border="1" align="center">
-	<tr align="center"><td><select name="qnaType">
-			<option value="문의">문의</option>
-			<option value="건의">건의</option>
-		</select></td>
-		<td align="right"><input type="submit" class="btn" id="btnInsert" style="background-color: #1A76D1; color: white" value="수정하기" /></td>
-	</tr>
-	<tr align="center"><th>게시글번호</th>
-		<td><input type="text" name="qnaNum" th:value="${list[0].qnaNum}" readonly="readonly" class="col-12"/></td>
-	</tr>
-	<tr align="center"><th>제목</th>
-		<td><input type="text" name="qnaTitle" th:value="${list[0].qnaTitle}" class="col-12"/></td>
-	</tr>
-	<tr align="center"><th>내용</th>
-		<td><textarea cols="50" rows="10" name="qnaQContent">[[${list[0].qnaQContent}]]</textarea></td>
-	</tr>
-</table>
-</form>
+	<br>
+	<div class="form" align="center">
+		<div class="form-content">
+			<form action="/login/item.login" method="post">
+				<div class="form-group">
+					<input type="text" name="userId" placeholder="아이디" />
+				</div>
+				<div class="form-group">
+					<input type="password" name="userPw" placeholder="비밀번호" />
+				</div>
+				<div class="col-12">
+					<div class="form-group login-btn">
+						<button class="btn" type="submit" style="width: 60%">로그인</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
 </body>
 </html>
