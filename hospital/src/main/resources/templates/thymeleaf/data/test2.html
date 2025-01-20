@@ -2,29 +2,86 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="keywords" content="Site keywords here">
+	<meta name="description" content="">
+	<meta name='copyright' content=''>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>주식 시세 데이터</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: center;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   
+    <!-- Favicon -->
+<link rel="icon" href="../static/img/favicon.png">
+
+<!-- Google Fonts -->
+<link
+	href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+	rel="stylesheet">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="../static/css/bootstrap.min.css">
+<!-- Nice Select CSS -->
+<link rel="stylesheet" href="../static/css/nice-select.css">
+<!-- Font Awesome CSS -->
+<link rel="stylesheet" href="../static/css/font-awesome.min.css">
+<!-- icofont CSS -->
+<link rel="stylesheet" href="../static/css/icofont.css">
+<!-- Slicknav -->
+<link rel="stylesheet" href="../static/css/slicknav.min.css">
+<!-- Owl Carousel CSS -->
+<link rel="stylesheet" href="../static/css/owl-carousel.css">
+<!-- Datepicker CSS -->
+<link rel="stylesheet" href="../static/css/datepicker.css">
+<!-- Animate CSS -->
+<link rel="stylesheet" href="../static/css/animate.min.css">
+<!-- Magnific Popup CSS -->
+<link rel="stylesheet" href="../static/css/magnific-popup.css">
+
+<!-- Medipro CSS -->
+<link rel="stylesheet" href="../static/css/normalize.css">
+<link rel="stylesheet" href="../static/css/style.css">
+<link rel="stylesheet" href="../static/css/responsive.css">
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript" src="/static/js/checkbox.js"></script>
+<script type="text/javascript">
+$(function(){
+	$.ajax({
+		type : "get",
+		url: "../getPatHeader",
+		dataType:"html",
+		success:function(result){
+			$("#getPatHeader").html(result);
+		},
+		error:function(){
+			alert("서버오류");
+		}
+	});
+	
+});
+$(function(){
+	$.ajax({
+			type : "get",
+			url: "../getFooter",
+			dataType:"html",
+			success:function(result){
+				$("#getFooter").html(result);
+			},
+			error:function(){
+				alert("서버오류");
+			}
+		});
+});
+</script>
+    
 </head>
 <body>
+<div id="getPatHeader"></div>
+<br>
     <h1>주식 시세 데이터 보기</h1>
-    <table id="stockDataTable">
+     <canvas id="myChart" width="800" height="400"></canvas>
+    <table id="stockDataTable" border='1' class="container col-8">
         <thead>
-            <tr>
+            <tr align="center">
                 <th>날짜</th>
                 <th>마감가</th>
                 <th>변동률</th>
@@ -33,64 +90,122 @@
             </tr>
         </thead>
         <tbody id="stockDataBody">
-            <tr id="initialStockRow">
-                <td id="currentDateCell"></td>
-                <td id="currentClosePriceCell"></td>
-                <td id="currentChangeRateCell"></td>
-                <td id="currentTotalVolumeCell">0</td>
-                <td id="currentTotalTradingValueCell">0</td>
+            <tr id="initialStockRow" style="background-color: white; color: black">
+                <td id="currentDateCell" align="center"></td>
+                <td id="currentClosePriceCell" align="center"></td>
+                <td id="currentChangeRateCell" align="center"></td>
+                <td id="currentTotalVolumeCell" align="center">0</td>
+                <td id="currentTotalTradingValueCell" align="center">0</td>
             </tr>
         </tbody>
     </table>
 
+   
+
     <script>
-        // WebSocket 연결
         const stockSocket = new WebSocket('ws://localhost:2000');
 
-        // 초기 누적 값 로드
         let accumulatedVolume = parseInt(localStorage.getItem('accumulatedVolume')) || 0;
         let accumulatedTradingValue = parseFloat(localStorage.getItem('accumulatedTradingValue')) || 0;
-        let previousPrice = parseFloat(localStorage.getItem('previousPrice')) || 55300; // 초기 마감가
-        const currentDate = new Date().toISOString().slice(0, 10); // YYYY-MM-DD 형식
+        let previousPrice = parseFloat(localStorage.getItem('previousPrice')) || 55300;
+        const currentDate = new Date().toISOString().slice(0, 10);
 
-        // 오늘 날짜 초기화
         if (!localStorage.getItem('lastTrackedDate')) {
             localStorage.setItem('lastTrackedDate', currentDate);
         }
 
-        // 페이지 로드 시 기존 값 설정
         document.getElementById('currentDateCell').textContent = currentDate; 
         document.getElementById('currentClosePriceCell').textContent = previousPrice; 
         document.getElementById('currentTotalVolumeCell').textContent = accumulatedVolume; 
         document.getElementById('currentTotalTradingValueCell').textContent = accumulatedTradingValue.toFixed(2); 
 
-        // 기존 데이터 로드
         const historicalData = JSON.parse(localStorage.getItem('historicalStockData')) || [];
         historicalData.forEach(data => {
             const newStockRow = document.createElement('tr');
             newStockRow.innerHTML = `
-                <td>${data.date}</td>
-                <td>${data.price}</td>
-                <td>${data.changeRate}</td>
-                <td>${data.volume}</td>
-                <td>${data.tradingValue}</td>
+                <td align="center">${data.date}</td>
+                <td align="center">${data.price}</td>
+                <td align="center">${data.changeRate}</td>
+                <td align="center">${data.volume}</td>
+                <td align="center">${data.tradingValue}</td>
             `;
             document.getElementById('stockDataBody').appendChild(newStockRow);
         });
 
+        let historicalStockData = {
+            labels: [], 
+            datasets: [
+                {
+                    label: '거래량',
+                    data: [],
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1,
+                    fill: false,
+                    yAxisID: 'y1'
+                },
+                {
+                    label: '체결가격',
+                    data: [],
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1,
+                    fill: false,
+                    yAxisID: 'y2' 
+                }
+            ]
+        };
+
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'line',
+            data: historicalStockData,
+            options: {
+                responsive: false,
+                scales: {
+                    x: {
+                        display: false 
+                    },
+                    y1: {
+                        type: 'linear',
+                        position: 'left',
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: '거래량'
+                        },
+                        afterDataLimits: (scale) => { 
+                            scale.max = scale.max * 1.1;
+                        }
+                    },
+                    y2: {
+                        type: 'linear',
+                        position: 'right',
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: '체결가격'
+                        },
+                        grid: {
+                            drawOnChartArea: false 
+                        },
+                        ticks: {
+                            stepSize: 50000
+                        }
+                    }
+                }
+            }
+        });
+
         stockSocket.onmessage = function(event) {
             const stockMessage = JSON.parse(event.data);
-            const todayDate = new Date().toISOString().slice(0, 10); // 오늘 날짜
+            const todayDate = new Date().toISOString().slice(0, 10);
             const currentPrice = parseFloat(stockMessage.price);
-            
-            // 하루가 바뀌었는지 확인
-            if (todayDate !== localStorage.getItem('lastTrackedDate')) {
-                // 하루가 바뀌었으면 초기화
-                const previousTrackedDate = localStorage.getItem('lastTrackedDate');
+            const volume = stockMessage.volume;
 
-                // 새로운 행 추가
-                const newStockRow = document.createElement('tr');
+            if (todayDate !== localStorage.getItem('lastTrackedDate')) {
+                const previousTrackedDate = localStorage.getItem('lastTrackedDate');
                 const changeRate = ((currentPrice - previousPrice) / previousPrice * 100).toFixed(2);
+
+                const newStockRow = document.createElement('tr');
                 newStockRow.innerHTML = `
                     <td>${previousTrackedDate}</td>
                     <td>${previousPrice}</td>
@@ -100,11 +215,9 @@
                 `;
                 document.getElementById('stockDataBody').appendChild(newStockRow);
 
-                // 날짜 업데이트
                 localStorage.setItem('lastTrackedDate', todayDate);
-                localStorage.setItem('previousPrice', currentPrice); // 현재 가격을 전날 가격으로 저장
-
-                // 기존 데이터를 localStorage에 저장
+                localStorage.setItem('previousPrice', currentPrice);
+                
                 historicalData.push({
                     date: previousTrackedDate,
                     price: previousPrice,
@@ -114,35 +227,41 @@
                 });
                 localStorage.setItem('historicalStockData', JSON.stringify(historicalData));
 
-                // 초기화
                 accumulatedVolume = 0; 
                 accumulatedTradingValue = 0; 
-                
-                // previousPrice 업데이트
-                previousPrice = currentPrice; // 현재 가격을 전날의 마지막 가격으로 업데이트
+                previousPrice = currentPrice; 
             }
 
-            // 데이터 업데이트
             document.getElementById('currentDateCell').textContent = todayDate; 
             document.getElementById('currentClosePriceCell').textContent = currentPrice; 
 
-            // changeRate 계산
-            const changeRate = ((currentPrice - previousPrice) / previousPrice) * 100; // 변동률 계산
+            const changeRate = ((currentPrice - previousPrice) / previousPrice) * 100;
             document.getElementById('currentChangeRateCell').textContent = changeRate.toFixed(2) + '%'; 
 
-            // 거래량 및 거래대금 누적
-            const volume = stockMessage.volume;
-            accumulatedVolume += volume; // 누적 거래량
-            accumulatedTradingValue += (currentPrice * volume); // 누적 거래대금
+            accumulatedVolume += volume; 
+            accumulatedTradingValue += (currentPrice * volume); 
 
-            // UI 업데이트
-            document.getElementById('currentTotalVolumeCell').textContent = accumulatedVolume; // 총 거래량 업데이트
-            document.getElementById('currentTotalTradingValueCell').textContent = accumulatedTradingValue; // 총 거래대금 업데이트
+            document.getElementById('currentTotalVolumeCell').textContent = accumulatedVolume; 
+            document.getElementById('currentTotalTradingValueCell').textContent = accumulatedTradingValue.toFixed(2); 
 
-            // localStorage에 누적 값 저장
             localStorage.setItem('accumulatedVolume', accumulatedVolume);
             localStorage.setItem('accumulatedTradingValue', accumulatedTradingValue);
+
+            // 차트 데이터 업데이트
+            if (historicalStockData.labels.length >= 30) {
+                historicalStockData.labels.shift();
+                historicalStockData.datasets[0].data.shift();
+                historicalStockData.datasets[1].data.shift();
+            }
+
+            historicalStockData.labels.push(todayDate);
+            historicalStockData.datasets[0].data.push(volume); 
+            historicalStockData.datasets[1].data.push(currentPrice); 
+
+            myChart.update(); 
         };
     </script>
+    
+    <div id="getFooter"></div>
 </body>
 </html>

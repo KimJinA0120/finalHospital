@@ -2,15 +2,169 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="keywords" content="Site keywords here">
+	<meta name="description" content="">
+	<meta name='copyright' content=''>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock Data Chart</title>
+    <title>기업 협력 및 후원</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Favicon -->
+<link rel="icon" href="../static/img/favicon.png">
+
+<!-- Google Fonts -->
+<link
+	href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+	rel="stylesheet">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="../static/css/bootstrap.min.css">
+<!-- Nice Select CSS -->
+<link rel="stylesheet" href="../static/css/nice-select.css">
+<!-- Font Awesome CSS -->
+<link rel="stylesheet" href="../static/css/font-awesome.min.css">
+<!-- icofont CSS -->
+<link rel="stylesheet" href="../static/css/icofont.css">
+<!-- Slicknav -->
+<link rel="stylesheet" href="../static/css/slicknav.min.css">
+<!-- Owl Carousel CSS -->
+<link rel="stylesheet" href="../static/css/owl-carousel.css">
+<!-- Datepicker CSS -->
+<link rel="stylesheet" href="../static/css/datepicker.css">
+<!-- Animate CSS -->
+<link rel="stylesheet" href="../static/css/animate.min.css">
+<!-- Magnific Popup CSS -->
+<link rel="stylesheet" href="../static/css/magnific-popup.css">
+
+<!-- Medipro CSS -->
+<link rel="stylesheet" href="../static/css/normalize.css">
+<link rel="stylesheet" href="../static/css/style.css">
+<link rel="stylesheet" href="../static/css/responsive.css">
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript" src="/static/js/checkbox.js"></script>
+<script type="text/javascript">
+$(function(){
+	$.ajax({
+		type : "get",
+		url: "../getPatHeader",
+		dataType:"html",
+		success:function(result){
+			$("#getPatHeader").html(result);
+		},
+		error:function(){
+			alert("서버오류");
+		}
+	});
+	
+});
+$(function(){
+	$.ajax({
+			type : "get",
+			url: "../getFooter",
+			dataType:"html",
+			success:function(result){
+				$("#getFooter").html(result);
+			},
+			error:function(){
+				alert("서버오류");
+			}
+		});
+});
+</script>
 </head>
 <body>
-    <canvas id="myChart" width="800" height="400"></canvas>
+<div id="getPatHeader"></div>
+<br/>
+ 	
+            <h3 align="center"><b>기업 협력 및 후원</b></h3><br/>
+			<div style="text-align: center;">
+			    <img src="/static/img/blockqoute-bg.jpg" style="width: 70%;">
+			</div>
+			<br/>
+			<p style="font-size: 25px; text-align:center; color: #0066cc; line-height: 1.5;">
+			 SKU병원은 최신 의료 장비와 기술을 제공하기 위해 <b>삼성과의 협력</b>을 강화하고 있습니다.<br/>
+			</p><br/>
+			<p style="text-align: center">
+			 삼성의 첨단 영상 진단 기기는 우리의 진단 프로세스를 혁신적으로 변화시키고 있으며, 이를 통해 환자들에게 더 정확하고 빠른 치료를 제공하고 있습니다.<br/> 
+			 삼성의 기술적 지원 덕분에 우리는 의료 서비스의 질을 한층 높일 수 있었습니다.<br/>
+			</p>
+
+            
+             <!-- blank area 빈공간 만드는 코드-->
+		<section class="appointment">
+			<div class="container">
+				<div class="row ">
+					<div class="col-lg-6  col-12">
+						<div class="subscribe-text ">
+							<h6></h6><p class=""></p>
+						</div></div>
+					<div class="col-lg-6  col-12">
+						<div class="subscribe-form ">
+							<form action="#" method="get" target="_blank" class="newsletter-inner"></form>
+						</div></div></div></div>
+		</section>
+		<!-- end blank area -->
+            
+ <div align="center">
+ 	 <canvas id="myChart" width="700" height="300"></canvas>
+ </div>
+    <table id="stockTable" border="1" class="container col-8">
+        <thead>
+            <tr align="center">
+                <th>날짜</th>
+                <th>종가</th>
+                <th>등락률</th>
+                <th>거래량</th>
+                <th>거래대금</th>
+            </tr>
+        </thead>
+        <tbody id="stockBody">
+            <tr id="stockRow" style="background-color: white; color: black">
+                <td id="dateCell" align="center"></td>
+                <td id="priceCell" align="center"></td>
+                <td id="changeRateCell" align="center"></td>
+                <td id="volumeCell" align="center">0</td>
+                <td id="tradingValueCell" align="center">0</td>
+            </tr>
+        </tbody>
+    </table>
 
     <script>
-        const ctx = document.getElementById('myChart').getContext('2d');
+ 		// WebSocket 연결
+    	const socket = new WebSocket('ws://localhost:2000');
+    	
+    	 // 초기 누적 값 로드
+        let totalVolume = parseInt(localStorage.getItem('totalVolume')) || 0;
+        let totalTradingValue = parseFloat(localStorage.getItem('totalTradingValue')) || 0;
+        let lastPrice = parseFloat(localStorage.getItem('lastPrice')) || 55300; // 초기 종가
+        const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD 형식
+
+        // 오늘 날짜 초기화
+        if (!localStorage.getItem('lastDate')) {
+            localStorage.setItem('lastDate', today);
+        }
+
+        // 페이지 로드 시 기존 값 설정
+        document.getElementById('dateCell').textContent = today; 
+        document.getElementById('priceCell').textContent = lastPrice; 
+        document.getElementById('volumeCell').textContent = totalVolume; 
+        document.getElementById('tradingValueCell').textContent = totalTradingValue; 
+
+        // 기존 데이터 로드
+        const existingData = JSON.parse(localStorage.getItem('stockData')) || [];
+        existingData.forEach(data => {
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td align="center">${data.date}</td>
+                <td align="center">${data.price}</td>
+                <td align="center">${data.changeRate}%</td>
+                <td align="center">${data.volume}</td>
+                <td align="center">${data.tradingValue}</td>
+            `;
+            document.getElementById('stockBody').appendChild(newRow);
+        });
+ 		
         
         let stockData = {
             labels: [], 
@@ -33,7 +187,7 @@
                 }
             ]
         };
-
+        const ctx = document.getElementById('myChart').getContext('2d');
         const myChart = new Chart(ctx, {
             type: 'line',
             data: stockData,
@@ -74,10 +228,72 @@
             }
         });
 
-        const socket = new WebSocket('ws://localhost:2000');
+
 
         socket.onmessage = function(event) {
+        	const message = JSON.parse(event.data);
+            const currentDate = new Date().toISOString().slice(0, 10); // 오늘 날짜
+            const price = parseFloat(message.price);
             
+            // 하루가 바뀌었는지 확인
+            if (currentDate !== localStorage.getItem('lastDate')) {
+                // 하루가 바뀌었으면 초기화
+                const previousDate = localStorage.getItem('lastDate');
+
+                // 새로운 행 추가
+                const newRow = document.createElement('tr');
+                const changeRate = ((price - lastPrice) / lastPrice * 100).toFixed(2);
+                newRow.innerHTML = `
+                    <td>${previousDate}</td>
+                    <td>${lastPrice}</td>
+                    <td>${changeRate}%</td>
+                    <td>${totalVolume}</td>
+                    <td>${totalTradingValue.toFixed(2)}</td>
+                `;
+                document.getElementById('stockBody').appendChild(newRow);
+
+                // 날짜 업데이트
+                localStorage.setItem('lastDate', currentDate);
+                localStorage.setItem('lastPrice', price); // 현재 가격을 전날 가격으로 저장
+
+                // 기존 데이터를 localStorage에 저장
+                existingData.push({
+                    date: previousDate,
+                    price: lastPrice,
+                    changeRate: changeRate,
+                    volume: totalVolume,
+                    tradingValue: totalTradingValue
+                });
+                localStorage.setItem('stockData', JSON.stringify(existingData));
+
+                // 초기화
+                totalVolume = 0; 
+                totalTradingValue = 0; 
+                
+                // lastPrice 업데이트
+                lastPrice = price; // 현재 가격을 전날의 마지막 가격으로 업데이트
+            }
+
+            // 데이터 업데이트
+            document.getElementById('dateCell').textContent = currentDate; 
+            document.getElementById('priceCell').textContent = price; 
+
+            // changeRate 계산
+            const changeRate = ((price - lastPrice) / lastPrice) * 100; // 등락률 계산
+            document.getElementById('changeRateCell').textContent = changeRate.toFixed(2) + '%'; 
+
+            // 거래량 및 거래대금 누적
+            const volume = message.volume;
+            totalVolume += volume; // 누적 거래량
+            totalTradingValue += (price * volume); // 누적 거래대금
+
+            // UI 업데이트
+            document.getElementById('volumeCell').textContent = totalVolume; // 총 거래량 업데이트
+            document.getElementById('tradingValueCell').textContent = totalTradingValue; // 총 거래대금 업데이트
+
+            // localStorage에 누적 값 저장
+            localStorage.setItem('totalVolume', totalVolume);
+            localStorage.setItem('totalTradingValue', totalTradingValue);
             
             if (stockData.labels.length >= 30) {
             	stockData.labels.shift();
@@ -94,5 +310,7 @@
             myChart.update(); 
         };
     </script>
+    
+    <div id="getFooter"></div>
 </body>
 </html>
