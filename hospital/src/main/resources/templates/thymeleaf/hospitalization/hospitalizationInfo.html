@@ -40,20 +40,40 @@
 <link rel="stylesheet" href="/static/css/style.css">
 <link rel="stylesheet" href="/static/css/responsive.css">
 
-<style type="text/css">
-	th{
-		background-color: #b2c9ad;
-		color: black;
-	}
-	div{
-		font-size: 25px;
-		margin: 10px;
-		color: black;
-	}
-</style>
+
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$.ajax({
+		type : "get",
+		url: "../getHeader",
+		dataType:"html",
+		success:function(result){
+			$("#getHeader").html(result);
+		},
+		error:function(){
+			alert("서버오류");
+		}
+	});
+});
+$(function(){
+	$.ajax({
+			type : "get",
+			url: "../getFooter",
+			dataType:"html",
+			success:function(result){
+				$("#getFooter").html(result);
+			},
+			error:function(){
+				alert("서버오류");
+			}
+		});
+});
+</script>
 </head>
 <body>
-<div align="center" style="margin-top: 10%">
+<div id="getHeader"></div> 
+<div align="center" style="margin-top: 10%; font-size: 25px; margin: 10px; color: black;">
 입원 상세 정보
 </div>
 <br>
@@ -75,10 +95,11 @@
 <td>[[${dto.docNum}]]</td></tr>
 <tr align="center"><th>담당간호사</th>
 <td>[[${dto.nurNum}]]</td></tr>
+</table><br>
 <th:block th:if="${dto.hospitalizationStatus}=='입원'">
-<tr align="center"><th colspan="2"><h5 style="color: #0A122A"><a th:href="|hospitalizationUpdate?hospitalizationNum=${dto.hospitalizationNum}|">입원수정</a> | 
-<a th:href="|hospitalizationDelete?hospitalizationNum=${dto.hospitalizationNum}|">입원삭제</a></h5> </th></tr>
+<h5 align="center"><a th:href="|hospitalizationUpdate?hospitalizationNum=${dto.hospitalizationNum}|" class="btn" style="color: #0A122A" >입원수정</a>
+<a th:href="|hospitalizationDelete?hospitalizationNum=${dto.hospitalizationNum}|" class="btn" style="color: #0A122A" >입원삭제</a></h5> 
 </th:block>
-</table>
+<div id="getFooter"></div>
 </body>
 </html>
