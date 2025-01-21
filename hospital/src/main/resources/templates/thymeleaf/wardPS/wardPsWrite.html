@@ -1,51 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>wardPsWrite</title>
-<style type="text/css">
-	#title {
-		font-size: 25px;
-		margin: 10px;
-		color: black;
-	}
-	
-	table{
-		color: black;
-		text-align: center;		
-	}
-	
-	th{
-		background-color: #b2c9ad;
-		font-size: 20px; 
-		width: 20%;
-		
-	}
-	
-	td{
-		background-color: white;
-		width: 30%;
-		margin-right: 2%;
-	}
-	
-	input {
-		width: 100%;
-	}
-	
-	#a1{
-		width: 25%;
-	}
-	
-	#a2{
-		width: 5%;
-	}
-	
-	#btn{
-		font-size : 10px;
-		width: 100%;
-	}
-
-</style>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.js"></script>
 <script type="text/javascript">
@@ -84,77 +41,146 @@ $(function() {
 	
 });
 </script>
+
+<!-- Meta Tags -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="keywords" content="Site keywords here">
+<meta name="description" content="">
+<meta name='copyright' content=''>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Favicon -->
+<link rel="icon" href="../static/img/favicon.png">
+
+<!-- Google Fonts -->
+<link
+	href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+	rel="stylesheet">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="../static/css/bootstrap-green.min.css">
+<!-- Nice Select CSS -->
+<link rel="stylesheet" href="../static/css/nice-select.css">
+<!-- Font Awesome CSS -->
+<link rel="stylesheet" href="../static/css/font-awesome.min.css">
+<!-- icofont CSS -->
+<link rel="stylesheet" href="../static/css/icofont.css">
+<!-- Slicknav -->
+<link rel="stylesheet" href="../static/css/slicknav.min.css">
+<!-- Owl Carousel CSS -->
+<link rel="stylesheet" href="../static/css/owl-carousel.css">
+<!-- Datepicker CSS -->
+<link rel="stylesheet" href="../static/css/datepicker.css">
+<!-- Animate CSS -->
+<link rel="stylesheet" href="../static/css/animate.min.css">
+<!-- Magnific Popup CSS -->
+<link rel="stylesheet" href="../static/css/magnific-popup.css">
+
+<!-- Medipro CSS -->
+<link rel="stylesheet" href="../static/css/normalize-green.css">
+<link rel="stylesheet" href="../static/css/style-green.css">
+<link rel="stylesheet" href="../static/css/responsive-green.css">
+
 </head>
 <body>
 <div id="getHeader"></div>
-<div id="title" align="center" style="margin-top: 5%; margin-bottom: 2%; text-align: center;">
- 병동 처방 작성
-</div>
-<div align="center" style="margin-left: 20px; margin-right: 20px;">
-<form action="wardPsWrite" method="post" th:object="${wardPsCommand}">
-    <table border="1">
-        <tr>
-            <th>병동처방번호</th>
-            <td>
-                <input type="text" name="wardPsNum" th:value="${wardPsCommand.wardPsNum}" readonly="readonly">
-            </td>
-            <th>입원번호</th>
-            <td id="a1">
-                <input type="text" name="hospNum" id="hospNum" th:value="${wardPsCommand.hospNum}" readonly="readonly">
-                <span style="color:red" th:if="${#fields.hasErrors('hospNum')}" th:errors="*{hospNum}"></span>
-            </td>
-            <td id="a2"> <button type="button" id="btn" class="btn col-12" style="background-color: #0A122A; color: white">입원번호 찾기</button>
-            </td>
-        </tr>
-        <tr>
-            <th>담당의사번호</th>
-            <td>
-                <input type="text" name="empNum" id="empNum" th:value="${wardPsCommand.empNum}" readonly="readonly">
-            </td>
-            <th>처방의사번호</th>
-            <td>
-                <input type="text" name="writeDoc" th:value="${userNum}" readonly="readonly">
-            </td>
-        </tr>
-        <tr>
-            <th>진단명</th>
-            <td colspan="4">
-                <input type="text" name="diagName" th:value="${wardPsCommand.diagName}">
-                <span style="color:red" th:if="${#fields.hasErrors('diagName')}" th:errors="*{diagName}"></span>
-            </td>
-        </tr>
-        <tr>
-            <th>진단내용</th>
-            <td colspan="4">
-                <textarea rows="10" cols="40" name="diagCont">[[${wardPsCommand.diagCont}]]</textarea>
-                <span style="color:red" th:if="${#fields.hasErrors('diagCont')}" th:errors="*{diagCont}"></span>
-            </td>
-        </tr>
-        <tr>
-            <th>약처방</th>
-            <td colspan="4">
-                <textarea rows="10" cols="40" name="medicPres">[[${wardPsCommand.medicPres}]]</textarea>
-            </td>
-        </tr>
-        <tr>
-            <th>검사 처방</th>
-            <td colspan="4">
-                <textarea rows="10" cols="40" name="examPres">[[${wardPsCommand.examPres}]]</textarea>
-            </td>
-        </tr>
-        <tr>
-            <th>처치처방</th>
-            <td colspan="4">
-                <textarea rows="10" cols="40" name="hanPres">[[${wardPsCommand.hanPres}]]</textarea>
-            </td>
-        </tr>
-    </table>
 
-    <button type="submit" class="btn col-12" style="background-color: #4b5945; color: white">등록</button>
+<section class="contact-us section">
+    <div class="container col-lg-6">
+        <div class="inner">
+            <div class="row">
+                <div class="col-lg-6-center">
+                    <div class="contact-us-form">
+                        <h2>병동 처방 작성</h2>
+                        <form action="wardPsWrite" method="post" th:object="${wardPsCommand}">
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <span>병동처방번호</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <input type="text" name="wardPsNum" th:value="${wardPsCommand.wardPsNum}" readonly="readonly">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <span>입원번호</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <input type="text" name="hospNum" id="hospNum" th:value="${wardPsCommand.hospNum}" readonly="readonly">
+                                        <button type="button" id="btn" class="btn" style="height:30px; text-align:center; padding: .200rem .75rem;">입원번호 찾기</button>
+                                        <span style="color:red" th:if="${#fields.hasErrors('hospNum')}" th:errors="*{hospNum}"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <span>담당의사번호</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <input type="text" name="empNum" id="empNum" th:value="${wardPsCommand.empNum}" readonly="readonly">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <span>처방의사번호</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <input type="text" name="writeDoc" th:value="${userNum}" readonly="readonly">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <span>진단명</span><input type="text" name="diagName" 
+                                        th:value="${wardPsCommand.diagName}" style="width: 200%">
+                                        <span style="color:red" th:if="${#fields.hasErrors('diagName')}" th:errors="*{diagName}"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6"></div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <span>진단내용</span><textarea cols="50" rows="10" name="diagCont">[[${wardPsCommand.diagCont}]]</textarea>
+                                        <span style="color:red" th:if="${#fields.hasErrors('diagCont')}" th:errors="*{diagCont}"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <span>약처방</span><textarea cols="50" rows="10" name="medicPres">[[${wardPsCommand.medicPres}]]</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <span>검사 처방</span><textarea cols="50" rows="10" name="examPres">[[${wardPsCommand.examPres}]]</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <span>처치처방</span><textarea cols="50" rows="10" name="hanPres">[[${wardPsCommand.hanPres}]]</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group login-btn">
+                                        <button class="btn" type="submit" style="width: 100%; background-color: #66785F">등록</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-</form>
-
-</div>
 
 <div id="getFooter"></div>
 </body>
