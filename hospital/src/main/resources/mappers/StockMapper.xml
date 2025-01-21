@@ -7,9 +7,5 @@
         INSERT INTO stock(timestamp, symbol, price, volume, cumulativevolume, created_date)
         VALUES (#{timestamp}, #{symbol}, #{price}, #{volume}, #{cumulativeVolume}, #{createdDate})
     </insert>
-     <select id="selectYesterdayVolume" resultType="long">
-        SELECT SUM(volume) FROM stock
-        WHERE TRUNC(created_date) = TRUNC(SYSDATE) - 1
-    </select>
 
 </mapper>
