@@ -95,7 +95,7 @@ function employeeSelect(empNum,empName){
 			[<a th:href="|employeeSearch?page=${i}&searchWord=${searchWord}&kind=${kind}|">[[${i}]]</a>]
 		</th:block>
 		<span th:if="${page < maxPage}">
-			<a th:href="@{employeeSearch(page=${page + 1},searchWord=${searchWord},kind=${kind})">[다음]</a>
+			<a th:href="@{employeeSearch(page=${page + 1},searchWord=${searchWord},kind=${kind})}">[다음]</a>
 		</span>
 		<span th:if="${page >= maxPage}">
 			[다음]
