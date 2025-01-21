@@ -78,18 +78,18 @@ $(function(){
 <div id="getHeader"></div>
 
 <form action="qnaAnswer" method="post">
-<table border="1" class="container col-8">
-	<tr><td style="background-color: white" align="center">게시글번호</td>
+<table border="1" class="container col-9">
+	<tr><td style="background-color: #b2c9ad; color: black" align="center">게시글번호</td>
 		<td style="background-color: white"><input type="text" th:value="${list[0].qnaNum}" name="qnaNum" readonly="readonly" style="width: 100%"></td></tr>
-	<tr><td align="center">작성자</td><td>[[${list[0].patientNum}]]</td></tr>
-	<tr><td align="center">제목</td><td>[[${list[0].qnaTitle}]]</td></tr>
-	<tr><td align="center">작성일</td><td>[[${#dates.format(list[0].qnaQDate, 'yyyy-MM-dd')}]]</td></tr>
-	<tr><td align="center">내용</td>
+	<tr><td style="background-color: #b2c9ad; color: black" align="center">작성자</td><td>[[${list[0].patientNum}]]</td></tr>
+	<tr><td style="background-color: #b2c9ad; color: black" align="center">제목</td><td>[[${list[0].qnaTitle}]]</td></tr>
+	<tr><td style="background-color: #b2c9ad; color: black" align="center">작성일</td><td>[[${#dates.format(list[0].qnaQDate, 'yyyy-MM-dd')}]]</td></tr>
+	<tr><td style="background-color: #b2c9ad; color: black" align="center">내용</td>
 	<td><span th:utext="${#strings.replace(list[0].qnaQContent, newLineChar, '<br />')}"></span></td>
 	</tr>
-	<tr><td align="center">답변자</td><td>[[${list[0].empNum}]]</td></tr>
-	<tr><td align="center">답변일</td><td>[[${#dates.format(list[0].qnaADate, 'yyyy-MM-dd')}]]</td></tr>
-	<tr><td align="center">답변</td>
+	<tr><td style="background-color: #b2c9ad; color: black" align="center">답변자</td><td>[[${list[0].empNum}]]</td></tr>
+	<tr><td style="background-color: #b2c9ad; color: black" align="center">답변일</td><td>[[${#dates.format(list[0].qnaADate, 'yyyy-MM-dd')}]]</td></tr>
+	<tr><td style="background-color: #b2c9ad; color: black" align="center">답변</td>
 		<td><textarea cols="50" rows="10" name="qnaAContent">[[${list[0].qnaAContent}]]</textarea></td>
 	</tr>
 	<tr><th colspan="2"><button class="btn" type="submit" style="width: 100%; background-color: #66785F ">답변등록</button></th></tr>

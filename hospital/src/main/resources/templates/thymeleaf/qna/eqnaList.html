@@ -87,7 +87,7 @@ table, td, th {
 <h3 class="title" align="center"><b>문의/건의목록</b></h3>
 <br>
 <table border="1" class="container col-8">
-	<tr  style="background-color: #b2c9ad; color: black" align="center"><th>게시글번호</th><th>제목</th></tr>
+	<tr style="background-color: #b2c9ad; color: black" align="center"><th>게시글번호</th><th>제목</th></tr>
 	<tr th:each="dto : ${list}">
 		<th style="width: 30%">[[${dto.qnaNum}]]</th>
 		<th><a th:href="|qnaAnswer?qnaNum=${dto.qnaNum}|">[[${dto.qnaType}]] : [[${dto.qnaTitle}]]</a></th>
