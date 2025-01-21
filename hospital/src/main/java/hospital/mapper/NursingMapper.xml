@@ -17,6 +17,8 @@
 			javaType="string" property="nursingCon" />
 			<result column="HANDLE_PRESCRIPT" jdbcType="VARCHAR"
 			javaType="string" property="hanPres" />
+			<result column="CALL_STOP" jdbcType="VARCHAR"
+			javaType="string" property="callStop" />
 			<result column="PRESCRIPT_DATE" javaType="java.util.Date" 
 				jdbcType="DATE" property="presDate" />
 			<result column="INPUT_DATE" javaType="java.util.Date" 
@@ -26,13 +28,14 @@
 	
 	<sql id="baseCol">
 		NURSING_NUM, WARDPRESCRIPT_NUM, EMP_NUM, handle_nurs
-		, NURSING_CONTENT, HANDLE_PRESCRIPT, PRESCRIPT_DATE, INPUT_DATE
+		, NURSING_CONTENT, HANDLE_PRESCRIPT, CALL_STOP
+		, PRESCRIPT_DATE, INPUT_DATE
 	</sql>
 
 	<sql id="SelbaseCol">
 		NURSING_NUM as nursingNum, WARDPRESCRIPT_NUM as wardPsNum
-		, EMP_NUM as empNum, handle_nurs as handleNurs
-		, NURSING_CONTENT as nursingCon, HANDLE_PRESCRIPT as hanPres
+		, EMP_NUM as empNum, handle_nurs as handleNurs, NURSING_CONTENT as nursingCon
+		, HANDLE_PRESCRIPT as hanPres, CALL_STOP as callStop
 		, PRESCRIPT_DATE as presDate, INPUT_DATE as inputDate
 	</sql>
 
@@ -41,7 +44,7 @@
 		<include refid="baseCol" />
 		)
 		values(#{nursingNum}, #{wardPsNum}, #{empNum}, #{handleNurs}
-		, #{nursingCon}, #{hanPres}, #{presDate}, sysdate)
+		, #{nursingCon}, #{hanPres}, '실행', #{presDate}, sysdate)
 	</insert>
 	
 	
@@ -58,7 +61,8 @@
 	
 	<sql id="nursCol">
 		n.NURSING_NUM, n.WARDPRESCRIPT_NUM, n.EMP_NUM, n.handle_nurs
-		, n.NURSING_CONTENT, n.HANDLE_PRESCRIPT, n.PRESCRIPT_DATE, n.INPUT_DATE
+		, n.NURSING_CONTENT, n.HANDLE_PRESCRIPT, n.CALL_STOP
+		, n.PRESCRIPT_DATE, n.INPUT_DATE
 	</sql>
 	
 

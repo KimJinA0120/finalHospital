@@ -22,6 +22,8 @@ public class NursCommand {
 	String nursingCon;
 	String hanPres;
 	
+	String callStop;
+	
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 	@NotNull(message = "처치일시를 입력하십시오.")
 	LocalDateTime presDate;

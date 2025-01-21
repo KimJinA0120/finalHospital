@@ -32,9 +32,12 @@ public interface HosPatientMapper {
 
 	public String empName(String empNum);
 
-	public void delete(CallPsDeleteDTO dto);
+	public Integer delete(CallPsDeleteDTO dto);
 
 	public void WPSupdate(CallPsDeleteDTO dto);
+
+	public void nursingUpdate(@Param(value = "psNum") String psNum
+							,@Param(value = "stopN") String stopN);
 
 
 }

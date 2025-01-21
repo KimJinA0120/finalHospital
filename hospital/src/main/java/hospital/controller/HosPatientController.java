@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import hospital.command.CallPsDeleteCommand;
 import hospital.service.AutoNumService;
@@ -86,9 +87,8 @@ public class HosPatientController {
 	@Autowired
 	CallDeleteService callDeleteService;
 	@PostMapping("{baseId}/wardInPSdelete")
-	public String delete(CallPsDeleteCommand callPsDeleteCommand) {
-		callDeleteService.execute(callPsDeleteCommand);
-		return "redirect:hosPatList";
+	public @ResponseBody Integer delete(CallPsDeleteCommand callPsDeleteCommand) {
+		return callDeleteService.execute(callPsDeleteCommand);
 	}
 
 }

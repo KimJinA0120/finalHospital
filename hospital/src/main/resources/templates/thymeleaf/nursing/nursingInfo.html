@@ -107,6 +107,9 @@ function callDelete() {
 <div id="title" style="margin-top: 5%; margin-bottom:2%; width: 80%; text-align: center;">
 	병동 간호 일지
 </div>
+<div th:if="${nursCommand.callStop != null && nursCommand.callStop != ''}">
+<h3 style="color: red;">[[${nursCommand.callStop}]]</h3>
+</div>
 <table border="1" id="tab1">
 	<tr>
 		<th>간호번호</th> <td>[[${nursCommand.nursingNum}]]</td>
@@ -141,7 +144,8 @@ function callDelete() {
 	
 </div> <br>
 <div align="center" style="color: white;">
-<a th:href="|nursingDelete?num=${nursCommand.nursingNum}|" class="btn">삭제</a> 
+<button th:if="${nursCommand.callStop != null && nursCommand.callStop != ''}"
+th:onclick="callDelete([[${nursCommand.nursingNum}]])" class="btn">삭제 요청</button> 
 </div>
 
 <div id="getFooter"></div>

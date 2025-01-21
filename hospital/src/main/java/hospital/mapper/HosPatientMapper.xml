@@ -11,10 +11,16 @@
 	
 	<update id="WPSupdate" parameterType="callDel">
 	 update WARDPRESCRIPT
-   		set CALL_STOP = '중지',
+   		set CALL_STOP = '삭제접수',
    			STOP_CAUSE = #{delCallNum},
    			STOP_DATE = sysdate
    		where WARDPRESCRIPT_NUM = #{delPsNum}
+	</update> 
+	
+	<update id="nursingUpdate" parameterType="string">
+	 update nursing
+   		set CALL_STOP = #{stpoN},
+   		where nursing_NUM = #{psNum}
 	</update>
 	
 	<!-- 드롭다운 -->

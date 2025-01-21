@@ -67,13 +67,12 @@ $(function(){
 </script>
 
 <script th:inline="javascript">
-$(function() {
-	
 
 function CallPsStop(wardPsNum) {
 	var userN = [[${userNum}]];
 	var mainDoc = [[${wardPsCommand.empNum}]];
 	var Wdoc = [[${wardPsCommand.writeDoc}]];
+	
 	if (userN != null && userN != "") {
 		
 		if (userN.startsWith('doc')) {
@@ -130,7 +129,7 @@ function callDelete(num) {
 	}
 	
 }
-});
+
 </script>
 </head>
 <body>
@@ -139,6 +138,10 @@ function callDelete(num) {
 <div align="center">
 <div id="title" style="margin-top: 5%; margin-bottom:2%; width: 80%; text-align: center;">
 	병동 처방 정보
+</div>
+<div th:if="${wardPsCommand.callStop != null && (wardPsCommand.callStop == '중지' || wardPsCommand.callStop == '삭제접수')}">
+<h3 style="color: red;">[[${wardPsCommand.callStop}]]</h3>
+<span style="color: black;">중지 사유 : [[${wardPsCommand.stopCause}]]</span>
 </div>
 <table border="1" id="tab1">
 	<tr>
@@ -186,9 +189,11 @@ function callDelete(num) {
 	
 	
 </div> <br>
-<div align="center" style="color: white;">
-<button th:onclick="CallPsStop([[${wardPsCommand.wardPsNum}]])" class="btn">처방 중지</button>
-<button th:onclick="callDelect([[${wardPsCommand.wardPsNum}]])" class="btn">삭제 요청</button>
+<div align="center" style="color: white;" th:if="${wardPsCommand.callStop != '삭제접수'}">
+    <button th:if="${wardPsCommand.callStop != '중지'}" 
+            th:onclick="CallPsStop([[${wardPsCommand.wardPsNum}]])" 
+            class="btn">처방 중지</button>
+    <button th:onclick="callDelete([[${wardPsCommand.wardPsNum}]])" class="btn">삭제 요청</button>
 </div>
 
  <div id="getFooter"></div>

@@ -54,17 +54,19 @@ $(function(){
 	$("#sub").click(function(){
 		$("#frm").ajaxSubmit({  //CSR
 			type: "POST",
-			url: "../wardPS/wardInPSdelete",
+			url: "wardInPSdelete",
 			beforeSubmit : function(){
 				
 				if($("#delPsNum").val() == ""){
 					alert("처방전을 선택하신 후 중지를 요청하십시오.");
-					location.href= "/";
+					opener.location.href="/";
+					window.self.close();
 				}
 				
 				if($("#delCaller").val() == ""){
 					alert("다시 로그인 해주십시오.");
-					location.href= "/";
+					opener.location.href="/";
+					window.self.close();
 				}
 				
 				if($("#delCause").val() == ""){
@@ -75,12 +77,23 @@ $(function(){
 				
 			},
 			success: function (result) {
+				if (result.trim() == "1") {
+					alert("성공");
+					location.href="hosPatList";
+					window.self.close();
+				} else {
+					alert("실패");
+					location.href="/";
+					window.close();
+				}
+				
 				
 			},
 			
 			error : function(){
 				alert("서버오류");
 				location.href="/";
+				window.self.close();
 			}
 		});
 	});
@@ -95,7 +108,7 @@ $(function(){
 </div>
 
 <div align="center" style="margin-left: 20px; margin-right: 20px;">
-<form action="wardPsUpdate" method="post" id="frm">
+<form action="wardInPSdelete" method="post" id="frm">
     <table border="1">
     
     	<tr>

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import hospital.command.WardPsCommand;
 import hospital.service.AutoNumService;
@@ -91,9 +92,9 @@ public class WardPsController {
    @Autowired
    WardPsUpdateService wardPsUpdateService;
    @PostMapping("wardPsUpdate")
-   public String wardPsUpdate(WardPsCommand wardPsCommand) {
-	   wardPsUpdateService.execute(wardPsCommand);
-	   return "redirect:wardPsInfo?num="+wardPsCommand.getWardPsNum();
+   public @ResponseBody Integer wardPsUpdate(WardPsCommand wardPsCommand) {
+	   int i = wardPsUpdateService.execute(wardPsCommand);
+	   return i;
    }
    
    ////////////// 입원번호 찾기

@@ -21,6 +21,8 @@ public class NursingDTO {
 	String nursingCon;
 	String hanPres;
 	
+	String callStop;
+	
 	Date presDate;
 	Date inputDate;
 }

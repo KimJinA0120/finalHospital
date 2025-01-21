@@ -59,12 +59,14 @@ $(function(){
 				
 				if($("#wardPsNum").val() == ""){
 					alert("처방전을 선택하신 후 중지를 요청하십시오.");
-					location.href= "/";
+					opener.location.href="/";
+					window.self.close();
 				}
 				
 				if($("#stopDoc").val() == ""){
 					alert("다시 로그인 해주십시오.");
-					location.href= "/";
+					opener.location.href="/";
+					window.self.close();
 				}
 				
 				if($("#stopCause").val() == ""){
@@ -75,14 +77,22 @@ $(function(){
 				
 			},
 			success: function (result) {
-				alert("성공");
-				location.href="wardPsList";
-				window.self.close();
+				if (result == "1") {
+					alert("성공");
+					opener.location.href="wardPsInfo?num="+ $("#wardPsNum").val();
+					window.self.close();
+				} else {
+					alert("서버오류");
+					opener.location.href="/";
+					window.self.close();
+				}
+				
 			},
 			
 			error : function(){
 				alert("서버오류");
-				location.href="/";
+				opener.location.href="/";
+				window.self.close();
 			}
 		});
 	});

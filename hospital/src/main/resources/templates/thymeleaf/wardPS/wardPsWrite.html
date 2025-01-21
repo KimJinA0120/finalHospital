@@ -100,7 +100,7 @@ $(function() {
             </td>
             <th>입원번호</th>
             <td id="a1">
-                <input type="text" name="hospNum" id="hospNum" th:value="${wardPsCommand.hospNum}">
+                <input type="text" name="hospNum" id="hospNum" th:value="${wardPsCommand.hospNum}" readonly="readonly">
                 <span style="color:red" th:if="${#fields.hasErrors('hospNum')}" th:errors="*{hospNum}"></span>
             </td>
             <td id="a2"> <button type="button" id="btn" class="btn col-12" style="background-color: #0A122A; color: white">입원번호 찾기</button>

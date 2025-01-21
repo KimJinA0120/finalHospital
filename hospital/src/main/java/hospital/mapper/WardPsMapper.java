@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import hospital.command.WardPsCommand;
 import hospital.domain.SEPhosPatientDTO;
 import hospital.domain.WardPsDTO;
 
@@ -18,7 +17,7 @@ public interface WardPsMapper {
 
 	public WardPsDTO selectOne(String num);
 	
-	public void wardPsUpdate(@Param("cause") String cause
+	public int wardPsUpdate(@Param("cause") String cause
 							, @Param("wardPsNum") String wardPsNum);
 
 	public Integer count();
