@@ -48,21 +48,48 @@
 	table{
 		font-size: 15px;
 	}
-	div{
-		font-size: 25px;
-		margin: 10px;
-		color: black;
-	}
 </style>
+
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$.ajax({
+		type : "get",
+		url: "../getHeader",
+		dataType:"html",
+		success:function(result){
+			$("#getHeader").html(result);
+		},
+		error:function(){
+			alert("서버오류");
+		}
+	});
+	
+});
+$(function(){
+	$.ajax({
+			type : "get",
+			url: "../getFooter",
+			dataType:"html",
+			success:function(result){
+				$("#getFooter").html(result);
+			},
+			error:function(){
+				alert("서버오류");
+			}
+		});
+});
+</script>
 
 </head>
 <body>
-<div align="center" style="margin-top: 10%">
+<div id="getHeader"></div>
+<div align="center" style="font-size: 25px; margin: 10px; color: black;">
 수술기록
 </div>
 <table border="1" class="container col-6">
 	<tr align="center"><th class="col-4">수술번호</th>
-		<td>[[${dto.surgeryNum}]]</td></tr>
+		<td style="background-color: white">[[${dto.surgeryNum}]]</td></tr>
 	<tr align="center"><th>수술예약번호</th>
 		<td>[[${dto.surgeryAppointmentNum}]]</td></tr>
 	<tr align="center"><th>수술내용</th>
@@ -75,5 +102,6 @@
 <div align="center">
 <a th:href="|surgeryModify?surgeryNum=${dto.surgeryNum}|" class="btn">수정</a> <br> 
 </div>
+<div id="getFooter"></div>
 </body>
 </html>

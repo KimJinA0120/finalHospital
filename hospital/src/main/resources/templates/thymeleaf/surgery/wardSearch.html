@@ -158,13 +158,13 @@ function wardSelect(wardPsNum){
 		<th colspan="6" style="text-align: center;">
 			<span th:if="${page <= 1}">[이전]</span>
 			<span th:if="${page > 1}">
-			<a th:href="|wardPsList?page=${page - 1}&searchWord=${searchWord}&location=${location}&roomN=${roomN}&hpState=${hpState}|">[이전]</a>
+			<a th:href="|wardSearch?page=${page - 1}&searchWord=${searchWord}&location=${location}&roomN=${roomN}&hpState=${hpState}|">[이전]</a>
 			</span>
 			<th:block th:each="i : ${#numbers.sequence(startPageNum, endPageNum)}">
-				[<a th:href="|wardPsList?page=${i}&searchWord=${searchWord}&location=${location}&roomN=${roomN}&hpState=${hpState}|">[[${i}]]</a>]
+				[<a th:href="|wardSearch?page=${i}&searchWord=${searchWord}&location=${location}&roomN=${roomN}&hpState=${hpState}|">[[${i}]]</a>]
 			</th:block>
 			<span th:if="${page < maxPage}">
-			<a th:href="@{wardPsList?(page=${page + 1},searchWord=${searchWord},location=${location},roomN=${roomN}),hpState=${hpState}}">[다음]</a>
+			<a th:href="@{wardSearch?(page=${page + 1},searchWord=${searchWord},location=${location},roomN=${roomN}),hpState=${hpState}}">[다음]</a>
 			</span>
 			<span th:if="${page >= maxPage}">
 			[다음]
