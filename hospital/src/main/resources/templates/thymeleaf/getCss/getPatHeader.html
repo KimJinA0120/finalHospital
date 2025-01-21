@@ -112,7 +112,7 @@ table tr:first-child{
 							<i class="fa fa-user" style="color: #1a76d1"></i>
 							<th:block th:if="${session.auth == null}"> 
 								<li><a href="login/patientLogin">로그인</a></li>
-								<li><a href="patient/patientWriteCon">회원가입</a></li>
+								<li><a href="/patient/patientWriteCon">회원가입</a></li>
 							</th:block>
 							<th:block th:if="${session.auth!=null}"> 
 								<li><a href="../login/logout">로그아웃</a></li>
