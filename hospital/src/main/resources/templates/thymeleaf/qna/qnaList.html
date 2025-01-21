@@ -9,6 +9,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		
 <title>문의/건의</title>
+
+<link rel="stylesheet" href="/static/css/sections.css">
 	<!-- Favicon -->
 <link rel="icon" href="../static/img/favicon.png">
 
@@ -146,8 +148,8 @@ table, td, th {
 		<th>[[${#dates.format(dto.qnaQDate, 'yyyy-MM-dd')}]]<br />
 		<th:block th:if="${session.auth != null}">
 			<th:block th:if="${session.auth.userId == dto.patientId}">
-			<button type="button" th:attr="onclick=|qnaUpdate('${dto.qnaNum}');|">문의/건의수정</button>
-			<button type="button" th:attr="onclick=|qnaDelete('${dto.qnaNum}');|">문의/건의삭제</button> 
+			<button type="button" class="search-btn" th:attr="onclick=|qnaUpdate('${dto.qnaNum}');|">문의/건의수정</button>
+			<button type="button" class="search-btn" th:attr="onclick=|qnaDelete('${dto.qnaNum}');|">문의/건의삭제</button> 
 			</th:block>
 		</th:block>	
 	</th>
