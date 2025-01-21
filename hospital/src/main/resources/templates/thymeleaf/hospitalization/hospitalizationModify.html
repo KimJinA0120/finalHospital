@@ -1,54 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="keywords" content="Site keywords here">
 <meta name="description" content="">
 <meta name='copyright' content=''>
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <!-- Favicon -->
-<link rel="icon" href="static/img/favicon.png">
-		
+<link rel="icon" href="../static/img/favicon.png">
+
 <!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+	rel="stylesheet">
 
 <!-- Bootstrap CSS -->
-<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+<link rel="stylesheet" href="../static/css/bootstrap-green.min.css">
 <!-- Nice Select CSS -->
-<link rel="stylesheet" href="/static/css/nice-select.css">
+<link rel="stylesheet" href="../static/css/nice-select.css">
 <!-- Font Awesome CSS -->
-<link rel="stylesheet" href="/static/css/font-awesome.min.css">
+<link rel="stylesheet" href="../static/css/font-awesome.min.css">
 <!-- icofont CSS -->
-<link rel="stylesheet" href="/static/css/icofont.css">
+<link rel="stylesheet" href="../static/css/icofont.css">
 <!-- Slicknav -->
-<link rel="stylesheet" href="/static/css/slicknav.min.css">
+<link rel="stylesheet" href="../static/css/slicknav.min.css">
 <!-- Owl Carousel CSS -->
-<link rel="stylesheet" href="/static/css/owl-carousel.css">
+<link rel="stylesheet" href="../static/css/owl-carousel.css">
 <!-- Datepicker CSS -->
-<link rel="stylesheet" href="/static/css/datepicker.css">
+<link rel="stylesheet" href="../static/css/datepicker.css">
 <!-- Animate CSS -->
-<link rel="stylesheet" href="/static/css/animate.min.css">
+<link rel="stylesheet" href="../static/css/animate.min.css">
 <!-- Magnific Popup CSS -->
-<link rel="stylesheet" href="/static/css/magnific-popup.css">
-		
-<!-- Medipro CSS -->
-<link rel="stylesheet" href="/static/css/normalize.css">
-<link rel="stylesheet" href="/static/css/style.css">
-<link rel="stylesheet" href="/static/css/responsive.css">
+<link rel="stylesheet" href="../static/css/magnific-popup.css">
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<style type="text/css">
-	th{
-		background-color: #b2c9ad;
-		color: black;
-	}
-	div{
-		font-size: 25px;
-		margin: 10px;
-		color: black;
-	}
-</style>
+<!-- Medipro CSS -->
+<link rel="stylesheet" href="../static/css/normalize-green.css">
+<link rel="stylesheet" href="../static/css/style-green.css">
+<link rel="stylesheet" href="../static/css/responsive-green.css">
 <title>hospitalizationModify.html</title>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script type="text/javascript">
@@ -68,7 +61,145 @@ $(function(){
 
 </head>
 <body>
-<div align="center" style="margin-top: 10%">
+<header class="header" >
+			<!-- Topbar -->
+			<div class="topbar">
+				<div class="container">
+					<div class="row">
+					<div class="col-lg-6 col-md-5 col-12">
+							
+						</div>
+						<div class="col-lg-6 col-md-7 col-12">
+							<!-- Top Contact -->
+							<ul class="top-contact">
+							<i class="fa fa-user" style="color: #8EB486"></i>
+								<th:block th:if="${session.auth!=null}">
+									<li><i class="fa fa-doctor"></i><a href="../login/logout">로그아웃</a></li>
+									<li><a href="/employee/employeeMyPage">마이페이지</a></li>
+								</th:block>
+								<th:block  th:if="${session.auth==null}">
+									<li><a href="/login/employeeLogin">로그인</a></li>
+								</th:block>
+							</ul>
+							<!-- End Top Contact -->
+						</div>
+					</div>
+				</div>
+			</div>
+
+		<div class="header-inner">
+				<div class="container">
+					<div class="inner">
+						<div class="row">
+							<div class="col-lg-3 col-md-10 col-12">
+								<!-- Start Logo -->
+								<div class="logo">
+									<a href="/"><img src="/static/img/empLogo.png" alt="#"></a>
+								</div>
+								<!-- End Logo -->
+								<!-- Mobile Nav -->
+								<div class="mobile-nav"></div>
+								<!-- End Mobile Nav -->
+							</div>
+							<div class="col-lg-8 col-md-9 col-12">
+								<!-- Main Menu -->
+								<div class="main-menu">
+									<nav class="navigation">
+										<ul class="nav menu">
+											<li><a href="#">접수/예약<i class="icofont-rounded-down"></i></a>
+												<ul class="dropdown">
+													<li><a href="../receipt/receiptList">접수/예약관리</a></li>
+												</ul>
+											</li>
+											<li><a href="#">EMR<i class="icofont-rounded-down"></i></a>
+												<ul class="dropdown">
+													<th:block th:if="${session.auth != null}">
+														<th:block th:if="${session.auth.grade=='doc'}">
+															<li><a href="../wardPS/hosPatList">병동처방</a></li>
+															<li><a href="../medical/medicalList">외래진료</a></li>
+														</th:block>
+														<th:block th:if="${session.auth.grade=='nur'}">
+															<li><a href="../wardPS/hosPatList">병동처방</a></li>
+															<li><a href="../nursing/hosPatList">간호처방</a></li>
+															<li><a href="../medical/medicalList">외래진료</a></li>
+														</th:block>
+														<th:block th:if="${session.auth.grade=='emp'}">
+															<li><a href="../medical/medicalList">외래진료</a></li>
+														</th:block>
+													</th:block>
+												</ul>
+											</li>
+											<li><a href="#">수술<i class="icofont-rounded-down"></i></a>
+												<ul class="dropdown">
+													<th:block th:if="${session.auth != null}">
+														<th:block th:if="${session.auth.grade=='doc'}">
+													<li><a href="../surgery/surgeryScheduler">수술스케쥴러</a></li>
+													<li><a href="../surgery/surgeryAppointmentList">수술예약</a></li>
+													<li><a href="../surgery/surgeryList">환자수술결과기록</a></li>
+													<li><a href="../surgery/operatingRoom">수술실</a></li>
+													</th:block>
+													</th:block>
+												</ul>
+											</li>
+											<li><a href="#">검사<i class="icofont-rounded-down"></i></a>
+												<ul class="dropdown">
+												<th:block th:if="${session.auth != null}">
+														<th:block th:if="${session.auth.grade=='mdt'}">
+													<li><a href="../inspection/inspectionList">검사예약</a></li>
+													<li><a href="../radiation/radiationList">방사선</a></li>
+													<li><a href="../clinical/clinicalList">임상병리</a></li>
+													</th:block>
+													<th:block th:if="${session.auth.grade=='emp'}">
+													<li><a href="../inspection/inspectionList">검사예약</a></li>
+													</th:block>
+													<th:block th:if="${session.auth.grade=='doc'}">
+													<li><a href="../inspection/inspectionList">검사예약</a></li>
+													<li><a href="../radiation/radiationList">방사선</a></li>
+													<li><a href="../clinical/clinicalList">임상병리</a></li>
+													</th:block>
+												</th:block>
+												</ul>
+											</li>
+											<li><a href="#">입원/병동/응급실<i class="icofont-rounded-down"></i></a>
+												<ul class="dropdown">
+													<li><a href="../WardRoomBed/WardList">병동관리</a></li>
+													<li><a href="../Hospitalization/hospitalizationList">입원관리 </a></li>
+													<li><a href="../Hospitalization/emerHospitalizationList">응급입원관리 </a></li>
+												</ul>
+											</li>
+											<li><a href="#">문의<i class="icofont-rounded-down"></i></a>
+												<ul class="dropdown">
+												<th:block th:if="${session.auth != null}">
+													<th:block th:if="${session.auth.grade=='emp'}">
+													<li><a href="../qna/eqnaList">문의/건의</a></li>
+													</th:block>
+												</th:block>
+												</ul>
+											</li>
+											<li><a href="#">사용자<i class="icofont-rounded-down"></i></a>
+												<ul class="dropdown">
+														<li><a href="../employee/patientRegist">환자등록</a></li>
+														<li><a href="../patient/patientList">환자목록</a></li>
+														<li><a href="../employee/employeeList">직원목록</a></li>
+														<li><a href="../employee/doctorList">의사목록</a></li>
+												</ul>
+											</li>
+										</ul>
+									</nav>
+								</div>
+								<!--/ End Main Menu -->
+							</div>
+							<div class="col-lg-2 col-12">
+								<div class="get-quote">
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+<div align="center" style="margin-top: 10%; font-size: 25px; margin: 10px; color: black;">
 입원정보수정
 </div>
 <br>
@@ -97,6 +228,9 @@ $(function(){
 <tr align="center">
 <th colspan="3"><input type="submit" value="입원수정" class="btn col-12" style="background-color: #4b5945; color: white"></th>
 </tr>
+</table>
 </form>
+<script type="text/javascript" src="/static/js/getCss.js"></script>
+<div id="getFooter"></div>
 </body>
 </html>
