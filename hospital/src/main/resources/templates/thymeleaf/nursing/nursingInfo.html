@@ -67,11 +67,10 @@ $(function(){
 </script>
 
 <script th:inline="javascript">
-function callDelete() {
+function callDelete(num) {
 	var userN = [[${userNum}]];
 	var mainDoc = [[${nursCommand.empNum}]];
 	var Wdoc = [[${nursCommand.handleNurs}]];
-	var num = [[${nursCommand.nursingNum}]];
 	
 	if (userN != null && userN != "") {
 		
@@ -143,8 +142,6 @@ function callDelete() {
 	
 	
 </div> <br>
-<div align="center"><button  class="btn">삭제 요청</button></div>
-
 <div align="center" style="color: white;">
 <button th:if="${nursCommand.callStop != null && nursCommand.callStop != ''}"
 th:onclick="callDelete([[${nursCommand.nursingNum}]])" class="btn">삭제 요청</button> 

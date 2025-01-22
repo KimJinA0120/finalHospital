@@ -25,7 +25,7 @@ public class HosPatientController {
 		String cont = request.getRequestURI().split("/")[1];
 		if (cont.equals("nursing")) {
 			return "redirect:nursingList";
-		} else if (cont.equals("wardPS")) {
+		}else if (cont.equals("wardPS")) {
 			return "redirect:wardPsList";
 		}else {
 			return "redirect:/";
